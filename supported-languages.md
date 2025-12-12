@@ -4,57 +4,78 @@ Chloros erbjuder fullständigt gränssnittsstöd på **38 språk världen över*
 
 Chloros stöder följande språk:
 
-1. 🇺🇸 **Engelska**
-2. 🇪🇸 **Español** (spanska)
-3. 🇵🇹 **Português** (portugisiska)
-4. 🇫🇷 **Français** (franska)
-5. 🇩🇪 **Deutsch** (tyska)
-6. 🇮🇹 **Italiano** (italienska)
-7. 🇯🇵 **日本語** (japanska)
-8. 🇰🇷 **한국어** (koreanska)
-9. 🇨🇳 **简体中文** (förenklad kinesiska)
-10. 🇹🇼 **繁體中文** (traditionell kinesiska)
-11. 🇷🇺 **Русский** (ryska)
-12. 🇳🇱 **Nederlands** (nederländska)
-13. 🇸🇦 **العربية** (arabiska)
-14. 🇵🇱 **Polski** (polska)
-15. 🇹🇷 **Türkçe** (turkiska)
-16. 🇮🇳 **हिंदी** (hindi)
-17. 🇮🇩 **Bahasa Indonesia** (indonesiska)
-18. 🇻🇳 **Tiếng Việt** (vietnamesiska)
-19. 🇹🇭 **ไทย** (thailändska)
-20. 🇸🇪 **Svenska** (svenska)
-21. 🇩🇰 **Dansk** (danska)
-22. 🇳🇴 **Norsk** (norska)
-23. 🇫🇮 **Suomi** (finska)
-24. 🇬🇷 **Ελληνικά** (grekiska)
-25. 🇨🇿 **Čeština** (tjeckiska)
-26. 🇭🇺 **Magyar** (ungerska)
-27. 🇷🇴 **Română** (rumänska)
-28. 🇺🇦 **Українська** (ukrainska)
-29. 🇧🇷 **Português Brasileiro** (brasiliansk portugisiska)
-30. 🇭🇰 **粵語** (kantonesiska)
-31. 🇲🇾 **Bahasa Melayu** (malaysiska)
-32. 🇸🇰 **Slovenčina** (Slovakiska)
-33. 🇧🇬 **Български** (Bulgariska)
-34. 🇭🇷 **Hrvatski** (Kroatiska)
-35. 🇱🇹 **Lietuvių** (Litauiska)
-36. 🇱🇻 **Latviešu** (lettiska)
-37. 🇪🇪 **Eesti** (estniska)
-38. 🇸🇮 **Slovenščina** (slovenska)
+| # | Språk | Ursprungligt namn | CLI-kod |
+|---|----------|-------------|----------|
+| 1 | 🇺🇸 Engelska | Engelska | `en` |
+| 2 | 🇪🇸 Spanska | Español | `es` |
+| 3 | 🇵🇹 Portugisiska | Português | `pt` |
+| 4 | 🇫🇷 Franska | Français | `fr` |
+| 5 | 🇩🇪 Tyska | Deutsch | `de` |
+| 6 | 🇮🇹 Italienska | Italiano | `it` |
+| 7 | 🇯🇵 Japanska | 日本語 | `ja` |
+| 8 | 🇰🇷 Koreanska | 한국어 | `ko` |
+| 9 | 🇨🇳 Kinesiska (förenklad) | 简体中文 | `zh` |
+| 10 | 🇹🇼 Kinesiska (traditionell) | 繁體中文 | `zh-TW` |
+| 11 | 🇷🇺 Ryska | Русский | `ru` |
+| 12 | 🇳🇱 Nederländska | Nederlands | `nl` |
+| 13 | 🇸🇦 Arabiska | العربية | `ar` |
+| 14 | 🇵🇱 Polska | Polski | `pl` |
+| 15 | 🇹🇷 Turkiska | Türkçe | `tr` |
+| 16 | 🇮🇳 Hindi | हिंदी | `hi` |
+| 17 | 🇮🇩 Indonesiska | Bahasa Indonesia | `id` |
+| 18 | 🇻🇳 Vietnamesiska | Tiếng Việt | `vi` |
+| 19 | 🇹🇭 Thailändska | ไทย | `th` |
+| 20 | 🇸🇪 Svenska | Svenska | `sv` |
+| 21 | 🇩🇰 Danska | Dansk | `da` |
+| 22 | 🇳🇴 Norska | Norsk | `no` |
+| 23 | 🇫🇮 Finska | Suomi | `fi` |
+| 24 | 🇬🇷 Grekiska | Ελληνικά | `el` |
+| 25 | 🇨🇿 Tjeckiska | Čeština | `cs` |
+| 26 | 🇭🇺 Ungerska | Magyar | `hu` |
+| 27 | 🇷🇴 Rumänska | Română | `ro` |
+| 28 | 🇺🇦 Ukrainska | Українська | `uk` |
+| 29 | 🇧🇷 Brasiliansk portugisiska | Português Brasileiro | `pt-BR` |
+| 30 | 🇭🇰 Kantonesiska | 粵語 | `zh-HK` |
+| 31 | 🇲🇾 Malajiska | Bahasa Melayu | `ms` |
+| 32 | 🇸🇰 Slovakiska | Slovenčina | `sk` |
+| 33 | 🇧🇬 Bulgariska | Български | `bg` |
+| 34 | 🇭🇷 Kroatiska | Hrvatski | `hr` |
+| 35 | 🇱🇹 Litauiska | Lietuvių | `lt` |
+| 36 | 🇱🇻 Lettiska | Latviešu | `lv` |
+| 37 | 🇪🇪 Estniska | Eesti | `et` |
+| 38 | 🇸🇮 Slovenska | Slovenščina | `sl` |
 
 ## Hur man byter språk
 
 ### I Chloros Desktop/Browser
 
-1. Öppna programinställningarna
-2. Navigera till menyn för språkval
-3. Välj önskat språk från listan
-4. Gränssnittet uppdateras omedelbart
+1. Öppna programinställningarna.
+2. Navigera till menyn för språkval.
+3. Välj önskat språk från listan.
+4. Gränssnittet uppdateras omedelbart.
 
 ### I Chloros CLI
 
-Använd språkparametern med dina kommandon för att ställa in gränssnittsspråket.
+Använd kommandot `language` för att visa eller ändra språket i gränssnittet CLI:
+
+```bash
+# View current language
+chloros-cli language
+
+# Change to Spanish
+chloros-cli language es
+
+# Change to Chinese (Simplified)
+chloros-cli language zh
+
+# Change to Brazilian Portuguese
+chloros-cli language pt-BR
+
+# List all available languages
+chloros-cli language --list
+```
+
+Mer information finns i [CLI-dokumentationen](CLI.md).
 
 ### I Chloros Python SDK
 
@@ -64,7 +85,7 @@ Ställ in språkparametern när du initialiserar SDK för att få meddelanden oc
 
 Alla 38 språk stöds fullt ut i:
 
-* **Chloros Desktop** – Fullständig översättning av GUI
+* **Chloros Desktop** – Fullständig översättning av grafiskt användargränssnitt
 * **Chloros Browser** – Webbgränssnitt på alla språk
 * **Chloros CLI** – Kommandoradsgränssnitt och utdatameddelanden
 * **Chloros Python SDK** – API-meddelanden och dokumentation
