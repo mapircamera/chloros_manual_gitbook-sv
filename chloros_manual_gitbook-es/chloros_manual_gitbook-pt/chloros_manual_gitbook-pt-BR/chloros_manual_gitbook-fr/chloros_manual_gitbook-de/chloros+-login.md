@@ -1,16 +1,16 @@
-# Chloros+ Login
+# Logga in på Chloros+
 
-## Chloros and Chloros (Browser) Login
+## Chloros och Chloros (webbläsare) Logga in
 
-The user <img src=".gitbook/assets/icon_user.JPG" alt="" data-size="line"> sidebar menu allows you to log into your Chloros+ account and unlock additional features.
+Användaren <img src=".gitbook/assets/icon_user.JPG" alt="" data-size="line"> sidofältsmenyn låter dig logga in på ditt Chloros+-konto och låsa upp ytterligare funktioner.
 
-When logged in your account details will be shown:
+När du är inloggad kommer dina kontouppgifter att visas:
 
 <figure><img src=".gitbook/assets/user_account.JPG" alt="" width="375"><figcaption></figcaption></figure>
 
-## CLI Login
+## CLI-inloggning
 
-Login with your Chloros+ credentials to enable CLI processing.
+Logga in med dina Chloros+-uppgifter för att aktivera CLI-bearbetning.
 
 **Syntax:**
 
@@ -18,26 +18,26 @@ Login with your Chloros+ credentials to enable CLI processing.
 chloros-cli login <email> <password>
 ```
 
-**Example:**
+**Exempel:**
 
 ```powershell
 chloros-cli login user@example.com 'MyP@ssw0rd123'
 ```
 
 {% hint style="warning" %}
-**Special Characters**: Use single quotes around passwords containing characters like `$`, `!`, or spaces.
-{% endhint %}
+**Specialtecken**: Använd enstaka citattecken runt lösenord som innehåller tecken som `$`, `!` eller mellanslag.
+{% sluthint %}
 
-**Output:**
+**Produktion:**
 
 <figure><img src=".gitbook/assets/cli login_w.JPG" alt=""><figcaption></figcaption></figure>
 
-### Plan Expiration
+### Planens utgång
 
-The plan expiration in the GUI shows when your license will become invalid. For recurring monthly subscriptions the expiration is at the end of the month. For yearly subscriptions it is a year after you started the subscription. The license check requires a monthly internet connection to verify, with a 30 day grace period.
+Planens utgång i GUI visar när din licens blir ogiltig. För återkommande månadsabonnemang löper ut i slutet av månaden. För årsprenumerationer är det ett år efter att du startade prenumerationen. Licenskontrollen kräver en månatlig internetanslutning för att verifiera, med en respitperiod på 30 dagar.
 
-### Device Limit
+### Enhetsgräns
 
-Each Chloros+ plan offers a different number of registered devices. Each device you log into with a Chloros+ account will count towards your number of registered devices. You can rename and remove a device on your MAPIR Cloud account page.
+Varje Chloros+ plan erbjuder olika antal registrerade enheter. Varje enhet du loggar in på med ett Chloros+-konto kommer att räknas in i ditt antal registrerade enheter. Du kan byta namn på och ta bort en enhet på din MAPIR Cloud-kontosida.
 
-<table><thead><tr><th width="168.5999755859375" align="right">Chloros+ Plan</th><th align="center">COPPER</th><th align="center">BRONZE</th><th align="center">SILVER</th><th align="center">GOLD</th></tr></thead><tbody><tr><td align="right">Devices Supported</td><td align="center">2</td><td align="center">2</td><td align="center">5</td><td align="center">10</td></tr></tbody></table>
+<table><thead><tr><th width="168.5999755859375" align="right">Chloros+ Plan</th><th align="center">KOPPAR</th><th align="center">BRONS</th><th align="center">SILVER</th><th align="center">GULD</th></tr></thead><tbody><tr><td align="right">Enheter Stöds</td><td align="center">2</td><td align="center">2</td><td align="center">5</td><td align="center">10</td></tr></tbody></table>
