@@ -1,204 +1,204 @@
-# Adding Files to a Project
+# Lägga till filer till ett projekt
 
-Once you've created or opened a project in Chloros, the next step is to add your multispectral images to begin processing. The File Browser<img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> tab makes it easy to import images and manage your dataset.
+När du har skapat eller öppnat ett projekt i Chloros är nästa steg att lägga till dina multispektrala bilder för att påbörja bearbetningen. Filbläddraren<img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> gör det enkelt att importera bilder och hantera din dataset.
 
-## Accessing the File Browser
+## Öppna filbläddraren
 
-1. Open or create a project in Chloros
-2. Click the **File Browser** <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> icon in the left sidebar
-3. The File Browser panel will display your project's file list
+1. Öppna eller skapa ett projekt i Chloros
+2. Klicka på ikonen **Filbläddraren** <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> i vänster sidofält
+3. Panelen Filbläddraren visar projektets fillista
 
-{% hint style="info" %}
-**Supported File Types**: Chloros supports RAW+JPG and JPG image files from MAPIR Survey3W and Survey3N cameras. Only RAW+JPG are recommended.
+{% hint style=&quot;info&quot; %}
+**Filtyper som stöds**: Chloros stöder RAW+JPG- och JPG-bildfiler från MAPIR Survey3W och Survey3N kameror. Endast RAW+JPG rekommenderas.
 {% endhint %}
 
 ***
 
-## Adding Images to Your Project
+## Lägga till bilder till ditt projekt
 
-There are two primary ways to add images to your project:
+Det finns två huvudsakliga sätt att lägga till bilder till ditt projekt:
 
-### Method 1: Add Files
+### Metod 1: Lägg till filer
 
-Use this option to import individual image files or a small selection of files.
+Använd det här alternativet för att importera enskilda bildfiler eller ett litet urval av filer.
 
-1. Click the **"Add Files"** button at the top of the File Browser panel
-2. Navigate to the folder containing your images
-3. Select one or more image files (hold **Ctrl** to select multiple files)
-4. Click **"Open"** to import the selected files
+1. Klicka på knappen **&quot;Lägg till filer&quot;** högst upp i panelen Filbläddraren.
+2. Navigera till mappen som innehåller dina bilder.
+3. Välj en eller flera bildfiler (håll ned **Ctrl** för att välja flera filer).
+4. Klicka på **&quot;Öppna&quot;** för att importera de valda filerna.
 
-### Method 2: Add Folder
+### Metod 2: Lägg till mapp
 
-Use this option to import all images from a folder at once.
+Använd det här alternativet för att importera alla bilder från en mapp på en gång.
 
-1. Click the **"Add Folder"** button at the top of the File Browser panel
-2. Navigate to and select the folder containing your capture session images
-3. Click **"Select Folder"** to import all supported images from that folder
-
-***
-
-## Understanding the File Browser Table
-
-Once images are imported, they appear in a table with the following columns:
-
-### Thumbnail
-
-* Small preview of each image
-* Click thumbnail to view full image in the main preview area
-
-### File Name
-
-* Original filename from the camera
-* Maintains camera naming convention (e.g., IMG\_0001.RAW)
-
-### Timestamp
-
-* Date and time the image was captured
-* Extracted from image EXIF metadata
-* Used for PPK synchronization and calibration target detection
-
-### Camera Model
-
-* Automatically detected camera and filter configuration
-* Examples: Survey3W\_RGN, Survey3N\_OCN, Survey3W\_RGB
-* Used to apply correct processing profiles
-
-### Target Column (Checkbox)
-
-* Check this box for images that contain calibration targets
-* Greatly speeds up target detection during processing
-* See [Choosing Target Images](choosing-target-images.md) for details
+1. Klicka på knappen **&quot;Lägg till mapp&quot;** längst upp i panelen Filbläddraren.
+2. Navigera till och välj mappen som innehåller bilderna från din fotograferingssession.
+3. Klicka på **&quot;Välj mapp&quot;** för att importera alla bilder som stöds från den mappen.
 
 ***
 
-## Managing Files in Your Project
+## Förstå tabellen i filbläddraren
 
-### Removing Files
+När bilderna har importerats visas de i en tabell med följande kolumner:
 
-To remove unwanted images from your project:
+### Miniatyrbild
 
-1. Select one or more images in the File Browser table
-2. Click the **"Remove Selected"** button
-3. Confirm removal (files are not deleted from disk, only removed from the project)
+* Liten förhandsgranskning av varje bild.
+* Klicka på miniatyrbilden för att visa hela bilden i huvudförhandsgranskningsområdet.
 
-### Sorting and Filtering
+### Filnamn
 
-* **Sort by column**: Click any column header to sort images
-* **Timestamp sort**: Useful for organizing chronological capture sequences
-* **Camera model filter**: Group images by camera type if using multiple cameras
+* Originalfilnamn från kameran.
+* Behåller kamerans namngivningskonvention (t.ex. IMG\_0001.RAW).
 
-***
+### Tidsstämpel
 
-## Image Preview
+* Datum och tid då bilden togs.
+* Extraherad från bildens EXIF-metadata.
+* Används för PPK-synkronisering och kalibreringsmåldetektering
 
-### Viewing Full Image
+### Kameramodell
 
-Click any image thumbnail in the File Browser to display it in the main preview area:
+* Automatiskt detekterad kamera- och filterkonfiguration
+* Exempel: Survey3W\_RGN, Survey3N\_OCN, Survey3W\_RGB
+* Används för att tillämpa korrekta bearbetningsprofiler
 
-1. Image appears in the center preview panel
-2. Use zoom controls to inspect image details
-3. Navigate between images using arrow keys
+### Målkolumn (kryssruta)
 
-### Quick Navigation
-
-* **Previous Image**: Click left arrow or press ← key
-* **Next Image**: Click right arrow or press → key
-* **Zoom In/Out**: Use mouse wheel or zoom buttons
-* **Pan**: Click and drag on image when zoomed in
+* Markera denna ruta för bilder som innehåller kalibreringsmål
+* Påskyndar måldetekteringen avsevärt under bearbetningen
+* Se [Välja målbilder](choosing-target-images.md) för mer information
 
 ***
 
-## Duplicate File Handling
+## Hantera filer i ditt projekt
 
-Chloros automatically detects and ignores duplicate files:
+### Ta bort filer
 
-* Files with identical filenames are skipped
-* Prevents accidental double-processing
-* Warning message displayed when duplicates are detected
+Så här tar du bort oönskade bilder från ditt projekt:
 
-{% hint style="warning" %}
-**Important**: Do not rename or modify your original image files before importing. Chloros relies on original filenames and metadata for proper processing.
+1. Välj en eller flera bilder i tabellen Filbläddraren
+2. Klicka på knappen **&quot;Ta bort valda&quot;**
+3. Bekräfta borttagningen (filerna raderas inte från disken, utan tas bara bort från projektet)
+
+### Sortera och filtrera
+
+* **Sortera efter kolumn**: Klicka på valfri kolumnrubrik för att sortera bilder
+* **Sortera efter tidsstämpel**: Användbart för att organisera kronologiska bildsekvenser.
+* **Filter för kameramodell**: Gruppera bilder efter kameratyp om du använder flera kameror.
+
+***
+
+## Bildförhandsgranskning
+
+### Visa hela bilden
+
+Klicka på valfri miniatyrbild i filbläddraren för att visa den i huvudförhandsgranskningsområdet:
+
+1. Bilden visas i det centrala förhandsgranskningsfönstret.
+2. Använd zoomkontrollerna för att granska bilddetaljer.
+3. Navigera mellan bilderna med piltangenterna
+
+### Snabbnavigering
+
+* **Föregående bild**: Klicka på vänsterpilen eller tryck på ←-tangenten
+* **Nästa bild**: Klicka på högerpilen eller tryck på →-tangenten
+* **Zooma in/ut**: Använd mushjulet eller zoomknapparna
+* **Panorera**: Klicka och dra på bilden när du har zoomat in
+
+***
+
+## Hantering av dubbletter
+
+Chloros upptäcker och ignorerar automatiskt dubbla filer:
+
+* Filer med identiska filnamn hoppas över.
+* Förhindrar oavsiktlig dubbelbearbetning.
+* Varningsmeddelande visas när dubbletter upptäcks.
+
+{% hint style=&quot;warning&quot; %}
+**Viktigt**: Döp inte om eller ändra dina originalbildfiler innan du importerar dem. Chloros förlitar sig på originalfilnamn och metadata för korrekt bearbetning.
 {% endhint %}
 
 ***
 
-## Mixed Camera Datasets
+## Blandade kameradataset
 
-If your project contains images from multiple MAPIR cameras:
+Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 
-1. Chloros automatically detects each camera model
-2. Each camera type is processed with its appropriate calibration profile
-3. File Browser displays camera model in the Camera Model column
-4. Processing applies correct settings for each camera type
+1. Chloros identifierar automatiskt varje kameramodell.
+2. Varje kameratyp bearbetas med sin lämpliga kalibreringsprofil.
+3. Filbläddraren visar kameramodellen i kolumnen Kameramodell.
+4. Bearbetningen tillämpar korrekta inställningar för varje kameratyp.
 
-**Example scenario**: Survey3W RGN + Survey3N OCN dual-camera setup
-
-***
-
-## Best Practices
-
-### Organize Before Import
-
-* Keep calibration target images in the same folder as survey images
-* Maintain original folder structure from your camera/SD card
-* Don't mix datasets from different sessions in one project
-
-### File Naming
-
-* Preserve original camera filenames (IMG\_0001.RAW, etc.)
-* Don't rename files before import
-* Original names contain important metadata
-
-### Calibration Target Images
-
-* Always include 1-2 calibration target images per session
-* Capture targets before and after the capture session
-* Place targets in the same lighting conditions as capture area
-* Mark target images using the Target checkbox to speed up processing
+**Exempel på scenario**: Survey3W RGN + Survey3N OCN med dubbla kameror.
 
 ***
 
-## Common Issues and Solutions
+## Bästa praxis
 
-### Images Not Appearing After Import
+### Organisera före import
 
-**Possible causes:**
+* Spara kalibreringsmålbilderna i samma mapp som undersökningsbilderna.
+* Behåll den ursprungliga mappstrukturen från din kamera/SD-kort.
+* Blanda inte datamängder från olika sessioner i ett projekt.
 
-* File format not supported (only RAW+JPG and JPG from MAPIR cameras)
-* Images are from non-MAPIR cameras (see [Supported Cameras](../supported-cameras.md))
-* File corruption or incomplete transfer from SD card
+### Filnamngivning
 
-**Solution**: Verify file format and camera model compatibility
+* Behåll de ursprungliga kamerafilnamnen (IMG\_0001.RAW, etc.).
+* Byt inte namn på filerna före import.
+* De ursprungliga namnen innehåller viktig metadata.
 
-### Camera Model Not Detected
+### Kalibreringsmålbilder
 
-**Possible causes:**
-
-* Modified EXIF metadata
-* Images edited in external software
-* Incomplete file transfer
-
-**Solution**: Re-import original, unmodified files from camera/SD card
-
-### Missing Timestamps
-
-**Possible causes:**
-
-* Camera clock not set correctly
-* EXIF data stripped by external software
-
-**Solution**: Verify camera time settings were correct during capture
+* Inkludera alltid 1–2 kalibreringsmålbilder per session.
+* Ta bilder av målen före och efter fotograferingssessionen.
+* Placera målen i samma ljusförhållanden som fotograferingsområdet.
+* Markera målbilderna med kryssrutan Mål för att påskynda bearbetningen.
 
 ***
 
-## Next Steps
+## Vanliga problem och lösningar
 
-Once your files are imported:
+### Bilder visas inte efter import
 
-1. **Review the file list** - Ensure all images loaded correctly
-2. **Check camera models** - Verify correct camera detection
-3. **Mark target images** - See [Choosing Target Images](choosing-target-images.md)
-4. **Adjust settings** - Configure processing options in [Project Settings](adjusting-project-settings.md)
-5. **Start processing** - See [Starting the Processing](starting-the-processing.md)
+**Möjliga orsaker:**
 
-For detailed information about project configuration, see [Adjusting Project Settings](adjusting-project-settings.md).
+* Filformatet stöds inte (endast RAW+JPG och JPG från MAPIR-kameror)
+* Bilderna kommer från kameror som inte är MAPIR (se [Stödda kameror](../supported-cameras.md))
+* Filskada eller ofullständig överföring från SD-kort
+
+**Lösning**: Kontrollera filformatet och kameramodellens kompatibilitet.
+
+### Kameramodell upptäcks inte
+
+**Möjliga orsaker:**
+
+* Modifierade EXIF-metadata.
+* Bilder redigerade i extern programvara.
+* Ofullständig filöverföring.
+
+**Lösning**: Importera om originalfilerna, utan modifieringar, från kameran/SD-kortet.
+
+### Saknade tidsstämplar
+
+**Möjliga orsaker:**
+
+* Kamerans klocka är inte korrekt inställd
+* EXIF-data har tagits bort av extern programvara
+
+**Lösning**: Kontrollera att kamerans tidsinställningar var korrekta under fotograferingen
+
+***
+
+## Nästa steg
+
+När dina filer har importerats:
+
+1. **Granska fillistan** – Kontrollera att alla bilder har laddats korrekt
+2. **Kontrollera kameramodeller** – Kontrollera att kamerorna har identifierats korrekt
+3. **Markera målbilder** – Se [Välja målbilder](choosing-target-images.md)
+4. **Justera inställningarna** – Konfigurera bearbetningsalternativ i [Projektinställningar](adjusting-project-settings.md)
+5. **Starta bearbetningen** – Se [Starta bearbetningen](starting-the-processing.md)
+
+För detaljerad information om projektkonfiguration, se [Justera projektinställningar](adjusting-project-settings.md).

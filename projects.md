@@ -1,17 +1,13 @@
-# Projekt
+# GUI : Projekt
 
 Chloros låter dig skapa projekt som kan öppnas igen i framtiden.
 
 ## Nytt projekt
 
-<figure><img src=".gitbook/assets/project_new.JPG" alt=""><figcaption></figcaption></figure>
-
-Välj "Nytt projekt" från huvudmenyn och ange ett unikt namn för ditt projekt.
+<figure><img src=".gitbook/assets/project_new.JPG" alt=""><figcaption></figcaption></figure>Välj &quot;Nytt projekt&quot; från huvudmenyn och ange ett unikt namn för ditt projekt.
 
 ## Öppna projekt
 
-<figure><img src=".gitbook/assets/project_open.JPG" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/project_open.JPG" alt=""><figcaption></figcaption></figure>Välj &quot;Öppna projekt&quot; för att se en lista över befintliga projekt i projektmappen. Om det inte finns några projekt öppnas inte den sekundära sidomenyn. Du kan se några GUI-skapade projekt (t1, t2, t3) listade i bilden ovan. Projekten DATE\_TIME skapades av CLI med hjälp av standardnamngivningsschemat för projekt. Klicka på ett projektnamn för att öppna det.
 
-Välj "Öppna projekt" för att se en lista över befintliga projekt i projektmappen. Om det inte finns några projekt öppnas inte den sekundära sidomenyn. Du kan se några GUI skapade projekt (t1, t2, t3) listade i bilden ovan. DATE\_TIME-projekten skapades av CLI med standardprojektets namnschema. Om du klickar på ett projektnamn öppnas det.
-
-Genom att klicka på knappen "Öppna projektmapp" öppnas din dators filutforskare vid projektsökvägen. Du kan justera projektsökvägen i [Projektinställningar](project-settings/page-2.md).
+Om du klickar på knappen &quot;Öppna projektmapp&quot; öppnas din dators filutforskare i projektets sökväg. Du kan justera projektets sökväg i [Projektinställningar](project-settings/project-settings.md).

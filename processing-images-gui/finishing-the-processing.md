@@ -1,306 +1,306 @@
-# Finishing the Processing
+# Avsluta bearbetningen
 
-Once Chloros completes processing, it's time to review your results, verify output quality, and prepare your processed images for use in your workflow. This page guides you through the final steps and next actions.
+När Chloros har slutfört bearbetningen är det dags att granska resultaten, kontrollera utskriftskvaliteten och förbereda de bearbetade bilderna för användning i ditt arbetsflöde. Denna sida guidar dig genom de sista stegen och nästa åtgärder.
 
-## Processing Complete Indication
+## Indikation på att bearbetningen är klar
 
-When processing finishes successfully, you'll see several indicators:
+När bearbetningen har slutförts framgångsrikt visas flera indikatorer:
 
-* ✅ **Progress bar**: Reaches 100% completion
-* ✅ **Debug Log**: Shows "Processing Complete" message
-* ✅ **Start button**: Becomes enabled again (ready for next processing run)
-* ✅ **Output files**: All processed images saved to camera model subfolder
-
-***
-
-## Locating Your Processed Images
-
-### Opening the Output Folder
-
-1. Click the **Main Menu** <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> icon (top left)
-2. Select **"Open Project Folder"**
-3. Your file explorer opens to the project directory
-4. Locate your project by name
+* ✅ **Förloppsindikator**: Når 100 % färdigställande
+* ✅ **Felsökningslogg**: Visar meddelandet ”Bearbetning klar”
+* ✅ **Startknapp**: Aktiveras igen (redo för nästa bearbetningskörning)
+* ✅ **Utmatningsfiler**: Alla bearbetade bilder sparas i undermappen för kameramodellen
 
 ***
 
-## Reviewing Processed Images
+## Hitta dina bearbetade bilder
 
-### Quick Preview in File Explorer
+### Öppna utmatningsmappen
 
-**Windows built-in preview:**
-
-1. Navigate to camera model subfolder
-2. Select an image file
-3. Preview appears in Windows Explorer preview pane
-4. Use arrow keys to browse through images
-
-### Preview in External Image Viewers
-
-**Recommended viewers:**
-
-* **QGIS** - Free GIS software (best for georeferenced multispectral analysis)
-* **IrfanView** - Fast, lightweight image viewer (supports TIFF)
-* **Adobe Photoshop** - Professional editing (TIFF support)
-* **GIMP** - Free alternative to Photoshop
-* **Windows Photos** - Basic viewing (may not support 16-bit TIFF)
-
-### Preview in Chloros Image Viewer
-
-Use Chloros's built-in Image Viewer for advanced visualization:
-
-1. Click an image thumbnail in the File Browser
-2. Image opens in the main preview area
-3. Click **Image Viewer** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> tab in left sidebar
-4. Use [Index/LUT Sandbox](../image-viewer-gui/index-lut-sandbox.md) for interactive analysis
-
-See [Image Viewer](../image-viewer-gui/page-3.md) for detailed instructions.
+1. Klicka på **Huvudmenyn** <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> (uppe till vänster)
+2. Välj **&quot;Öppna projektmapp&quot;**
+3. Din filutforskare öppnas i projektkatalogen
+4. Leta reda på ditt projekt efter namn
 
 ***
 
-## Reviewing the Debug Log
+## Granska bearbetade bilder
 
-### Check for Warnings or Errors
+### Snabb förhandsgranskning i filutforskaren
 
-1. Open **Debug Log** <img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line"> tab
-2. Scroll through messages
-3. Look for yellow warnings or red errors
-4. Review any issues noted
-5. Contact MAPIR support for assistance
+**Windows inbyggd förhandsgranskning:**
 
-### Saving the Log
+1. Navigera till undermappen för kameramodellen
+2. Välj en bildfil
+3. Förhandsgranskningen visas i Windows Explorer-förhandsgranskningsfönstret
+4. Använd piltangenterna för att bläddra igenom bilderna
 
-To keep a record of processing or to send to MAPIR Support:
+### Förhandsgranska i externa bildvisare
 
-1. Click **"Copy"** or **"Download"** button
-2. Save as text file in project folder
-3. Include with project documentation
-4. Send to MAPIR support if issues encountered
+**Rekommenderade bildvisare:**
 
-***
+* **QGIS** – Gratis GIS-programvara (bäst för georefererad multispektral analys)
+* **IrfanView** – Snabb, lättviktig bildvisare (stöder TIFF)
+* **Adobe Photoshop** – Professionell redigering (stöd för TIFF)
+* **GIMP** – Gratis alternativ till Photoshop
+* **Windows Photos** – Grundläggande visning (stöder eventuellt inte 16-bitars TIFF)
 
-## Common Output Issues and Solutions
+### Förhandsgranska i Chloros Image Viewer
 
-### Issue: Missing Output Files
+Använd Chloros:s inbyggda Image Viewer för avancerad visualisering:
 
-**Possible causes:**
+1. Klicka på en miniatyrbild i filbläddraren
+2. Bilden öppnas i huvudförhandsgranskningsområdet
+3. Klicka på **Image Viewer** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i vänster sidofält.
+4. Använd [Index/LUT Sandbox](../image-viewer-gui/index-lut-sandbox.md) för interaktiv analys.
 
-* Files didn't meet processing criteria
-* Target-only images (excluded from export)
-* Disk space ran out during export
-* File corruption during processing
-
-**Solutions:**
-
-1. Check Debug Log for skip/error messages
-2. Verify disk space was sufficient
-3. Count files: Should match (original count - target count) × (indices + 1)
-4. Re-import and reprocess any missing files
-
-### Issue: Dark or Bright Edges (Vignetting Still Visible)
-
-**Possible causes:**
-
-* Vignette correction disabled
-* Camera/lens not in Chloros profile database
-* Extreme vignetting beyond correction capability
-
-**Solutions:**
-
-1. Verify vignette correction was enabled in Project Settings
-2. Check camera model correctly detected
-3. Contact MAPIR support if vignetting persists
-
-### Issue: Incorrect Colors or Values
-
-**Possible causes:**
-
-* No calibration targets detected
-* Wrong calibration target model selected
-* Reflectance calibration disabled
-* Poor quality target images
-
-**Solutions:**
-
-1. Verify reflectance calibration was enabled
-2. Check "Target found" messages in Debug Log
-3. Review target image quality
-4. Reprocess with proper targets marked
-
-### Issue: NDVI Values Seem Wrong
-
-**Expected NDVI ranges:**
-
-* **Water, rocks, soil**: -0.1 to 0.2
-* **Sparse/unhealthy vegetation**: 0.2 to 0.4
-* **Moderate vegetation**: 0.4 to 0.6
-* **Healthy, dense vegetation**: 0.6 to 0.9
-
-**If values are outside these ranges:**
-
-1. Verify reflectance calibration was applied
-2. Verify light sensor log was included
-3. Check calibration targets were detected
-4. Ensure correct camera model was detected
-5. Review target image capture timing and conditions
+Se [Bildvisare](../image-viewer-gui/opening-an-image-full-screen.md) för detaljerade instruktioner.
 
 ***
 
-## Using Your Processed Images
+## Granska felsökningsloggen
 
-### For Photogrammetry / Orthomosaic Creation
+### Kontrollera om det finns varningar eller fel
 
-**Recommended workflow:**
+1. Öppna fliken **Felsökningslogg** <img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line"> -fliken
+2. Bläddra igenom meddelandena
+3. Leta efter gula varningar eller röda fel
+4. Granska eventuella problem som noterats
+5. Kontakta MAPIR support för hjälp
 
-1. **Import calibrated reflectance images** into photogrammetry software:
+### Spara loggen
+
+För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
+
+1. Klicka på knappen **&quot;Kopiera&quot;** eller **&quot;Hämta&quot;**
+2. Spara som textfil i projektmappen
+3. Bifoga med projektdokumentationen
+4. Skicka till MAPIR support om problem uppstår
+
+***
+
+## Vanliga utdatafel och lösningar
+
+### Problem: Saknade utdatafiler
+
+**Möjliga orsaker:**
+
+* Filerna uppfyllde inte bearbetningskriterierna.
+* Endast målbilder (uteslutna från export).
+* Diskutrymmet tog slut under exporten.
+* Filskada under bearbetningen.
+
+**Lösningar:**
+
+1. Kontrollera felsökningsloggen för meddelanden om hopp/fel.
+2. Kontrollera att det fanns tillräckligt med diskutrymme.
+3. Räkna filer: Bör stämma (ursprungligt antal – målantal) × (index + 1)
+4. Importera om och bearbeta om eventuella saknade filer
+
+### Problem: Mörka eller ljusa kanter (vignettering fortfarande synlig)
+
+**Möjliga orsaker:**
+
+* Vignettkorrigering inaktiverad
+* Kamera/objektiv finns inte i Chloros-profildatabasen
+* Extrem vignettering som överstiger korrigeringsförmågan
+
+**Lösningar:**
+
+1. Kontrollera att vignettkorrigering är aktiverad i projektinställningarna.
+2. Kontrollera att kameramodellen har identifierats korrekt.
+3. Kontakta MAPIR-supporten om vignetteringen kvarstår.
+
+### Problem: Felaktiga färger eller värden
+
+**Möjliga orsaker:**
+
+* Inga kalibreringsmål har identifierats.
+* Fel kalibreringsmodell har valts.
+* Reflektanskalibrering är inaktiverad.
+* Målbilderna är av dålig kvalitet.
+
+**Lösningar:**
+
+1. Kontrollera att reflektanskalibrering är aktiverad.
+2. Kontrollera meddelanden om ”Mål hittat” i felsökningsloggen.
+3. Granska målbildens kvalitet.
+4. Bearbeta om med rätt mål markerade.
+
+### Problem: NDVI-värdena verkar felaktiga
+
+**Förväntade NDVI-intervall:**
+
+* **Vatten, stenar, jord**: -0,1 till 0,2
+* **Gles/ohälsosam vegetation**: 0,2 till 0,4
+* **Måttlig vegetation**: 0,4 till 0,6
+* **Hälsosam, tät vegetation**: 0,6 till 0,9
+
+**Om värdena ligger utanför dessa intervall:**
+
+1. Kontrollera att reflektanskalibrering har tillämpats.
+2. Kontrollera att ljussensorloggen har inkluderats.
+3. Kontrollera att kalibreringsmålen har detekterats.
+4. Se till att rätt kameramodell har detekterats.
+5. Granska tidpunkten och förhållandena för målbildens tagning.
+
+***
+
+## Använda dina bearbetade bilder
+
+### För fotogrammetri/skapande av ortomosaik
+
+**Rekommenderat arbetsflöde:**
+
+1. **Importera kalibrerade reflektansbilder** till fotogrammetriprogramvara:
    * Pix4Dmapper
    * Agisoft Metashape
    * DroneDeploy
    * WebODM
-2. **Keep EXIF metadata**: Ensure GPS data preserved for geotagging
-3. **Calibrated workflows**: Use reflectance images for scientific accuracy
-4. **Process index mosaics**: Create NDVI orthomosaics from individual index images
-5. **Export georeferenced GeoTIFF**: For use in GIS applications
+2. **Behåll EXIF-metadata**: Se till att GPS-data bevaras för geotaggning
+3. **Kalibrerade arbetsflöden**: Använd reflektansbilder för vetenskaplig noggrannhet
+4. **Bearbeta indexmosaiker**: Skapa NDVI ortomosaiker från enskilda indexbilder
+5. **Exportera georefererade GeoTIFF**: För användning i GIS-applikationer
 
-### For GIS Analysis
+### För GIS-analys
 
-**Recommended workflow:**
+**Rekommenderat arbetsflöde:**
 
-1. **Load into QGIS, ArcGIS, or similar**
-2. **Use 16-bit TIFF** reflectance images for multi-band analysis
-3. **Use index images** (NDVI, NDRE) as ready-to-use vegetation layers
-4. **Raster calculator**: Combine bands for custom analysis
-5. **Export**: Create classification maps, change detection, vegetation health maps
+1. **Ladda in i QGIS, ArcGIS eller liknande**
+2. **Använd 16-bitars TIFF** reflektansbilder för multibandsanalys
+3. **Använd indexbilder** (NDVI, NDRE) som färdiga vegetationslager
+4. **Rasterkalkylator**: Kombinera band för anpassad analys
+5. **Exportera**: Skapa klassificeringskartor, förändringsdetektering, kartor över vegetationens hälsa
 
-### For Direct Analysis / Reporting
+### För direkt analys/rapportering
 
-**Recommended workflow:**
+**Rekommenderat arbetsflöde:**
 
-1. **Use index images with LUT colors** for visual reports
-2. **Extract statistics**: Mean NDVI per field/plot
-3. **Time series**: Compare indices across multiple sessions
-4. **Generate reports**: Include maps, statistics, and visualizations
-
-***
-
-## Archiving and Backup
-
-### Recommended Backup Strategy
-
-**What to save:**
-
-* ✅ **Original RAW/JPG images** - Archive on separate drive/cloud
-* ✅ **Processed outputs** - Keep calibrated images and indices
-* ✅ **Project file** - Contains all settings for reprocessing if needed
-* ✅ **Debug Log** - Documents processing details
-* ✅ **Calibration target images** - For verification and reprocessing
-
-**Storage recommendations:**
-
-* **Immediate backup**: External hard drive
-* **Long-term archive**: Cloud storage (Google Drive, Dropbox, etc.)
-* **Critical data**: Keep 2-3 copies in different locations
+1. **Använd indexbilder med LUT-färger** för visuella rapporter
+2. **Extrahera statistik**: Medelvärde NDVI per fält/tomt
+3. **Tidsserier**: Jämför index över flera sessioner
+4. **Skapa rapporter**: Inkludera kartor, statistik och visualiseringar
 
 ***
 
-## Next Processing Runs
+## Arkivering och säkerhetskopiering
 
-### Reusing Project Settings
+### Rekommenderad säkerhetskopieringsstrategi
 
-If processing similar datasets in the future:
+**Vad du ska spara:**
 
-1. **Save Project Template** (if not already done)
-2. **Create new project** using saved template
-3. **Import new images**
-4. **Process** with identical settings for consistency
+* ✅ **Originalbilder i RAW/JPG** – Arkivera på separat enhet/moln
+* ✅ **Bearbetade resultat** – Behåll kalibrerade bilder och index
+* ✅ **Projektfil** – Innehåller alla inställningar för ombearbetning om det behövs
+* ✅ **Felsökningslogg** – Dokumenterar bearbetningsdetaljer
+* ✅ **Kalibreringsmålbilder** – För verifiering och ombearbetning
 
-### Batch Processing Multiple Sessions
+**Rekommendationer för lagring:**
 
-For multiple sessions/datasets:
-
-**Option 1: GUI - Multiple Projects**
-
-* Create separate project for each session
-* Use consistent template settings
-* Process one at a time
-
-**Option 2: Chloros CLI (Chloros+ only)**
-
-* Automate batch processing
-* Process multiple folders with scripts
-* See [CLI Documentation](../CLI.md)
-
-**Option 3: Python SDK (Chloros+ only)**
-
-* Programmatic control
-* Integration with analysis pipelines
-* See [API Documentation](../api-python-sdk.md)
+* **Omedelbar säkerhetskopiering**: Extern hårddisk
+* **Långtidsarkiv**: Molnlagring (Google Drive, Dropbox, etc.)
+* **Kritiska data**: Spara 2-3 kopior på olika platser
 
 ***
 
-## Troubleshooting Post-Processing
+## Nästa bearbetningskörningar
 
-### Re-Processing with Different Settings
+### Återanvända projektinställningar
 
-If results aren't satisfactory:
+Om du bearbetar liknande datamängder i framtiden:
 
-1. Keep original images (never delete)
-2. Open same project in Chloros
-3. Adjust settings in Project Settings panel
-4. Process again - outputs will overwrite previous results
+1. **Spara projektmall** (om det inte redan är gjort)
+2. **Skapa ett nytt projekt** med den sparade mallen
+3. **Importera nya bilder**
+4. **Bearbeta** med identiska inställningar för konsistens
 
-### Processing Subset of Images
+### Batchbearbetning av flera sessioner
 
-To reprocess only specific images:
+För flera sessioner/datauppsättningar:
 
-1. Create new project
-2. Import only the images needing reprocessing
-3. Use same settings template
-4. Process smaller dataset
+**Alternativ 1: GUI – flera projekt**
 
-### Getting Help
+* Skapa ett separat projekt för varje session
+* Använd konsistenta mallinställningar
+* Bearbeta en i taget
 
-If you encounter issues:
+**Alternativ 2: Chloros CLI (endast Chloros+)**
 
-* 📧 **Email**: info@mapir.camera (include Debug Log)
+* Automatisera batchbearbetning
+* Bearbeta flera mappar med skript
+* Se [CLI-dokumentation](../CLI.md)
+
+**Alternativ 3: Python SDK (endast Chloros+)**
+
+* Programmatisk kontroll
+* Integration med analyspipelines
+* Se [API-dokumentation](../api-python-sdk.md)
+
+***
+
+## Felsökning efter bearbetning
+
+### Ombearbetning med andra inställningar
+
+Om resultaten inte är tillfredsställande:
+
+1. Behåll originalbilderna (ta aldrig bort dem)
+2. Öppna samma projekt i Chloros
+3. Justera inställningarna i panelen Projektinställningar
+4. Bearbeta igen – resultaten kommer att skriva över tidigare resultat
+
+### Bearbeta delmängd av bilder
+
+För att bearbeta endast specifika bilder:
+
+1. Skapa ett nytt projekt
+2. Importera endast de bilder som behöver bearbetas igen
+3. Använd samma inställningsmall
+4. Bearbeta mindre dataset
+
+### Få hjälp
+
+Om du stöter på problem:
+
+* 📧 **E-post**: info@mapir.camera (inkludera felsökningslogg)
 * 🌐 **Support**: [https://www.mapir.camera/community/contact](https://www.mapir.camera/community/contact)
-* 📚 **FAQ**: [Frequently Asked Questions](../faq.md)
-* 📖 **Documentation**: [Chloros Manual](../)
+* 📚 **FAQ**: [Vanliga frågor](../faq.md)
+* 📖 **Dokumentation**: [Chloros Manual](../)
 
 ***
 
-## Summary: Complete Workflow
+## Sammanfattning: Komplett arbetsflöde
 
-You've now completed the full Chloros processing workflow:
+Du har nu slutfört hela arbetsflödet för Chloros:
 
-1. ✅ **Created project** - See [Projects](../projects.md)
-2. ✅ **Added files** - See [Adding Files](page-1.md)
-3. ✅ **Adjusted settings** - See [Adjusting Project Settings](adjusting-project-settings.md)
-4. ✅ **Marked targets** - See [Choosing Target Images](choosing-target-images.md)
-5. ✅ **Started processing** - See [Starting the Processing](starting-the-processing.md)
-6. ✅ **Monitored progress** - See [Monitoring the Processing](monitoring-the-processing.md)
-7. ✅ **Reviewed results** - This page
+1. ✅ **Skapade projekt** – Se [Projekt](../projects.md)
+2. ✅ **Lagt till filer** – Se [Lägga till filer](adding-files-to-a-project.md)
+3. ✅ **Justerat inställningar** – Se [Justera projektinställningar](adjusting-project-settings.md)
+4. ✅ **Markerade mål** – Se [Välja målbilder](choosing-target-images.md)
+5. ✅ **Startade bearbetningen** – Se [Starta bearbetningen](starting-the-processing.md)
+6. ✅ **Övervakad framsteg** - Se [Övervaka bearbetningen](monitoring-the-processing.md)
+7. ✅ **Granskade resultat** - Denna sida
 
-**Your calibrated, reflectance-corrected multispectral images are ready for analysis!**
+**Dina kalibrerade, reflektanskorrigerade multispektrala bilder är klara för analys!**
 
 ***
 
-## Additional Resources
+## Ytterligare resurser
 
-### Advanced Features
+### Avancerade funktioner
 
-* [**Image Viewer**](../image-viewer-gui/page-3.md) - Interactive visualization and analysis
-* [**Index/LUT Sandbox**](../image-viewer-gui/index-lut-sandbox.md) - Custom index testing
-* [**Multispectral Index Formulas**](../project-settings/multispectral-index-formulas.md) - Complete index reference
+* [**Bildvisare**](../image-viewer-gui/opening-an-image-full-screen.md) – Interaktiv visualisering och analys
+* [**Index/LUT Sandbox**](../image-viewer-gui/index-lut-sandbox.md) – Anpassad indexprovning
+* [**Multispektrala indexformler**](../project-settings/multispectral-index-formulas.md) – Komplett indexreferens
 
-### Automation & Integration
+### Automatisering och integration
 
-* [**CLI Documentation**](../CLI.md) - Command-line batch processing
-* [**Python SDK**](../api-python-sdk.md) - Programmatic automation
-* [**Chloros+ Features**](../#chloros) - Advanced processing capabilities
+* [**CLI-dokumentation**](../CLI.md) – Batchbearbetning via kommandoraden
+* [**Python SDK**](../api-python-sdk.md) – Programmatisk automatisering
+* [**Chloros+ Funktioner**](../#chloros) – Avancerade bearbetningsfunktioner
 
-### Support & Learning
+### Support och utbildning
 
-* [**FAQ**](../faq.md) - Common questions answered
-* [**Calibration Targets**](../calibration-targets.md) - Understanding reflectance calibration
-* [**Supported Cameras**](../supported-cameras.md) - Compatible hardware
+* [**Vanliga frågor**](../faq.md) – Svar på vanliga frågor
+* [**Kalibreringsmål**](../calibration-targets.md) – Förstå reflektanskalibrering
+* [**Kompatibla kameror**](../supported-cameras.md) – Kompatibel hårdvara

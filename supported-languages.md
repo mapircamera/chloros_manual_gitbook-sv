@@ -1,10 +1,10 @@
 # Språk som stöds
 
-Chloros tillhandahåller fullt gränssnittsstöd på **38 språk över hela världen**, vilket gör det tillgängligt för användare över hela världen. Du kan byta språk direkt över alla gränssnitt: Desktop, Browser, CLI och Python SDK.
+Chloros erbjuder fullständigt gränssnittsstöd på **38 språk världen över**, vilket gör det tillgängligt för användare över hela världen. Du kan växla språk direkt i alla gränssnitt: Desktop, Browser, CLI och Python SDK.
 
 Chloros stöder följande språk:
 
-1. 🇺🇸 **engelska**
+1. 🇺🇸 **Engelska**
 2. 🇪🇸 **Español** (spanska)
 3. 🇵🇹 **Português** (portugisiska)
 4. 🇫🇷 **Français** (franska)
@@ -19,9 +19,9 @@ Chloros stöder följande språk:
 13. 🇸🇦 **العربية** (arabiska)
 14. 🇵🇱 **Polski** (polska)
 15. 🇹🇷 **Türkçe** (turkiska)
-16. 🇮🇳 **हिंदी** (Hindi)
+16. 🇮🇳 **हिंदी** (hindi)
 17. 🇮🇩 **Bahasa Indonesia** (indonesiska)
-18. 🇻🇳 **Tiếng Việt** (vietnamesisk)
+18. 🇻🇳 **Tiếng Việt** (vietnamesiska)
 19. 🇹🇭 **ไทย** (thailändska)
 20. 🇸🇪 **Svenska** (svenska)
 21. 🇩🇰 **Dansk** (danska)
@@ -34,11 +34,11 @@ Chloros stöder följande språk:
 28. 🇺🇦 **Українська** (ukrainska)
 29. 🇧🇷 **Português Brasileiro** (brasiliansk portugisiska)
 30. 🇭🇰 **粵語** (kantonesiska)
-31. 🇲🇾 **Bahasa Melayu** (malajiska)
-32. 🇸🇰 **Slovenčina** (slovakiska)
-33. 🇧🇬 **Български** (bulgariska)
-34. 🇭🇷 **Hrvatski** (kroatiska)
-35. 🇱🇹 **Lietuvių** (litauiska)
+31. 🇲🇾 **Bahasa Melayu** (malaysiska)
+32. 🇸🇰 **Slovenčina** (Slovakiska)
+33. 🇧🇬 **Български** (Bulgariska)
+34. 🇭🇷 **Hrvatski** (Kroatiska)
+35. 🇱🇹 **Lietuvių** (Litauiska)
 36. 🇱🇻 **Latviešu** (lettiska)
 37. 🇪🇪 **Eesti** (estniska)
 38. 🇸🇮 **Slovenščina** (slovenska)
@@ -48,9 +48,9 @@ Chloros stöder följande språk:
 ### I Chloros Desktop/Browser
 
 1. Öppna programinställningarna
-2. Navigera till språkvalsmenyn
+2. Navigera till menyn för språkval
 3. Välj önskat språk från listan
-4. Gränssnittet kommer att uppdateras omedelbart
+4. Gränssnittet uppdateras omedelbart
 
 ### I Chloros CLI
 
@@ -58,15 +58,15 @@ Använd språkparametern med dina kommandon för att ställa in gränssnittsspr�
 
 ### I Chloros Python SDK
 
-Ställ in språkparametern när du initierar SDK:n för att få meddelanden och utdata på ditt föredragna språk.
+Ställ in språkparametern när du initialiserar SDK för att få meddelanden och utdata på ditt önskade språk.
 
-## Rapportering
+## Täckning
 
-Alla 38 språk stöds fullt ut över:
+Alla 38 språk stöds fullt ut i:
 
-* **Chloros Desktop** - Komplett GUI-översättning
-* **Chloros Browser** - Webbgränssnitt på alla språk
-* **Chloros CLI** - Kommandoradsgränssnitt och utgående meddelanden
-* **Chloros Python SDK** - API-meddelanden och dokumentation
+* **Chloros Desktop** – Fullständig översättning av GUI
+* **Chloros Browser** – Webbgränssnitt på alla språk
+* **Chloros CLI** – Kommandoradsgränssnitt och utdatameddelanden
+* **Chloros Python SDK** – API-meddelanden och dokumentation
 
 Språkstöd säkerställer att användare över hela världen kan arbeta effektivt på sitt modersmål utan hinder.
