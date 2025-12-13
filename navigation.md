@@ -14,7 +14,9 @@ Från huvudmenyn kan du starta ett nytt projekt, öppna ett befintligt projekt e
 
 När den är aktiverad startar startknappen bildbehandlingsprocessen.
 
-### <img src=".gitbook/assets/image (4).png" alt="" data-size="line"> Förloppsindikator <img src=".gitbook/assets/image (5).png" alt="" data-size="line">I det kostnadsfria läget Chloros, som bearbetar alla filer sekventiellt, visar förloppsindikatorn två steg: Målidentifiering och bearbetning.
+### <img src=".gitbook/assets/image (4).png" alt="" data-size="line"> Förloppsindikator <img src=".gitbook/assets/image (5).png" alt="" data-size="line">
+
+I det kostnadsfria läget Chloros, som bearbetar alla filer sekventiellt, visar förloppsindikatorn två steg: Målidentifiering och bearbetning.
 
 I det kostnadsbelagda läget Chloros+, som bearbetar alla filer samtidigt, visar förloppsindikatorn fyra steg: Identifiering, analys, kalibrering, export. Om du håller muspekaren över Chloros+ förloppsindikatorn visas en utökad panel med fyra förloppsindikatorer så att du kan följa processen. Om du klickar på den övre förloppsindikatorn fryses rullgardinsmenyn, och om du klickar igen låses den upp igen.
 

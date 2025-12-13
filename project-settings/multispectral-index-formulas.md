@@ -10,7 +10,7 @@ metaLinks:
 
 Nedanstående indexformler använder en kombination av Survey3-filtrets genomsnittliga transmissionsintervall:
 
-<table><thead><tr><th align="center">Survey3 Filterfärg</th><th width="196.199951171875" align="center">Survey3 Filternamn</th><th width="159.800048828125" align="center">Transmissionsområde (FWHM)</th><th align="center">Genomsnittlig transmission</th></tr></thead><tbody><tr><td align="center">Blue</td><td align="center">NGB - Blue</td><td align="center">468–483 nm</td><td align="center">475 nm</td></tr><tr><td align="center">Cyan</td><td align="center">OCN- Cyan</td><td align="center">476-512 nm</td><td align="center">494 nm</td></tr><tr><td align="center">Green</td><td align="center">RGN | NGB - Green</td><td align="center">543-558 nm</td><td align="center">547 nm</td></tr><tr><td align="center">Orange</td><td align="center">OCN - Orange</td><td align="center">598-640 nm</td><td align="center">619 nm</td></tr><tr><td align="center">Red</td><td align="center">RGN - Red</td><td align="center">653-668 nm</td><td align="center">661 nm</td></tr><tr><td align="center">RedEdge</td><td align="center">Re - RedEdge</td><td align="center">712-735 nm</td><td align="center">724 nm</td></tr><tr><td align="center">NIR1</td><td align="center">OCN - NIR1</td><td align="center">798-848 nm</td><td align="center">823 nm</td></tr><tr><td align="center">NIR2</td><td align="center">RGN | NGB | NIR - NIR2</td><td align="center">835-865 nm</td><td align="center">850 nm</td></tr></tbody></table>
+<table><thead><tr><th align="center">Survey3 Filterfärg</th><th width="196.199951171875" align="center">Survey3 Filternamn</th><th width="159.800048828125" align="center">Transmissionsområde (FWHM)</th><th align="center">Genomsnittlig transmission</th></tr></thead><tbody><tr><td align="center">Blue</td><td align="center">NGB - Blue</td><td align="center">468–483 nm</td><td align="center">475 nm</td></tr><tr><td align="center">Cyan</td><td align="center">OCN- Cyan</td><td align="center">476-512 nm</td><td align="center">494 nm</td></tr><tr><td align="center">Green</td><td align="center">RGN | NGB - Green</td><td align="center">543-558 nm</td><td align="center">547 nm</td></tr><tr><td align="center">Orange</td><td align="center">OCN - Orange</td><td align="center">598–640 nm</td><td align="center">619 nm</td></tr><tr><td align="center">Red</td><td align="center">RGN - Red</td><td align="center">653-668 nm</td><td align="center">661 nm</td></tr><tr><td align="center">RedEdge</td><td align="center">Re - RedEdge</td><td align="center">712-735 nm</td><td align="center">724 nm</td></tr><tr><td align="center">NIR1</td><td align="center">OCN - NIR1</td><td align="center">798-848 nm</td><td align="center">823 nm</td></tr><tr><td align="center">NIR2</td><td align="center">RGN | NGB | NIR - NIR2</td><td align="center">835-865 nm</td><td align="center">850 nm</td></tr></tbody></table>
 
 När dessa formler används kan namnet sluta på &quot;\_1&quot; eller &quot;\_2&quot;, vilket motsvarar vilket NIR-filter, antingen NIR1 eller NIR2, som användes.
 
@@ -38,15 +38,15 @@ $$
 FCI1 = Red * RedEdge
 $$
 
-Skogsområden har lägre FCI1-värden på grund av trädens lägre reflektans och förekomsten av skuggor i trädkronorna.
+Skogsområden kommer att ha lägre FCI1-värden på grund av trädens lägre reflektans och förekomsten av skuggor i trädkronorna.
 
-_Referens: Becker, Sarah J., Craig S.T. Daughtry och Andrew L. Russ. &quot;Robusta skogstäckningsindex för multispektrala bilder.&quot; Photogrammetric Engineering &amp; Remote Sensing 84.8 (2018): 505-512._
+_Referens: Becker, Sarah J., Craig S.T. Daughtry och Andrew L. Russ. ”Robusta skogstäckningsindex för multispektrala bilder.” Photogrammetric Engineering &amp; Remote Sensing 84.8 (2018): 505-512._
 
 ***
 
 ## FCI2 – Skogstäckningsindex 2
 
-Detta index skiljer trädkronor från andra typer av vegetation med hjälp av multispektrala reflektionsbilder som inte innehåller ett rött kantband.
+Detta index skiljer skogskronorna från andra typer av vegetation med hjälp av multispektrala reflektansbilder som inte inkluderar ett rött kantband.
 
 $$
 FCI2 = Red * NIR
@@ -98,7 +98,7 @@ $$
 GCI = {NIR \over Green} - 1
 $$
 
-Med breda NIR och gröna våglängder får man en bättre förutsägelse av klorofyllhalten samtidigt som man får högre känslighet och bättre signal-brusförhållande.
+Med breda NIR och gröna våglängder kan klorofyllhalten förutsägas bättre, samtidigt som känsligheten ökar och signal-brusförhållandet blir högre.
 
 _Referens: Gitelson, A., Y. Gritz och M. Merzlyak. ”Relationships Between Leaf Chlorophyll Content and Spectral Reflectance and Algorithms for Non-Destructive Chlorophyll Assessment in Higher Plant Leaves.” Journal of Plant Physiology 160 (2003): 271-282._
 
@@ -106,7 +106,7 @@ _Referens: Gitelson, A., Y. Gritz och M. Merzlyak. ”Relationships Between Leaf
 
 ## GLI - Green Bladindex
 
-Detta index var ursprungligen avsett att användas med en digital RGB-kamera för att mäta vete täckning, där de röda, gröna och blå digitala siffrorna (DN) varierar från 0 till 255.
+Detta index var ursprungligen utformat för användning med en digital RGB-kamera för att mäta vete täckning, där de röda, gröna och blå digitala siffrorna (DN) varierar från 0 till 255.
 
 $$
 GLI = {(Green - Red) + (Green - Blue)  \over (2 * Green) + Red + Blue }
@@ -166,7 +166,7 @@ _Referens: Sripada, R., et al. &quot;Determining In-Season Nitrogen Requirements
 
 ***
 
-## LAI – Bladarealindex
+## LAI – Bladareaindex
 
 Detta index används för att uppskatta lövverkstäckningen och för att prognostisera grödans tillväxt och avkastning. ENVI beräknar grönt LAI med hjälp av följande empiriska formel från Boegh et al (2002):
 
@@ -180,9 +180,9 @@ $$
 EVI = 2.5 *  {(NIR - Red) \over (NIR + 6 * Red - 7.5 * Blue + 1)}
 $$
 
-Höga LAI-värden ligger vanligtvis mellan cirka 0 och 3,5. Om scenen innehåller moln och andra ljusa element som ger mättade pixlar kan LAI-värdena dock överstiga 3,5. Helst bör du maskera bort moln och ljusa detaljer från din scen innan du skapar en LAI-bild.
+Höga LAI-värden ligger vanligtvis mellan cirka 0 och 3,5. Om scenen innehåller moln och andra ljusa element som ger mättade pixlar kan LAI-värdena dock överstiga 3,5. Helst bör du maskera bort moln och ljusa element från scenen innan du skapar en LAI-bild.
 
-_Referens: Boegh, E., H. Soegaard, N. Broge, C. Hasager, N. Jensen, K. Schelde och A. Thomsen. &quot;Airborne Multi-spectral Data for Quantifying Leaf Area Index, Nitrogen Concentration and Photosynthetic Efficiency in Agriculture.&quot; Remote Sensing of Environment 81, nr 2-3 (2002): 179-193._
+_Referens: Boegh, E., H. Soegaard, N. Broge, C. Hasager, N. Jensen, K. Schelde och A. Thomsen. ”Airborne Multi-spectral Data for Quantifying Leaf Area Index, Nitrogen Concentration and Photosynthetic Efficiency in Agriculture.” Remote Sensing of Environment 81, nr 2-3 (2002): 179-193._
 
 ***
 
@@ -212,7 +212,7 @@ _Referens: Yang, Z., P. Willis och R. Mueller. ”Impact of Band-Ratio Enhanced 
 
 ## MSAVI2 – Modifierat jordjusterat vegetationsindex 2
 
-Detta index är en enklare version av MSAVI-indexet som föreslagits av Qi et al (1994) och som förbättrar det jordjusterade vegetationsindexet (SAVI). Det minskar jordbruset och ökar det dynamiska omfånget för vegetationssignalen. MSAVI2 baseras på en induktiv metod som inte använder ett konstant _L_-värde (som med SAVI) för att markera frisk vegetation.
+Detta index är en enklare version av indexet MSAVI som föreslagits av Qi et al (1994) och som förbättrar det jordjusterade vegetationsindexet (SAVI). Det minskar jordbruset och ökar det dynamiska omfånget för vegetationssignalen. MSAVI2 baseras på en induktiv metod som inte använder ett konstant _L_-värde (som med SAVI) för att markera frisk vegetation.
 
 $$
 MSAVI2 = {2 * NIR + 1 - \sqrt{(2 * NIR + 1)^{2} - 8(NIR - Red)} \over 2}
@@ -234,7 +234,7 @@ $$
 
 ## NDVI – Normaliserat vegetationsindex
 
-Detta index är ett mått på hälsosam, grön vegetation. Kombinationen av dess normaliserade differensformulering och användningen av de högsta absorptions- och reflektionsregionerna för klorofyll gör det robust under en rad olika förhållanden. Det kan dock mättas i täta vegetationsförhållanden när LAI blir högt.
+Detta index är ett mått på hälsosam, grön vegetation. Kombinationen av dess normaliserade skillnadsformulering och användningen av de högsta absorptions- och reflektionsregionerna för klorofyll gör det robust under en rad olika förhållanden. Det kan dock mättas i tät vegetation när LAI blir högt.
 
 $$
 NDVI = {NIR - Red \over NIR + Red  }
@@ -260,7 +260,7 @@ _Referens: Goel, N., och W. Qin. ”Influences of Canopy Architecture on Relatio
 
 ## OSAVI – Optimerat jordjusterat vegetationsindex
 
-Detta index baseras på det jordjusterade vegetationsindexet (SAVI). Det använder ett standardvärde på 0,16 för justeringsfaktorn för trädkronans bakgrund. Rondeaux (1996) fastställde att detta värde ger större markvariation än SAVI för låg vegetationstäckning, samtidigt som det visar ökad känslighet för vegetationstäckning över 50 %. Detta index används bäst i områden med relativt gles vegetation där marken är synlig genom trädkronorna.
+Detta index baseras på det jordjusterade vegetationsindexet (SAVI). Det använder ett standardvärde på 0,16 för justeringsfaktorn för trädkronans bakgrund. Rondeaux (1996) fastställde att detta värde ger större markvariation än SAVI för låg vegetationstäckning, samtidigt som det visar ökad känslighet för vegetationstäckning över 50 %. Detta index används bäst i områden med relativt gles vegetation där marken syns genom trädkronorna.
 
 $$
 OSAVI = {(NIR - Red) \over (NIR + Red + 0.16)  }
@@ -284,7 +284,7 @@ _Referens: Roujean, J., och F. Breon. &quot;Estimating PAR Absorbed by Vegetatio
 
 ## SAVI – Jordjusterat vegetationsindex
 
-Detta index liknar NDVI, men undertrycker effekterna av markpixlar. Det använder en justeringsfaktor för trädkronans bakgrund, _L_, som är en funktion av vegetationstätheten och ofta kräver förkunskaper om vegetationsmängder. Huete (1988) föreslår ett optimalt värde på _L_=0,5 för att ta hänsyn till första ordningens variationer i markbakgrunden. Detta index används bäst i områden med relativt gles vegetation där marken syns genom trädkronorna.
+Detta index liknar NDVI, men undertrycker effekterna av jordpixlar. Det använder en justeringsfaktor för trädkronans bakgrund, _L_, som är en funktion av vegetationstätheten och ofta kräver förkunskaper om vegetationsmängder. Huete (1988) föreslår ett optimalt värde på _L_=0,5 för att ta hänsyn till första ordningens variationer i markbakgrunden. Detta index används bäst i områden med relativt gles vegetation där marken syns genom trädkronorna.
 
 $$
 SAVI = {1.5 * (NIR- Red) \over (NIR + Red + 0.5)  }
@@ -294,9 +294,9 @@ _Referens: Huete, A. &quot;A Soil-Adjusted Vegetation Index (SAVI).&quot; Remote
 
 ***
 
-## TDVI – Transformed Difference Vegetation Index (Transformerat vegetationsindex)
+## TDVI – Transformed Difference Vegetation Index
 
-Detta index är användbart för övervakning av vegetationstäckning i urbana miljöer. Det mättas inte som NDVI och SAVI.
+Detta index är användbart för övervakning av vegetationstäcket i urbana miljöer. Det mättas inte som NDVI och SAVI.
 
 $$
 TDVI = 1.5 * {(NIR- Red) \over \sqrt{NIR^{2} + Red + 0.5}  }
@@ -320,7 +320,7 @@ _Referens: Gitelson, A., et al. &quot;Vegetation and Soil Lines in Visible Spect
 
 ## WDRVI – Vegetationsindex med stort dynamiskt omfång
 
-Detta index liknar NDVI, men använder en viktningskoefficient (_a_) för att minska skillnaden mellan bidraget från de nära infraröda och röda signalerna till NDVI. WDRVI är särskilt effektivt i scener med måttlig till hög vegetationstäthet när NDVI överstiger 0,6. NDVI tenderar att plana ut när vegetationsfraktionen och bladareaindexet (LAI) ökar, medan WDRVI är mer känsligt för ett bredare spektrum av vegetationsfraktioner och för förändringar i LAI.
+Detta index liknar NDVI, men använder en viktningskoefficient (_a_) för att minska skillnaden mellan bidraget från signalerna i det nära infraröda och röda spektrumet till NDVI. WDRVI är särskilt effektivt i scener med måttlig till hög vegetationstäthet när NDVI överstiger 0,6. NDVI tenderar att plana ut när vegetationsfraktionen och bladareaindexet (LAI) ökar, medan WDRVI är mer känsligt för ett bredare spektrum av vegetationsfraktioner och för förändringar i LAI.
 
 $$
 WDRVI = {(\alpha * NIR- Red) \over (\alpha * NIR + Red)}

@@ -90,22 +90,22 @@ Dessa inställningar styr hur Chloros bearbetar och kalibrerar dina bilder.
 
 * **Typ**: Kryssruta
 * **Standard**: Inaktiverad (avmarkerad)
-* **Beskrivning**: Aktiverar användningen av PPK-korrigeringar (Post-Processed Kinematic) från MAPIR DAQ-inspelare som innehåller GPS (GNSS). När denna funktion är aktiverad kommer Chloros att använda alla .daq-loggfiler som innehåller exponeringspinndata i din projektkatalog och tillämpa exakta geolokaliseringskorrigeringar på dina bilder.
-* **Krav**: .daq-loggfil med exponeringsstiftposter måste finnas i din projektkatalog
-* **När ska funktionen aktiveras**: Vi rekommenderar att du alltid aktiverar PPK-korrigering om du har exponeringsfeedbackposter i din .daq-loggfil.
+* **Beskrivning**: Aktiverar användningen av PPK-korrigeringar (Post-Processed Kinematic) från MAPIR DAQ-inspelare som innehåller GPS (GNSS). När funktionen är aktiverad använder Chloros alla .daq-loggfiler som innehåller exponeringspinndata i din projektkatalog och tillämpar exakta geolokaliseringskorrigeringar på dina bilder.
+* **Krav**: .daq-loggfil med exponeringspin-poster måste finnas i din projektkatalog
+* **När ska det aktiveras**: Det rekommenderas att alltid aktivera PPK-korrigering om du har exponeringsfeedback-poster i din .daq-loggfil.
 
-### Exponeringsstift 1
+### Exponeringspin 1
 
 * **Typ**: Rullgardinsmeny
-* **Synlighet**: Endast synlig när &quot;Tillämpa PPK-korrigeringar&quot; är aktiverat OCH exponeringsdata är tillgängliga för stift 1
+* **Synlighet**: Endast synlig när &quot;Tillämpa PPK-korrigeringar&quot; är aktiverat OCH exponeringsdata är tillgängliga för Pin 1.
 * **Alternativ**:
-  * Kameramodellnamn som upptäckts i projektet
-  * &quot;Använd inte&quot; – Ignorera detta exponeringsstift
-* **Standard**: Väljs automatiskt baserat på projektkonfigurationen
+  * Kameramodellnamn som upptäckts i projektet.
+  * &quot;Använd inte&quot; – Ignorera denna exponeringspin.
+* **Standard**: Väljs automatiskt baserat på projektkonfigurationen.
 * **Beskrivning**: Tilldelar en specifik kamera till exponeringsstift 1 för PPK-tidssynkronisering. Exponeringsstiftet registrerar den exakta tidpunkten när kamerans slutare utlöses, vilket är avgörande för en korrekt PPK-geolokalisering.
 * **Automatiskt val**:
-  * Enkel kamera + enkel stift: Väljer automatiskt kameran
-  * En kamera + två stift: Stift 1 tilldelas automatiskt till kameran
+  * En kamera + ett stift: Väljer automatiskt kameran
+  * En kamera + två stift: Stift 1 tilldelas automatiskt kameran
   * Flera kameror: Manuell val krävs
 
 ### Exponeringsstift 2
@@ -114,12 +114,12 @@ Dessa inställningar styr hur Chloros bearbetar och kalibrerar dina bilder.
 * **Synlighet**: Endast synlig när &quot;Tillämpa PPK-korrigeringar&quot; är aktiverat OCH exponeringsdata är tillgängliga för stift 2
 * **Alternativ**:
   * Kameramodellnamn som upptäckts i projektet
-  * &quot;Använd inte&quot; – Ignorera denna exponeringsstift
+  * &quot;Använd inte&quot; – Ignorera detta exponeringsstift
 * **Standard**: Väljs automatiskt baserat på projektkonfigurationen
 * **Beskrivning**: Tilldelar en specifik kamera till exponeringsstift 2 för PPK-tidssynkronisering vid användning av en dubbelkamerakonfiguration.
 * **Automatiskt val**:
-  * Enkel kamera + enkel stift: Stift 2 ställs automatiskt in på &quot;Använd inte&quot;
-  * Enkel kamera + två stift: Stift 2 ställs automatiskt in på &quot;Använd inte&quot;
+  * En kamera + ett stift: Stift 2 ställs automatiskt in på &quot;Använd inte&quot;
+  * En kamera + två stift: Stift 2 ställs automatiskt in på &quot;Använd inte&quot;
   * Flera kameror: Manuell val krävs
 * **Obs**: Samma kamera kan inte tilldelas både stift 1 och stift 2 samtidigt.
 
@@ -138,9 +138,9 @@ Med dessa inställningar kan du konfigurera multispektrala index för analys och
   * NDRE (normaliserad skillnad RedEdge)
   * EVI (förbättrat vegetationsindex)
   * GNDVI, SAVI, OSAVI, MSAVI2
-  * Och många fler (se [Multispektrala indexformler](multispectral-index-formulas.md) för en fullständig lista)
+  * Och många fler (se [Formler för multispektrala index](multispectral-index-formulas.md) för en komplett lista)
 * **Funktioner**:
-  * Välj bland fördefinierade indexformler
+  * Välj mellan fördefinierade indexformler
   * Konfigurera visualiseringsfärggradienter (LUT – Look-Up Tables)
   * Ställ in tröskelvärden för analys
   * Skapa anpassade indexformler
@@ -170,15 +170,15 @@ Dessa inställningar styr formatet och kvaliteten på exporterade bearbetade bil
 * **Alternativ**:
   * **TIFF (16-bitars)** – Okomprimerat 16-bitars TIFF-format
   * **TIFF (32-bitars, procent)** – 32-bitars flyttalsformat TIFF med reflektansvärden i procent
-  * **PNG (8-bitars)** - Komprimerat 8-bitars PNG-format
-  * **JPG (8-bitars)** - Komprimerat 8-bitars JPEG-format
+  * **PNG (8-bitars)** – Komprimerat 8-bitars PNG-format
+  * **JPG (8-bitars)** – Komprimerat 8-bitars JPEG-format
 * **Standard**: TIFF (16-bitars)
 * **Beskrivning**: Väljer filformat för att spara bearbetade och kalibrerade bilder.
 * **Formatrekommendationer**:
   * **TIFF (16-bitars)**: Rekommenderas för vetenskaplig analys och professionella arbetsflöden. Bevarar maximal datakvalitet utan komprimeringsartefakter. Bäst för multispektral analys och vidare bearbetning i GIS-programvara.
   * **TIFF (32-bitars, procent)**: Bäst för arbetsflöden som kräver reflektansvärden i procent (0–100 %). Ger maximal precision för radiometriska mätningar.
-  * **PNG (8-bitars)**: Bra för visning på webben och allmän visualisering. Mindre filstorlekar med förlustfri komprimering, men reducerat dynamiskt omfång.
-  * **JPG (8-bitars)**: Minsta filstorlekar, bäst för förhandsgranskning och endast visning på webben. Använder förlustrik komprimering som inte är lämplig för vetenskaplig analys.
+  * **PNG (8-bitars)**: Bra för webbvisning och allmän visualisering. Mindre filstorlekar med förlustfri komprimering, men reducerat dynamiskt omfång.
+  * **JPG (8-bitars)**: Minsta filstorlekar, bäst för förhandsgranskning och endast webbvisning. Använder förlustkomprimering som inte är lämplig för vetenskaplig analys.
 
 ***
 
@@ -192,11 +192,11 @@ Med den här funktionen kan du spara dina aktuella projektinställningar som en 
   * Skapa mallar för olika kamerasystem (RGB, multispektral, NIR)
   * Spara standardkonfigurationer för specifika grödtyper eller analysarbetsflöden
   * Dela enhetliga inställningar inom ett team
-* **Så här använder du funktionen**:
-  1. Konfigurera alla önskade projektinställningar.
-  2. Ange ett mallnamn (t.ex. ”RedEdge Survey3 NDVI Standard”).
-  3. Klicka på ikonen Spara.
-  4. Mallen kan nu laddas när du skapar nya projekt.
+* **Hur man använder**:
+  1. Konfigurera alla önskade projektinställningar
+  2. Ange ett mallnamn (t.ex. &quot;RedEdge Survey3 NDVI Standard&quot;)
+  3. Klicka på ikonen för att spara
+  4. Mallen kan nu laddas när du skapar nya projekt
 
 ***
 
@@ -208,7 +208,7 @@ Denna inställning anger var nya projekt sparas som standard.
 * **Standard**: `C:\Users\[Username]\Chloros Projects`
 * **Beskrivning**: Visar den aktuella standardkatalogen där nya Chloros-projekt skapas. Klicka på redigeringsikonen för att välja en annan katalog.
 * **När ska du ändra**:
-  * Ställ in på en nätverksenhet för teamsamarbete.
+  * Ställ in en nätverksenhet för teamsamarbete.
   * Ändra till en enhet med mer lagringsutrymme för stora datamängder.
   * Organisera projekt efter år, kund eller projekttyp i olika mappar.
 * **Obs**: Att ändra denna inställning påverkar endast NYA projekt. Befintliga projekt förblir på sina ursprungliga platser.
@@ -230,7 +230,7 @@ Inställningarna tillämpas i följande ordning:
 
 ### Inställningar och bildbehandling
 
-De flesta inställningsändringar (särskilt i kategorierna Bearbetning och Export) utlöser ombearbetning av bilder för att återspegla de nya inställningarna. Vissa inställningar är dock &quot;endast för export&quot; och kräver inte omedelbar ombearbetning:
+De flesta inställningsändringar (särskilt i kategorierna Bearbetning och Export) utlöser ombearbetning av bilder för att återspegla de nya inställningarna. Vissa inställningar är dock ”endast för export” och kräver inte omedelbar ombearbetning:
 
 * Spara projektmall
 * Arbetsmapp
@@ -241,14 +241,14 @@ De flesta inställningsändringar (särskilt i kategorierna Bearbetning och Expo
 ## Bästa praxis
 
 1. **Börja med standardinställningarna**: Standardinställningarna fungerar bra för de flesta MAPIR-kamerasystem och typiska arbetsflöden.
-2. **Skapa mallar**: När du har optimerat inställningarna för ett specifikt arbetsflöde eller en specifik kamera sparar du dem som en mall för att säkerställa konsistens mellan olika projekt.
+2. **Skapa mallar**: När du har optimerat inställningarna för ett specifikt arbetsflöde eller en specifik kamera sparar du dem som en mall för att säkerställa konsekvens mellan olika projekt.
 3. **Testa innan fullständig bearbetning**: När du experimenterar med nya inställningar testar du på en liten delmängd av bilderna innan du bearbetar hela datasetet.
 4. **Dokumentera dina inställningar**: Använd beskrivande mallnamn som anger kamerasystem, bearbetningstyp och avsedd användning (t.ex. &quot;Survey3\_RGB\_NDVI\_Agriculture&quot;).
 5. **Val av exportformat**: Välj exportformat baserat på din slutliga användning:
    * Vetenskaplig analys → TIFF (16-bitars eller 32-bitars)
    * GIS-bearbetning → TIFF (16-bitars)
    * Snabb visualisering → PNG (8-bitars)
-   * Webbdela → JPG (8-bitars)
+   * Delning på webben → JPG (8-bitars)
 
 ***
 
