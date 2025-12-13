@@ -2,9 +2,9 @@
 
 När Chloros har slutfört bearbetningen är det dags att granska resultaten, kontrollera utskriftskvaliteten och förbereda de bearbetade bilderna för användning i ditt arbetsflöde. Denna sida guidar dig genom de sista stegen och nästa åtgärder.
 
-## Indikation på att bearbetningen är klar
+## Indikation om att bearbetningen är klar
 
-När bearbetningen har slutförts framgångsrikt visas flera indikatorer:
+När bearbetningen har slutförts visas flera indikatorer:
 
 * ✅ **Förloppsindikator**: Når 100 % färdigställande
 * ✅ **Felsökningslogg**: Visar meddelandet ”Bearbetning klar”
@@ -17,7 +17,7 @@ När bearbetningen har slutförts framgångsrikt visas flera indikatorer:
 
 ### Öppna utmatningsmappen
 
-1. Klicka på **Huvudmenyn** <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> (uppe till vänster)
+1. Klicka på ikonen **Huvudmeny** <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> (uppe till vänster)
 2. Välj **&quot;Öppna projektmapp&quot;**
 3. Din filutforskare öppnas i projektkatalogen
 4. Leta reda på ditt projekt efter namn
@@ -79,7 +79,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 ***
 
-## Vanliga utdatafel och lösningar
+## Vanliga utdataproblem och lösningar
 
 ### Problem: Saknade utdatafiler
 
@@ -94,16 +94,16 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 1. Kontrollera felsökningsloggen för meddelanden om hopp/fel.
 2. Kontrollera att det fanns tillräckligt med diskutrymme.
-3. Räkna filer: Bör stämma (ursprungligt antal – målantal) × (index + 1)
-4. Importera om och bearbeta om eventuella saknade filer
+3. Räkna filerna: Bör stämma (ursprungligt antal – målantal) × (index + 1)
+4. Importera om och bearbeta om eventuella saknade filer.
 
 ### Problem: Mörka eller ljusa kanter (vignettering fortfarande synlig)
 
 **Möjliga orsaker:**
 
-* Vignettkorrigering inaktiverad
-* Kamera/objektiv finns inte i Chloros-profildatabasen
-* Extrem vignettering som överstiger korrigeringsförmågan
+* Vignettkorrigering inaktiverad.
+* Kamera/objektiv finns inte i Chloros-profildatabasen.
+* Extrem vignettering som överstiger korrigeringskapaciteten.
 
 **Lösningar:**
 
@@ -116,9 +116,9 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 **Möjliga orsaker:**
 
 * Inga kalibreringsmål har identifierats.
-* Fel kalibreringsmodell har valts.
+* Fel kalibreringsmålmodell har valts.
 * Reflektanskalibrering är inaktiverad.
-* Målbilderna är av dålig kvalitet.
+* Målbilder av dålig kvalitet.
 
 **Lösningar:**
 
@@ -127,7 +127,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 3. Granska målbildens kvalitet.
 4. Bearbeta om med rätt mål markerade.
 
-### Problem: NDVI-värdena verkar felaktiga
+### Problem: NDVI-värdena verkar felaktiga.
 
 **Förväntade NDVI-intervall:**
 
@@ -170,14 +170,14 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 2. **Använd 16-bitars TIFF** reflektansbilder för multibandsanalys
 3. **Använd indexbilder** (NDVI, NDRE) som färdiga vegetationslager
 4. **Rasterkalkylator**: Kombinera band för anpassad analys
-5. **Exportera**: Skapa klassificeringskartor, förändringsdetektering, kartor över vegetationens hälsa
+5. **Exportera**: Skapa klassificeringskartor, ändringsdetektering, kartor över vegetationens hälsa
 
 ### För direkt analys/rapportering
 
 **Rekommenderat arbetsflöde:**
 
 1. **Använd indexbilder med LUT-färger** för visuella rapporter
-2. **Extrahera statistik**: Medelvärde NDVI per fält/tomt
+2. **Extrahera statistik**: Genomsnittlig NDVI per fält/tomt
 3. **Tidsserier**: Jämför index över flera sessioner
 4. **Skapa rapporter**: Inkludera kartor, statistik och visualiseringar
 
@@ -191,7 +191,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 * ✅ **Originalbilder i RAW/JPG** – Arkivera på separat enhet/moln
 * ✅ **Bearbetade resultat** – Behåll kalibrerade bilder och index
-* ✅ **Projektfil** – Innehåller alla inställningar för ombearbetning om det behövs
+* ✅ **Projektfil** – Innehåller alla inställningar för ombearbetning vid behov
 * ✅ **Felsökningslogg** – Dokumenterar bearbetningsdetaljer
 * ✅ **Kalibreringsmålbilder** – För verifiering och ombearbetning
 
@@ -199,7 +199,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 * **Omedelbar säkerhetskopiering**: Extern hårddisk
 * **Långtidsarkiv**: Molnlagring (Google Drive, Dropbox, etc.)
-* **Kritiska data**: Spara 2-3 kopior på olika platser
+* **Kritiska data**: Spara 2–3 kopior på olika platser
 
 ***
 
@@ -210,7 +210,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 Om du bearbetar liknande datamängder i framtiden:
 
 1. **Spara projektmall** (om det inte redan är gjort)
-2. **Skapa ett nytt projekt** med den sparade mallen
+2. **Skapa nytt projekt** med hjälp av den sparade mallen
 3. **Importera nya bilder**
 4. **Bearbeta** med identiska inställningar för konsistens
 
@@ -220,14 +220,14 @@ För flera sessioner/datauppsättningar:
 
 **Alternativ 1: GUI – flera projekt**
 
-* Skapa ett separat projekt för varje session
-* Använd konsistenta mallinställningar
-* Bearbeta en i taget
+* Skapa separata projekt för varje session.
+* Använd konsekventa mallinställningar.
+* Bearbeta en i taget.
 
 **Alternativ 2: Chloros CLI (endast Chloros+)**
 
-* Automatisera batchbearbetning
-* Bearbeta flera mappar med skript
+* Automatisera batchbearbetning.
+* Bearbeta flera mappar med skript.
 * Se [CLI-dokumentation](../CLI.md)
 
 **Alternativ 3: Python SDK (endast Chloros+)**
@@ -249,7 +249,7 @@ Om resultaten inte är tillfredsställande:
 3. Justera inställningarna i panelen Projektinställningar
 4. Bearbeta igen – resultaten kommer att skriva över tidigare resultat
 
-### Bearbeta delmängd av bilder
+### Bearbetning av delmängd av bilder
 
 För att bearbeta endast specifika bilder:
 
@@ -281,7 +281,7 @@ Du har nu slutfört hela arbetsflödet för Chloros:
 6. ✅ **Övervakad framsteg** - Se [Övervaka bearbetningen](monitoring-the-processing.md)
 7. ✅ **Granskade resultat** - Denna sida
 
-**Dina kalibrerade, reflektanskorrigerade multispektrala bilder är klara för analys!**
+**Dina kalibrerade, reflektanskorrigerade multispektrala bilder är redo för analys!**
 
 ***
 
@@ -290,7 +290,7 @@ Du har nu slutfört hela arbetsflödet för Chloros:
 ### Avancerade funktioner
 
 * [**Bildvisare**](../image-viewer-gui/opening-an-image-full-screen.md) – Interaktiv visualisering och analys
-* [**Index/LUT Sandbox**](../image-viewer-gui/index-lut-sandbox.md) – Anpassad indexprovning
+* [**Index/LUT Sandbox**](../image-viewer-gui/index-lut-sandbox.md) – Anpassad indextestning
 * [**Multispektrala indexformler**](../project-settings/multispectral-index-formulas.md) – Komplett indexreferens
 
 ### Automatisering och integration

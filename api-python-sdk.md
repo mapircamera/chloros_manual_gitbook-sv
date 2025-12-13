@@ -98,7 +98,7 @@ Innan du installerar SDK, se till att du har:
 pip install chloros-sdk
 ```
 
-**Med stöd för övervakning av förloppet:**
+**Med stöd för övervakning av framsteg:**
 
 ```bash
 pip install chloros-sdk[progress]
@@ -110,7 +110,7 @@ pip install chloros-sdk[progress]
 pip install chloros-sdk[dev]
 ```
 
-### Kontrollera installationen
+### Verifiera installationen
 
 Testa att SDK är korrekt installerat:
 
@@ -174,7 +174,7 @@ ChlorosLocal(
 
 | Parameter                 | Typ | Standard                   | Beskrivning                           |
 | ------------------------- | ---- | ------------------------- | ------------------------------------- |
-| `api_url`                 | str  | `"http://localhost:5000"` | URL av lokal Chloros-backend          |
+| `api_url`                 | str  | `"http://localhost:5000"` | URL av lokal Chloros backend          |
 | `auto_start_backend`      | bool | `True`                    | Starta backend automatiskt vid behov |
 | `backend_exe`             | str  | `None` (automatisk detektering)      | Sökväg till backend-körbar fil            |
 | `timeout`                 | int  | `30`                      | Begär tidsgräns i sekunder            |
@@ -236,7 +236,7 @@ Importera bilder från en mapp.
 | `folder_path` | str/Path | Ja      | Sökväg till mapp med bilder         |
 | `recursive`   | bool     | Nej       | Sök i undermappar (standard: False) |
 
-**Returnerar:** `dict` – Importerade resultat med filantal
+**Returnerar:** `dict` - Importerade resultat med antal filer
 
 **Exempel:**
 
@@ -313,10 +313,10 @@ Bearbeta projektbilderna.
 | `progress_callback` | callable | `None`       | Återkopplingsfunktion för framsteg (progress, msg) |
 | `poll_interval`     | float    | `2.0`        | Pollningsintervall för framsteg (sekunder)   |
 
-**Returnerar:** `dict` - Bearbetningsresultat
+**Returnerar:** `dict` – Bearbetningsresultat
 
 {% hint style=&quot;warning&quot; %}
-**Parallellt läge**: Kräver Chloros+-licens. Skalar automatiskt till dina CPU-kärnor (upp till 16 arbetare).
+**Parallellt läge**: Kräver Chloros+ licens. Skalas automatiskt till dina CPU-kärnor (upp till 16 arbetare).
 {% endhint %}
 
 **Exempel:**
@@ -358,9 +358,9 @@ print(config['Project Settings'])
 
 #### `get_status()`
 
-Hämta information om backend-status.
+Hämta statusinformation om backend.
 
-**Returnerar:** `dict` – Backend-status
+**Returnerar:** `dict` - Backend-status
 
 **Exempel:**
 
@@ -388,7 +388,7 @@ chloros.shutdown_backend()
 
 #### `process_folder(folder_path, **options)`
 
-Enradig bekvämlighetsfunktion för att bearbeta en mapp.
+Enradig praktisk funktion för att bearbeta en mapp.
 
 **Parametrar:**
 
@@ -1133,7 +1133,7 @@ chloros.process(progress_callback=notebook_progress)
 
 * Windows Server 2016 eller senare
 * Chloros installerat (engångsinstallation)
-* Licens aktiverad på valfri maskin (cachelagrad licens kopierad till servern)
+* Licensen aktiverad på valfri maskin (cachelagrad licens kopierad till servern)
 
 ***
 
@@ -1157,7 +1157,7 @@ chloros.process(progress_callback=notebook_progress)
 * Slutanvändarna måste ha aktiva Chloros+-licenser
 * Kommersiell distribution kräver OEM-licensiering.
 
-Kontakta info@mapir.camera för OEM-förfrågningar.
+Kontakta info@mapir.camera för frågor om OEM.
 
 ***
 
@@ -1229,12 +1229,12 @@ thread.start()
 
 ### Exempelkod
 
-Alla exempel som listas här är testade och produktionsklara. Kopiera och anpassa dem för ditt användningsfall.
+Alla exempel som listas här är testade och produktionsklara. Kopiera och anpassa dem efter ditt användningsfall.
 
 ***
 
 ## Licens
 
-**Proprietär programvara** – Copyright (c) 2025 MAPIR Inc.
+**Proprietär programvara** – Upphovsrätt (c) 2025 MAPIR Inc.
 
 SDK kräver ett aktivt Chloros+-abonnemang. Obehörig användning, distribution eller modifiering är förbjuden.

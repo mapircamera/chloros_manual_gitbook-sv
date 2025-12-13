@@ -1,10 +1,10 @@
 # Övervakning av bearbetningen
 
-När bearbetningen har startat erbjuder Chloros flera sätt att övervaka framstegen, kontrollera om det finns problem och förstå vad som händer med din dataset. På denna sida förklaras hur du kan spåra din bearbetning och tolka den information som Chloros tillhandahåller.
+När bearbetningen har startat erbjuder Chloros flera sätt att övervaka framstegen, kontrollera om det finns problem och förstå vad som händer med din dataset. På den här sidan förklaras hur du spårar bearbetningen och tolkar den information som Chloros tillhandahåller.
 
 ## Översikt över förloppsindikatorn
 
-Förloppsindikatorn i den övre rubriken visar bearbetningsstatus och färdigställandegrad i realtid.
+Förloppsindikatorn i den övre rubriken visar bearbetningsstatus och procentuell färdigställandegrad i realtid.
 
 ### Förloppsindikator i fritt läge
 
@@ -17,7 +17,7 @@ För användare utan Chloros+-licens:
 
 **Förloppsindikatorn visar:**
 
-* Total procentuell färdigställningsgrad (0–100 %)
+* Total procentuell färdigställandegrad (0–100 %)
 * Namn på aktuellt steg
 * Enkel horisontell stapelvisualisering
 
@@ -25,10 +25,10 @@ För användare utan Chloros+-licens:
 
 För användare med Chloros+-licens:
 
-**4-stegs förloppsindikator:**
+**Förloppsindikator i fyra steg:**
 
 1. **Detektering** – Hitta kalibreringsmål
-2. **Analys** – Granska bilder och förbereda pipeline
+2. **Analys** – Granska bilder och förbered pipeline
 3. **Kalibrering** – Tillämpa vignett- och reflektanskorrigeringar
 4. **Export** – Spara bearbetade filer
 
@@ -49,7 +49,7 @@ För användare med Chloros+-licens:
 
 * Chloros skannar bilder som är markerade med kryssrutan Mål
 * Datorvisionsalgoritmer identifierar de fyra kalibreringspanelerna
-* Reflektansvärden extraheras från varje panel
+* Reflektionsvärden extraheras från varje panel
 * Målets tidsstämplar registreras för korrekt kalibreringsschemaläggning
 
 **Varaktighet:**
@@ -96,7 +96,7 @@ För användare med Chloros+-licens:
 
 * **Debayering**: Konvertera RAW-Bayer-mönster till 3 kanaler
 * **Vignettkorrigering**: Ta bort mörkare kanter på linsen
-* **Reflektionskalibrering**: Normalisera med målvärden
+* **Reflektanskalibrering**: Normalisera med målvärden
 * **Indexberäkning**: Beräkna multispektrala index
 * Bearbeta varje bild genom hela processen
 
@@ -114,10 +114,10 @@ För användare med Chloros+-licens:
 * **Chloros+-läge**: Bearbetar upp till 16 bilder samtidigt
 * **GPU-acceleration**: Påskyndar denna fas avsevärt
 
-**Vad du ska vara uppmärksam på:**
+**Vad du ska hålla koll på:**
 
 * Stadig framsteg genom bildantalet
-* Kontrollera felsökningsloggen för meddelanden om färdigställande per bild
+* Kontrollera felsökningsloggen för meddelanden om färdigställda bilder
 * Varningar om bildkvalitet eller kalibreringsproblem
 
 ### Fas 4: Exportera
@@ -202,7 +202,7 @@ Kritiska problem som kan orsaka att bearbetningen misslyckas:
 | &quot;Inga mål hittade&quot;               | Inga kalibreringsmål upptäckta        | Markera målbilder eller inaktivera reflektionskalibrering |
 | &quot;Otillräckligt diskutrymme&quot;        | Otillräckligt lagringsutrymme för utdata          | Frigör diskutrymme                                    |
 | &quot;Hoppar över skadad fil&quot;        | Bildfilen är skadad                  | Kopiera om filen från SD-kortet                             |
-| &quot;PPK-data tillämpad&quot;               | GPS-korrigeringar från .daq-fil tillämpad | Ingen åtgärd – normalt                                         |
+| &quot;PPK-data tillämpad&quot;               | GPS-korrigeringar från .daq-fil tillämpade | Ingen åtgärd – normalt                                         |
 
 ### Kopiera loggdata
 
@@ -286,10 +286,10 @@ När GPU-acceleration är aktiverad:
 
 ### Varningssignaler
 
-**Processen avstannar (ingen förändring på mer än 5 minuter):**
+**Processen avstannar (ingen förändring på över 5 minuter):**
 
 * Kontrollera felsökningsloggen för fel
-* Kontrollera tillgängligt diskutrymme
+* Kontrollera att det finns ledigt diskutrymme
 * Kontrollera Aktivitetshanteraren för att säkerställa att Chloros körs
 
 **Felmeddelanden visas ofta:**
@@ -314,15 +314,15 @@ Avbryt bearbetningen om du ser:
 * ❌ Felaktiga inställningar har konfigurerats
 * ❌ Felaktiga bilder har importerats
 
-**Så här stoppar du:**
+**Så här avbryter du:**
 
 1. Klicka på **knappen Stopp/Avbryt** (ersätter knappen Start)
 2. Bearbetningen avbryts, framstegen går förlorade
-3. Åtgärda problemen och starta om från början
+3. Åtgärda problemen och börja om från början
 
 ***
 
-## Felsökning under bearbetning
+## Felsökning under bearbetningen
 
 ### Bearbetningen går mycket långsamt
 

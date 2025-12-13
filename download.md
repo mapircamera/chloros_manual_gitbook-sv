@@ -12,7 +12,7 @@ Ladda ner den senaste versionen av Chloros för Windows för att komma igång me
 
 | Krav          | Minsta                         | Rekommenderat                     |
 | -------------------- | ------------------------------- | ------------------------------- |
-| **Operativsystem** | Windows 10 (64-bit)             | Windows 11 (64-bit)             |
+| **Operativsystem** | Windows 10 (64-bitars)             | Windows 11 (64-bitars)             |
 | **Processor**        | Intel Core i5 eller motsvarande     | Intel Core i7 eller bättre         |
 | **Minne (RAM)**     | 8 GB                             | 16 GB eller mer                    |
 | **Grafikkort**    | DirectX 11-kompatibelt           | NVIDIA GPU med 4 GB+ VRAM       |
@@ -66,7 +66,7 @@ pip install chloros-sdk
 
 **Dokumentation**: [API: Python SDK](api-python-sdk.md)
 
-**Krav**: Chloros Desktop måste vara installerat, Chloros+ licens krävs.
+**Krav**: Chloros Desktop måste vara installerat, Chloros+ licens krävs
 
 ***
 
@@ -102,7 +102,7 @@ Lås upp avancerade funktioner med ett Chloros+-abonnemang:
 **Installationen misslyckas med felmeddelandet:**
 
 * Se till att du har administratörsrättigheter
-* Inaktivera tillfälligt antivirusprogrammet
+* Inaktivera antivirusprogrammet tillfälligt
 * Kontrollera att du uppfyller minimikraven för systemet
 
 **Programmet startar inte:**
@@ -110,7 +110,7 @@ Lås upp avancerade funktioner med ett Chloros+-abonnemang:
 * Prova Chloros (webbläsare) version
 * Kontrollera att Windows 10/11 (64-bitars) är installerat
 * Uppdatera grafikdrivrutiner
-* Kontrollera Windows Händelsevisare för felinformation
+* Kontrollera Windows Händelsevisaren för felinformation
 * Kontakta supporten med felloggarna
 
 **Problem med licensaktivering:**
@@ -163,6 +163,6 @@ Behöver du hjälp med installation eller konfiguration?
 
 Obehörig användning, distribution eller modifiering är förbjuden.
 
-**Gratisversion**: Tillgänglig för personlig och kommersiell användning med funktionsbegränsningar.
+**Gratisversion**: Tillgänglig för personligt och kommersiellt bruk med begränsade funktioner.
 
 **Chloros+**: Abonnemangsbaserad licens för avancerade funktioner och kommersiell användning.

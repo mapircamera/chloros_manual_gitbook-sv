@@ -22,22 +22,22 @@ Det finns två huvudsakliga sätt att lägga till bilder till ditt projekt:
 
 Använd det här alternativet för att importera enskilda bildfiler eller ett litet urval av filer.
 
-1. Klicka på knappen **&quot;Lägg till filer&quot;** högst upp i panelen Filbläddraren.
+1. Klicka på knappen **”Lägg till filer”** högst upp i panelen Filbläddraren.
 2. Navigera till mappen som innehåller dina bilder.
 3. Välj en eller flera bildfiler (håll ned **Ctrl** för att välja flera filer).
-4. Klicka på **&quot;Öppna&quot;** för att importera de valda filerna.
+4. Klicka på **”Öppna”** för att importera de valda filerna.
 
 ### Metod 2: Lägg till mapp
 
 Använd det här alternativet för att importera alla bilder från en mapp på en gång.
 
-1. Klicka på knappen **&quot;Lägg till mapp&quot;** längst upp i panelen Filbläddraren.
+1. Klicka på knappen **&quot;Lägg till mapp&quot;** längst upp i filbläddrarpanelen.
 2. Navigera till och välj mappen som innehåller bilderna från din fotograferingssession.
 3. Klicka på **&quot;Välj mapp&quot;** för att importera alla bilder som stöds från den mappen.
 
 ***
 
-## Förstå tabellen i filbläddraren
+## Förstå filbläddrarens tabell
 
 När bilderna har importerats visas de i en tabell med följande kolumner:
 
@@ -48,7 +48,7 @@ När bilderna har importerats visas de i en tabell med följande kolumner:
 
 ### Filnamn
 
-* Originalfilnamn från kameran.
+* Ursprungligt filnamn från kameran.
 * Behåller kamerans namngivningskonvention (t.ex. IMG\_0001.RAW).
 
 ### Tidsstämpel
@@ -79,7 +79,7 @@ Så här tar du bort oönskade bilder från ditt projekt:
 
 1. Välj en eller flera bilder i tabellen Filbläddraren
 2. Klicka på knappen **&quot;Ta bort valda&quot;**
-3. Bekräfta borttagningen (filerna raderas inte från disken, utan tas bara bort från projektet)
+3. Bekräfta borttagningen (filerna raderas inte från hårddisken, utan tas bara bort från projektet)
 
 ### Sortera och filtrera
 
@@ -117,7 +117,7 @@ Chloros upptäcker och ignorerar automatiskt dubbla filer:
 * Varningsmeddelande visas när dubbletter upptäcks.
 
 {% hint style=&quot;warning&quot; %}
-**Viktigt**: Döp inte om eller ändra dina originalbildfiler innan du importerar dem. Chloros förlitar sig på originalfilnamn och metadata för korrekt bearbetning.
+**Viktigt**: Byt inte namn på eller ändra dina originalbildfiler innan du importerar dem. Chloros förlitar sig på originalfilnamn och metadata för korrekt bearbetning.
 {% endhint %}
 
 ***
@@ -126,12 +126,12 @@ Chloros upptäcker och ignorerar automatiskt dubbla filer:
 
 Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 
-1. Chloros identifierar automatiskt varje kameramodell.
-2. Varje kameratyp bearbetas med sin lämpliga kalibreringsprofil.
-3. Filbläddraren visar kameramodellen i kolumnen Kameramodell.
-4. Bearbetningen tillämpar korrekta inställningar för varje kameratyp.
+1. Chloros detekterar automatiskt varje kameramodell
+2. Varje kameratyp bearbetas med sin lämpliga kalibreringsprofil
+3. Filbläddraren visar kameramodellen i kolumnen Kameramodell
+4. Bearbetningen tillämpar korrekta inställningar för varje kameratyp
 
-**Exempel på scenario**: Survey3W RGN + Survey3N OCN med dubbla kameror.
+**Exempel på scenario**: Survey3W RGN + Survey3N OCN dubbla kameror
 
 ***
 
@@ -139,22 +139,22 @@ Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 
 ### Organisera före import
 
-* Spara kalibreringsmålbilderna i samma mapp som undersökningsbilderna.
-* Behåll den ursprungliga mappstrukturen från din kamera/SD-kort.
-* Blanda inte datamängder från olika sessioner i ett projekt.
+* Spara kalibreringsmålbilderna i samma mapp som undersökningsbilderna
+* Behåll den ursprungliga mappstrukturen från din kamera/SD-kort
+* Blanda inte datamängder från olika sessioner i ett projekt
 
 ### Filnamngivning
 
-* Behåll de ursprungliga kamerafilnamnen (IMG\_0001.RAW, etc.).
-* Byt inte namn på filerna före import.
-* De ursprungliga namnen innehåller viktig metadata.
+* Behåll de ursprungliga kamerafilnamnen (IMG\_0001.RAW, etc.)
+* Byt inte namn på filerna före import
+* De ursprungliga namnen innehåller viktig metadata
 
 ### Kalibreringsmålbilder
 
 * Inkludera alltid 1–2 kalibreringsmålbilder per session.
 * Ta bilder av målen före och efter fotograferingssessionen.
 * Placera målen i samma ljusförhållanden som fotograferingsområdet.
-* Markera målbilderna med kryssrutan Mål för att påskynda bearbetningen.
+* Markera målbilder med kryssrutan Mål för att påskynda bearbetningen.
 
 ***
 
@@ -165,7 +165,7 @@ Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 **Möjliga orsaker:**
 
 * Filformatet stöds inte (endast RAW+JPG och JPG från MAPIR-kameror)
-* Bilderna kommer från kameror som inte är MAPIR (se [Stödda kameror](../supported-cameras.md))
+* Bilderna kommer från kameror som inte är MAPIR (se [Kameror som stöds](../supported-cameras.md))
 * Filskada eller ofullständig överföring från SD-kort
 
 **Lösning**: Kontrollera filformatet och kameramodellens kompatibilitet.

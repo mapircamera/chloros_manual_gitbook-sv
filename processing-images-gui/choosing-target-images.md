@@ -32,7 +32,7 @@ När du markerar specifika bilder i kolumnen Mål:
 
 ### Steg 1: Identifiera dina målbilder
 
-Gå igenom dina importerade bilder i filbläddraren och identifiera vilka bilder som innehåller kalibreringsmål.
+Bläddra igenom dina importerade bilder i filbläddraren och identifiera vilka bilder som innehåller kalibreringsmål.
 
 **Vanliga scenarier:**
 
@@ -47,7 +47,7 @@ För varje bild som innehåller ett kalibreringsmål:
 
 1. Leta reda på bilden i tabellen i filbläddraren.
 2. Leta reda på kolumnen **Mål** (kolumnen längst till höger).
-3. Klicka på kryssrutan i kolumnen Mål för den bilden.
+3. Klicka i kryssrutan i kolumnen Mål för den bilden.
 4. Upprepa för alla bilder som innehåller mål.
 
 ### Steg 3: Kontrollera ditt val
@@ -96,7 +96,7 @@ Innan bearbetningen, dubbelkolla:
 
 * 3–5 bilder tagna strax efter att ljussensorn har börjat spela in.
 * Rotera kameran mellan bilderna för bästa resultat.
-* Valfritt: regelbundet mitt i sessionen om ljusförhållandena förändras hela tiden.
+* Valfritt: regelbundet under sessionen om ljusförhållandena förändras hela tiden.
 
 ***
 
@@ -106,10 +106,10 @@ Innan bearbetningen, dubbelkolla:
 
 Om du använder två MAPIR-kameror samtidigt (t.ex. Survey3W RGN + Survey3N OCN):
 
-1. Ta bilder av motivet med **båda kamerorna** samtidigt.
-2. Använd **samma fysiska motiv** för båda kamerorna.
-3. Markera bilderna för **båda kameratyperna** i filbläddraren.
-4. Chloros använder lämpliga motiv för kalibrering av varje kamera.
+1. Ta målbilder med **båda kamerorna** samtidigt.
+2. Använd **samma fysiska mål** för båda kamerorna.
+3. Markera målbilder för **båda kameratyperna** i filbläddraren.
+4. Chloros använder lämpliga mål för kalibrering av varje kamera.
 
 ### Kolumn för kameramodell
 
@@ -157,10 +157,10 @@ Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Pr
 
 **Lösningar:**
 
-1. Kontrollera att kolumnen Mål är markerad för korrekta bilder.
-2. Granska målbildens kvalitet i förhandsgranskningen.
-3. Ta om målen om kvaliteten är dålig.
-4. Justera inställningarna för måldetektering om det behövs.
+1. Kontrollera att kolumnen Mål är markerad för korrekta bilder
+2. Granska målbildens kvalitet i förhandsgranskningen
+3. Ta om målen om kvaliteten är dålig
+4. Justera inställningarna för måldetektering om det behövs
 
 ### Problem: Falska måldetekteringar
 
@@ -168,12 +168,12 @@ Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Pr
 
 * Vita byggnader, fordon eller markbeläggning som misstas för mål
 * Ljusa fläckar i vegetationen
-* För låg detektionskänslighet
+* För låg detekteringskänslighet
 
 **Lösningar:**
 
-1. Markera endast faktiska målbilder för att begränsa detektionsområdet
-2. Öka minimalt kalibreringsprovområde
+1. Markera endast faktiska målbilder för att begränsa detekteringsområdet
+2. Öka minimikaliberingsområdet
 3. Öka minimivärdet för målkluster
 4. Se till att målbilderna endast visar målet (minimalt med bakgrundsstörningar)
 
@@ -201,8 +201,8 @@ Innan du påbörjar bearbetningen, verifiera ditt val av målbilder:
 
 1. Lämna alla kryssrutor i målkolumnen omarkerade
 2. **Inaktivera** &quot;Reflektanskalibrering&quot; i projektinställningarna
-3. Vignettkorrigering kommer fortfarande att tillämpas
-4. Utmatningen kommer inte att kalibreras för absolut reflektans
+3. Vignettkorrigering kommer fortfarande att tillämpas.
+4. Utmatningen kommer inte att kalibreras för absolut reflektans.
 
 {% hint style=&quot;warning&quot; %}
 **Rekommenderas inte**: Utan reflektanskalibrering representerar pixelvärden endast relativ ljusstyrka, inte vetenskapliga reflektansmätningar. Använd kalibreringsmål för exakta, repeterbara resultat.

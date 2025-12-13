@@ -10,7 +10,7 @@ Det vanligaste sättet att öppna en bild i Image Viewer:
 
 1. Se till att du befinner dig på fliken **File Browser** (Filbläddraren). <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line">
 2. Klicka på valfri **bildminiatyr** i bildrutnätet
-3. Bilden öppnas i **huvudförhandsgranskningsområdet** (mitten av skärmen)
+3. Bilden öppnas i **huvudförhandsgranskningsområdet** (mitt på skärmen)
 4. Bilden är nu laddad och redo för visning i helskärmsläge
 
 ### Öppna fliken Bildvisare
@@ -30,8 +30,8 @@ När en bild har laddats i förhandsgranskningsområdet:
 Den största delen av skärmen visar din bild:
 
 * **Full upplösning**: Bilder visas i originalupplösning.
-* **Zoomalbar**: Använd kontrollerna eller mushjulet för att zooma
-* **Panorerbar**: Klicka och dra för att flytta runt när du har zoomat
+* **Zoombara**: Använd kontrollerna eller mushjulet för att zooma
+* **Panorerbara**: Klicka och dra för att flytta runt när du har zoomat
 * **Bildförhållandet bibehålls**: Bilderna skalas proportionellt
 
 ***
@@ -89,7 +89,7 @@ När du zoomar in bortom skärmstorleken:
 
 När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
 
-**Värdets visningsplats:**
+**Värdeskärmens placering:**
 
 * **Flytande tal och röd linje i index LUT-gradientlegend på höger sida**
 * **När du zoomar in ytterligare visas ett flytande värde nära markören och den markerade pixeln**
@@ -98,7 +98,7 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
 
 ***
 
-## Bildtyper som du kan visa
+## Bildtyper du kan visa
 
 ### Originalbilder (före bearbetning)
 
@@ -155,7 +155,7 @@ Se [Index/LUT Sandbox](index-lut-sandbox.md) för detaljerade instruktioner.
 
 * **+** eller **=**: Zooma in
 * **−**: Zooma ut
-* **0** (Noll): Anpassa till skärmen
+* **0** (noll): Anpassa till skärmen
 * **Mushjul**: Zooma in/ut
 
 ### Visningskontroller
@@ -198,18 +198,18 @@ Kontrollera att indexen är korrekt beräknade:
 
 **Lösningar:**
 
-1. Försök öppna i en extern visare för att verifiera filens integritet
-2. Kontrollera att filformatet stämmer överens med förväntad typ
-3. Stäng andra program för att frigöra minne
-4. Försök med en mindre/annan bild
+1. Försök öppna i en extern visare för att verifiera filens integritet.
+2. Kontrollera att filformatet stämmer överens med förväntad typ.
+3. Stäng andra program för att frigöra minne.
+4. Försök med en mindre/annan bild.
 
 ### Svart eller vit bildvisning
 
 **Möjliga orsaker:**
 
-* Värdeintervall utanför visningskapaciteten
-* 32-bitars flytande bild med ovanliga värden
-* Fel i indexberäkningen
+* Värdeintervall utanför visningskapaciteten.
+* 32-bitars flytande bild med ovanliga värden.
+* Fel i indexberäkningen.
 
 **Lösningar:**
 
@@ -221,7 +221,7 @@ Kontrollera att indexen är korrekt beräknade:
 
 **Möjliga orsaker:**
 
-* Fel bild visas (original vs bearbetad)
+* Visar fel bild (original vs bearbetad)
 * Kalibreringen tillämpades inte korrekt.
 * Ljusgivardata inkluderades inte i indata.
 * Procentläget växlades felaktigt.
@@ -229,8 +229,8 @@ Kontrollera att indexen är korrekt beräknade:
 **Lösningar:**
 
 1. Kontrollera att du visar bearbetad utdata (kontrollera filnamnstillägget).
-2. Kontrollera procentlägets knappstatus.
-3. Jämför med kända bra bilder från samma dataset.
+2. Kontrollera procentlägesknappens status.
+3. Jämför med bilder från samma dataset som du vet är korrekta.
 
 ***
 
@@ -242,6 +242,6 @@ Nu när du kan visa bilder i helskärmsläge:
 * [**Index/LUT Sandbox**](index-lut-sandbox.md) – Tillämpa anpassade index och färgkartläggning
 * [**Multispektrala indexformler**](../project-settings/multispectral-index-formulas.md) – Förstå tillgängliga index
 
-För bearbetningsflödet, se:
+För bearbetningsarbetsflödet, se:
 
 * [**Bearbeta bilder (GUI)**](../processing-images-gui/adding-files-to-a-project.md) – Komplett bearbetningsguide

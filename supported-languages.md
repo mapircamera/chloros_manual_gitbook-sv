@@ -43,14 +43,14 @@ Chloros stöder följande språk:
 | 35 | 🇱🇹 Litauiska | Lietuvių | `lt` |
 | 36 | 🇱🇻 Lettiska | Latviešu | `lv` |
 | 37 | 🇪🇪 Estniska | Eesti | `et` |
-| 38 | 🇸🇮 Slovenska | Slovenščina | `sl` |
+| 38 | 🇸🇮 Slovensk | Slovenščina | `sl` |
 
 ## Hur man byter språk
 
 ### I Chloros Desktop/Browser
 
 1. Öppna programinställningarna.
-2. Navigera till menyn för språkval.
+2. Gå till menyn för språkval.
 3. Välj önskat språk från listan.
 4. Gränssnittet uppdateras omedelbart.
 

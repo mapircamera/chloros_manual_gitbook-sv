@@ -39,14 +39,14 @@ Styr hur Chloros identifierar kalibreringsmål i dina bilder.
 
 **Viktiga inställningar:**
 
-* **Minsta kalibreringsprovområde**: Storleksgräns för måldetektering (standard: 25 pixlar)
+* **Minsta kalibreringsprovområde**: Storleksgräns för målidentifiering (standard: 25 pixlar)
 * **Minsta målkluster**: Likhetsgräns för gruppering av målområden (standard: 60)
 
 **När ska du justera:**
 
-* Öka provområdet om du får falska detekteringar.
-* Minska om målen inte detekteras.
-* Justera klustringen om målen delas upp i flera detekteringar.
+* Öka provområdet om du får felaktiga identifieringar.
+* Minska om målen inte identifieras.
+* Justera klustringen om målen delas upp i flera identifieringar.
 
 ### Bearbetning
 
@@ -56,7 +56,7 @@ Huvudsakliga alternativ för bildbearbetning och kalibrering.
 
 * **Vignettkorrigering**: Kompenserar för linsens mörkare kanter ✅ Rekommenderas
 * **Reflektanskalibrering**: Normaliserar värden med hjälp av kalibreringsmål ✅ Rekommenderas
-* **Debayer-metod**: Algoritm för att konvertera RAW till 3-kanals multispektral
+* **Debayer-metod**: Algoritm för konvertering av RAW till 3-kanals multispektral
 * **Minsta omkalibreringsintervall**: Tid mellan användning av kalibreringsmål (0 = använd alla)
 
 **Avancerade inställningar:**
@@ -78,7 +78,7 @@ Konfigurera vilka vegetationsindex som ska beräknas och exporteras.
 
 **Populära index:**
 
-* **NDVI**: Allmän vegetationhälsa (vanligast)
+* **NDVI**: Allmän vegetationens hälsa (vanligast)
 * **NDRE**: Tidig stressdetektering med RedEdge
 * **GNDVI**: Känslig för klorofyllkoncentration
 * **OSAVI**: Fungerar bra med synlig jord
@@ -126,7 +126,7 @@ Skapa återanvändbara mallar för enhetliga arbetsflöden:
 
 När du skapar ett nytt projekt:
 
-1. Välj **&quot;Nytt projekt&quot;** i huvudmenyn.
+1. Välj **&quot;Nytt projekt&quot;** från huvudmenyn.
 2. Välj alternativet **&quot;Ladda från mall&quot;**.
 3. Välj din sparade mall.
 4. Alla inställningar tillämpas automatiskt.
@@ -183,8 +183,8 @@ När du bearbetar bilder från flera MAPIR-kameror i ett projekt:
 
 1. Chloros identifierar automatiskt varje kameramodell
 2. Varje kamera får en lämplig bearbetningsprofil
-3. PPK: Tilldela varje kamera manuellt rätt exponeringsstift
-4. Alla kameror använder samma exportformat och index
+3. PPK: Tilldela varje kamera manuellt rätt exponeringsstift.
+4. Alla kameror använder samma exportformat och index.
 
 **Exempel**: Survey3W RGN + Survey3N OCN rigg med dubbla kameror
 

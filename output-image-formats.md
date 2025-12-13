@@ -16,7 +16,7 @@ metaLinks:
 
 ### **JPG (8-bitars)**
 
-8-bitars (pixel digitala tal 0–255) JPG (.jpg)-format.
+8-bitars (pixel digitalt tal 0–255) JPG (.jpg)-format.
 
 ### **PNG (8-bitars)**
 

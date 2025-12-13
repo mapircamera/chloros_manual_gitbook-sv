@@ -1,6 +1,6 @@
 # GUI: Navigering
 
-När du startar Chloros och Chloros (webbläsare) för första gången startas dess backend. När den är klar visas huvudmenyikonen längst upp till vänster. <img src=".gitbook/assets/image (1).png" alt="" data-size="line"> .
+När du startar Chloros och Chloros (webbläsare) för första gången startar dess bakgrundsprogram. När det är klart visas huvudmenyikonen längst upp till vänster. <img src=".gitbook/assets/image (1).png" alt="" data-size="line"> .
 
 <figure><img src=".gitbook/assets/header.JPG" alt=""><figcaption></figcaption></figure>
 
@@ -10,13 +10,11 @@ Från vänster till höger innehåller den övre rubriken:
 
 Från huvudmenyn kan du starta ett nytt projekt, öppna ett befintligt projekt eller öppna projektmappen.
 
-### <img src=".gitbook/assets/image (2).png" alt="" data-size="line"> Spela/Starta-knapp
+### <img src=".gitbook/assets/image (2).png" alt="" data-size="line"> Spela/starta-knapp
 
-När den är aktiverad startar startknappen bildbearbetningsprocessen.
+När den är aktiverad startar startknappen bildbehandlingsprocessen.
 
-### <img src=".gitbook/assets/image (4).png" alt="" data-size="line"> Förloppsindikator <img src=".gitbook/assets/image (5).png" alt="" data-size="line">
-
-I det kostnadsfria läget Chloros, som bearbetar alla filer sekventiellt, visar förloppsindikatorn två steg: Målidentifiering och bearbetning.
+### <img src=".gitbook/assets/image (4).png" alt="" data-size="line"> Förloppsindikator <img src=".gitbook/assets/image (5).png" alt="" data-size="line">I det kostnadsfria läget Chloros, som bearbetar alla filer sekventiellt, visar förloppsindikatorn två steg: Målidentifiering och bearbetning.
 
 I det kostnadsbelagda läget Chloros+, som bearbetar alla filer samtidigt, visar förloppsindikatorn fyra steg: Identifiering, analys, kalibrering, export. Om du håller muspekaren över Chloros+ förloppsindikatorn visas en utökad panel med fyra förloppsindikatorer så att du kan följa processen. Om du klickar på den övre förloppsindikatorn fryses rullgardinsmenyn, och om du klickar igen låses den upp igen.
 
@@ -32,7 +30,7 @@ På fliken Projektinställningar kan du justera globala projektinställningar oc
 
 #### <img src=".gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> Filbläddraren
 
-Lägg till filer/mappar och ta bort filer från projektet. Duplicerade filer ignoreras. Markera målkolumnen för valfri målbild, så kommer bearbetningen endast att titta på markerade bilder för mål, vilket avsevärt påskyndar bearbetningstiden.
+Lägg till filer/mappar och ta bort filer från projektet. Duplicerade filer ignoreras. Markera målkolumnrutan för valfri målbild, så kommer bearbetningen endast att titta på markerade bilder för mål, vilket avsevärt påskyndar bearbetningstiden.
 
 #### <img src=".gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> [Bildvisare](image-viewer-gui/opening-an-image-full-screen.md)
 

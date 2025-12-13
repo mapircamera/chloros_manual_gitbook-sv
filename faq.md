@@ -51,15 +51,15 @@ Nej. Endast enskilda MAPIR-kamerabilder stöds, inte sammanfogade bilder som en 
 
 <summary>Hur kan jag påskynda måldetekteringssteget i Chloros?</summary>
 
-Om du i filbläddrarens tabell förväljer målbilderna i den högra kolumnen kommer Chloros att endast söka efter kalibreringsmål i dessa bilder, vilket påskyndar bearbetningen avsevärt.
+Om du i filbläddrarens tabell förväljer målbilderna i den högra kolumnen kommer Chloros att endast söka efter kalibreringsmål i dessa bilder, vilket påtagligt påskyndar bearbetningen.
 
 </details>
 
 <details>
 
-<summary>Om jag laddar upp mina bilder till <a href="https://www.mapir.camera/collections/software/products/mapir-cloud-subscription">MAPIR Cloud,</a> ska jag då bearbeta dem i Chloros innan jag laddar upp dem?</summary>
+<summary>Om jag ska ladda upp mina bilder till <a href="https://www.mapir.camera/collections/software/products/mapir-cloud-subscription">MAPIR Cloud,</a> ska jag då bearbeta dem i Chloros innan jag laddar upp dem?</summary>
 
-Om du planerar att ladda upp till vår onlinebearbetningsplattform [MAPIR Cloud](https://www.mapir.camera/collections/software/products/mapir-cloud-subscription) ska du inte redigera bilderna innan du laddar upp dem. Cloud utför samma bearbetning och mer därtill.
+Om du planerar att ladda upp till vår onlinebehandlingsplattform [MAPIR Cloud](https://www.mapir.camera/collections/software/products/mapir-cloud-subscription) ska du inte redigera bilderna innan du laddar upp dem. Cloud utför samma bearbetning och mer därtill.
 
 </details>
 
@@ -67,6 +67,6 @@ Om du planerar att ladda upp till vår onlinebearbetningsplattform [MAPIR Cloud]
 
 <summary>Kommer MAPIR någonsin att stödja X-funktionen? Jag önskar verkligen att MAPIR erbjöd X.</summary>
 
-Vi är alltid intresserade av att få feedback om våra produkter. Om du upptäcker ett problem med våra produkter eller har ett förslag på hur vi kan förbättra våra produkter, vänligen [KONTAKTA OSS](https://www.mapir.camera/community/contact) för att dela med dig av dina tankar. Det mesta av vår forskning och utveckling styrs av att vi lyssnar på våra kunders största behov.
+Vi är alltid intresserade av att få feedback på våra produkter. Om du upptäcker ett problem med våra produkter eller har ett förslag på hur vi kan förbättra våra produkter, vänligen [KONTAKTA OSS](https://www.mapir.camera/community/contact) för att dela med dig av dina tankar. Det mesta av vår forskning och utveckling styrs av att lyssna på våra kunders största behov.
 
 </details>

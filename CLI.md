@@ -97,7 +97,7 @@ chloros-cli process "C:\Datasets\Survey_001" --vignette --reflectance
 | --------------------- | ------- | -------------- | -------------------------------------------------------------------------------------- |
 | `<input-folder>`      | Sökväg    | _Krävs_     | Mapp som innehåller multispektrala RAW/JPG-bilder                                         |
 | `-o, --output`        | Sökväg    | Samma som inmatning  | Utmatningsmapp för bearbetade bilder                                                     |
-| `-n, --project-name`  | Sträng  | Automatiskt genererad | Anpassat projektnamn                                                                    |
+| `-n, --project-name`  | Sträng  | Autogenererad | Anpassat projektnamn                                                                    |
 | `--vignette`          | Flagga    | Aktiverad        | Aktivera vignettkorrigering                                                             |
 | `--no-vignette`       | Flagga    | -              | Inaktivera vignettkorrigering                                                            |
 | `--reflectance`       | Flagga    | Aktiverad        | Aktivera reflektanskalibrering                                                         |
@@ -369,13 +369,13 @@ chloros-cli --port 5001 process "C:\Datasets\Survey_001"
 
 ***
 
-## Guide för bearbetningsinställningar
+## Guide till bearbetningsinställningar
 
 ### Parallell bearbetning
 
 Chloros+ CLI **skalar automatiskt** parallell bearbetning för att matcha din dators kapacitet:
 
-**Så här fungerar det:**
+**Så fungerar det:**
 
 * Detekterar dina CPU-kärnor och RAM-minne
 * Tilldelar arbetare: **2× CPU-kärnor** (använder hyperthreading)
@@ -403,7 +403,7 @@ CLI använder **Hög kvalitet (snabbare)** som standard och rekommenderad debaye
 
 ### Vignettkorrigering
 
-**Vad den gör:** Korrigerar ljusfallet vid bildkanterna (mörkare hörn som är vanliga i kamerabilder).
+**Vad den gör:** Korrigerar ljusfall vid bildkanterna (mörkare hörn som är vanliga i kamerabilder).
 
 * **Aktiverat som standard** – De flesta användare bör ha detta aktiverat
 * Använd `--no-vignette` för att inaktivera
@@ -416,9 +416,9 @@ CLI använder **Hög kvalitet (snabbare)** som standard och rekommenderad debaye
 
 Konverterar råa sensorvärden till standardiserade reflektansprocenttal med hjälp av kalibreringspaneler.
 
-* **Aktiverat som standard** – Väsentligt för vegetationsanalys.
-* Kräver kalibreringsmålpaneler i bilder.
-* Använd `--no-reflectance` för att inaktivera.
+* **Aktiverat som standard** – Väsentligt för vegetationsanalys
+* Kräver kalibreringsmålpaneler i bilderna
+* Använd `--no-reflectance` för att inaktivera
 
 {% hint style=&quot;info&quot; %}
 **Krav**: Se till att kalibreringspanelerna är korrekt exponerade och synliga i dina bilder för korrekt reflektanskonvertering.
@@ -677,7 +677,7 @@ Chloros+ license required for CLI access
 
 **Lösningar:**
 
-1. Kontrollera att du har ett aktivt Chloros+-abonnemang
+1. Kontrollera att du har ett aktivt Chloros+-abonnemang.
 2. Logga in med dina inloggningsuppgifter:
 
 ```powershell
@@ -743,7 +743,7 @@ chloros-cli --port 5001 process "C:\Datasets\Field_A"
 
 ### F: Behöver jag en licens för CLI?
 
-**S:** Ja! CLI kräver en betald **Chloros+-licens**.
+**S:** Ja! CLI kräver en betald **Chloros+ licens**.
 
 * ❌ Standardplan (gratis): CLI inaktiverad
 * ✅ Chloros+ (betald) plan: CLI fullt aktiverad
@@ -905,7 +905,7 @@ chloros-cli process "C:\Datasets\Field_A" ^
 
 ***
 
-### Exempel 5: Anpassad utdataplats
+### Exempel 5: Anpassad utmatningsplats
 
 Bearbeta till annan enhet med specifikt format:
 
