@@ -1,6 +1,6 @@
 # Övervakning av bearbetningen
 
-När bearbetningen har startat erbjuder Chloros flera sätt att övervaka framstegen, kontrollera om det finns problem och förstå vad som händer med din dataset. På den här sidan förklaras hur du spårar bearbetningen och tolkar den information som Chloros tillhandahåller.
+När bearbetningen har startat erbjuder Chloros flera sätt att övervaka framstegen, kontrollera om det finns problem och förstå vad som händer med din dataset. På den här sidan förklaras hur du kan spåra bearbetningen och tolka den information som Chloros tillhandahåller.
 
 ## Översikt över förloppsindikatorn
 
@@ -28,7 +28,7 @@ För användare med Chloros+-licens:
 **Förloppsindikator i fyra steg:**
 
 1. **Detektering** – Hitta kalibreringsmål
-2. **Analys** – Granska bilder och förbered pipeline
+2. **Analys** – Granska bilder och förbereda pipeline
 3. **Kalibrering** – Tillämpa vignett- och reflektanskorrigeringar
 4. **Export** – Spara bearbetade filer
 
@@ -37,7 +37,7 @@ För användare med Chloros+-licens:
 * **Håll muspekaren över** förloppsindikatorn för att se den utökade panelen med fyra steg
 * **Klicka** på förloppsindikatorn för att frysa/fästa den utökade panelen
 * **Klicka igen** för att låsa upp och dölja automatiskt när musen lämnar panelen
-* Varje steg visar individuellt förlopp (0–100 %)
+* Varje steg visar individuell förlopp (0-100 %)
 
 ***
 
@@ -49,7 +49,7 @@ För användare med Chloros+-licens:
 
 * Chloros skannar bilder som är markerade med kryssrutan Mål
 * Datorvisionsalgoritmer identifierar de fyra kalibreringspanelerna
-* Reflektionsvärden extraheras från varje panel
+* Reflektansvärden extraheras från varje panel
 * Målets tidsstämplar registreras för korrekt kalibreringsschemaläggning
 
 **Varaktighet:**
@@ -63,7 +63,7 @@ För användare med Chloros+-licens:
 * Antal skannade bilder
 * Antal hittade mål
 
-**Vad du ska titta efter:**
+**Vad du ska vara uppmärksam på:**
 
 * Bör slutföras snabbt om målen är korrekt markerade
 * Om det tar för lång tid kan det hända att målen inte är markerade
@@ -73,8 +73,8 @@ För användare med Chloros+-licens:
 
 **Vad händer:**
 
-* Läser EXIF-metadata för bilder (tidsstämplar, exponeringsinställningar)
-* Bestämmer kalibreringsstrategi baserat på måltidsstämplar
+* Läser bildens EXIF-metadata (tidsstämplar, exponeringsinställningar)
+* Bestämmer kalibreringsstrategi baserat på målets tidsstämplar
 * Organiserar bildbehandlingskön
 * Förbereder parallella bearbetningsarbetare (endast Chloros+)
 
@@ -92,7 +92,7 @@ För användare med Chloros+-licens:
 
 ### Steg 3: Kalibrering
 
-**Vad händer:**
+**Vad som händer:**
 
 * **Debayering**: Konvertera RAW-Bayer-mönster till 3 kanaler
 * **Vignettkorrigering**: Ta bort mörkare kanter på linsen
@@ -110,14 +110,14 @@ För användare med Chloros+-licens:
 
 **Bearbetningsbeteende:**
 
-* **Fritt läge**: Bearbetar en bild i taget i sekventiell ordning
+* **Fritt läge**: Bearbetar en bild i taget i sekvens
 * **Chloros+-läge**: Bearbetar upp till 16 bilder samtidigt
 * **GPU-acceleration**: Påskyndar denna fas avsevärt
 
-**Vad du ska hålla koll på:**
+**Vad du ska vara uppmärksam på:**
 
 * Stadig framsteg genom bildantalet
-* Kontrollera felsökningsloggen för meddelanden om färdigställda bilder
+* Kontrollera felsökningsloggen för meddelanden om färdigställande per bild
 * Varningar om bildkvalitet eller kalibreringsproblem
 
 ### Fas 4: Exportera
@@ -195,10 +195,10 @@ Kritiska problem som kan orsaka att bearbetningen misslyckas:
 
 ### Vanliga loggmeddelanden
 
-| Meddelande                          | Betydelse                                | Åtgärd som krävs                                         |
+| Meddelande                          | Betydelse                                | Nödvändig åtgärd                                         |
 | -------------------------------- | -------------------------------------- | ----------------------------------------------------- |
 | &quot;Mål upptäckt i \[filnamn]&quot; | Kalibreringsmål hittat  | Ingen åtgärd – normalt                                         |
-| &quot;Bearbetar bild X av Y&quot;        | Aktuell uppdatering av framsteg                | Ingen åtgärd – normalt                                         |
+| &quot;Bearbetar bild X av Y&quot;        | Aktuell uppdatering av förloppet                | Ingen åtgärd – normalt                                         |
 | &quot;Inga mål hittade&quot;               | Inga kalibreringsmål upptäckta        | Markera målbilder eller inaktivera reflektionskalibrering |
 | &quot;Otillräckligt diskutrymme&quot;        | Otillräckligt lagringsutrymme för utdata          | Frigör diskutrymme                                    |
 | &quot;Hoppar över skadad fil&quot;        | Bildfilen är skadad                  | Kopiera om filen från SD-kortet                             |
@@ -248,7 +248,7 @@ Så här kopierar du loggen för felsökning eller support:
 
 **Om minnet är lågt:**
 
-* Bearbeta mindre batcher
+* Bearbeta mindre batchar
 * Stäng andra applikationer
 * Uppgradera RAM om du regelbundet bearbetar stora datamängder
 
@@ -328,7 +328,7 @@ Avbryt bearbetningen om du ser:
 
 **Möjliga orsaker:**
 
-* Omärkta målbilder (skanning av alla bilder)
+* Omärkta målbilder (skannar alla bilder)
 * HDD istället för SSD-lagring
 * Otillräckliga systemresurser
 * Många index konfigurerade
@@ -340,7 +340,7 @@ Avbryt bearbetningen om du ser:
 2. För framtiden: Använd SSD, minska index, uppgradera hårdvara
 3. Överväg CLI för batchbearbetning av stora datamängder
 
-### Varningar om ”diskutrymme”
+### Varningar om &quot;diskutrymme&quot;
 
 **Lösningar:**
 

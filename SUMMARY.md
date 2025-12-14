@@ -9,7 +9,7 @@
 * [Bildformat för utdata](output-image-formats.md)
 * [Chloros+ Inloggning](chloros+-login.md)
 * [Kalibreringsmål](calibration-targets.md)
-* [Stödda språk](supported-languages.md)
+* [Kompatibla språk](supported-languages.md)
 * [Hämta](download.md)
 * [Vanliga frågor](faq.md)
 
@@ -31,4 +31,4 @@
 
 * [Öppna en bild i helskärmsläge](image-viewer-gui/opening-an-image-full-screen.md)
 * [Bildlager](image-viewer-gui/image-layers.md)
-* [Index/LUT-sandlåda](image-viewer-gui/index-lut-sandbox.md)
+* [Index/LUT Sandbox](image-viewer-gui/index-lut-sandbox.md)

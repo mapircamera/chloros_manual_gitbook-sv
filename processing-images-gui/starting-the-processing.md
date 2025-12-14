@@ -52,14 +52,14 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 **Så här fungerar det:**
 
-* Bearbetar bilder en i taget, sekventiellt.
-* Enkelsträngad drift.
-* Lägre minnesanvändning.
+* Bearbetar bilder en i taget, sekventiellt
+* Enkelsträngad drift
+* Lägre minnesanvändning
 
 **Förloppsindikatorn visar två steg:**
 
-1. **Måldetektering** – Söker efter kalibreringsmål.
-2. **Bearbetning** – Tillämpar kalibrering och exporterar bilder.
+1. **Måldetektering** – Söker efter kalibreringsmål
+2. **Bearbetning** – Tillämpar kalibrering och exporterar bilder
 
 **Bearbetningstid:**
 
@@ -86,14 +86,14 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 **Interaktion med förloppsindikatorn:**
 
-* **Håll muspekaren** över indikatorn för att se en detaljerad rullgardinsmeny med fyra steg
-* **Klicka** på förloppsindikatorn för att frysa rullgardinsmenyn på plats
+* **Håll muspekaren** över indikatorn för att se en detaljerad nedrullningsbar panel med fyra steg
+* **Klicka** på förloppsindikatorn för att frysa nedrullningspanelen på plats
 * **Klicka igen** för att låsa upp och dölja panelen
 
 **Bearbetningstid:**
 
 * Betydligt snabbare än fritt läge
-* Skalas med antalet CPU-kärnor
+* Skalas med CPU-kärnantal
 * GPU-acceleration förbättrar hastigheten ytterligare
 
 {% hint style=&quot;info&quot; %}
@@ -109,7 +109,7 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 **Vad Chloros gör:**
 
 * Skannar markerade målbilder (eller alla bilder om inga är markerade)
-* Identifierar de fyra kalibreringspanelerna i varje mål
+* Identifierar de 4 kalibreringspanelerna i varje mål
 * Extraherar reflektansvärden från målpanelerna
 * Registrerar måltidsstämplar för kalibreringsschemaläggning
 
@@ -129,12 +129,12 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 **Vad Chloros gör:**
 
-* **Vignettkorrigering**: Tar bort linsmörkning i kanterna
+* **Vignettkorrigering**: Tar bort linsförmörkning i kanterna
 * **Reflektanskalibrering**: Normaliserar med hjälp av målreflektansvärden
 * Tillämpar korrigeringar över alla band/kanaler
 * Använder lämpligt kalibreringsmål för varje bild baserat på tidsstämpel
 
-**Varaktighet:** Större delen av bearbetningstiden
+**Varaktighet:** Största delen av bearbetningstiden
 
 ### Steg 4: Indexberäkning
 
@@ -167,7 +167,7 @@ När den har startats körs hela pipelinen automatiskt:
 
 * Ingen användarinteraktion behövs
 * Alla konfigurerade steg utförs i sekvens
-* Uppdateringar av framsteg visas i realtid
+* Uppdateringar av förloppet visas i realtid
 
 ### Datoranvändning under bearbetning
 
@@ -185,17 +185,17 @@ När den har startats körs hela pipelinen automatiskt:
 * Undvik att starta andra CPU-intensiva uppgifter
 
 {% hint style=&quot;warning&quot; %}
-**Prestandatips**: För bästa prestanda med Chloros+ stänger du andra program och låter Chloros använda alla systemresurser.
+**Prestandatips**: För bästa Chloros+ prestanda, stäng andra program och låt Chloros använda alla systemresurser.
 {% endhint %}
 
 ### Bearbetningen kan inte pausas
 
 **Viktiga begränsningar:**
 
-* När bearbetningen har startat kan den inte pausas.
-* Du kan avbryta bearbetningen, men då går framstegen förlorade.
-* Delresultat sparas inte.
-* Om bearbetningen avbryts måste du börja om från början.
+* När bearbetningen har startat kan den inte pausas
+* Du kan avbryta bearbetningen, men då går framstegen förlorade
+* Delresultat sparas inte
+* Om bearbetningen avbryts måste du börja om från början
 
 **Planeringstips:** För mycket stora projekt bör du överväga att bearbeta i omgångar eller använda CLI för bättre kontroll.
 
@@ -205,10 +205,10 @@ När den har startats körs hela pipelinen automatiskt:
 
 Medan bearbetningen pågår kan du:
 
-* **Se förloppsindikatorn** – Se den totala procentandelen som är klar.
-* **Visa aktuellt steg** – Detektera, analysera, kalibrera eller exportera.
-* **Kontrollera fliken Logg** – Se detaljerade bearbetningsmeddelanden och varningar.
-* **Förhandsgranska färdiga bilder** – Vissa exportfiler kan visas under bearbetningen.
+* **Se förloppsindikatorn** – Se den totala procentuella färdigställningsgraden
+* **Visa aktuellt steg** – Detektera, analysera, kalibrera eller exportera
+* **Kontrollera fliken Logg** – Se detaljerade bearbetningsmeddelanden och varningar
+* **Förhandsgranska färdiga bilder** – Vissa exportfiler kan visas under bearbetningen
 
 För detaljerad information om övervakning, se [Övervaka bearbetningen](monitoring-the-processing.md).
 
@@ -227,11 +227,11 @@ Om du behöver avbryta bearbetningen:
 
 ### När ska man avbryta
 
-**Giltiga skäl att avbryta:**
+**Giltiga skäl för att avbryta:**
 
 * Insett att felaktiga inställningar har använts
 * Glömt att markera målbilder
-* Felaktiga bilder importerade
+* Felaktiga bilder har importerats
 * Systemet går för långsamt eller svarar inte
 
 **Efter avbrytande:**
@@ -239,15 +239,15 @@ Om du behöver avbryta bearbetningen:
 * Granska och åtgärda eventuella problem
 * Justera inställningarna efter behov
 * Starta om bearbetningen från början
-* För bästa resultat, stäng Chloros helt och starta om.
+* För bästa resultat, stäng Chloros helt och starta om
 
 {% hint style=&quot;warning&quot; %}
-**Inga partiella resultat**: Avbrytande raderar all framsteg. Chloros sparar inte partiellt bearbetade bilder.
+**Inga partiella resultat**: Avbrytande raderar all framsteg. Chloros sparar inte delvis bearbetade bilder.
 {% endhint %}
 
 ***
 
-## Uppskattad bearbetningstid
+## Beräknad bearbetningstid
 
 Den faktiska bearbetningstiden varierar kraftigt beroende på:
 
@@ -266,7 +266,7 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 | ----------- | --------- | -------------- | -------------- |
 | 50 bilder   | 15–20 min | 5–8 min        | 3–5 min        |
 | 100 bilder  | 30–40 min | 10–15 min      | 5–8 min        |
-| 200 bilder  | 1–1,5 tim | 20–30 min      | 10–15 min      |
+| 200 bilder  | 1–1,5 timmar | 20–30 min      | 10–15 min      |
 | 500 bilder  | 2-3 timmar   | 45-60 min      | 20-30 min      |
 | 1000 bilder | 4-6 timmar   | 1,5-2 timmar      | 40-60 min      |
 
@@ -310,7 +310,7 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 3. Försök att bearbeta en mindre delmängd av bilderna
 4. Kontrollera att bilderna inte är skadade
 
-### Varningen &quot;Inga mål upptäckta&quot;
+### Varningen ”Inga mål upptäckta”
 
 **Möjliga orsaker:**
 
@@ -323,7 +323,7 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 1. Granska [Välja målbilder](choosing-target-images.md)
 2. Markera lämpliga bilder i kolumnen Mål
 3. Kontrollera att målen är synliga i de markerade bilderna
-4. Justera inställningarna för måldetektering vid behov
+4. Justera inställningarna för måldetektering om det behövs
 
 ***
 

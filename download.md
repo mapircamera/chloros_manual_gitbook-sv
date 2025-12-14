@@ -3,7 +3,6 @@ metaLinks:
   alternates:
     - https://app.gitbook.com/s/o044KN3Ws0uIDvOmSkcR/download
 ---
-
 # Ladda ner
 
 Ladda ner den senaste versionen av Chloros för Windows för att komma igång med multispektral bildbehandling.
@@ -49,7 +48,7 @@ Ladda ner den senaste versionen av Chloros för Windows för att komma igång me
 6. Logga in med ditt MAPIR Cloud Chloros+-konto (eller fortsätt med gratisversionen).
 
 {% hint style=&quot;success&quot; %}
-Installationsprogrammet lägger automatiskt till `chloros-cli` i systemets PATH för åtkomst via kommandoraden.
+Installationsprogrammet lägger automatiskt till `chloros-cli` i ditt systems PATH för åtkomst via kommandoraden.
 {% endhint %}
 
 ***
@@ -74,11 +73,11 @@ pip install chloros-sdk
 
 Installationen av Chloros innehåller:
 
-* ✅ **Chloros Desktop GUI** – Grafiskt gränssnitt med alla funktioner
-* ✅ **Chloros (webbläsare)** – Webbaserat gränssnitt för system med lägre specifikationer
+* ✅ **Chloros Desktop GUI** – Fullfjädrat grafiskt gränssnitt
+* ✅ **Chloros (Browser)** – Webbaserat gränssnitt för system med lägre specifikationer
 * ✅ **Chloros CLI** – Kommandoradsgränssnitt (kräver Chloros+-licens)
 * ✅ **Backend Engine** – Bildbehandlingspipeline
-* ✅ **Kameraprofil** - Förkonfigurerade MAPIR-kameramallar
+* ✅ **Kameraprofiler** - Förkonfigurerade MAPIR-kameramallar
 
 ***
 
@@ -110,7 +109,7 @@ Lås upp avancerade funktioner med ett Chloros+-abonnemang:
 * Prova Chloros (webbläsare) version
 * Kontrollera att Windows 10/11 (64-bitars) är installerat
 * Uppdatera grafikdrivrutiner
-* Kontrollera Windows Händelsevisaren för felinformation
+* Kontrollera Windows Händelsevisare för felinformation
 * Kontakta supporten med felloggarna
 
 **Problem med licensaktivering:**
@@ -163,6 +162,8 @@ Behöver du hjälp med installation eller konfiguration?
 
 Obehörig användning, distribution eller modifiering är förbjuden.
 
-**Gratisversion**: Tillgänglig för personligt och kommersiellt bruk med begränsade funktioner.
+**Gratisversion**: Tillgänglig för personlig och kommersiell användning med begränsade funktioner.
 
 **Chloros+**: Abonnemangsbaserad licens för avancerade funktioner och kommersiell användning.
+
+<figure><img src=".gitbook/assets/t3-125_2.jpg" alt=""><figcaption></figcaption></figure>

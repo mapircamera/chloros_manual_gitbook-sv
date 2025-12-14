@@ -20,7 +20,7 @@
 | **Operativsystem** | Windows 10/11 (64-bitars)                                              |
 | **Python**           | Python 3.7 eller högre                                                |
 | **Minne**           | Minst 8 GB RAM (16 GB rekommenderas)                                  |
-| **Internet**         | Krävs för aktivering av licensen                                     |
+| **Internet**         | Krävs för licensaktivering                                     |
 
 {% hint style=&quot;warning&quot; %}
 **Licenskrav**: Python SDK kräver ett betalt Chloros+-abonnemang för åtkomst till API. Standardabonnemang (gratis) har inte tillgång till API/SDK. Besök [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing) för att uppgradera.
@@ -129,7 +129,7 @@ SDK använder samma licens som Chloros, Chloros (webbläsare) och Chloros CLI. A
 
 1. Öppna **Chloros eller Chloros (webbläsare)** och logga in på fliken Användare <img src=".gitbook/assets/icon_user.JPG" alt="" data-size="line"> . Eller öppna **CLI**.
 2. Ange dina Chloros+-inloggningsuppgifter och logga in
-3. Licensen cachelagras lokalt (kvarstår efter omstart)
+3. Licensen cachas lokalt (kvarstår efter omstart)
 
 {% hint style=&quot;success&quot; %}
 **Engångsinstallation**: Efter inloggning via GUI eller CLI använder SDK automatiskt den cachade licensen. Ingen ytterligare autentisering behövs!
@@ -156,7 +156,7 @@ print(f"Backend running: {status['running']}")
 
 ### ChlorosLocal-klass
 
-Huvudklass för lokal Chloros-bildbehandling.
+Huvudklass för lokal Chloros bildbehandling.
 
 #### Konstruktör
 
@@ -175,7 +175,7 @@ ChlorosLocal(
 | Parameter                 | Typ | Standard                   | Beskrivning                           |
 | ------------------------- | ---- | ------------------------- | ------------------------------------- |
 | `api_url`                 | str  | `"http://localhost:5000"` | URL av lokal Chloros backend          |
-| `auto_start_backend`      | bool | `True`                    | Starta backend automatiskt vid behov |
+| `auto_start_backend`      | bool | `True`                    | Starta automatiskt backend om det behövs |
 | `backend_exe`             | str  | `None` (automatisk detektering)      | Sökväg till backend-körbar fil            |
 | `timeout`                 | int  | `30`                      | Begär tidsgräns i sekunder            |
 | `backend_startup_timeout` | int  | `60`                      | Tidsgräns för start av backend (sekunder) |
@@ -211,7 +211,7 @@ Skapa ett nytt Chloros-projekt.
 | `project_name` | str  | Ja      | Namn på projektet                                     |
 | `camera`       | str  | Nej       | Kameramall (t.ex. &quot;Survey3N\_RGN&quot;, &quot;Survey3W\_OCN&quot;) |
 
-**Returnerar:** `dict` – Svar på projektskapande
+**Returnerar:** `dict` - Svar på projektets skapande
 
 **Exempel:**
 
@@ -310,13 +310,13 @@ Bearbeta projektbilderna.
 | ------------------- | -------- | ------------ | ----------------------------------------- |
 | `mode`              | str      | `"parallel"` | Bearbetningsläge: &quot;parallel&quot; eller &quot;serial&quot;   |
 | `wait`              | bool     | `True`       | Vänta på slutförande                       |
-| `progress_callback` | callable | `None`       | Återkopplingsfunktion för framsteg (progress, msg) |
+| `progress_callback` | callable | `None`       | Återkopplingsfunktion för framsteg(progress, msg) |
 | `poll_interval`     | float    | `2.0`        | Pollningsintervall för framsteg (sekunder)   |
 
-**Returnerar:** `dict` – Bearbetningsresultat
+**Returnerar:** `dict` - Bearbetningsresultat
 
 {% hint style=&quot;warning&quot; %}
-**Parallellt läge**: Kräver Chloros+ licens. Skalas automatiskt till dina CPU-kärnor (upp till 16 arbetare).
+**Parallellt läge**: Kräver Chloros+-licens. Skalar automatiskt till dina CPU-kärnor (upp till 16 arbetare).
 {% endhint %}
 
 **Exempel:**
@@ -358,7 +358,7 @@ print(config['Project Settings'])
 
 #### `get_status()`
 
-Hämta statusinformation om backend.
+Hämta information om backend-status.
 
 **Returnerar:** `dict` - Backend-status
 
@@ -404,7 +404,7 @@ Enradig praktisk funktion för att bearbeta en mapp.
 | `mode`                    | str      | `"parallel"`    | Bearbetningsläge                |
 | `progress_callback`       | callable | `None`          | Återkoppling av förlopp              |
 
-**Returnerar:** `dict` – Bearbetningsresultat
+**Returnerar:** `dict` - Bearbetningsresultat
 
 **Exempel:**
 
@@ -564,7 +564,7 @@ print("All flights processed!")
 
 ***
 
-### Exempel 4: Integration av forskningspipeline
+### Exempel 4: Integrering av forskningspipeline
 
 Integrera Chloros med dataanalys:
 
@@ -712,7 +712,7 @@ else:
 
 ### Exempel 7: Kommandoradsverktyg
 
-Skapa ett anpassat CLI-verktyg med SDK:
+Bygg ett anpassat CLI-verktyg med SDK:
 
 ```python
 #!/usr/bin/env python
@@ -892,7 +892,7 @@ for i in range(0, len(images), batch_size):
 
 ### Backend startar inte
 
-**Problem:** SDK kan inte starta backend
+**Problem:** SDK startar inte backend
 
 **Lösningar:**
 
@@ -913,7 +913,7 @@ chloros = ChlorosLocal(backend_exe="C:\\Path\\To\\chloros-backend.exe")
 
 ***
 
-### Licens upptäcks inte
+### Licensen upptäcks inte
 
 **Problem:** SDK varnar om saknad licens
 
@@ -957,7 +957,7 @@ python -c "import sys; print(sys.path)"
 
 ### Bearbetningstidsgräns
 
-**Problem:** Bearbetningstiden löper ut
+**Problem:** Bearbetningen tar för lång tid
 
 **Lösningar:**
 
@@ -967,7 +967,7 @@ python -c "import sys; print(sys.path)"
 chloros = ChlorosLocal(timeout=120)  # 2 minutes
 ```
 
-2. Bearbeta mindre batchar
+2. Bearbeta mindre batcher
 3. Kontrollera tillgängligt diskutrymme
 4. Övervaka systemresurser
 
@@ -984,7 +984,7 @@ chloros = ChlorosLocal(timeout=120)  # 2 minutes
 chloros = ChlorosLocal(api_url="http://localhost:5001")
 ```
 
-Eller hitta och stäng den process som orsakar konflikten:
+Eller hitta och stäng den konfliktande processen:
 
 ```powershell
 # PowerShell
@@ -1003,7 +1003,7 @@ Get-NetTCPConnection -LocalPort 5000
 chloros.process(mode="parallel")  # Up to 16 workers
 ```
 
-2. **Minska utgångsupplösningen** (om det är acceptabelt)
+2. **Minska utdataupplösningen** (om det är acceptabelt)
 
 ```python
 chloros.configure(export_format="PNG (8-bit)")  # Faster than TIFF
@@ -1153,11 +1153,11 @@ chloros.process(progress_callback=notebook_progress)
 
 **S:** SDK-kod kan integreras i dina applikationer, men:
 
-* Slutanvändarna måste ha Chloros installerat
-* Slutanvändarna måste ha aktiva Chloros+-licenser
-* Kommersiell distribution kräver OEM-licensiering.
+* Slutanvändare måste ha Chloros installerat
+* Slutanvändarna behöver aktiva Chloros+-licenser
+* Kommersiell distribution kräver OEM-licensiering
 
-Kontakta info@mapir.camera för frågor om OEM.
+Kontakta info@mapir.camera för OEM-förfrågningar.
 
 ***
 
@@ -1235,6 +1235,6 @@ Alla exempel som listas här är testade och produktionsklara. Kopiera och anpas
 
 ## Licens
 
-**Proprietär programvara** – Upphovsrätt (c) 2025 MAPIR Inc.
+**Proprietär programvara** – Copyright (c) 2025 MAPIR Inc.
 
 SDK kräver ett aktivt Chloros+-abonnemang. Obehörig användning, distribution eller modifiering är förbjuden.

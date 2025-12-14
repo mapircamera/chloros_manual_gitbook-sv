@@ -2,9 +2,9 @@
 
 När Chloros har slutfört bearbetningen är det dags att granska resultaten, kontrollera utskriftskvaliteten och förbereda de bearbetade bilderna för användning i ditt arbetsflöde. Denna sida guidar dig genom de sista stegen och nästa åtgärder.
 
-## Indikation om att bearbetningen är klar
+## Indikation på att bearbetningen är klar
 
-När bearbetningen har slutförts visas flera indikatorer:
+När bearbetningen har slutförts framgångsrikt visas flera indikatorer:
 
 * ✅ **Förloppsindikator**: Når 100 % färdigställande
 * ✅ **Felsökningslogg**: Visar meddelandet ”Bearbetning klar”
@@ -62,7 +62,7 @@ Se [Bildvisare](../image-viewer-gui/opening-an-image-full-screen.md) för detalj
 
 ### Kontrollera om det finns varningar eller fel
 
-1. Öppna fliken **Felsökningslogg** <img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line"> -fliken
+1. Öppna fliken **Debug Log** <img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line"> -fliken
 2. Bläddra igenom meddelandena
 3. Leta efter gula varningar eller röda fel
 4. Granska eventuella problem som noterats
@@ -79,7 +79,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 ***
 
-## Vanliga utdataproblem och lösningar
+## Vanliga utdatafel och lösningar
 
 ### Problem: Saknade utdatafiler
 
@@ -109,16 +109,16 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 1. Kontrollera att vignettkorrigering är aktiverad i projektinställningarna.
 2. Kontrollera att kameramodellen har identifierats korrekt.
-3. Kontakta MAPIR-supporten om vignetteringen kvarstår.
+3. Kontakta MAPIR support om vignetteringen kvarstår.
 
 ### Problem: Felaktiga färger eller värden
 
 **Möjliga orsaker:**
 
 * Inga kalibreringsmål har identifierats.
-* Fel kalibreringsmålmodell har valts.
+* Fel kalibreringsmodell har valts.
 * Reflektanskalibrering är inaktiverad.
-* Målbilder av dålig kvalitet.
+* Målbilderna är av dålig kvalitet.
 
 **Lösningar:**
 
@@ -127,7 +127,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 3. Granska målbildens kvalitet.
 4. Bearbeta om med rätt mål markerade.
 
-### Problem: NDVI-värdena verkar felaktiga.
+### Problem: NDVI-värdena verkar felaktiga
 
 **Förväntade NDVI-intervall:**
 
@@ -170,14 +170,14 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 2. **Använd 16-bitars TIFF** reflektansbilder för multibandsanalys
 3. **Använd indexbilder** (NDVI, NDRE) som färdiga vegetationslager
 4. **Rasterkalkylator**: Kombinera band för anpassad analys
-5. **Exportera**: Skapa klassificeringskartor, ändringsdetektering, kartor över vegetationens hälsa
+5. **Exportera**: Skapa klassificeringskartor, förändringsdetektering, kartor över vegetationens hälsa
 
 ### För direkt analys/rapportering
 
 **Rekommenderat arbetsflöde:**
 
 1. **Använd indexbilder med LUT-färger** för visuella rapporter
-2. **Extrahera statistik**: Genomsnittlig NDVI per fält/tomt
+2. **Extrahera statistik**: Medelvärde NDVI per fält/tomt
 3. **Tidsserier**: Jämför index över flera sessioner
 4. **Skapa rapporter**: Inkludera kartor, statistik och visualiseringar
 
@@ -189,9 +189,9 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 **Vad du ska spara:**
 
-* ✅ **Originalbilder i RAW/JPG** – Arkivera på separat enhet/moln
+* ✅ **Originalbilder i RAW/JPG-format** – Arkivera på separat enhet/moln
 * ✅ **Bearbetade resultat** – Behåll kalibrerade bilder och index
-* ✅ **Projektfil** – Innehåller alla inställningar för ombearbetning vid behov
+* ✅ **Projektfil** – Innehåller alla inställningar för ombearbetning om det behövs
 * ✅ **Felsökningslogg** – Dokumenterar bearbetningsdetaljer
 * ✅ **Kalibreringsmålbilder** – För verifiering och ombearbetning
 
@@ -199,7 +199,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 * **Omedelbar säkerhetskopiering**: Extern hårddisk
 * **Långtidsarkiv**: Molnlagring (Google Drive, Dropbox, etc.)
-* **Kritiska data**: Spara 2–3 kopior på olika platser
+* **Kritiska data**: Spara 2-3 kopior på olika platser
 
 ***
 
@@ -249,7 +249,7 @@ Om resultaten inte är tillfredsställande:
 3. Justera inställningarna i panelen Projektinställningar
 4. Bearbeta igen – resultaten kommer att skriva över tidigare resultat
 
-### Bearbetning av delmängd av bilder
+### Bearbeta delmängd av bilder
 
 För att bearbeta endast specifika bilder:
 
@@ -276,12 +276,12 @@ Du har nu slutfört hela arbetsflödet för Chloros:
 1. ✅ **Skapade projekt** – Se [Projekt](../projects.md)
 2. ✅ **Lagt till filer** – Se [Lägga till filer](adding-files-to-a-project.md)
 3. ✅ **Justerat inställningar** – Se [Justera projektinställningar](adjusting-project-settings.md)
-4. ✅ **Markerade mål** – Se [Välja målbilder](choosing-target-images.md)
-5. ✅ **Startade bearbetningen** – Se [Starta bearbetningen](starting-the-processing.md)
-6. ✅ **Övervakad framsteg** - Se [Övervaka bearbetningen](monitoring-the-processing.md)
-7. ✅ **Granskade resultat** - Denna sida
+4. ✅ **Markerat mål** – Se [Välja målbilder](choosing-target-images.md)
+5. ✅ **Påbörjad bearbetning** – Se [Påbörja bearbetningen](starting-the-processing.md)
+6. ✅ **Övervakad framsteg** – Se [Övervaka bearbetningen](monitoring-the-processing.md)
+7. ✅ **Granskade resultat** – Denna sida
 
-**Dina kalibrerade, reflektanskorrigerade multispektrala bilder är redo för analys!**
+**Dina kalibrerade, reflektanskorrigerade multispektrala bilder är klara för analys!**
 
 ***
 
@@ -290,7 +290,7 @@ Du har nu slutfört hela arbetsflödet för Chloros:
 ### Avancerade funktioner
 
 * [**Bildvisare**](../image-viewer-gui/opening-an-image-full-screen.md) – Interaktiv visualisering och analys
-* [**Index/LUT Sandbox**](../image-viewer-gui/index-lut-sandbox.md) – Anpassad indextestning
+* [**Index/LUT Sandbox**](../image-viewer-gui/index-lut-sandbox.md) – Anpassad indexprovning
 * [**Multispektrala indexformler**](../project-settings/multispectral-index-formulas.md) – Komplett indexreferens
 
 ### Automatisering och integration

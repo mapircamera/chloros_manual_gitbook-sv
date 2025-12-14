@@ -18,7 +18,7 @@ Innan du bearbetar dina bilder är det viktigt att konfigurera projektinställni
 
 ### Standardinställningar (rekommenderas för de flesta användare)
 
-För typiska MAPIR Survey3 kamerarbetsflöden fungerar standardinställningarna bra:
+För typiska MAPIR Survey3 kamerararbetsflöden fungerar standardinställningarna bra:
 
 * ✅ **Vignettkorrigering**: Aktiverad
 * ✅ **Reflektanskalibrering**: Aktiverad (kräver bilder av MAPIR-mål)
@@ -39,14 +39,14 @@ Styr hur Chloros identifierar kalibreringsmål i dina bilder.
 
 **Viktiga inställningar:**
 
-* **Minsta kalibreringsprovområde**: Storleksgräns för målidentifiering (standard: 25 pixlar)
+* **Minsta kalibreringsprovområde**: Storleksgräns för måldetektering (standard: 25 pixlar)
 * **Minsta målkluster**: Likhetsgräns för gruppering av målområden (standard: 60)
 
 **När ska du justera:**
 
-* Öka provområdet om du får felaktiga identifieringar.
-* Minska om målen inte identifieras.
-* Justera klustringen om målen delas upp i flera identifieringar.
+* Öka provområdet om du får falska detekteringar.
+* Minska om målen inte detekteras.
+* Justera klustringen om målen delas upp i flera detekteringar.
 
 ### Bearbetning
 
@@ -55,8 +55,8 @@ Huvudsakliga alternativ för bildbearbetning och kalibrering.
 **Viktiga inställningar:**
 
 * **Vignettkorrigering**: Kompenserar för linsens mörkare kanter ✅ Rekommenderas
-* **Reflektanskalibrering**: Normaliserar värden med hjälp av kalibreringsmål ✅ Rekommenderas
-* **Debayer-metod**: Algoritm för konvertering av RAW till 3-kanals multispektral
+* **Reflektionskalibrering**: Normaliserar värden med hjälp av kalibreringsmål ✅ Rekommenderas
+* **Debayer-metod**: Algoritm för att konvertera RAW till 3-kanals multispektral
 * **Minsta omkalibreringsintervall**: Tid mellan användning av kalibreringsmål (0 = använd alla)
 
 **Avancerade inställningar:**
@@ -71,7 +71,7 @@ Konfigurera vilka vegetationsindex som ska beräknas och exporteras.
 
 **Så här lägger du till index:**
 
-1. Klicka på knappen **”Lägg till index”**
+1. Klicka på knappen **&quot;Lägg till index&quot;**
 2. Välj ett index från rullgardinsmenyn (NDVI, NDRE, GNDVI, etc.)
 3. Konfigurera visualiseringsinställningar (LUT-färger, värdeintervall)
 4. Lägg till flera index efter behov
@@ -101,7 +101,7 @@ Styr utdatafilformat och kvalitet.
 * **TIFF (16-bitars)**: Rekommenderas för GIS och vetenskaplig analys (intervall 0–65 535)
 * **TIFF (32-bitars, procent)**: Flytande reflektansvärden (intervall 0,0–1,0)
 * **PNG (8-bitars)**: Förlustfri komprimering för visualisering (intervall 0–255)
-* **JPG (8-bitars)**: Minsta filer, förlustrik komprimering (intervall 0–255)
+* **JPG (8-bitars)**: Minsta filer, förlustfri komprimering (intervall 0–255)
 
 ***
 
@@ -109,7 +109,7 @@ Styr utdatafilformat och kvalitet.
 
 ### Spara projektmall
 
-Skapa återanvändbara mallar för enhetliga arbetsflöden:
+Skapa återanvändbara mallar för konsekventa arbetsflöden:
 
 1. Konfigurera alla önskade inställningar i panelen Projektinställningar.
 2. Bläddra till avsnittet **”Spara projektmall”** längst ned.
@@ -183,8 +183,8 @@ När du bearbetar bilder från flera MAPIR-kameror i ett projekt:
 
 1. Chloros identifierar automatiskt varje kameramodell
 2. Varje kamera får en lämplig bearbetningsprofil
-3. PPK: Tilldela varje kamera manuellt rätt exponeringsstift.
-4. Alla kameror använder samma exportformat och index.
+3. PPK: Tilldela manuellt varje kamera rätt exponeringsstift
+4. Alla kameror använder samma exportformat och index
 
 **Exempel**: Survey3W RGN + Survey3N OCN rigg med dubbla kameror
 
@@ -209,7 +209,7 @@ För projekt med många bilder (500+):
 
 ***
 
-## Verifiera dina inställningar
+## Kontrollera dina inställningar
 
 Innan du börjar bearbeta, granska dessa viktiga inställningar:
 
