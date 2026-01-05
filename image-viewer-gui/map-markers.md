@@ -88,7 +88,7 @@ Fliken Karta stöder två kartleverantörer för bakgrundskartbilder:
 
 Du kan välja kartlagstyp (från vänster till höger):
 
- <img src="../.gitbook/assets/image (23).png" alt="" data-size="original">### Terräng
+ <img src="../.gitbook/assets/image (23).png" alt="" data-size="line">### Terräng
 
 Visar höjdprofiler och kartkakel med detaljer (vägar etc.)
 

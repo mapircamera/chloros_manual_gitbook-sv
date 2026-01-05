@@ -6,7 +6,7 @@ Användarmenyn <img src=".gitbook/assets/icon_user.JPG" alt="" data-size="line">
 
 När du är inloggad visas dina kontouppgifter:
 
-<figure><img src=".gitbook/assets/user_account.JPG" alt="" width="375"><figcaption></figcaption></figure>## CLI Inloggning
+<figure><img src=".gitbook/assets/user_account.JPG" alt="" data-size="line"><figcaption></figcaption></figure>## CLI Inloggning
 
 Logga in med dina Chloros+-inloggningsuppgifter för att aktivera CLI-bearbetning.
 
