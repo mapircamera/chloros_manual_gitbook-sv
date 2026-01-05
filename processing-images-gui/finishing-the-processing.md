@@ -9,16 +9,15 @@ När bearbetningen har slutförts framgångsrikt visas flera indikatorer:
 * ✅ **Förloppsindikator**: Når 100 % färdigställande
 * ✅ **Felsökningslogg**: Visar meddelandet ”Bearbetning klar”
 * ✅ **Startknapp**: Aktiveras igen (redo för nästa bearbetningskörning)
-* ✅ **Utmatningsfiler**: Alla bearbetade bilder sparas i undermappen för kameramodellen
-
-***
+* ✅ **Utmatningsfiler**: Alla bearbetade bilder sparas i undermappen för kameramodellen***
 
 ## Hitta dina bearbetade bilder
 
 ### Öppna utmatningsmappen
 
-1. Klicka på ikonen **Huvudmeny** <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> (uppe till vänster)
+1. Klicka på **Huvudmenyn** <img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt="" data-size="line"> (uppe till vänster)
 2. Välj **&quot;Öppna projektmapp&quot;**
+
 3. Din filutforskare öppnas i projektkatalogen
 4. Leta reda på ditt projekt efter namn
 
@@ -37,9 +36,7 @@ När bearbetningen har slutförts framgångsrikt visas flera indikatorer:
 
 ### Förhandsgranska i externa bildvisare
 
-**Rekommenderade bildvisare:**
-
-* **QGIS** – Gratis GIS-programvara (bäst för georefererad multispektral analys)
+**Rekommenderade bildvisare:*** **QGIS** – Gratis GIS-programvara (bäst för georefererad multispektral analys)
 * **IrfanView** – Snabb, lättviktig bildvisare (stöder TIFF)
 * **Adobe Photoshop** – Professionell redigering (stöd för TIFF)
 * **GIMP** – Gratis alternativ till Photoshop
@@ -62,7 +59,7 @@ Se [Bildvisare](../image-viewer-gui/opening-an-image-full-screen.md) för detalj
 
 ### Kontrollera om det finns varningar eller fel
 
-1. Öppna fliken **Debug Log** <img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line"> -fliken
+1. Öppna fliken **Felsökningslogg** <img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line"> -fliken
 2. Bläddra igenom meddelandena
 3. Leta efter gula varningar eller röda fel
 4. Granska eventuella problem som noterats
@@ -72,7 +69,8 @@ Se [Bildvisare](../image-viewer-gui/opening-an-image-full-screen.md) för detalj
 
 För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
-1. Klicka på knappen **&quot;Kopiera&quot;** eller **&quot;Hämta&quot;**
+1. Klicka på knappen **&quot;Kopiera&quot;**eller**&quot;Hämta&quot;**
+
 2. Spara som textfil i projektmappen
 3. Bifoga med projektdokumentationen
 4. Skicka till MAPIR support om problem uppstår
@@ -94,7 +92,7 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 1. Kontrollera felsökningsloggen för meddelanden om hopp/fel.
 2. Kontrollera att det fanns tillräckligt med diskutrymme.
-3. Räkna filerna: Bör stämma (ursprungligt antal – målantal) × (index + 1)
+3. Räkna filerna: Bör stämma (ursprungligt antal – målantal) × (index + 1).
 4. Importera om och bearbeta om eventuella saknade filer.
 
 ### Problem: Mörka eller ljusa kanter (vignettering fortfarande synlig)
@@ -103,22 +101,22 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 * Vignettkorrigering inaktiverad.
 * Kamera/objektiv finns inte i Chloros-profildatabasen.
-* Extrem vignettering som överstiger korrigeringskapaciteten.
+* Extrem vignettering som överstiger korrigeringsförmågan.
 
 **Lösningar:**
 
-1. Kontrollera att vignettkorrigering är aktiverad i projektinställningarna.
-2. Kontrollera att kameramodellen har identifierats korrekt.
-3. Kontakta MAPIR support om vignetteringen kvarstår.
+1. Kontrollera att vignettkorrigering är aktiverad i projektinställningarna
+2. Kontrollera att kameramodellen har identifierats korrekt
+3. Kontakta MAPIR-supporten om vignetteringen kvarstår
 
 ### Problem: Felaktiga färger eller värden
 
 **Möjliga orsaker:**
 
-* Inga kalibreringsmål har identifierats.
-* Fel kalibreringsmodell har valts.
-* Reflektanskalibrering är inaktiverad.
-* Målbilderna är av dålig kvalitet.
+* Inga kalibreringsmål har identifierats
+* Fel kalibreringsmålmodell har valts
+* Reflektanskalibrering inaktiverad
+* Målbilder av dålig kvalitet
 
 **Lösningar:**
 
@@ -129,20 +127,16 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 ### Problem: NDVI-värdena verkar felaktiga
 
-**Förväntade NDVI-intervall:**
-
-* **Vatten, stenar, jord**: -0,1 till 0,2
+**Förväntade NDVI-intervall:*** **Vatten, stenar, jord**: -0,1 till 0,2
 * **Gles/ohälsosam vegetation**: 0,2 till 0,4
 * **Måttlig vegetation**: 0,4 till 0,6
-* **Hälsosam, tät vegetation**: 0,6 till 0,9
-
-**Om värdena ligger utanför dessa intervall:**
+* **Hälsosam, tät vegetation**: 0,6 till 0,9**Om värdena ligger utanför dessa intervall:**
 
 1. Kontrollera att reflektanskalibrering har tillämpats.
 2. Kontrollera att ljussensorloggen har inkluderats.
 3. Kontrollera att kalibreringsmålen har detekterats.
 4. Se till att rätt kameramodell har detekterats.
-5. Granska tidpunkten och förhållandena för målbildens tagning.
+5. Granska tidpunkten för och förhållandena vid målbildens tagning.
 
 ***
 
@@ -152,12 +146,12 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 **Rekommenderat arbetsflöde:**
 
-1. **Importera kalibrerade reflektansbilder** till fotogrammetriprogramvara:
+1.**Importera kalibrerade reflektansbilder** till fotogrammetriprogramvara:
    * Pix4Dmapper
    * Agisoft Metashape
    * DroneDeploy
    * WebODM
-2. **Behåll EXIF-metadata**: Se till att GPS-data bevaras för geotaggning
+2. **Behåll EXIF-metadata**: Se till att GPS-data bevaras för geotagging
 3. **Kalibrerade arbetsflöden**: Använd reflektansbilder för vetenskaplig noggrannhet
 4. **Bearbeta indexmosaiker**: Skapa NDVI ortomosaiker från enskilda indexbilder
 5. **Exportera georefererade GeoTIFF**: För användning i GIS-applikationer
@@ -166,59 +160,49 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR Support:
 
 **Rekommenderat arbetsflöde:**
 
-1. **Ladda in i QGIS, ArcGIS eller liknande**
-2. **Använd 16-bitars TIFF** reflektansbilder för multibandsanalys
+1.**Ladda in i QGIS, ArcGIS eller liknande**
+
+2.**Använd 16-bitars TIFF** reflektansbilder för multibandsanalys
 3. **Använd indexbilder** (NDVI, NDRE) som färdiga vegetationslager
 4. **Rasterkalkylator**: Kombinera band för anpassad analys
-5. **Exportera**: Skapa klassificeringskartor, förändringsdetektering, kartor över vegetationens hälsa
+5. **Exportera**: Skapa klassificeringskartor, ändringsdetektering, kartor över vegetationens hälsa
 
 ### För direkt analys/rapportering
 
 **Rekommenderat arbetsflöde:**
 
-1. **Använd indexbilder med LUT-färger** för visuella rapporter
+1.**Använd indexbilder med LUT-färger** för visuella rapporter
 2. **Extrahera statistik**: Medelvärde NDVI per fält/tomt
 3. **Tidsserier**: Jämför index över flera sessioner
-4. **Skapa rapporter**: Inkludera kartor, statistik och visualiseringar
-
-***
+4. **Skapa rapporter**: Inkludera kartor, statistik och visualiseringar***
 
 ## Arkivering och säkerhetskopiering
 
 ### Rekommenderad säkerhetskopieringsstrategi
 
-**Vad du ska spara:**
-
-* ✅ **Originalbilder i RAW/JPG-format** – Arkivera på separat enhet/moln
-* ✅ **Bearbetade resultat** – Behåll kalibrerade bilder och index
+**Vad du ska spara:*** ✅ **Original RAW/JPG-bilder** – Arkivera på separat enhet/moln
+* ✅ **Bearbetade resultat** – Spara kalibrerade bilder och index
 * ✅ **Projektfil** – Innehåller alla inställningar för ombearbetning om det behövs
 * ✅ **Felsökningslogg** – Dokumenterar bearbetningsdetaljer
-* ✅ **Kalibreringsmålbilder** – För verifiering och ombearbetning
-
-**Rekommendationer för lagring:**
-
-* **Omedelbar säkerhetskopiering**: Extern hårddisk
-* **Långtidsarkiv**: Molnlagring (Google Drive, Dropbox, etc.)
-* **Kritiska data**: Spara 2-3 kopior på olika platser
-
-***
+* ✅ **Kalibreringsmålbilder** – För verifiering och ombearbetning**Rekommendationer för lagring:*** **Omedelbar säkerhetskopiering**: Extern hårddisk
+* **Långtidsarkiv**: Molnlagring (Google Drive, Dropbox osv.)
+* **Kritiska data**: Spara 2–3 kopior på olika platser***
 
 ## Nästa bearbetningskörningar
 
 ### Återanvända projektinställningar
 
-Om du bearbetar liknande datamängder i framtiden:
+Om du ska bearbeta liknande datamängder i framtiden:
 
-1. **Spara projektmall** (om det inte redan är gjort)
+1. **Spara projektmall** (om du inte redan har gjort det)
 2. **Skapa nytt projekt** med hjälp av den sparade mallen
 3. **Importera nya bilder**
-4. **Bearbeta** med identiska inställningar för konsistens
+
+4.**Bearbeta**med identiska inställningar för att uppnå konsistens
 
 ### Batchbearbetning av flera sessioner
 
-För flera sessioner/datauppsättningar:
-
-**Alternativ 1: GUI – flera projekt**
+För flera sessioner/datamängder:**Alternativ 1: GUI – flera projekt**
 
 * Skapa separata projekt för varje session.
 * Använd konsekventa mallinställningar.
@@ -254,7 +238,7 @@ Om resultaten inte är tillfredsställande:
 För att bearbeta endast specifika bilder:
 
 1. Skapa ett nytt projekt
-2. Importera endast de bilder som behöver bearbetas igen
+2. Importera endast de bilder som behöver bearbetas om
 3. Använd samma inställningsmall
 4. Bearbeta mindre dataset
 
@@ -265,23 +249,19 @@ Om du stöter på problem:
 * 📧 **E-post**: info@mapir.camera (inkludera felsökningslogg)
 * 🌐 **Support**: [https://www.mapir.camera/community/contact](https://www.mapir.camera/community/contact)
 * 📚 **FAQ**: [Vanliga frågor](../faq.md)
-* 📖 **Dokumentation**: [Chloros Manual](../)
-
-***
+* 📖 **Dokumentation**: [Chloros Manual](../)***
 
 ## Sammanfattning: Komplett arbetsflöde
 
 Du har nu slutfört hela arbetsflödet för Chloros:
 
 1. ✅ **Skapade projekt** – Se [Projekt](../projects.md)
-2. ✅ **Lagt till filer** – Se [Lägga till filer](adding-files-to-a-project.md)
-3. ✅ **Justerat inställningar** – Se [Justera projektinställningar](adjusting-project-settings.md)
-4. ✅ **Markerat mål** – Se [Välja målbilder](choosing-target-images.md)
-5. ✅ **Påbörjad bearbetning** – Se [Påbörja bearbetningen](starting-the-processing.md)
+2. ✅ **Lade till filer** – Se [Lägga till filer](adding-files-to-a-project.md)
+3. ✅ **Justerade inställningar** – Se [Justera projektinställningar](adjusting-project-settings.md)
+4. ✅ **Markerade mål** – Se [Välja målbilder](choosing-target-images.md)
+5. ✅ **Påbörjad bearbetning** – Se [Starta bearbetningen](starting-the-processing.md)
 6. ✅ **Övervakad framsteg** – Se [Övervaka bearbetningen](monitoring-the-processing.md)
-7. ✅ **Granskade resultat** – Denna sida
-
-**Dina kalibrerade, reflektanskorrigerade multispektrala bilder är klara för analys!**
+7. ✅ **Granskade resultat** – Denna sida**Dina kalibrerade, reflektanskorrigerade multispektrala bilder är klara för analys!**
 
 ***
 

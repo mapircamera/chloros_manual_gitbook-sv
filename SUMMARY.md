@@ -29,6 +29,8 @@
 
 ## BILDVISARE (GUI)
 
+* [Bildrutnät](image-viewer-gui/image-grid.md)
 * [Öppna en bild i helskärmsläge](image-viewer-gui/opening-an-image-full-screen.md)
 * [Bildlager](image-viewer-gui/image-layers.md)
-* [Index/LUT Sandbox](image-viewer-gui/index-lut-sandbox.md)
+* [Index/LUT-sandlåda](image-viewer-gui/index-lut-sandbox.md)
+* [Kartmarkörer](image-viewer-gui/map-markers.md)

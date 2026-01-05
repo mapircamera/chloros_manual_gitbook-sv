@@ -37,7 +37,7 @@ pip install chloros-sdk
 ```
 
 {% hint style=&quot;info&quot; %}
-**Första installationen**: Innan du använder SDK måste du aktivera din Chloros+-licens genom att öppna Chloros, Chloros (webbläsare) eller Chloros CLI och logga in med dina inloggningsuppgifter. Detta behöver endast göras en gång.
+**Första installationen**: Innan du använder SDK måste du aktivera din Chloros+-licens genom att öppna Chloros, Chloros (webbläsare) eller Chloros CLI och logga in med dina inloggningsuppgifter. Detta behöver bara göras en gång.
 {% endhint %}
 
 ### Grundläggande användning
@@ -127,12 +127,16 @@ print(f"Chloros SDK version: {chloros_sdk.__version__}")
 
 SDK använder samma licens som Chloros, Chloros (webbläsare) och Chloros CLI. Aktivera en gång via GUI eller CLI:
 
-1. Öppna **Chloros eller Chloros (webbläsare)** och logga in på fliken Användare <img src=".gitbook/assets/icon_user.JPG" alt="" data-size="line"> . Eller öppna **CLI**.
+1. Öppna **Chloros eller Chloros (webbläsare)**och logga in på fliken Användare <img src=".gitbook/assets/icon_user.JPG" alt="" data-size="line"> . Eller öppna**CLI**.
 2. Ange dina Chloros+-inloggningsuppgifter och logga in
 3. Licensen cachas lokalt (kvarstår efter omstart)
 
 {% hint style=&quot;success&quot; %}
 **Engångsinstallation**: Efter inloggning via GUI eller CLI använder SDK automatiskt den cachade licensen. Ingen ytterligare autentisering behövs!
+{% endhint %}
+
+{% hint style=&quot;info&quot; %}
+**Logga ut**: SDK-användare kan programmatiskt rensa cachade autentiseringsuppgifter med metoden `logout()`. Se [logout()-metoden](#logout) i API-referensen.
 {% endhint %}
 
 ### Testa anslutningen
@@ -156,7 +160,7 @@ print(f"Backend running: {status['running']}")
 
 ### ChlorosLocal-klass
 
-Huvudklass för lokal Chloros bildbehandling.
+Huvudklass för lokal Chloros-bildbehandling.
 
 #### Konstruktör
 
@@ -172,13 +176,13 @@ ChlorosLocal(
 
 **Parametrar:**
 
-| Parameter                 | Typ | Standard                   | Beskrivning                           |
+| Parameter                 | Typ | Standardvärde                   | Beskrivning                           |
 | ------------------------- | ---- | ------------------------- | ------------------------------------- |
 | `api_url`                 | str  | `"http://localhost:5000"` | URL av lokal Chloros backend          |
-| `auto_start_backend`      | bool | `True`                    | Starta automatiskt backend om det behövs |
+| `auto_start_backend`      | bool | `True`                    | Starta backend automatiskt vid behov |
 | `backend_exe`             | str  | `None` (automatisk detektering)      | Sökväg till backend-körbar fil            |
 | `timeout`                 | int  | `30`                      | Begär tidsgräns i sekunder            |
-| `backend_startup_timeout` | int  | `60`                      | Tidsgräns för start av backend (sekunder) |
+| `backend_startup_timeout` | int  | `60`                      | Timeout för start av backend (sekunder) |
 
 **Exempel:**
 
@@ -211,9 +215,7 @@ Skapa ett nytt Chloros-projekt.
 | `project_name` | str  | Ja      | Namn på projektet                                     |
 | `camera`       | str  | Nej       | Kameramall (t.ex. &quot;Survey3N\_RGN&quot;, &quot;Survey3W\_OCN&quot;) |
 
-**Returnerar:** `dict` - Svar på projektets skapande
-
-**Exempel:**
+**Returnerar:** `dict` – Svar på projektskapande**Exempel:**
 
 ```python
 # Basic project
@@ -236,9 +238,7 @@ Importera bilder från en mapp.
 | `folder_path` | str/Path | Ja      | Sökväg till mapp med bilder         |
 | `recursive`   | bool     | Nej       | Sök i undermappar (standard: False) |
 
-**Returnerar:** `dict` - Importerade resultat med antal filer
-
-**Exempel:**
+**Returnerar:** `dict` - Importerade resultat med antal filer**Exempel:**
 
 ```python
 # Import from folder
@@ -261,8 +261,8 @@ Konfigurera bearbetningsinställningar.
 | `debayer`                 | str  | &quot;Hög kvalitet (snabbare)&quot; | Debayer-metod                  |
 | `vignette_correction`     | bool | `True`                  | Aktivera vignettkorrigering      |
 | `reflectance_calibration` | bool | `True`                  | Aktivera reflektanskalibrering  |
-| `indices`                 | lista | `None`                  | Vegetationsindex att beräkna |
-| `export_format`           | str  | &quot;TIFF (16-bit)&quot;         | Utdataformat                   |
+| `indices`                 | list | `None`                  | Vegetationsindex att beräkna |
+| `export_format`           | str  | &quot;TIFF (16-bit)&quot;         | Utmatningsformat                   |
 | `ppk`                     | bool | `False`                 | Aktivera PPK-korrigeringar          |
 | `custom_settings`         | dict | `None`                  | Avancerade anpassade inställningar        |
 
@@ -273,11 +273,7 @@ Konfigurera bearbetningsinställningar.
 * `"PNG (8-bit)"` – Visuell inspektion
 * `"JPG (8-bit)"` – Komprimerad utdata
 
-**Tillgängliga index:**
-
-NDVI, NDRE, GNDVI, OSAVI, CIG, EVI, SAVI, MSAVI, MTVI2 och fler.
-
-**Exempel:**
+**Tillgängliga index:**NDVI, NDRE, GNDVI, OSAVI, CIG, EVI, SAVI, MSAVI, MTVI2 och fler.**Exempel:**
 
 ```python
 # Basic configuration
@@ -310,13 +306,13 @@ Bearbeta projektbilderna.
 | ------------------- | -------- | ------------ | ----------------------------------------- |
 | `mode`              | str      | `"parallel"` | Bearbetningsläge: &quot;parallel&quot; eller &quot;serial&quot;   |
 | `wait`              | bool     | `True`       | Vänta på slutförande                       |
-| `progress_callback` | callable | `None`       | Återkopplingsfunktion för framsteg(progress, msg) |
+| `progress_callback` | callable | `None`       | Återkopplingsfunktion för framsteg (progress, msg) |
 | `poll_interval`     | float    | `2.0`        | Pollningsintervall för framsteg (sekunder)   |
 
 **Returnerar:** `dict` - Bearbetningsresultat
 
 {% hint style=&quot;warning&quot; %}
-**Parallellt läge**: Kräver Chloros+-licens. Skalar automatiskt till dina CPU-kärnor (upp till 16 arbetare).
+**Parallellt läge**: Kräver Chloros+ licens. Skalar automatiskt till dina CPU-kärnor (upp till 16 arbetare).
 {% endhint %}
 
 **Exempel:**
@@ -345,9 +341,7 @@ chloros.process(wait=False)
 
 Hämta aktuell projektkonfiguration.
 
-**Returnerar:** `dict` – Aktuell projektkonfiguration
-
-**Exempel:**
+**Returnerar:** `dict` – Aktuell projektkonfiguration**Exempel:**
 
 ```python
 config = chloros.get_config()
@@ -360,9 +354,7 @@ print(config['Project Settings'])
 
 Hämta information om backend-status.
 
-**Returnerar:** `dict` - Backend-status
-
-**Exempel:**
+**Returnerar:** `dict` - Backend-status**Exempel:**
 
 ```python
 status = chloros.get_status()
@@ -381,6 +373,38 @@ Stäng av backend (om den startats av SDK).
 ```python
 chloros.shutdown_backend()
 ```
+
+***
+
+#### `logout()`
+
+Rensa cachade autentiseringsuppgifter från det lokala systemet.
+
+**Beskrivning:**
+
+Loggar ut programmatiskt genom att ta bort cachade autentiseringsuppgifter. Detta är användbart för:
+* Växla mellan olika Chloros+-konton
+* Rensa autentiseringsuppgifter i automatiserade miljöer
+* Säkerhetsändamål (t.ex. ta bort autentiseringsuppgifter innan avinstallation)
+
+**Returnerar:** `dict` - Resultat av utloggningsåtgärd**Exempel:**
+
+```python
+from chloros_sdk import ChlorosLocal
+
+# Initialize SDK
+chloros = ChlorosLocal()
+
+# Clear cached credentials
+result = chloros.logout()
+print(f"Logout successful: {result}")
+
+# After logout, login required via GUI/CLI/Browser before next SDK use
+```
+
+{% hint style=&quot;info&quot; %}
+**Omcertifiering krävs**: Efter att ha anropat `logout()` måste du logga in igen via Chloros, Chloros (webbläsare) eller Chloros CLI innan du använder SDK.
+{% endhint %}
 
 ***
 
@@ -404,9 +428,7 @@ Enradig praktisk funktion för att bearbeta en mapp.
 | `mode`                    | str      | `"parallel"`    | Bearbetningsläge                |
 | `progress_callback`       | callable | `None`          | Återkoppling av förlopp              |
 
-**Returnerar:** `dict` - Bearbetningsresultat
-
-**Exempel:**
+**Returnerar:** `dict` - Bearbetningsresultat**Exempel:**
 
 ```python
 from chloros_sdk import process_folder
@@ -710,9 +732,52 @@ else:
 
 ***
 
-### Exempel 7: Kommandoradsverktyg
+### Exempel 7: Kontohantering och utloggning
 
-Bygg ett anpassat CLI-verktyg med SDK:
+Hantera inloggningsuppgifter programmatiskt:
+
+```python
+from chloros_sdk import ChlorosLocal
+
+def switch_account():
+    """Clear credentials to switch to a different account"""
+    try:
+        chloros = ChlorosLocal()
+        
+        # Clear current credentials
+        result = chloros.logout()
+        print("✓ Credentials cleared successfully")
+        print("Please log in with new account via Chloros, Chloros (Browser), or CLI")
+        
+        return True
+    
+    except Exception as e:
+        print(f"✗ Logout failed: {e}")
+        return False
+
+def secure_cleanup():
+    """Remove credentials for security purposes"""
+    try:
+        chloros = ChlorosLocal()
+        chloros.logout()
+        print("✓ Credentials removed for security")
+        
+    except Exception as e:
+        print(f"Warning: Cleanup error: {e}")
+
+# Switch accounts
+if switch_account():
+    print("\nRe-authenticate via Chloros GUI/CLI/Browser before next SDK use")
+
+# Or perform secure cleanup
+# secure_cleanup()
+```
+
+***
+
+### Exempel 8: Kommandoradsverktyg
+
+Skapa ett anpassat CLI-verktyg med SDK:
 
 ```python
 #!/usr/bin/env python
@@ -735,8 +800,18 @@ def main():
                        help='Camera template')
     parser.add_argument('--format', default='TIFF (16-bit)',
                        help='Export format')
+    parser.add_argument('--logout', action='store_true',
+                       help='Clear cached credentials before processing')
     
     args = parser.parse_args()
+    
+    # Handle logout if requested
+    if args.logout:
+        from chloros_sdk import ChlorosLocal
+        chloros = ChlorosLocal()
+        chloros.logout()
+        print("Credentials cleared. Please re-login via Chloros GUI/CLI/Browser.")
+        return 0
     
     successful = []
     failed = []
@@ -778,7 +853,11 @@ if __name__ == '__main__':
 **Användning:**
 
 ```bash
+# Process multiple folders
 python my_processor.py "C:\Flight001" "C:\Flight002" --indices NDVI NDRE GNDVI
+
+# Clear cached credentials
+python my_processor.py --logout
 ```
 
 ***
@@ -892,9 +971,7 @@ for i in range(0, len(images), batch_size):
 
 ### Backend startar inte
 
-**Problem:** SDK startar inte backend
-
-**Lösningar:**
+**Problem:** SDK kan inte starta backend**Lösningar:**
 
 1. Kontrollera att Chloros Desktop är installerat:
 
@@ -913,11 +990,7 @@ chloros = ChlorosLocal(backend_exe="C:\\Path\\To\\chloros-backend.exe")
 
 ***
 
-### Licensen upptäcks inte
-
-**Problem:** SDK varnar om saknad licens
-
-**Lösningar:**
+### Licens upptäcks inte**Problem:** SDK varnar om saknad licens**Lösningar:**
 
 1. Öppna Chloros, Chloros (webbläsare) eller Chloros CLI och logga in.
 2. Kontrollera att licensen finns i cacheminnet:
@@ -931,15 +1004,23 @@ cache_path = Path(os.getenv('APPDATA')) / 'Chloros' / 'cache'
 print(f"Cache exists: {cache_path.exists()}")
 ```
 
-3. Kontakta supporten: info@mapir.camera
+3. Om du har problem med inloggningsuppgifterna, rensa cacheminnet och logga in igen:
+
+```python
+from chloros_sdk import ChlorosLocal
+
+# Clear cached credentials
+chloros = ChlorosLocal()
+chloros.logout()
+
+# Then login again via Chloros, Chloros (Browser), or Chloros CLI
+```
+
+4. Kontakta supporten: info@mapir.camera
 
 ***
 
-### Importfel
-
-**Problem:** `ModuleNotFoundError: No module named 'chloros_sdk'`
-
-**Lösningar:**
+### Importfel**Problem:** `ModuleNotFoundError: No module named 'chloros_sdk'`**Lösningar:**
 
 ```bash
 # Verify installation
@@ -955,11 +1036,7 @@ python -c "import sys; print(sys.path)"
 
 ***
 
-### Bearbetningstidsgräns
-
-**Problem:** Bearbetningen tar för lång tid
-
-**Lösningar:**
+### Bearbetningstidsgräns**Problem:** Bearbetningstiden löper ut**Lösningar:**
 
 1. Öka tidsgränsen:
 
@@ -967,17 +1044,13 @@ python -c "import sys; print(sys.path)"
 chloros = ChlorosLocal(timeout=120)  # 2 minutes
 ```
 
-2. Bearbeta mindre batcher
+2. Bearbeta mindre batchar
 3. Kontrollera tillgängligt diskutrymme
 4. Övervaka systemresurser
 
 ***
 
-### Porten används redan
-
-**Problem:** Backend-port 5000 upptagen
-
-**Lösningar:**
+### Porten används redan**Problem:** Backend-port 5000 upptagen**Lösningar:**
 
 ```python
 # Use different port
@@ -1003,7 +1076,7 @@ Get-NetTCPConnection -LocalPort 5000
 chloros.process(mode="parallel")  # Up to 16 workers
 ```
 
-2. **Minska utdataupplösningen** (om det är acceptabelt)
+2. **Minska utgångsupplösningen** (om det är acceptabelt)
 
 ```python
 chloros.configure(export_format="PNG (8-bit)")  # Faster than TIFF
@@ -1016,11 +1089,9 @@ chloros.configure(export_format="PNG (8-bit)")  # Faster than TIFF
 chloros.configure(indices=["NDVI"])  # Not all indices
 ```
 
-4. **Bearbeta på SSD** (inte HDD)
+4. **Bearbeta på SSD** (inte HDD)***
 
-***
-
-### Minneoptimering
+### Minnesoptimering
 
 För stora datamängder:
 
@@ -1123,17 +1194,13 @@ chloros.process(progress_callback=notebook_progress)
 
 ### F: Kräver SDK en internetanslutning?
 
-**S:** Endast för initial licensaktivering. Efter inloggning via Chloros, Chloros (webbläsare) eller Chloros CLI cachelagras licensen lokalt och fungerar offline i 30 dagar.
+**S:** Endast för initial licensaktivering. Efter inloggning via Chloros, Chloros (webbläsare) eller Chloros CLI sparas licensen lokalt och fungerar offline i 30 dagar.***
 
-***
-
-### F: Kan jag använda SDK på en server utan GUI?
-
-**S:** Ja! Krav:
+### F: Kan jag använda SDK på en server utan GUI?**S:** Ja! Krav:
 
 * Windows Server 2016 eller senare
 * Chloros installerat (engångsinstallation)
-* Licensen aktiverad på valfri maskin (cachelagrad licens kopierad till servern)
+* Licens aktiverad på valfri maskin (cachelagrad licens kopierad till servern)
 
 ***
 
@@ -1145,17 +1212,13 @@ chloros.process(progress_callback=notebook_progress)
 | **Bäst för**    | Visuellt arbete | Skriptning        | Integration |
 | **Automatisering**  | Begränsad     | Bra             | Utmärkt   |
 | **Flexibilitet** | Grundläggande       | Bra             | Maximal     |
-| **Licens**     | Chloros+    | Chloros+         | Chloros+    |
+| **Licens**     | Chloros+    | Chloros+         | Chloros+    |***
 
-***
+### F: Kan jag distribuera appar som skapats med SDK?**S:** SDK-kod kan integreras i dina applikationer, men:
 
-### F: Kan jag distribuera appar som skapats med SDK?
-
-**S:** SDK-kod kan integreras i dina applikationer, men:
-
-* Slutanvändare måste ha Chloros installerat
-* Slutanvändarna behöver aktiva Chloros+-licenser
-* Kommersiell distribution kräver OEM-licensiering
+* Slutanvändarna måste ha Chloros installerat
+* Slutanvändarna måste ha aktiva Chloros+-licenser
+* Kommersiell distribution kräver OEM-licensiering.
 
 Kontakta info@mapir.camera för OEM-förfrågningar.
 
@@ -1174,6 +1237,7 @@ pip install --upgrade chloros-sdk
 Som standard i projektvägen:
 
 ```
+
 Project_Path/
 └── MyProject/
     └── Survey3N_RGN/          # Processed outputs
@@ -1181,9 +1245,7 @@ Project_Path/
 
 ***
 
-### F: Kan jag bearbeta bilder från Python-skript som körs enligt schema?
-
-**S:** Ja! Använd Windows Task Scheduler med Python-skript:
+### F: Kan jag bearbeta bilder från Python-skript som körs enligt schema?**S:** Ja! Använd Windows Task Scheduler med Python-skript:
 
 ```python
 # scheduled_processing.py
@@ -1197,9 +1259,7 @@ Schemalägg via Task Scheduler för att köra dagligen.
 
 ***
 
-### F: Stöder SDK async/await?
-
-**S:** Den aktuella versionen är synkron. För asynkron funktion, använd `wait=False` eller kör i separat tråd:
+### F: Stöder SDK async/await?**S:** Den aktuella versionen är synkron. För asynkron funktion, använd `wait=False` eller kör i separat tråd:
 
 ```python
 import threading
@@ -1212,6 +1272,22 @@ thread.start()
 
 # Continue with other work...
 ```
+
+***
+
+### F: Hur växlar jag mellan olika Chloros+-konton?**S:** Använd metoden `logout()` för att rensa cachade inloggningsuppgifter och logga sedan in igen med det nya kontot:
+
+```python
+from chloros_sdk import ChlorosLocal
+
+# Clear current credentials
+chloros = ChlorosLocal()
+chloros.logout()
+
+# Re-login via Chloros, Chloros (Browser), or Chloros CLI with new account
+```
+
+Efter utloggning, autentisera med det nya kontot via GUI, webbläsaren eller CLI innan du använder SDK igen.
 
 ***
 
@@ -1229,12 +1305,10 @@ thread.start()
 
 ### Exempelkod
 
-Alla exempel som listas här är testade och produktionsklara. Kopiera och anpassa dem efter ditt användningsfall.
+Alla exempel som listas här är testade och produktionsklara. Kopiera och anpassa dem för ditt användningsfall.
 
 ***
 
-## Licens
-
-**Proprietär programvara** – Copyright (c) 2025 MAPIR Inc.
+## Licens**Proprietär programvara** – Copyright (c) 2025 MAPIR Inc.
 
 SDK kräver ett aktivt Chloros+-abonnemang. Obehörig användning, distribution eller modifiering är förbjuden.

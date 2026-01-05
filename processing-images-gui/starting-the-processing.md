@@ -26,13 +26,13 @@ Innan du klickar på Start-knappen, kontrollera att allt är klart:
 Start-/uppspelningsknappen finns i den övre rubrikraden i Chloros:
 
 * Position: Övre mitten av fönstret
-* Ikon: **Uppspelnings-/startknapp** <img src="../.gitbook/assets/image (2).png" alt="" data-size="line">
+* Ikon: **Uppspelnings-/startknapp** <img src="../.gitbook/assets/image (2) (1).png" alt="" data-size="line">
 * Status: Knappen är aktiverad (ljus) när den är redo för bearbetning
 
 ### Klicka för att starta
 
 1. Klicka på **knappen Spela/Starta** i den övre rubriken
-2. Bearbetningen startar omedelbart
+2. Bearbetningen påbörjas omedelbart
 3. Knappen blir inaktiverad (grå) under bearbetningen
 4. Progressionsfältet uppdateras och visar bearbetningsstatus
 
@@ -52,16 +52,14 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 **Så här fungerar det:**
 
-* Bearbetar bilder en i taget, sekventiellt
-* Enkelsträngad drift
-* Lägre minnesanvändning
+* Bearbetar bilder en i taget, sekventiellt.
+* Enkelsträngad drift.
+* Lägre minnesanvändning.
 
 **Förloppsindikatorn visar två steg:**
 
-1. **Måldetektering** – Söker efter kalibreringsmål
-2. **Bearbetning** – Tillämpar kalibrering och exporterar bilder
-
-**Bearbetningstid:**
+1.**Måldetektering** – Söker efter kalibreringsmål.
+2. **Bearbetning** – Tillämpar kalibrering och exporterar bilder.**Bearbetningstid:**
 
 * Mycket långsammare än Chloros+ parallellt läge
 * Lämpligt för små till medelstora datamängder (&lt; 200 bilder)
@@ -79,25 +77,19 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 **Förloppsindikatorn visar fyra steg:**
 
-1. **Detektering** – Hitta kalibreringsmål
-2. **Analys** – Undersöka bildmetadata och förbereda pipeline
+1.**Detektering** – Hitta kalibreringsmål
+2. **Analys** – Undersök bildmetadata och förbered pipeline
 3. **Kalibrering** – Tillämpar korrigeringar och kalibreringar
-4. **Export** – Sparar bearbetade bilder och index
-
-**Interaktion med förloppsindikatorn:**
-
-* **Håll muspekaren** över indikatorn för att se en detaljerad nedrullningsbar panel med fyra steg
+4. **Export** – Sparar bearbetade bilder och index**Interaktion med förloppsindikatorn:*** **Håll muspekaren** över indikatorn för att se en detaljerad nedrullningsbar panel med fyra steg
 * **Klicka** på förloppsindikatorn för att frysa nedrullningspanelen på plats
-* **Klicka igen** för att låsa upp och dölja panelen
-
-**Bearbetningstid:**
+* **Klicka igen** för att låsa upp och dölja panelen**Bearbetningstid:**
 
 * Betydligt snabbare än fritt läge
-* Skalas med CPU-kärnantal
+* Skalas med antalet CPU-kärnor
 * GPU-acceleration förbättrar hastigheten ytterligare
 
 {% hint style=&quot;info&quot; %}
-**Chloros+ Hastighet**: Parallell bearbetning kan vara 5-10 gånger snabbare än sekventiellt läge för stora datamängder. Ett projekt med 500 bilder som tar 2 timmar i gratis läge kan slutföras på 15-20 minuter med Chloros+.
+**Chloros+ Hastighet**: Parallellbearbetning kan vara 5-10 gånger snabbare än sekventiellt läge för stora datamängder. Ett projekt med 500 bilder som tar 2 timmar i gratis läge kan slutföras på 15-20 minuter med Chloros+.
 {% endhint %}
 
 ***
@@ -109,7 +101,7 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 **Vad Chloros gör:**
 
 * Skannar markerade målbilder (eller alla bilder om inga är markerade)
-* Identifierar de 4 kalibreringspanelerna i varje mål
+* Identifierar de fyra kalibreringspanelerna i varje mål
 * Extraherar reflektansvärden från målpanelerna
 * Registrerar måltidsstämplar för kalibreringsschemaläggning
 
@@ -127,14 +119,12 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 ### Steg 3: Kalibrering
 
-**Vad Chloros gör:**
-
-* **Vignettkorrigering**: Tar bort linsförmörkning i kanterna
+**Vad Chloros gör:*** **Vignettkorrigering**: Tar bort linsmörkning i kanterna
 * **Reflektanskalibrering**: Normaliserar med hjälp av målreflektansvärden
 * Tillämpar korrigeringar över alla band/kanaler
 * Använder lämpligt kalibreringsmål för varje bild baserat på tidsstämpel
 
-**Varaktighet:** Största delen av bearbetningstiden
+**Varaktighet:** Merparten av bearbetningstiden
 
 ### Steg 4: Indexberäkning
 
@@ -155,9 +145,7 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 * Skriver filer till undermappar för kameramodeller
 * Bevarar originalfilnamn med suffix
 
-**Varaktighet:** Varierar beroende på exportformat och filstorlek
-
-***
+**Varaktighet:** Varierar beroende på exportformat och filstorlek***
 
 ## Bearbetningsbeteende
 
@@ -167,7 +155,7 @@ När den har startats körs hela pipelinen automatiskt:
 
 * Ingen användarinteraktion behövs
 * Alla konfigurerade steg utförs i sekvens
-* Uppdateringar av förloppet visas i realtid
+* Uppdateringar av framsteg visas i realtid
 
 ### Datoranvändning under bearbetning
 
@@ -179,35 +167,33 @@ När den har startats körs hela pipelinen automatiskt:
 
 **Chloros+ Parallellt läge:**
 
-* Hög CPU-användning (multitrådad, upp till 16 kärnor)
+* Hög CPU-användning (flersträngad, upp till 16 kärnor)
 * Med GPU-acceleration: Hög GPU-användning
 * Datorn kan vara mindre responsiv under bearbetningen
 * Undvik att starta andra CPU-intensiva uppgifter
 
 {% hint style=&quot;warning&quot; %}
-**Prestandatips**: För bästa Chloros+ prestanda, stäng andra program och låt Chloros använda alla systemresurser.
+**Prestandatips**: För bästa prestanda med Chloros+ stänger du andra program och låter Chloros använda alla systemresurser.
 {% endhint %}
 
 ### Bearbetningen kan inte pausas
 
 **Viktiga begränsningar:**
 
-* När bearbetningen har startat kan den inte pausas
-* Du kan avbryta bearbetningen, men då går framstegen förlorade
-* Delresultat sparas inte
-* Om bearbetningen avbryts måste du börja om från början
+* När bearbetningen har startat kan den inte pausas.
+* Du kan avbryta bearbetningen, men då går framstegen förlorade.
+* Delresultat sparas inte.
+* Om bearbetningen avbryts måste du börja om från början.
 
-**Planeringstips:** För mycket stora projekt bör du överväga att bearbeta i omgångar eller använda CLI för bättre kontroll.
-
-***
+**Planeringstips:** För mycket stora projekt bör du överväga att bearbeta i omgångar eller använda CLI för bättre kontroll.***
 
 ## Övervaka din bearbetning
 
 Medan bearbetningen pågår kan du:
 
 * **Se förloppsindikatorn** – Se den totala procentuella färdigställningsgraden
-* **Visa aktuellt steg** – Detektera, analysera, kalibrera eller exportera
-* **Kontrollera fliken Logg** – Se detaljerade bearbetningsmeddelanden och varningar
+* **Visa aktuell fas** – Detektera, analysera, kalibrera eller exportera
+* **Kontrollera loggfliken** – Se detaljerade bearbetningsmeddelanden och varningar
 * **Förhandsgranska färdiga bilder** – Vissa exportfiler kan visas under bearbetningen
 
 För detaljerad information om övervakning, se [Övervaka bearbetningen](monitoring-the-processing.md).
@@ -239,10 +225,10 @@ Om du behöver avbryta bearbetningen:
 * Granska och åtgärda eventuella problem
 * Justera inställningarna efter behov
 * Starta om bearbetningen från början
-* För bästa resultat, stäng Chloros helt och starta om
+* För bästa resultat, stäng Chloros helt och starta om.
 
 {% hint style=&quot;warning&quot; %}
-**Inga partiella resultat**: Avbrytande raderar all framsteg. Chloros sparar inte delvis bearbetade bilder.
+**Inga partiella resultat**: Avbrytande raderar all framsteg. Chloros sparar inte partiellt bearbetade bilder.
 {% endhint %}
 
 ***
@@ -266,7 +252,7 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 | ----------- | --------- | -------------- | -------------- |
 | 50 bilder   | 15–20 min | 5–8 min        | 3–5 min        |
 | 100 bilder  | 30–40 min | 10–15 min      | 5–8 min        |
-| 200 bilder  | 1–1,5 timmar | 20–30 min      | 10–15 min      |
+| 200 bilder  | 1–1,5 tim | 20–30 min      | 10–15 min      |
 | 500 bilder  | 2-3 timmar   | 45-60 min      | 20-30 min      |
 | 1000 bilder | 4-6 timmar   | 1,5-2 timmar      | 40-60 min      |
 
@@ -331,10 +317,10 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 
 ### Innan du börjar
 
-1. **Testa först med en liten delmängd** – Bearbeta 10–20 bilder för att verifiera inställningarna.
+1. **Testa först med en liten delmängd** – Bearbeta 10–20 bilder för att kontrollera inställningarna.
 2. **Kontrollera tillgängligt diskutrymme** – Se till att det finns 2–3 gånger datamängdens storlek ledigt.
 3. **Stäng onödiga program** – Frigör systemresurser.
-4. **Verifiera målbilder** – Förhandsgranska markerade mål för att säkerställa kvaliteten.
+4. **Kontrollera målbilder** – Förhandsgranska markerade mål för att säkerställa kvaliteten.
 5. **Spara projektet** – Projektet sparas automatiskt, men det är bra att spara manuellt.
 
 ### Under bearbetningen

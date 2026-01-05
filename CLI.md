@@ -21,7 +21,7 @@
 | **Diskutrymme**       | Varierar beroende på projektets storlek                                              |
 
 {% hint style=&quot;warning&quot; %}
-**Licenskrav**: CLI kräver ett betalt Chloros+-abonnemang. Standardabonnemang (gratis) har inte tillgång till CLI. Besök [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing) för att uppgradera.
+**Licenskrav**: CLI kräver ett betalt Chloros+-abonnemang. Standardplaner (gratis) har inte tillgång till CLI. Besök [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing) för att uppgradera.
 {% endhint %}
 
 ## Snabbstart
@@ -31,6 +31,7 @@
 CLI ingår automatiskt i installationsprogrammet Chloros:
 
 1. Ladda ner och kör **Chloros Installer.exe**
+
 2. Följ installationsguiden
 3. CLI installeras till: `C:\Program Files\Chloros\resources\cli\chloros-cli.exe`
 
@@ -96,15 +97,15 @@ chloros-cli process "C:\Datasets\Survey_001" --vignette --reflectance
 | Alternativ                | Typ    | Standard        | Beskrivning                                                                            |
 | --------------------- | ------- | -------------- | -------------------------------------------------------------------------------------- |
 | `<input-folder>`      | Sökväg    | _Krävs_     | Mapp som innehåller multispektrala RAW/JPG-bilder                                         |
-| `-o, --output`        | Sökväg    | Samma som inmatning  | Utmatningsmapp för bearbetade bilder                                                     |
+| `-o, --output`        | Sökväg    | Samma som indata  | Utdatamapp för bearbetade bilder                                                     |
 | `-n, --project-name`  | Sträng  | Autogenererad | Anpassat projektnamn                                                                    |
 | `--vignette`          | Flagga    | Aktiverad        | Aktivera vignettkorrigering                                                             |
 | `--no-vignette`       | Flagga    | -              | Inaktivera vignettkorrigering                                                            |
 | `--reflectance`       | Flagga    | Aktiverad        | Aktivera reflektanskalibrering                                                         |
 | `--no-reflectance`    | Flagga    | -              | Inaktivera reflektanskalibrering                                                        |
 | `--ppk`               | Flagga    | Inaktiverad       | Tillämpa PPK-korrigeringar från .daq-ljussensordata                                      |
-| `--format`            | Val  | TIFF (16-bit)  | Utdataformat: `TIFF (16-bit)`, `TIFF (32-bit, Percent)`, `PNG (8-bit)`, `JPG (8-bit)` |
-| `--min-target-size`   | Heltal | Auto           | Minsta målstorlek i pixlar för kalibreringspaneldetektering                          |
+| `--format`            | Val  | TIFF (16-bit)  | Utmatningsformat: `TIFF (16-bit)`, `TIFF (32-bit, Percent)`, `PNG (8-bit)`, `JPG (8-bit)` |
+| `--min-target-size`   | Heltal | Auto           | Minsta målstorlek i pixlar för kalibreringspanelsdetektering                          |
 | `--target-clustering` | Heltal | Auto           | Tröskelvärde för målkluster (0-100)                                                    |
 | `--exposure-pin-1`    | Sträng  | Ingen           | Lås exponering för kameramodell (stift 1)                                                 |
 | `--exposure-pin-2`    | Sträng  | Ingen           | Lås exponering för kameramodell (stift 2)                                                 |
@@ -133,9 +134,7 @@ chloros-cli login user@example.com 'MyP@ssw0rd123'
 **Specialtecken**: Använd enkla citattecken runt lösenord som innehåller tecken som `$`, `!` eller mellanslag.
 {% endhint %}
 
-**Utdata:**
-
-<figure><img src=".gitbook/assets/cli login_w.JPG" alt=""><figcaption></figcaption></figure>***
+**Utdata:**<figure><img src=".gitbook/assets/cli login_w.JPG" alt=""><figcaption></figcaption></figure>***
 
 ### `logout` - Rensa inloggningsuppgifter
 
@@ -159,6 +158,10 @@ chloros-cli logout
 ✓ Logout successful
 ℹ Credentials cleared from cache
 ```
+
+{% hint style=&quot;info&quot; %}
+**SDK Användare**: Python SDK tillhandahåller också en programmatisk `logout()`-metod för att rensa autentiseringsuppgifter inom Python-skript. Se [Python SDK-dokumentationen](api-python-sdk.md#logout) för mer information.
+{% endhint %}
 
 ***
 
@@ -209,13 +212,11 @@ chloros-cli export-status
 chloros-cli export-status
 ```
 
-**Användningsfall:** Använd detta kommando medan bearbetningen pågår för att kontrollera exportförloppet.
-
-***
+**Användningsfall:** Använd detta kommando medan bearbetningen pågår för att kontrollera exportförloppet.***
 
 ### `language` – Hantera gränssnittsspråk
 
-Visa eller ändra gränssnittsspråket CLI.
+Visa eller ändra gränssnittsspråket för CLI.
 
 **Syntax:**
 
@@ -271,7 +272,7 @@ chloros-cli language ja
 | `th`    | Thailändska                  | ไทย              |
 | `sv`    | Svenska               | Svenska          |
 | `da`    | Danska                | Dansk            |
-| `no`    | Norska             | Norsk            |
+| `no`    | Norsk             | Norsk            |
 | `fi`    | Finska               | Suomi            |
 | `el`    | Grekiska                 | Ελληνικά         |
 | `cs`    | Tjeckiska                 | Čeština          |
@@ -287,15 +288,15 @@ chloros-cli language ja
 | `lt`    | Litauiska            | Lietuvių         |
 | `lv`    | Lettiska               | Latviešu         |
 | `et`    | Estniska              | Eesti            |
-| `sl`    | Slovensk             | Slovenščina      |
+| `sl`    | Slovenska             | Slovenščina      |
 
 {% hint style=&quot;success&quot; %}
-**Automatisk lagring**: Dina språkinställningar sparas i `~/.chloros/cli_language.json` och lagras under alla sessioner.
+**Automatisk lagring**: Dina språkinställningar sparas i `~/.chloros/cli_language.json` och lagras mellan alla sessioner.
 {% endhint %}
 
 ***
 
-### `set-project-folder` - Ställ in standardprojektmapp
+### `set-project-folder` – Ställ in standardprojektmapp
 
 Ändra standardprojektmappens plats (delad med GUI).
 
@@ -373,15 +374,11 @@ chloros-cli --port 5001 process "C:\Datasets\Survey_001"
 
 ### Parallell bearbetning
 
-Chloros+ CLI **skalar automatiskt** parallell bearbetning för att matcha din dators kapacitet:
-
-**Så fungerar det:**
+Chloros+ CLI **skalar automatiskt**parallell bearbetning för att matcha din dators kapacitet:**Så fungerar det:**
 
 * Detekterar dina CPU-kärnor och RAM-minne
 * Tilldelar arbetare: **2× CPU-kärnor** (använder hyperthreading)
-* **Maximalt: 16 parallella arbetare** (för stabilitet)
-
-**Systemnivåer:**
+* **Maximalt: 16 parallella arbetare** (för stabilitet)**Systemnivåer:**
 
 | Systemtyp   | CPU        | RAM      | Arbetare  | Prestanda     |
 | ------------- | ---------- | -------- | -------- | --------------- |
@@ -403,7 +400,7 @@ CLI använder **Hög kvalitet (snabbare)** som standard och rekommenderad debaye
 
 ### Vignettkorrigering
 
-**Vad den gör:** Korrigerar ljusfall vid bildkanterna (mörkare hörn som är vanliga i kamerabilder).
+**Vad den gör:** Korrigerar ljusfallet vid bildkanterna (mörkare hörn som är vanliga i kamerabilder).
 
 * **Aktiverat som standard** – De flesta användare bör ha detta aktiverat
 * Använd `--no-vignette` för att inaktivera
@@ -416,9 +413,9 @@ CLI använder **Hög kvalitet (snabbare)** som standard och rekommenderad debaye
 
 Konverterar råa sensorvärden till standardiserade reflektansprocenttal med hjälp av kalibreringspaneler.
 
-* **Aktiverat som standard** – Väsentligt för vegetationsanalys
-* Kräver kalibreringsmålpaneler i bilderna
-* Använd `--no-reflectance` för att inaktivera
+* **Aktiverat som standard** – Väsentligt för vegetationsanalys.
+* Kräver kalibreringsmålpaneler i bilder.
+* Använd `--no-reflectance` för att inaktivera.
 
 {% hint style=&quot;info&quot; %}
 **Krav**: Se till att kalibreringspanelerna är korrekt exponerade och synliga i dina bilder för korrekt reflektanskonvertering.
@@ -584,6 +581,7 @@ if __name__ == '__main__':
 ### Exempel på utdatastruktur
 
 ```
+
 MyProject/
 ├── project.json                             # Project metadata
 ├── 2025_0203_193056_008.JPG                # Original JPG
@@ -641,11 +639,10 @@ dir "C:\Program Files\Chloros\resources\cli\chloros-cli.exe"
 
 ***
 
-### Backend kunde inte startas
-
-**Fel:**
+### Backend kunde inte startas**Fel:**
 
 ```
+
 Backend failed to start within 30 seconds
 ```
 
@@ -667,17 +664,16 @@ chloros-cli --restart process "C:\Datasets\Field_A"
 
 ***
 
-### Licens-/autentiseringsproblem
-
-**Fel:**
+### Licens-/autentiseringsproblem**Fel:**
 
 ```
+
 Chloros+ license required for CLI access
 ```
 
 **Lösningar:**
 
-1. Kontrollera att du har ett aktivt Chloros+-abonnemang.
+1. Kontrollera att du har ett aktivt Chloros+-abonnemang
 2. Logga in med dina inloggningsuppgifter:
 
 ```powershell
@@ -694,11 +690,10 @@ chloros-cli status
 
 ***
 
-### Inga bilder hittades
-
-**Fel:**
+### Inga bilder hittades**Fel:**
 
 ```
+
 No images found in the specified folder
 ```
 
@@ -711,9 +706,7 @@ No images found in the specified folder
 
 ***
 
-### Bearbetningen avbryts eller hänger sig
-
-**Lösningar:**
+### Bearbetningen avbryts eller hänger sig**Lösningar:**
 
 1. Kontrollera tillgängligt diskutrymme (se till att det finns tillräckligt för utdata).
 2. Stäng andra program för att frigöra minne.
@@ -721,11 +714,10 @@ No images found in the specified folder
 
 ***
 
-### Porten används redan
-
-**Fel:**
+### Porten används redan**Fel:**
 
 ```
+
 Port 5000 is already in use
 ```
 
@@ -743,7 +735,7 @@ chloros-cli --port 5001 process "C:\Datasets\Field_A"
 
 ### F: Behöver jag en licens för CLI?
 
-**S:** Ja! CLI kräver en betald **Chloros+ licens**.
+**S:**Ja! CLI kräver en betald**Chloros+-licens**.
 
 * ❌ Standardplan (gratis): CLI inaktiverad
 * ✅ Chloros+ (betald) plan: CLI fullt aktiverad
@@ -752,9 +744,7 @@ Prenumerera på: [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera
 
 ***
 
-### F: Kan jag använda CLI på en server utan GUI?
-
-**S:** Ja! CLI körs helt utan grafiskt gränssnitt. Krav:
+### F: Kan jag använda CLI på en server utan GUI?**S:** Ja! CLI körs helt utan grafiskt gränssnitt. Krav:
 
 * Windows Server 2016 eller senare
 * Visual C++ Redistributable installerat
@@ -763,9 +753,7 @@ Prenumerera på: [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera
 
 ***
 
-### F: Var sparas bearbetade bilder?
-
-**S:** Som standard sparas bearbetade bilder i **samma mapp som ingången** i undermappar för kameramodeller (t.ex. `Survey3N_RGN/`).
+### F: Var sparas bearbetade bilder?**S:**Som standard sparas bearbetade bilder i**samma mapp som ingången** i undermappar för kameramodeller (t.ex. `Survey3N_RGN/`).
 
 Använd alternativet `-o` för att ange en annan utdatamapp:
 
@@ -775,15 +763,9 @@ chloros-cli process "C:\Input" -o "D:\Output"
 
 ***
 
-### F: Kan jag bearbeta flera mappar samtidigt?
+### F: Kan jag bearbeta flera mappar samtidigt?**S:** Inte direkt med ett enda kommando, men du kan använda skript för att bearbeta mappar i tur och ordning. Se avsnittet [Automatisering och skript](CLI.md#automation--scripting).***
 
-**S:** Inte direkt med ett enda kommando, men du kan använda skript för att bearbeta mappar i tur och ordning. Se avsnittet [Automatisering och skript](CLI.md#automation--scripting).
-
-***
-
-### F: Hur sparar jag CLI-utdata i en loggfil?
-
-**PowerShell:**
+### F: Hur sparar jag CLI-utdata till en loggfil?**PowerShell:**
 
 ```powershell
 chloros-cli process "C:\Datasets\Field_A" | Tee-Object -FilePath "processing.log"
@@ -797,9 +779,7 @@ chloros-cli process "C:\Datasets\Field_A" > processing.log 2>&1
 
 ***
 
-### F: Vad händer om jag trycker på Ctrl+C under bearbetningen?
-
-**S:** CLI kommer att:
+### F: Vad händer om jag trycker på Ctrl+C under bearbetningen?**S:** CLI kommer att:
 
 1. Avsluta bearbetningen på ett korrekt sätt
 2. Stänga av backend
@@ -809,15 +789,9 @@ Delvis bearbetade bilder kan finnas kvar i utdatamappen.
 
 ***
 
-### F: Kan jag automatisera CLI-bearbetningen?
+### F: Kan jag automatisera CLI-bearbetningen?**S:** Absolut! CLI är utformat för automatisering. Se [Automatisering och skriptning](CLI.md#automation--scripting) för exempel på PowerShell, Batch och Python.***
 
-**S:** Absolut! CLI är utformat för automatisering. Se [Automatisering och skriptning](CLI.md#automation--scripting) för exempel på PowerShell, Batch och Python.
-
-***
-
-### F: Hur kontrollerar jag CLI-versionen?
-
-**S:**
+### F: Hur kontrollerar jag versionen av CLI?**S:**
 
 ```powershell
 chloros-cli --version
@@ -826,6 +800,7 @@ chloros-cli --version
 **Utdata:**
 
 ```
+
 Chloros CLI 1.0.2
 ```
 
@@ -851,9 +826,7 @@ chloros-cli language --help
 
 * **E-post**: info@mapir.camera
 * **Webbplats**: [https://www.mapir.camera/community/contact](https://www.mapir.camera/community/contact)
-* **Priser**: [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing)
-
-***
+* **Priser**: [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing)***
 
 ## Kompletta exempel
 
@@ -880,7 +853,7 @@ chloros-cli process "C:\Datasets\Field_A" ^
 
 ***
 
-### Exempel 3: Snabb förhandsgranskningsbearbetning
+### Exempel 3: Snabb förhandsgranskning
 
 8-bitars PNG utan kalibrering för snabb granskning:
 
@@ -905,7 +878,7 @@ chloros-cli process "C:\Datasets\Field_A" ^
 
 ***
 
-### Exempel 5: Anpassad utmatningsplats
+### Exempel 5: Anpassad utdataplats
 
 Bearbeta till annan enhet med specifikt format:
 

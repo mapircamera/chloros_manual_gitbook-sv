@@ -6,9 +6,7 @@ Användarmenyn <img src=".gitbook/assets/icon_user.JPG" alt="" data-size="line">
 
 När du är inloggad visas dina kontouppgifter:
 
-<figure><img src=".gitbook/assets/user_account.JPG" alt="" width="375"><figcaption></figcaption></figure>
-
-## CLI Inloggning
+<figure><img src=".gitbook/assets/user_account.JPG" alt="" width="375"><figcaption></figcaption></figure>## CLI Inloggning
 
 Logga in med dina Chloros+-inloggningsuppgifter för att aktivera CLI-bearbetning.
 
@@ -17,6 +15,10 @@ Logga in med dina Chloros+-inloggningsuppgifter för att aktivera CLI-bearbetnin
 ```bash
 chloros-cli login <email> <password>
 ```
+
+{% hint style=&quot;info&quot; %}
+**SDK-användare**: Python SDK tillhandahåller också en programmatisk `logout()`-metod för att rensa cachade inloggningsuppgifter. Se [Python SDK dokumentationen](api-python-sdk.md#logout) för mer information.
+{% endhint %}
 
 **Exempel:**
 
@@ -30,9 +32,7 @@ chloros-cli login user@example.com 'MyP@ssw0rd123'
 
 **Utdata:**
 
-<figure><img src=".gitbook/assets/cli login_w.JPG" alt=""><figcaption></figcaption></figure>
-
-### Planens giltighetstid
+<figure><img src=".gitbook/assets/cli login_w.JPG" alt=""><figcaption></figcaption></figure>### Planens giltighetstid
 
 Planens giltighetstid i GUI visar när din licens upphör att gälla. För återkommande månadsabonnemang upphör giltighetstiden vid månadens slut. För årsabonnemang är det ett år efter att du startade abonnemanget. Licenskontrollen kräver en månatlig internetanslutning för verifiering, med en 30 dagars respitperiod.
 
