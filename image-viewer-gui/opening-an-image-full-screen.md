@@ -10,7 +10,7 @@ Det vanligaste sättet att öppna en bild i Image Viewer:
 
 1. Se till att du befinner dig på fliken **File Browser** (Filbläddraren). <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line">
 2. Klicka på valfri **bildminiatyr** i bildrutnätet
-3. Bilden öppnas i **huvudförhandsgranskningsområdet** (mitt på skärmen)
+3. Bilden öppnas i **huvudförhandsgranskningsområdet** (mitten av skärmen)
 4. Bilden är nu laddad och redo för visning i helskärmsläge
 
 ### Öppna fliken Bildvisare
@@ -64,18 +64,12 @@ Justera förstoringen för att granska bilddetaljer:
 * Tryck på **−** (minus)-tangenten
 * Rulla mushjulet **nedåt**
 
-**Anpassa till skärmen:**
-
-* Klicka på **↔** (Anpassa)-knappen.
-* Tryck på **0** (Noll)-tangenten.
-* Dubbelklicka på bilden.
-
 #### Panorera när du zoomar
 
 När du zoomar in bortom skärmstorleken:
 
-1. Flytta muspekaren över bilden.
-2. Klicka och **håll ned vänster musknapp**.
+1. Flytta muspekaren över bilden
+2. Klicka och **håll ned vänster musknapp**
 3. **Dra** för att flytta bilden
 4. Släpp för att sluta panorera
 
@@ -83,7 +77,7 @@ När du zoomar in bortom skärmstorleken:
 
 ***
 
-## Kontroll av pixelvärden
+## Granska pixelvärden
 
 ### Visa pixelvärden vid markören
 
@@ -91,24 +85,26 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
 
 **Värdeskärmens placering:**
 
-* **Flytande tal och röd linje i index LUT-gradientlegend på höger sida**
+* **Flytande tal och röd linje i index LUT-gradientlegenden på höger sida**
 * **När du zoomar in ytterligare visas ett flytande värde nära markören och den markerade pixeln**
 * Visar värden för pixeln **under markören eller den markerade pixeln**
 * Uppdateras när du flyttar musen
 
 ***
 
-## Bildtyper du kan visa
+## Bildtyper som du kan visa
 
-### Originalbilder (före bearbetning)
+### JPG
 
-**RAW + JPG-bilder från kameran:**
+**JPG-bilder från kamera:**
 
-* Visar RAW-data som förhandsgranskning
-* Visar originalvärden utan korrigeringar
+* Visar JPG-data som förhandsgranskning
+* Visar ursprungliga, okorrigerade värden
 * Användbart för att kontrollera bildkvaliteten före bearbetning
 
-### Kalibrerade reflektansbilder
+### RAW (original)
+
+### RAW (reflektans)
 
 **Efter bearbetning:**
 
@@ -117,11 +113,11 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
 * Multiband TIFF (Red, Green, NIR, etc.)
 * Vetenskapliga data redo för analys
 
-### Indexbilder
+### RAW (Index)
 
 **NDVI, NDRE, GNDVI, etc. (\_NDVI.tif-filer):**
 
-* Enbandsgråskalebilder
+* Enkelbandsgråskalebilder
 * Pixelvärden representerar indexberäkningsresultat
 * Intervallet är vanligtvis -1 till +1 för normaliserade index
 * Kan tillämpa färg-LUT:er för visualisering
@@ -148,26 +144,14 @@ Se [Index/LUT Sandbox](index-lut-sandbox.md) för detaljerade instruktioner.
 
 * **→** (högerpil): Nästa bild
 * **←** (vänsterpil): Föregående bild
-* **Hem**: Första bilden i listan
+* **Home**: Första bilden i listan
 * **Slut**: Sista bilden i listan
 
 ### Zooma
 
 * **+** eller **=**: Zooma in
 * **−**: Zooma ut
-* **0** (noll): Anpassa till skärmen
 * **Mushjul**: Zooma in/ut
-
-### Visningskontroller
-
-* **P**: Växla mellan pixelprocentläge
-* **L**: Växla mellan lagerpaneler
-* **Esc**: Stäng helskärmsläge eller återgå till filbläddraren
-
-### Övrigt
-
-* **Ctrl+S**: Spara aktuell bild
-* **F**: Helskärmsläge (om tillgängligt)
 
 ***
 
@@ -221,16 +205,16 @@ Kontrollera att indexen är korrekt beräknade:
 
 **Möjliga orsaker:**
 
-* Visar fel bild (original vs bearbetad)
+* Fel bild visas (original vs bearbetad).
 * Kalibreringen tillämpades inte korrekt.
-* Ljusgivardata inkluderades inte i indata.
+* Ljusgivardata ingick inte i indata.
 * Procentläget växlades felaktigt.
 
 **Lösningar:**
 
 1. Kontrollera att du visar bearbetad utdata (kontrollera filnamnstillägget).
 2. Kontrollera procentlägesknappens status.
-3. Jämför med bilder från samma dataset som du vet är korrekta.
+3. Jämför med kända bra bilder från samma dataset.
 
 ***
 
