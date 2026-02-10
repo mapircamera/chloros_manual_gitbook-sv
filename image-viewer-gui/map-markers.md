@@ -1,6 +1,6 @@
 # Kartmarkörer
 
-Fliken Karta visar dina bilder på en interaktiv 2D-karta baserad på deras GPS-koordinater. Detta ger en geografisk översikt över din bildtagning och hjälper dig att visualisera den rumsliga täckningen. Det är också användbart när du först importerar dina bilder för att snabbt ta bort bilder som du inte behöver bearbeta.
+Fliken Karta visar dina bilder på en interaktiv 2D-karta baserad på deras GPS-koordinater. Detta ger en geografisk översikt över din inspelningssession och hjälper dig att visualisera den rumsliga täckningen. Det är också användbart när du först importerar dina bilder för att snabbt ta bort bilder som du inte behöver bearbeta.
 
 <figure><img src="../.gitbook/assets/chloros_map_markers.gif" alt=""><figcaption></figcaption></figure>
 
@@ -19,7 +19,7 @@ Fliken Karta visar dina bilder på en interaktiv 2D-karta baserad på deras GPS-
 
 ## Justera bilder från fliken Karta
 
-Fliken **Karta** <img src="../.gitbook/assets/image (3).png" alt="" data-size="line"> har samma funktioner för att lägga till  <img src="../.gitbook/assets/image.png" alt="" data-size="line">   <img src="../.gitbook/assets/image (1).png" alt="" data-size="line">  och ta bort  <img src="../.gitbook/assets/image (2).png" alt="" data-size="line">  filknapparna som fliken [**Filbläddraren**](../processing-images-gui/adding-files-to-a-project.md) <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> . Den visar också samma projektfiltabell, men med olika kolumnrubriker:
+Fliken **Karta**<img src="../.gitbook/assets/image (3).png" alt="" data-size="line"> har samma funktioner för att lägga till  <img src="../.gitbook/assets/image.png" alt="" data-size="line">   <img src="../.gitbook/assets/image (1).png" alt="" data-size="line">  och ta bort  <img src="../.gitbook/assets/image (2).png" alt="" data-size="line">  filknapparna som fliken [**Filbläddraren**](../processing-images-gui/adding-files-to-a-project.md) <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> . Den visar också samma projektfiltabell, men med andra kolumnrubriker:
 
 ### Filnamn
 
@@ -52,24 +52,24 @@ Varje bild med GPS-data representeras av en markör på kartan:
 
 * Markörerna anger de exakta GPS-koordinaterna där varje bild togs.
 * Klustrade markörer kan grupperas när du zoomar ut.
-* Zooma in för att se enskilda bilders platser.
+* Zooma in för att se enskilda bildplatser.
 
 {% hint style="success" %}
-SUPERZOOM: När du når den maximala zoomnivån från kartkortsleverantören förstoras kartkortet vid ytterligare zoomning, så att du kan se markörer som ligger nära varandra.
+SUPERZOOM: När du når den maximala zoomnivån från kartkakel-leverantören förstoras kakeln vid ytterligare zoomning, så att du kan se markörer som ligger nära varandra.
 {% endhint %}
 
 ### Förhandsgranskning vid muspekning
 
-* **Håll muspekaren** över en markör för att se en miniatyrförhandsgranskning av den bilden.
-* Detta möjliggör snabb visuell identifiering utan att lämna kartvyn.
+* **Håll muspekaren** över en markör för att se en förhandsgranskning av bilden i miniatyrformat.
+* Detta möjliggör snabb visuell identifiering utan att du behöver lämna kartvyn.
 * Användbart för att hitta specifika bilder inom en stor bildsession.
 
 ***
 
-## Kartkakel-leverantörer
+## Kartkortsleverantörer
 
 {% hint style="success" %}
-**Automatisk val**: Chloros väljer automatiskt den kartleverantör som ger den bästa zoomnivån för din aktuella kartposition. Du kan växla mellan leverantörer manuellt om du vill.
+**Automatisk val**: Chloros väljer automatiskt den kartleverantör som ger den bästa zoomnivån för din aktuella kartposition. Du kan manuellt växla mellan leverantörer om du vill.
 {% endhint %}
 
 Fliken Karta stöder två kartleverantörer för bakgrundskartbilder:
@@ -90,7 +90,7 @@ Fliken Karta stöder två kartleverantörer för bakgrundskartbilder:
 
 Du kan välja kartlagstyp (från vänster till höger):
 
- <img src="../.gitbook/assets/image (23).png" alt="" data-size="line">### Terräng
+ <img src="../.gitbook/assets/image (23).png" alt="" data-size="original">### Terräng
 
 Visar höjdprofiler och kartkakel med detaljer (vägar etc.)
 
@@ -117,9 +117,7 @@ Visar satellitkartkakel med extra detaljer (vägar etc.)
 
 ### Panoreringkontroller
 
-* **Panorera**: Klicka och dra för att flytta runt på kartan.
-
-***
+* **Panorera**: Klicka och dra för att flytta runt på kartan.***
 
 ## Användningsfall
 
@@ -133,12 +131,12 @@ Visar satellitkartkakel med extra detaljer (vägar etc.)
 
 * Se den rumsliga fördelningen av markbaserade bilder
 * Lokalisera kalibreringsmålbilder i förhållande till undersökningsområdet
-* Planera ytterligare bildtagningsplatser
+* Planera ytterligare bildtagningplatser
 
 ### Kvalitetskontroll
 
 * Identifiera snabbt bilder som tagits på oväntade platser.
-* Verifiera GPS-noggrannheten i hela datasetet.
+* Kontrollera GPS-noggrannheten i hela datasetet.
 * Korsreferera bildplatser med fältanteckningar.
 
 ***
@@ -159,7 +157,7 @@ Visar satellitkartkakel med extra detaljer (vägar etc.)
 
 **Möjliga orsaker:**
 
-* Kamerans GPS hade dålig satellitfix.
+* Kamerans GPS hade dålig satellitfixering.
 * GPS-avvikelse under fotograferingen.
 
 **Lösning**: Detta är vanligtvis ett problem med fotograferingstidpunkten. Överväg att använda PPK/RTK GPS för precisionsapplikationer.

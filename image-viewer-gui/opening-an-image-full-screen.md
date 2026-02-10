@@ -30,11 +30,9 @@ När en bild har laddats i förhandsgranskningsområdet:
 Den största delen av skärmen visar din bild:
 
 * **Full upplösning**: Bilder visas i originalupplösning.
-* **Zoombara**: Använd kontrollerna eller mushjulet för att zooma
-* **Panorerbara**: Klicka och dra för att flytta runt när du har zoomat
-* **Bildförhållandet bibehålls**: Bilderna skalas proportionellt
-
-***
+* **Zoomalbar**: Använd kontrollerna eller mushjulet för att zooma
+* **Panorerbar**: Klicka och dra för att flytta runt när du har zoomat
+* **Bildförhållandet bibehålls**: Bilderna skalas proportionellt***
 
 ## Visningsalternativ
 
@@ -44,51 +42,39 @@ Den största delen av skärmen visar din bild:
 
 Navigera genom din bilduppsättning med hjälp av kortkommandon eller knappar:
 
-* **Nästa bild**: Klicka på →-knappen eller tryck på **→** (högerpilen)
-* **Föregående bild**: Klicka på ←-knappen eller tryck på **←** (vänsterpilen)
+* **Nästa bild**: Klicka på →-knappen eller tryck på**→** (högerpilen)
+* **Föregående bild**: Klicka på ←-knappen eller tryck på**←** (vänsterpilen)
 * **Hoppa till en specifik bild**: Gå tillbaka till filbläddraren och klicka på önskad miniatyrbild
 
 #### Zoomkontroller
 
 Justera förstoringen för att granska bilddetaljer:
 
-**Zooma in:**
-
-* Klicka på **+** (plus)-knappen
-* Tryck på **+** eller **=**-tangenten
+**Zooma in:*** Klicka på **+** (plus)-knappen
+* Tryck på **+**eller**=**-tangenten
 * Rulla mushjulet **uppåt**
 
-**Zooma ut:**
-
-* Klicka på **−** (minus)-knappen
+**Zooma ut:*** Klicka på **−** (minus)-knappen
 * Tryck på **−** (minus)-tangenten
 * Rulla mushjulet **nedåt**
 
-#### Panorera när du zoomar
+#### Panorera när du har zoomat in
 
-När du zoomar in bortom skärmstorleken:
+När du har zoomat in bortom skärmstorleken:
 
 1. Flytta muspekaren över bilden
 2. Klicka och **håll ned vänster musknapp**
-3. **Dra** för att flytta bilden
+
+3.**Dra** för att flytta bilden
 4. Släpp för att sluta panorera
 
-**Alternativ**: Använd piltangenterna för att panorera i små steg
-
-***
+**Alternativ**: Använd piltangenterna för att panorera i små steg***
 
 ## Granska pixelvärden
 
 ### Visa pixelvärden vid markören
 
-När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
-
-**Värdeskärmens placering:**
-
-* **Flytande tal och röd linje i index LUT-gradientlegenden på höger sida**
-* **När du zoomar in ytterligare visas ett flytande värde nära markören och den markerade pixeln**
-* Visar värden för pixeln **under markören eller den markerade pixeln**
-* Uppdateras när du flyttar musen
+När du flyttar muspekaren över bilden visas pixelvärdena i realtid:**Värdeskärmens placering:*** **Flytande tal och röd linje i index LUT-gradientlegenden på höger sida*** **När du zoomar in ytterligare visas ett flytande värde nära markören och den markerade pixeln*** Visar värden för pixeln **under markören eller den markerade pixeln*** Uppdateras när du flyttar musen
 
 ***
 
@@ -109,7 +95,7 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
 **Efter bearbetning:**
 
 * Vignettkorrigerad
-* Reflektanskalibrerad
+* Reflektans kalibrerad
 * Multiband TIFF (Red, Green, NIR, etc.)
 * Vetenskapliga data redo för analys
 
@@ -117,7 +103,7 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
 
 **NDVI, NDRE, GNDVI, etc. (\_NDVI.tif-filer):**
 
-* Enkelbandsgråskalebilder
+* Enbandsgråskalebilder
 * Pixelvärden representerar indexberäkningsresultat
 * Intervallet är vanligtvis -1 till +1 för normaliserade index
 * Kan tillämpa färg-LUT:er för visualisering
@@ -128,7 +114,7 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:
 
 Tillämpa multispektrala index och färg-LUT:er:
 
-1. Leta reda på **Index/LUT Sandbox** i **Image Viewer** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i sidofältet
+1. Leta reda på **Index/LUT Sandbox**i**Image Viewer** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i sidofältet
 2. Välj vegetationsindex (NDVI, NDRE, etc.)
 3. Välj multispektralformel eller skapa en egen anpassad formel (endast Chloros+)
 4. Tillämpa färg-LUT-gradient för visualisering
@@ -149,15 +135,13 @@ Se [Index/LUT Sandbox](index-lut-sandbox.md) för detaljerade instruktioner.
 
 ### Zooma
 
-* **+** eller **=**: Zooma in
+* **+**eller**=**: Zooma in
 * **−**: Zooma ut
-* **Mushjul**: Zooma in/ut
-
-***
+* **Mushjul**: Zooma in/ut***
 
 ### Verifiera indexberäkningar
 
-Kontrollera att indexen är korrekt beräknade:
+Kontrollera att indexen har beräknats korrekt:
 
 1. Öppna NDVI eller annan indexbild
 2. Kontrollera vegetationsområden:
@@ -166,9 +150,7 @@ Kontrollera att indexen är korrekt beräknade:
    * **GNDVI**: Liknar NDVI men klorofyllkänslig
 3. Kontrollera icke-vegetation:
    * **Jord**: Nära 0 eller något negativt
-   * **Vatten**: Negativa värden (-0,5 till 0)
-
-***
+   * **Vatten**: Negativa värden (-0,5 till 0)***
 
 ## Felsökning av visningsproblem
 
@@ -198,16 +180,16 @@ Kontrollera att indexen är korrekt beräknade:
 **Lösningar:**
 
 1. Kontrollera pixelvärdena – om alla är mycket låga eller mycket höga, justera visningsintervallet.
-2. Försök öppna i QGIS eller liknande med automatisk intervalljustering.
+2. Försök öppna i QGIS eller liknande med automatisk justering av intervallet.
 3. Kontrollera felsökningsloggen från bearbetningen för fel.
 
 ### Pixelvärdena verkar felaktiga
 
 **Möjliga orsaker:**
 
-* Fel bild visas (original vs bearbetad).
+* Fel bild visas (original vs bearbetad)
 * Kalibreringen tillämpades inte korrekt.
-* Ljusgivardata ingick inte i indata.
+* Ljusgivardata inkluderades inte i indata.
 * Procentläget växlades felaktigt.
 
 **Lösningar:**

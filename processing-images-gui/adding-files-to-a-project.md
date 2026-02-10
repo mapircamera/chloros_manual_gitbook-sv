@@ -33,9 +33,7 @@ Använd det här alternativet för att importera alla bilder från en mapp på e
 
 1. Klicka på knappen **&quot;Lägg till mapp&quot;** <img src="../.gitbook/assets/image (1).png" alt="" data-size="line"> längst upp i filbläddrarpanelen.
 2. Navigera till och välj mappen som innehåller bilderna från din fotograferingssession.
-3. Klicka på **&quot;Välj mapp&quot;** för att importera alla bilder som stöds från den mappen.
-
-***
+3. Klicka på **&quot;Välj mapp&quot;** för att importera alla bilder som stöds från den mappen.***
 
 ## Förstå filbläddrarens tabell
 
@@ -43,14 +41,14 @@ När bilderna har importerats visas de i en tabell med följande kolumner:
 
 ### Filnamn
 
-* Originalfilnamn från kameran
-* Behåller kamerans namngivningskonvention (t.ex. IMG\_0001.RAW)
+* Originalfilnamn från kameran.
+* Behåller kamerans namngivningskonvention (t.ex. IMG\_0001.RAW).
 
 ### Tidsstämpel
 
-* Datum och tid då bilden togs
-* Extraherad från bildens EXIF-metadata
-* Används för PPK-synkronisering och kalibreringsmåldetektering
+* Datum och tid då bilden togs.
+* Extraherad från bildens EXIF-metadata.
+* Används för PPK-synkronisering och kalibreringsmåldetektering.
 
 ### Kameramodell
 
@@ -86,9 +84,7 @@ Så här tar du bort oönskade bilder från ditt projekt:
 
 * **Sortera efter kolumn**: Klicka på valfri kolumnrubrik för att sortera bilderna.
 * **Sortera efter tidsstämpel**: Användbart för att organisera kronologiska bildsekvenser.
-* **Filtrera efter kameramodell**: Gruppera bilder efter kameratyp om du använder flera kameror.
-
-***
+* **Filtrera efter kameramodell**: Gruppera bilder efter kameratyp om du använder flera kameror.***
 
 ## Bildförhandsgranskning
 
@@ -105,9 +101,7 @@ Klicka på valfri miniatyrbild i filbläddraren för att visa den i huvudförhan
 * **Föregående bild**: Klicka på vänsterpilen eller tryck på ←-tangenten.
 * **Nästa bild**: Klicka på högerpilen eller tryck på →-tangenten
 * **Zooma in/ut**: Använd mushjulet eller zoomknapparna
-* **Panorera**: Klicka och dra på bilden när du har zoomat in
-
-***
+* **Panorera**: Klicka och dra på bilden när du har zoomat in***
 
 ## Hantering av dubbletter
 
@@ -132,9 +126,7 @@ Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 3. Filbläddraren visar kameramodellen i kolumnen Kameramodell.
 4. Bearbetningen tillämpar korrekta inställningar för varje kameratyp.
 
-**Exempel på scenario**: Survey3W RGN + Survey3N OCN dubbla kameror.
-
-***
+**Exempel på scenario**: Survey3W RGN + Survey3N OCN dubbla kameror.***
 
 ## Bästa praxis
 
@@ -188,15 +180,13 @@ Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 * Kamerans klocka är inte korrekt inställd
 * EXIF-data har tagits bort av extern programvara
 
-**Lösning**: Kontrollera att kamerans tidsinställningar var korrekta under fotograferingen
-
-***
+**Lösning**: Kontrollera att kamerans tidsinställningar var korrekta vid fotograferingen***
 
 ## Nästa steg
 
 När dina filer har importerats:
 
-1. **Granska fillistan** – Se till att alla bilder har laddats korrekt
+1. **Granska fillistan** – Kontrollera att alla bilder har laddats korrekt
 2. **Kontrollera kameramodeller** – Kontrollera att kameran har identifierats korrekt
 3. **Markera målbilder** – Se [Välja målbilder](choosing-target-images.md)
 4. **Justera inställningar** – Konfigurera bearbetningsalternativ i [Projektinställningar](adjusting-project-settings.md)

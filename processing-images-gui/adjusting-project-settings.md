@@ -8,7 +8,7 @@ Innan du bearbetar dina bilder är det viktigt att konfigurera projektinställni
 2. Klicka på ikonen **Projektinställningar** <img src="../.gitbook/assets/icon_project-settings.JPG" alt="" data-size="line"> i vänster sidofält
 3. Panelen Projektinställningar visar alla konfigurationsalternativ
 
-{% hint style=&quot;info&quot; %}
+{% hint style="info" %}
 **Inställningarna sparas automatiskt** med ditt projekt. När du öppnar ett projekt igen återställs alla inställningar.
 {% endhint %}
 
@@ -22,7 +22,7 @@ För typiska MAPIR Survey3 kamerararbetsflöden fungerar standardinställningarn
 
 * ✅ **Vignettkorrigering**: Aktiverad
 * ✅ **Reflektanskalibrering**: Aktiverad (kräver bilder av MAPIR-mål)
-* ✅ **Debayer-metod**: Hög kvalitet (snabbare)
+* ✅ **Debayer-metod**: Standard (snabb, medelhög kvalitet)
 * ✅ **Exportformat**: TIFF (16-bitars)
 
 Importera bara dina bilder och börja bearbeta med dessa standardinställningar.
@@ -37,33 +37,35 @@ Panelen Projektinställningar är indelad i flera kategorier. Nedan följer en s
 
 Styr hur Chloros identifierar kalibreringsmål i dina bilder.
 
-**Viktiga inställningar:**
+**Viktiga inställningar:*** **Minsta kalibreringsprovområde**: Storleksgräns för måldetektering (standard: 25 pixlar)
+* **Minsta målkluster**: Likhetsgräns för gruppering av målområden (standard: 60)**När ska du justera:**
 
-* **Minsta kalibreringsprovområde**: Storleksgräns för måldetektering (standard: 25 pixlar)
-* **Minsta målkluster**: Likhetsgräns för gruppering av målområden (standard: 60)
-
-**När ska du justera:**
-
-* Öka provområdet om du får falska detekteringar.
-* Minska om målen inte detekteras.
-* Justera klustringen om målen delas upp i flera detekteringar.
+* Öka provområdet om du får falska detekteringar
+* Minska om mål inte detekteras
+* Justera klustring om mål delas upp i flera detekteringar
 
 ### Bearbetning
 
-Huvudsakliga alternativ för bildbearbetning och kalibrering.
+Huvudsakliga bildbearbetnings- och kalibreringsalternativ.
 
-**Viktiga inställningar:**
-
-* **Vignettkorrigering**: Kompenserar för linsens mörkare kanter ✅ Rekommenderas
-* **Reflektionskalibrering**: Normaliserar värden med hjälp av kalibreringsmål ✅ Rekommenderas
+**Viktiga inställningar:*** **Vignettkorrigering**: Kompenserar för linsförmörkning vid kanterna ✅ Rekommenderas
+* **Reflektanskalibrering**: Normaliserar värden med hjälp av kalibreringsmål ✅ Rekommenderas
 * **Debayer-metod**: Algoritm för att konvertera RAW till 3-kanals multispektral
-* **Minsta omkalibreringsintervall**: Tid mellan användning av kalibreringsmål (0 = använd alla)
-
-**Avancerade inställningar:**
-
-* **Ljussensorns tidszonsförskjutning**: För PPK-tidssynkronisering (standard: 0)
+* **Minsta omkalibreringsintervall**: Tid mellan användning av kalibreringsmål (0 = använd alla)**Avancerade inställningar:*** **Ljussensorns tidszonsförskjutning**: För PPK-tidssynkronisering (standard: 0)
 * **Tillämpa PPK-korrigeringar**: Använder GPS-/exponeringsstiftdata från .daq-filer
 * **Exponeringsstift 1/2**: Tilldelar kameror till exponeringsstift för dubbla kamerakonfigurationer
+
+### Debayer-metod
+
+Vi erbjuder för närvarande två debayering-metoder i Chloros:
+
+#### Standard (snabb, medelhög kvalitet)
+
+Standarddebayering bearbetas snabbt men visar debayering-färgbrus, vilket resulterar i mindre exakta och mer brusiga bilder.
+
+#### Texturmedveten (långsam, högsta kvalitet) \[Endast Chloros+]
+
+Texturmedveten använder en högkvalitativ kantmedveten debayering i kombination med en AI/ML-brusreduceringsmodell som tar bort nästan allt debayering-brus. Modellen Texturmedveten kräver GPU-minne (VRAM) för att köras. Vi rekommenderar att du använder den när du har &gt;4 GB VRAM tillgängligt för snabbare bearbetning.
 
 ### Index (multispektrala index)
 
@@ -71,20 +73,17 @@ Konfigurera vilka vegetationsindex som ska beräknas och exporteras.
 
 **Så här lägger du till index:**
 
-1. Klicka på knappen **&quot;Lägg till index&quot;**
+1. Klicka på knappen**&quot;Lägg till index&quot;**
+
 2. Välj ett index från rullgardinsmenyn (NDVI, NDRE, GNDVI, etc.)
 3. Konfigurera visualiseringsinställningar (LUT-färger, värdeintervall)
 4. Lägg till flera index efter behov
 
-**Populära index:**
-
-* **NDVI**: Allmän vegetationens hälsa (vanligast)
+**Populära index:*** **NDVI**: Allmän vegetationens hälsa (vanligast)
 * **NDRE**: Tidig stressdetektering med RedEdge
 * **GNDVI**: Känslig för klorofyllkoncentration
 * **OSAVI**: Fungerar bra med synlig jord
-* **EVI**: Regioner med högt bladarealindex (LAI)
-
-**Anpassade formler (endast Chloros+):**
+* **EVI**: Regioner med högt bladarealindex (LAI)**Anpassade formler (endast Chloros+):**
 
 * Skapa anpassade multispektrala indexformler
 * Använd bandmatematik med alla bildkanaler
@@ -96,25 +95,21 @@ För alla tillgängliga index och formler, se [Multispektrala indexformler](../p
 
 Styr utdatafilformat och kvalitet.
 
-**Tillgängliga format:**
-
-* **TIFF (16-bitars)**: Rekommenderas för GIS och vetenskaplig analys (intervall 0–65 535)
+**Tillgängliga format:*** **TIFF (16-bitars)**: Rekommenderas för GIS och vetenskaplig analys (intervall 0–65 535)
 * **TIFF (32-bitars, procent)**: Flytande reflektansvärden (intervall 0,0–1,0)
 * **PNG (8-bitars)**: Förlustfri komprimering för visualisering (intervall 0–255)
-* **JPG (8-bitars)**: Minsta filer, förlustfri komprimering (intervall 0–255)
-
-***
+* **JPG (8-bitars)**: Minsta filer, förlustrik komprimering (intervall 0–255)***
 
 ## Spara och ladda inställningar
 
 ### Spara projektmall
 
-Skapa återanvändbara mallar för konsekventa arbetsflöden:
+Skapa återanvändbara mallar för enhetliga arbetsflöden:
 
-1. Konfigurera alla önskade inställningar i panelen Projektinställningar.
-2. Bläddra till avsnittet **”Spara projektmall”** längst ned.
-3. Ange ett beskrivande mallnamn (t.ex. ”Survey3N\_RGN\_Agriculture”).
-4. Klicka på ikonen Spara.
+1. Konfigurera alla önskade inställningar i panelen Projektinställningar
+2. Bläddra till avsnittet **”Spara projektmall”** längst ned
+3. Ange ett beskrivande mallnamn (t.ex. ”Survey3N\_RGN\_Agriculture”)
+4. Klicka på ikonen Spara
 
 **Fördelar:**
 
@@ -152,25 +147,22 @@ Om du använder MAPIR DAQ-inspelare med GPS för exakt geolokalisering:
 
 * MAPIR DAQ med GPS-modul (GNSS)
 * .daq-loggfil med exponeringstiftposter
-* Kamera ansluten till DAQ-exponeringsstift under inspelningssessionen
+* Kamera ansluten till DAQ-exponeringstift under inspelningssessionen
 
 ### Konfigurationssteg
 
-1. Placera .daq-loggfilen i din projektmapp.
-2. I Projektinställningar aktiverar du kryssrutan **&quot;Tillämpa PPK-korrigeringar&quot;**.
-3. Ställ in **&quot;Ljussensorns tidszonsförskjutning&quot;** om det behövs (standard: 0 för UTC).
+1. Placera .daq-loggfilen i din projektmapp
+2. I Projektinställningar aktiverar du kryssrutan **&quot;Tillämpa PPK-korrigeringar&quot;**
+
+3. Ställ in**&quot;Light sensor timezone offset&quot;** (Ljussensorns tidszonsförskjutning) om det behövs (standard: 0 för UTC)
 4. Tilldela kameror till exponeringsstift:
    * **Enkel kamera**: Tilldelas automatiskt till stift 1
-   * **Två kameror**: Tilldela varje kamera manuellt till rätt stift
-
-**Tilldelning av exponeringsstift:**
-
-* **Exponeringsstift 1**: Välj kameramodell från rullgardinsmenyn
+   * **Dubbla kameror**: Tilldela varje kamera manuellt till rätt stift**Tilldelning av exponeringsstift:*** **Exponeringsstift 1**: Välj kameramodell från rullgardinsmenyn
 * **Exponeringsstift 2**: Välj en andra kamera eller &quot;Använd inte&quot;
 * Samma kamera kan inte tilldelas båda stiften
 
-{% hint style=&quot;warning&quot; %}
-**Viktigt**: Exponeringsstift måste tilldelas korrekt till respektive kamera. Felaktig tilldelning resulterar i felaktiga geolokaliseringsdata.
+{% hint style="warning" %}
+**Viktigt**: Exponeringsstiften måste tilldelas korrekt till respektive kamera. Felaktig tilldelning resulterar i felaktiga geolokaliseringsdata.
 {% endhint %}
 
 ***
@@ -183,7 +175,7 @@ När du bearbetar bilder från flera MAPIR-kameror i ett projekt:
 
 1. Chloros identifierar automatiskt varje kameramodell
 2. Varje kamera får en lämplig bearbetningsprofil
-3. PPK: Tilldela manuellt varje kamera rätt exponeringsstift
+3. PPK: Tilldela varje kamera manuellt till rätt exponeringsstift
 4. Alla kameror använder samma exportformat och index
 
 **Exempel**: Survey3W RGN + Survey3N OCN rigg med dubbla kameror
@@ -209,7 +201,7 @@ För projekt med många bilder (500+):
 
 ***
 
-## Kontrollera dina inställningar
+## Verifiera dina inställningar
 
 Innan du börjar bearbeta, granska dessa viktiga inställningar:
 
