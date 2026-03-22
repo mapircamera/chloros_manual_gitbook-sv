@@ -1,36 +1,36 @@
 # Öppna en bild i helskärmsläge
 
-Chloros Image Viewer har ett särskilt gränssnitt i helskärmsläge för visning, analys och bearbetning av multispektrala bilder. Oavsett om du visar originalbilder eller bearbetade resultat erbjuder Image Viewer kraftfulla verktyg för granskning och analys.
+Bildvisaren Chloros har ett särskilt gränssnitt för helskärmsvisning som gör det möjligt att visa, analysera och bearbeta dina multispektrala bilder. Oavsett om du tittar på originalbilder eller bearbetade resultat erbjuder bildvisaren kraftfulla verktyg för granskning och analys.
 
-## Öppna Image Viewer
+## Öppna bildvisaren
 
 ### Från filbläddraren
 
-Det vanligaste sättet att öppna en bild i Image Viewer:
+Det vanligaste sättet att öppna en bild i bildvisaren:
 
-1. Se till att du befinner dig på fliken **File Browser** (Filbläddraren). <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line">
+1. Se till att du befinner dig på fliken **Filbläddraren** <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line">
 2. Klicka på valfri **bildminiatyr** i bildrutnätet
-3. Bilden öppnas i **huvudförhandsgranskningsområdet** (mitten av skärmen)
+3. Bilden öppnas i **huvudförhandsgranskningsområdet** (mitt på skärmen)
 4. Bilden är nu laddad och redo för visning i helskärmsläge
 
 ### Öppna fliken Bildvisare
 
 När en bild har laddats i förhandsgranskningsområdet:
 
-1. Klicka på ikonen **Bildvisare** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i vänster sidofält.
-2. Fliken Bildvisare öppnas och visar den valda bilden i helskärmsläge.
-3. Avancerade visnings- och analysverktyg blir tillgängliga i vänster sidofält.
+1. Klicka på **Bildvisare** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i vänster sidofält
+2. Fliken Bildvisare öppnas och visar den valda bilden i helskärmsläge
+3. Avancerade visnings- och analysverktyg blir tillgängliga i vänster sidofält
 
 ***
 
-## Översikt över bildvisarens gränssnitt
+## Översikt över gränssnittet i bildvisaren
 
 ### Huvudvisningsområde
 
 Den största delen av skärmen visar din bild:
 
-* **Full upplösning**: Bilder visas i originalupplösning.
-* **Zoomalbar**: Använd kontrollerna eller mushjulet för att zooma
+* **Full upplösning**: Bilder visas i ursprunglig upplösning
+* **Zoombar**: Använd kontrollerna eller mushjulet för att zooma
 * **Panorerbar**: Klicka och dra för att flytta runt när du har zoomat
 * **Bildförhållandet bibehålls**: Bilderna skalas proportionellt***
 
@@ -40,7 +40,7 @@ Den största delen av skärmen visar din bild:
 
 #### Bläddra igenom bilder
 
-Navigera genom din bilduppsättning med hjälp av kortkommandon eller knappar:
+Navigera genom din bildsamling med hjälp av kortkommandon eller knappar:
 
 * **Nästa bild**: Klicka på →-knappen eller tryck på**→** (högerpilen)
 * **Föregående bild**: Klicka på ←-knappen eller tryck på**←** (vänsterpilen)
@@ -51,14 +51,14 @@ Navigera genom din bilduppsättning med hjälp av kortkommandon eller knappar:
 Justera förstoringen för att granska bilddetaljer:
 
 **Zooma in:*** Klicka på **+** (plus)-knappen
-* Tryck på **+**eller**=**-tangenten
+* Tryck på **+**- eller**=**-tangenten
 * Rulla mushjulet **uppåt**
 
 **Zooma ut:*** Klicka på **−** (minus)-knappen
 * Tryck på **−** (minus)-tangenten
 * Rulla mushjulet **nedåt**
 
-#### Panorera när du har zoomat in
+#### Panorera vid zoomning
 
 När du har zoomat in bortom skärmstorleken:
 
@@ -66,19 +66,19 @@ När du har zoomat in bortom skärmstorleken:
 2. Klicka och **håll ned vänster musknapp**
 
 3.**Dra** för att flytta bilden
-4. Släpp för att sluta panorera
+4. Släpp för att avsluta panoreringen
 
 **Alternativ**: Använd piltangenterna för att panorera i små steg***
 
-## Granska pixelvärden
+## Granskning av pixelvärden
 
 ### Visa pixelvärden vid markören
 
-När du flyttar muspekaren över bilden visas pixelvärdena i realtid:**Värdeskärmens placering:*** **Flytande tal och röd linje i index LUT-gradientlegenden på höger sida*** **När du zoomar in ytterligare visas ett flytande värde nära markören och den markerade pixeln*** Visar värden för pixeln **under markören eller den markerade pixeln*** Uppdateras när du flyttar musen
+När du flyttar muspekaren över bilden visas pixelvärden i realtid:**Plats för värdevisning:*** **Flytande siffra och röd linje i index-LUT-gradientlegenden på höger sida*** **När du zoomar in ytterligare, flytande värde nära markören och markerad pixel*** Visar värden för pixel **under markören eller markerad*** Uppdateras när du flyttar musen
 
 ***
 
-## Bildtyper som du kan visa
+## Bildtyper du kan visa
 
 ### JPG
 
@@ -88,13 +88,13 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:**Värdesk
 * Visar ursprungliga, okorrigerade värden
 * Användbart för att kontrollera bildkvaliteten före bearbetning
 
-### RAW (original)
+### RAW (Original)
 
-### RAW (reflektans)
+### RAW (Reflektans)
 
 **Efter bearbetning:**
 
-* Vignettkorrigerad
+* Vignettering korrigerad
 * Reflektans kalibrerad
 * Multiband TIFF (Red, Green, NIR, etc.)
 * Vetenskapliga data redo för analys
@@ -105,18 +105,18 @@ När du flyttar muspekaren över bilden visas pixelvärdena i realtid:**Värdesk
 
 * Enbandsgråskalebilder
 * Pixelvärden representerar indexberäkningsresultat
-* Intervallet är vanligtvis -1 till +1 för normaliserade index
+* Intervall vanligtvis -1 till +1 för normaliserade index
 * Kan tillämpa färg-LUT:er för visualisering
 
 ***
 
 ## Index- och LUT-tillämpning
 
-Tillämpa multispektrala index och färg-LUT:er:
+Tillämpa multispektrala index och färg-Look-Up Tables:
 
-1. Leta reda på **Index/LUT Sandbox**i**Image Viewer** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i sidofältet
+1. Leta upp **Index/LUT Sandbox**i**Image Viewer** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> sidomenyn
 2. Välj vegetationsindex (NDVI, NDRE, etc.)
-3. Välj multispektralformel eller skapa en egen anpassad formel (endast Chloros+)
+3. Välj multispektralformel eller skapa en egen anpassad (endast Chloros+)
 4. Tillämpa färg-LUT-gradient för visualisering
 5. Justera värdeintervall och tröskelvärden
 
@@ -131,13 +131,13 @@ Se [Index/LUT Sandbox](index-lut-sandbox.md) för detaljerade instruktioner.
 * **→** (högerpil): Nästa bild
 * **←** (vänsterpil): Föregående bild
 * **Home**: Första bilden i listan
-* **Slut**: Sista bilden i listan
+* **End**: Sista bilden i listan
 
 ### Zooma
 
 * **+**eller**=**: Zooma in
 * **−**: Zooma ut
-* **Mushjul**: Zooma in/ut***
+* **Musens rullhjul**: Zooma in/ut***
 
 ### Verifiera indexberäkningar
 
@@ -147,7 +147,7 @@ Kontrollera att indexen har beräknats korrekt:
 2. Kontrollera vegetationsområden:
    * **NDVI**: Bör visa 0,4–0,9 för friska växter
    * **NDRE**: Högre värden för kraftig tillväxt
-   * **GNDVI**: Liknar NDVI men klorofyllkänslig
+   * **GNDVI**: Liknar NDVI men är klorofyllkänsligt
 3. Kontrollera icke-vegetation:
    * **Jord**: Nära 0 eller något negativt
    * **Vatten**: Negativa värden (-0,5 till 0)***
@@ -158,45 +158,45 @@ Kontrollera att indexen har beräknats korrekt:
 
 **Möjliga orsaker:**
 
-* Filen skadades under bearbetningen
+* Filen har skadats under bearbetningen
 * Filformatet stöds inte
-* Otillräckligt minne för stora bilder
+* Otillräckligt minne för stor bild
 
 **Lösningar:**
 
-1. Försök öppna i en extern visare för att verifiera filens integritet.
-2. Kontrollera att filformatet stämmer överens med förväntad typ.
-3. Stäng andra program för att frigöra minne.
-4. Försök med en mindre/annan bild.
+1. Försök öppna i en extern visare för att kontrollera filens integritet
+2. Kontrollera att filformatet stämmer överens med förväntad typ
+3. Stäng andra program för att frigöra minne
+4. Försök med en mindre/annan bild
 
-### Svart eller vit bildvisning
+### Bilden visas svart eller vit
 
 **Möjliga orsaker:**
 
-* Värdeintervall utanför visningskapaciteten.
-* 32-bitars flytande bild med ovanliga värden.
-* Fel i indexberäkningen.
+* Värdeintervall utanför visningskapaciteten
+* 32-bitars flyttalsbild med ovanliga värden
+* Fel i indexberäkningen
 
 **Lösningar:**
 
-1. Kontrollera pixelvärdena – om alla är mycket låga eller mycket höga, justera visningsintervallet.
-2. Försök öppna i QGIS eller liknande med automatisk justering av intervallet.
-3. Kontrollera felsökningsloggen från bearbetningen för fel.
+1. Kontrollera pixelvärdena – om alla är mycket låga eller mycket höga, justera visningsintervallet
+2. Försök öppna i QGIS eller liknande med automatisk intervalljustering
+3. Kontrollera felsökningsloggen från bearbetningen för fel
 
 ### Pixelvärdena verkar felaktiga
 
 **Möjliga orsaker:**
 
-* Fel bild visas (original vs bearbetad)
-* Kalibreringen tillämpades inte korrekt.
-* Ljusgivardata inkluderades inte i indata.
-* Procentläget växlades felaktigt.
+* Visar fel bild (original vs bearbetad)
+* Kalibreringen tillämpades inte korrekt
+* Ljussensordata ingick inte i indata
+* Procentläget växlade felaktigt
 
 **Lösningar:**
 
-1. Kontrollera att du visar bearbetad utdata (kontrollera filnamnstillägget).
-2. Kontrollera procentlägesknappens status.
-3. Jämför med kända bra bilder från samma dataset.
+1. Kontrollera att du tittar på den bearbetade utdata (kontrollera filnamnssuffixet)
+2. Kontrollera statusen för procentlägesknappen
+3. Jämför med bilder som du vet är korrekta från samma dataset
 
 ***
 
@@ -205,9 +205,9 @@ Kontrollera att indexen har beräknats korrekt:
 Nu när du kan visa bilder i helskärmsläge:
 
 * [**Bildlager**](image-layers.md) – Lär dig mer om multibandsvisualisering
-* [**Index/LUT Sandbox**](index-lut-sandbox.md) – Tillämpa anpassade index och färgkartläggning
-* [**Multispektrala indexformler**](../project-settings/multispectral-index-formulas.md) – Förstå tillgängliga index
+* [**Index/LUT-sandlåda**](index-lut-sandbox.md) – Tillämpa anpassade index och färgkartläggning
+* [**Formler för multispektrala index**](../project-settings/multispectral-index-formulas.md) – Förstå tillgängliga index
 
-För bearbetningsarbetsflödet, se:
+För bearbetningsflödet, se:
 
 * [**Bearbeta bilder (GUI)**](../processing-images-gui/adding-files-to-a-project.md) – Komplett bearbetningsguide

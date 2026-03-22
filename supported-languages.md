@@ -4,9 +4,9 @@ Chloros erbjuder fullständigt gränssnittsstöd på **38 språk världen över*
 
 Chloros stöder följande språk:
 
-| # | Språk | Ursprungligt namn | CLI-kod |
+| # | Språk | Namn på originalspråket | CLI-kod |
 |---|----------|-------------|----------|
-| 1 | 🇺🇸 Engelska | Engelska | `en` |
+| 1 | 🇺🇸 Engelska | English | `en` |
 | 2 | 🇪🇸 Spanska | Español | `es` |
 | 3 | 🇵🇹 Portugisiska | Português | `pt` |
 | 4 | 🇫🇷 Franska | Français | `fr` |
@@ -47,16 +47,16 @@ Chloros stöder följande språk:
 
 ## Hur man byter språk
 
-### I Chloros Desktop/Browser
+### I Chloros på datorn/webbläsaren
 
-1. Öppna programinställningarna.
-2. Gå till menyn för språkval.
-3. Välj önskat språk från listan.
-4. Gränssnittet uppdateras omedelbart.
+1. Öppna programinställningarna
+2. Gå till menyn för språkval
+3. Välj önskat språk från listan
+4. Gränssnittet uppdateras omedelbart
 
 ### I Chloros CLI
 
-Använd kommandot `language` för att visa eller ändra språket i gränssnittet CLI:
+Använd kommandot `language` för att visa eller ändra gränssnittsspråket i CLI:
 
 ```bash
 # View current language
@@ -75,7 +75,7 @@ chloros-cli language pt-BR
 chloros-cli language --list
 ```
 
-Mer information finns i [CLI-dokumentationen](CLI.md).
+För mer information, se [CLI-dokumentationen](CLI.md).
 
 ### I Chloros Python SDK
 

@@ -7,43 +7,61 @@
 * 🚀 **Automatisering** – Skriptbaserad batchbearbetning av flera datamängder
 * 🔗 **Integration** – Integrera i befintliga arbetsflöden och pipelines
 * 💻 **Headless-drift** – Kör utan GUI
-* 🌍 **Flera språk** – Stöd för 38 språk
-* ⚡ **Parallell bearbetning** – Skalar dynamiskt till din CPU (upp till 16 parallella arbetare)
+* 🌍 **Flerspråkig** – Stöd för 38 språk
+* ⚡ **Parallell bearbetning** – [Dynamic Compute Adaptation](processing-architecture/dynamic-compute-adaptation.md) optimerar automatiskt för din hårdvara
 
 ### Krav
 
 | Krav          | Detaljer                                                             |
 | -------------------- | ------------------------------------------------------------------- |
-| **Operativsystem** | Windows 10/11 (64-bit)                                              |
+| **Operativsystem** | Windows 10/11 (64-bit), Linux x86_64 (amd64), Linux arm64 (NVIDIA Jetson JetPack 6) |
 | **Licens**          | Chloros+ ([betald plan krävs](https://cloud.mapir.camera/pricing)) |
 | **Minne**           | Minst 8 GB RAM (16 GB rekommenderas)                                  |
 | **Internet**         | Krävs för licensaktivering                                     |
-| **Diskutrymme**       | Varierar beroende på projektets storlek                                              |
+| **Diskutrymme**       | Varierar beroende på projektstorlek                                              |
 
-{% hint style=&quot;warning&quot; %}
-**Licenskrav**: CLI kräver ett betalt Chloros+-abonnemang. Standardplaner (gratis) har inte tillgång till CLI. Besök [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing) för att uppgradera.
+{% hint style="warning" %}
+**Licenskrav**: CLI kräver ett betalt Chloros+-abonnemang. Standardabonnemang (gratis) har inte tillgång till CLI. Besök [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing) för att uppgradera.
 {% endhint %}
 
 ## Snabbstart
 
 ### Installation
 
-CLI ingår automatiskt i installationsprogrammet Chloros:
+#### Windows
+
+CLI ingår automatiskt i installationsprogrammet för Chloros:
 
 1. Ladda ner och kör **Chloros Installer.exe**
 
 2. Följ installationsguiden
-3. CLI installeras till: `C:\Program Files\Chloros\resources\cli\chloros-cli.exe`
+3. CLI installeras i: `C:\Program Files\Chloros\resources\cli\chloros-cli.exe`
 
-{% hint style=&quot;success&quot; %}
+{% hint style="success" %}
 Installationsprogrammet lägger automatiskt till `chloros-cli` i systemets PATH. Starta om terminalen efter installationen.
 {% endhint %}
 
-### Första installationen
+#### Linux
+
+Installera paketet `.deb` för din arkitektur:
+
+```bash
+# Linux amd64
+sudo dpkg -i chloros-amd64.deb
+
+# Linux arm64 (NVIDIA Jetson, JetPack 6)
+sudo dpkg -i chloros-arm64-jp6.deb
+```
+
+För detaljerad information om Linux-installationen, se [Linux Installation](linux/linux-installation.md).
+
+### Första installation
 
 Innan du använder CLI måste du aktivera din Chloros+-licens:
 
-```bash
+**Windows:**
+
+```powershell
 # Login with your Chloros+ account
 chloros-cli login user@example.com 'your_password'
 
@@ -54,12 +72,33 @@ chloros-cli status
 chloros-cli process "C:\Images\Dataset001"
 ```
 
+**Linux:**
+
+```bash
+# Login with your Chloros+ account
+chloros-cli login user@example.com 'your_password'
+
+# Check license status
+chloros-cli status
+
+# Process your first project
+chloros-cli process ~/images/dataset001
+```
+
 ### Grundläggande användning
 
 Bearbeta en mapp med standardinställningar:
 
+**Windows:**
+
 ```powershell
 chloros-cli process "C:\Images\Dataset001"
+```
+
+**Linux:**
+
+```bash
+chloros-cli process ~/images/dataset001
 ```
 
 ***
@@ -76,7 +115,7 @@ chloros-cli [global-options] <command> [command-options]
 
 ## Kommandon
 
-### `process` – Bearbeta bilder
+### `process` - Bearbeta bilder
 
 Bearbeta bilder i en mapp med kalibrering.
 
@@ -88,33 +127,40 @@ chloros-cli process <input-folder> [options]
 
 **Exempel:**
 
-```powershell
+```bash
+# Windows
 chloros-cli process "C:\Datasets\Survey_001" --vignette --reflectance
+
+# Linux
+chloros-cli process ~/datasets/survey_001 --vignette --reflectance
 ```
 
-#### Alternativ för bearbetningskommandon
+#### Alternativ för kommandot Process
 
 | Alternativ                | Typ    | Standard        | Beskrivning                                                                            |
 | --------------------- | ------- | -------------- | -------------------------------------------------------------------------------------- |
-| `<input-folder>`      | Sökväg    | _Krävs_     | Mapp som innehåller multispektrala RAW/JPG-bilder                                         |
-| `-o, --output`        | Sökväg    | Samma som indata  | Utdatamapp för bearbetade bilder                                                     |
+| `<input-folder>`      | Sökväg    | _Obligatoriskt_     | Mapp som innehåller RAW/JPG-multispektralbilder                                         |
+| `-o, --output`        | Sökväg    | Samma som ingång  | Utdatamapp för bearbetade bilder                                                     |
 | `-n, --project-name`  | Sträng  | Autogenererad | Anpassat projektnamn                                                                    |
 | `--vignette`          | Flagga    | Aktiverad        | Aktivera vignettkorrigering                                                             |
 | `--no-vignette`       | Flagga    | -              | Inaktivera vignettkorrigering                                                            |
 | `--reflectance`       | Flagga    | Aktiverad        | Aktivera reflektanskalibrering                                                         |
 | `--no-reflectance`    | Flagga    | -              | Inaktivera reflektanskalibrering                                                        |
 | `--ppk`               | Flagga    | Inaktiverad       | Tillämpa PPK-korrigeringar från .daq-ljussensordata                                      |
-| `--format`            | Val  | TIFF (16-bit)  | Utmatningsformat: `TIFF (16-bit)`, `TIFF (32-bit, Percent)`, `PNG (8-bit)`, `JPG (8-bit)` |
-| `--min-target-size`   | Heltal | Auto           | Minsta målstorlek i pixlar för kalibreringspanelsdetektering                          |
-| `--target-clustering` | Heltal | Auto           | Tröskelvärde för målkluster (0-100)                                                    |
-| `--exposure-pin-1`    | Sträng  | Ingen           | Lås exponering för kameramodell (stift 1)                                                 |
+| `--format`            | Val  | TIFF (16-bit)  | Utdataformat: `TIFF (16-bit)`, `TIFF (32-bit, Percent)`, `PNG (8-bit)`, `JPG (8-bit)` |
+| `--min-target-size`   | Heltal | Auto           | Minsta målstorlek i pixlar för detektering av kalibreringspanelen                          |
+| `--target-clustering` | Heltal | Auto           | Tröskelvärde för målkluster (0–100)                                                    |
+| `--debayer`           | Val  | `standard`     | Debayer-metod: `standard` eller `texture-aware` (endast Chloros+)                          |
+| `--target`, `--targets` | Flagga  | Inaktiverad       | Sök endast efter kalibreringsmål i en undermapp med namnet ”target” eller ”targets” (påskyndar bearbetningen) |
+| `--indices`           | Lista    | Ingen           | Vegetationsindex att beräkna (t.ex. `--indices NDVI NDRE GNDVI`)                    |
+| `--exposure-pin-1`    | Sträng  | Ingen           | Lås exponering för kameramodell (Pin 1)                                                 |
 | `--exposure-pin-2`    | Sträng  | Ingen           | Lås exponering för kameramodell (stift 2)                                                 |
 | `--recal-interval`    | Heltal | Auto           | Omkalibreringsintervall i sekunder                                                      |
-| `--timezone-offset`   | Heltal | 0              | Tidszonsförskjutning i timmar                                                               |
+| `--timezone-offset`   | Heltal | 0              | Tidszonsavvikelse i timmar                                                               |
 
 ***
 
-### `login` – Autentisera konto
+### `login` - Autentisera konto
 
 Logga in med dina Chloros+-inloggningsuppgifter för att aktivera CLI-bearbetning.
 
@@ -126,11 +172,11 @@ chloros-cli login <email> <password>
 
 **Exempel:**
 
-```powershell
+```bash
 chloros-cli login user@example.com 'MyP@ssw0rd123'
 ```
 
-{% hint style=&quot;warning&quot; %}
+{% hint style="warning" %}
 **Specialtecken**: Använd enkla citattecken runt lösenord som innehåller tecken som `$`, `!` eller mellanslag.
 {% endhint %}
 
@@ -148,7 +194,7 @@ chloros-cli logout
 
 **Exempel:**
 
-```powershell
+```bash
 chloros-cli logout
 ```
 
@@ -159,15 +205,15 @@ chloros-cli logout
 ℹ Credentials cleared from cache
 ```
 
-{% hint style=&quot;info&quot; %}
-**SDK Användare**: Python SDK tillhandahåller också en programmatisk `logout()`-metod för att rensa autentiseringsuppgifter inom Python-skript. Se [Python SDK-dokumentationen](api-python-sdk.md#logout) för mer information.
+{% hint style="info" %}
+**SDK-användare**: Python SDK tillhandahåller även en programmatisk `logout()`-metod för att rensa inloggningsuppgifter inom Python-skript. Se [Python SDK dokumentationen](api-python-sdk.md#logout) för mer information.
 {% endhint %}
 
 ***
 
 ### `status` – Kontrollera licensstatus
 
-Visa aktuell licens- och autentiseringsstatus.
+Visar aktuell licens- och autentiseringsstatus.
 
 **Syntax:**
 
@@ -177,7 +223,7 @@ chloros-cli status
 
 **Exempel:**
 
-```powershell
+```bash
 chloros-cli status
 ```
 
@@ -208,7 +254,7 @@ chloros-cli export-status
 
 **Exempel:**
 
-```powershell
+```bash
 chloros-cli export-status
 ```
 
@@ -233,7 +279,7 @@ chloros-cli language <language-code>
 
 **Exempel:**
 
-```powershell
+```bash
 # View current language
 chloros-cli language
 
@@ -249,20 +295,20 @@ chloros-cli language ja
 
 #### Språk som stöds (totalt 38)
 
-| Kod    | Språk              | Ursprungligt namn      |
+| Kod    | Språk              | Namn på originalspråket      |
 | ------- | --------------------- | ---------------- |
-| `en`    | Engelska               | Engelska          |
+| `en`    | Engelska               | English          |
 | `es`    | Spanska               | Español          |
 | `pt`    | Portugisiska            | Português        |
 | `fr`    | Franska                | Français         |
 | `de`    | Tyska                | Deutsch          |
-| `it`    | Italienska               | Italiano         |
+| `it`    | Italienska              | Italiano         |
 | `ja`    | Japanska              | 日本語              |
 | `ko`    | Koreanska                | 한국어              |
 | `zh`    | Kinesiska (förenklad)  | 简体中文             |
 | `zh-TW` | Kinesiska (traditionell) | 繁體中文             |
 | `ru`    | Ryska               | Русский          |
-| `nl`    | Nederländska                 | Nederlands       |
+| `nl`    | Nederländska                | Nederlands       |
 | `ar`    | Arabiska                | العربية          |
 | `pl`    | Polska                | Polski           |
 | `tr`    | Turkiska               | Türkçe           |
@@ -272,10 +318,10 @@ chloros-cli language ja
 | `th`    | Thailändska                  | ไทย              |
 | `sv`    | Svenska               | Svenska          |
 | `da`    | Danska                | Dansk            |
-| `no`    | Norsk             | Norsk            |
+| `no`    | Norska             | Norsk            |
 | `fi`    | Finska               | Suomi            |
 | `el`    | Grekiska                 | Ελληνικά         |
-| `cs`    | Tjeckiska                 | Čeština          |
+| `cs`    | Tjeckiska                | Čeština          |
 | `hu`    | Ungerska             | Magyar           |
 | `ro`    | Rumänska              | Română           |
 | `uk`    | Ukrainska             | Українська       |
@@ -288,17 +334,17 @@ chloros-cli language ja
 | `lt`    | Litauiska            | Lietuvių         |
 | `lv`    | Lettiska               | Latviešu         |
 | `et`    | Estniska              | Eesti            |
-| `sl`    | Slovenska             | Slovenščina      |
+| `sl`    | Slovensk             | Slovenščina      |
 
-{% hint style=&quot;success&quot; %}
-**Automatisk lagring**: Dina språkinställningar sparas i `~/.chloros/cli_language.json` och lagras mellan alla sessioner.
+{% hint style="success" %}
+**Automatisk lagring**: Ditt språkval sparas i `~/.chloros/cli_language.json` och behålls under alla sessioner.
 {% endhint %}
 
 ***
 
-### `set-project-folder` – Ställ in standardprojektmapp
+### `set-project-folder` - Ställ in standardprojektmapp
 
-Ändra standardprojektmappens plats (delad med GUI).
+Ändra platsen för standardprojektmappen (delas med GUI på Windows).
 
 **Syntax:**
 
@@ -308,13 +354,17 @@ chloros-cli set-project-folder <folder-path>
 
 **Exempel:**
 
-```powershell
+```bash
+# Windows
 chloros-cli set-project-folder "C:\Projects\2025"
+
+# Linux
+chloros-cli set-project-folder ~/projects/2025
 ```
 
 ***
 
-### `get-project-folder` – Visa projektmapp
+### `get-project-folder` - Visa projektmapp
 
 Visa den aktuella standardprojektmappens plats.
 
@@ -326,14 +376,19 @@ chloros-cli get-project-folder
 
 **Exempel:**
 
-```powershell
+```bash
 chloros-cli get-project-folder
 ```
 
 **Utdata:**
 
 ```
+
+# Windows
 ℹ Current project folder: C:\Projects\2025
+
+# Linux
+ℹ Current project folder: /home/user/.local/share/chloros/projects
 ```
 
 ***
@@ -350,62 +405,131 @@ chloros-cli reset-project-folder
 
 ***
 
+### `selftest` – Kör systemdiagnostik
+
+Kör 7 diagnostiska kontroller för att verifiera din systemkonfiguration.
+
+**Syntax:**
+
+```bash
+chloros-cli selftest
+```
+
+**Utförda diagnostiska kontroller:**
+
+1. Versionskontroll
+2. Porttillgänglighet (5000)
+3. Start av backend
+4. API-anslutningstest
+5. Systeminformation och GPU-detektering
+6. Verifiering av brusreduceringsmodeller
+7. Kontroll av CUDA-tillgänglighet
+
+{% hint style="info" %}
+**Användbart för felsökning**: Kör `selftest` efter installationen för att verifiera att ditt system är korrekt konfigurerat, särskilt på Linux/Jetson där GPU- och CUDA-inställningarna kan behöva verifieras.
+{% endhint %}
+
+***
+
+### `update` – Sök efter uppdateringar (endast Linux)
+
+Sök efter och installera CLI-uppdateringar på Linux-system.
+
+**Syntax:**
+
+```bash
+# Check for updates without installing
+chloros-cli update --check
+
+# Check for and install updates
+chloros-cli update
+```
+
+| Alternativ    | Beskrivning                        |
+| --------- | ---------------------------------- |
+| `--check` | Sök endast efter uppdateringar, installera inte |
+
+{% hint style="info" %}
+Detta kommando är endast tillgängligt på Linux. På Windows levereras uppdateringar via installationsprogrammet.
+{% endhint %}
+
+***
+
 ## Globala alternativ
 
 Dessa alternativ gäller för alla kommandon:
 
-| Alternativ          | Typ    | Standard       | Beskrivning                                      |
-| --------------- | ------- | ------------- | ------------------------------------------------ |
-| `--backend-exe` | Sökväg    | Automatiskt upptäckt | Sökväg till backend-körbar fil                       |
-| `--port`        | Heltal | 5000          | Backend API portnummer                          |
-| `--restart`     | Flagga    | -             | Tvinga omstart av backend (avslutar befintliga processer) |
-| `--version`     | Flagga    | -             | Visa versionsinformation och avsluta                |
-| `--help`        | Flagga    | -             | Visa hjälpinformation och avsluta                   |
+| Alternativ            | Typ    | Standard       | Beskrivning                                      |
+| ----------------- | ------- | ------------- | ------------------------------------------------ |
+| `--backend-exe`   | Sökväg    | Automatiskt detekterad | Sökväg till backend-körbar fil                       |
+| `--port`          | Heltal | 5000          | Backend API portnummer                          |
+| `--restart`       | Flagga    | -             | Tvinga omstart av backend (avslutar befintliga processer) |
+| `--version`       | Flagga    | -             | Visa versionsinformation och avsluta                |
+| `--help`          | Flagga    | -             | Visa hjälpinformation och avsluta                   |
+
+{% hint style="info" %}
+**Automatisk upptäckt av backend**: Sökvägen `--backend-exe` upptäcks automatiskt per plattform:
+* **Windows**: `C:\Program Files\MAPIR\Chloros\resources\backend\chloros-backend.exe`
+* **Linux (.deb)**: `/usr/lib/chloros/chloros-backend`
+* **Linux (manuell)**: `/opt/mapir/chloros/backend/chloros-backend`
+{% endhint %}
 
 **Exempel med globala alternativ:**
 
+**Windows:**
+
 ```powershell
 chloros-cli --port 5001 process "C:\Datasets\Survey_001"
+```
+
+**Linux:**
+
+```bash
+chloros-cli --port 5001 process ~/datasets/survey_001
 ```
 
 ***
 
 ## Guide till bearbetningsinställningar
 
-### Parallell bearbetning
+### Parallellbearbetning och dynamisk beräkningsanpassning
 
-Chloros+ CLI **skalar automatiskt**parallell bearbetning för att matcha din dators kapacitet:**Så fungerar det:**
+Chloros 1.1.0 inkluderar [Dynamisk beräkningsanpassning](processing-architecture/dynamic-compute-adaptation.md) — bearbetningsmotorn **upptäcker automatiskt din hårdvara** och väljer den optimala strategin:
 
-* Detekterar dina CPU-kärnor och RAM-minne
-* Tilldelar arbetare: **2× CPU-kärnor** (använder hyperthreading)
-* **Maximalt: 16 parallella arbetare** (för stabilitet)**Systemnivåer:**
+| Plattform | Strategi | Arbetare | Pipeline | Anmärkningar |
+| --- | --- | --- | --- | --- |
+| **Jetson Nano 8 GB** | `GPU_SINGLE` | 1 | `tiled_gpu` | Minneseffektiv, serialiserad |
+| **Jetson Orin NX 16 GB** | `GPU_PARALLEL` | 3 | `fused_gpu` | Samtidig GPU-bearbetning |
+| **Stationär dator med 8 GB GPU** | `GPU_SINGLE` | 3 | `tiled_gpu` | Bra prestanda för stationära datorer |
+| **Stationär dator med 12 GB+ GPU** | `GPU_PARALLEL` | 3–4 | `fused_gpu` | Optimal stationär prestanda |
+| **System med endast CPU** | `CPU_PARALLEL` | kärnor – 1 | `cpu_fallback` | Inget grafikkort krävs |
 
-| Systemtyp   | CPU        | RAM      | Arbetare  | Prestanda     |
-| ------------- | ---------- | -------- | -------- | --------------- |
-| **Högpresterande**  | 16+ kärnor  | 32+ GB   | Upp till 16 | Maximal hastighet   |
-| **Mellanklass** | 8–15 kärnor | 16–31 GB | 8–16     | Utmärkt hastighet |
-| **Lågprisklass**   | 4–7 kärnor  | 8–15 GB  | 4–8      | Bra hastighet      |
-
-{% hint style=&quot;success&quot; %}
-**Automatisk optimering**: CLI detekterar automatiskt ditt systems specifikationer och konfigurerar optimal parallellbearbetning. Ingen manuell konfiguration behövs!
+{% hint style="success" %}
+**Ingen manuell konfiguration behövs!** Chloros upptäcker automatiskt din CPU, GPU, RAM och (på Jetson) temperatursensorer, och konfigurerar sedan den optimala bearbetningspipeline automatiskt.
 {% endhint %}
 
 ### Debayer-metoder
 
-CLI använder **Hög kvalitet (snabbare)** som standard och rekommenderad debayer-algoritm:
+| Metod | CLI-flagga | Kvalitet | Hastighet | Licens |
+| --- | --- | --- | --- | --- |
+| **Standard (Snabb, medelhög kvalitet)** | `--debayer standard` | Bra | Snabb | Gratis / Chloros+ |
+| **Texturmedveten (Långsam, högsta kvalitet)** | `--debayer texture-aware` | Högsta | Långsam | Endast Chloros+ |
 
-| Metod                      | Kvalitet | Hastighet | Beskrivning                                 |
-| --------------------------- | ------- | ----- | ------------------------------------------- |
-| **Hög kvalitet (snabbare)** ⭐ | ⭐⭐⭐⭐    | ⚡⚡⚡   | Kantmedveten algoritm (standard, rekommenderad) |
+Standardmetoden för debayering är **Standard**. Metoden**Texturmedveten** använder en AI/ML-brusreduceringsmodell för utdata av högsta kvalitet, men kräver en Chloros+-licens och ett NVIDIA-grafikkort.
+
+```bash
+# Use Texture Aware debayer (Chloros+ only)
+chloros-cli process ~/datasets/field_a --debayer texture-aware
+```
 
 ### Vignettkorrigering
 
-**Vad den gör:** Korrigerar ljusfallet vid bildkanterna (mörkare hörn som är vanliga i kamerabilder).
+**Vad det gör:** Korrigerar ljusavfall vid bildkanterna (mörkare hörn som är vanliga i kamerabilder).
 
 * **Aktiverat som standard** – De flesta användare bör ha detta aktiverat
 * Använd `--no-vignette` för att inaktivera
 
-{% hint style=&quot;success&quot; %}
+{% hint style="success" %}
 **Rekommendation**: Aktivera alltid vignettkorrigering för att säkerställa enhetlig ljusstyrka över hela bilden.
 {% endhint %}
 
@@ -413,31 +537,31 @@ CLI använder **Hög kvalitet (snabbare)** som standard och rekommenderad debaye
 
 Konverterar råa sensorvärden till standardiserade reflektansprocenttal med hjälp av kalibreringspaneler.
 
-* **Aktiverat som standard** – Väsentligt för vegetationsanalys.
-* Kräver kalibreringsmålpaneler i bilder.
-* Använd `--no-reflectance` för att inaktivera.
+* **Aktiverat som standard** – Nödvändigt för vegetationsanalys
+* Kräver kalibreringspaneler i bilderna
+* Använd `--no-reflectance` för att inaktivera
 
-{% hint style=&quot;info&quot; %}
+{% hint style="info" %}
 **Krav**: Se till att kalibreringspanelerna är korrekt exponerade och synliga i dina bilder för korrekt reflektanskonvertering.
 {% endhint %}
 
 ### PPK-korrigeringar
 
-**Vad det gör:** Tillämpar efterbearbetade kinematiska korrigeringar med hjälp av DAQ-A-SD-loggdata för förbättrad GPS-noggrannhet.
+**Vad det gör:** Tillämpar post-processerade kinematiska korrigeringar med hjälp av DAQ-A-SD-loggdata för förbättrad GPS-noggrannhet.
 
 * **Inaktiverat som standard**
 * Använd `--ppk` för att aktivera
-* Kräver .daq-filer i projektmappen från MAPIR DAQ-A-SD ljussensor.
+* Kräver .daq-filer i projektmappen från MAPIR DAQ-A-SD-ljussensor.
 
 ### Utdataformat
 
-<table><thead><tr><th width="197">Format</th><th width="130.20001220703125">Bitdjup</th><th width="116.5999755859375">Filstorlek</th><th>Bäst för</th></tr></thead><tbody><tr><td><strong>TIFF (16-bitars)</strong> ⭐</td><td>16-bitars heltal</td><td>Stor</td><td>GIS-analys, fotogrammetri (rekommenderas)</td></tr><tr><td><strong>TIFF (32-bitars, procent)</strong></td><td>32-bitars flyttal</td><td>Mycket stor</td><td>Vetenskaplig analys, forskning</td></tr><tr><td><strong>PNG (8-bitars)</strong></td><td>8-bitars heltal</td><td>Medel</td><td>Visuell inspektion, webbdelning</td></tr><tr><td><strong>JPG (8-bitars)</strong></td><td>8-bitars heltal</td><td>Liten</td><td>Snabb förhandsgranskning, komprimerad utdata</td></tr></tbody></table>***
+<table><thead><tr><th width="197">Format</th><th width="130.20001220703125">Bittjocklek</th><th width="116.5999755859375">Filstorlek</th><th>Bäst för</th></tr></thead><tbody><tr><td><strong>TIFF (16-bit)</strong> ⭐</td><td>16-bitars heltal</td><td>Stor</td><td>GIS-analys, fotogrammetri (rekommenderas)</td></tr><tr><td><strong>TIFF (32-bitars, procent)</strong></td><td>32-bitars flyttal</td><td>Mycket stor</td><td>Vetenskaplig analys, forskning</td></tr><tr><td><strong>PNG (8-bit)</strong></td><td>8-bitars heltal</td><td>Medel</td><td>Visuell inspektion, delning på webben</td></tr><tr><td><strong>JPG (8-bit)</strong></td><td>8-bitars heltal</td><td>Liten</td><td>Snabb förhandsgranskning, komprimerad utdata</td></tr></tbody></table>***
 
-## Automatisering och skript
+## Automatisering och skriptning
 
-### PowerShell-batchbearbetning
+### PowerShell-batchbearbetning (Windows)
 
-Bearbeta flera datamängdsmappar automatiskt:
+Bearbeta flera datasetmappar automatiskt på Windows:
 
 ```powershell
 # process_all_datasets.ps1
@@ -461,9 +585,9 @@ foreach ($dataset in $datasets) {
 Write-Host "All datasets processed!" -ForegroundColor Green
 ```
 
-### Windows-batchskript
+### Windows Batchskript (Windows)
 
-Enkel slinga för batchbearbetning:
+Enkel loop för batchbearbetning på Windows:
 
 ```batch
 @echo off
@@ -488,9 +612,35 @@ echo All datasets processed!
 pause
 ```
 
-### Python Automatiseringsskript
+### Bash-batchbearbetning (Linux)
 
-Avancerad automatisering med felhantering:
+Bearbeta flera datasetmappar på Linux:
+
+```bash
+#!/bin/bash
+# process_all_datasets.sh
+
+for dataset in ~/datasets/2026/*/; do
+    name=$(basename "$dataset")
+    echo "Processing $name..."
+
+    chloros-cli process "$dataset" \
+        --vignette \
+        --reflectance
+
+    if [ $? -eq 0 ]; then
+        echo "✓ $name complete"
+    else
+        echo "✗ $name failed"
+    fi
+done
+
+echo "All datasets processed!"
+```
+
+### Python automatiseringsskript (plattformsoberoende)
+
+Avancerad automatisering med felhantering (fungerar på Windows och Linux):
 
 ```python
 import subprocess
@@ -515,6 +665,9 @@ def process_dataset(input_folder):
 
 def main():
     """Process all datasets in a directory"""
+    # Adjust path for your platform
+    # Windows: Path('C:/Datasets/2025')
+    # Linux:   Path.home() / 'datasets' / '2025'
     datasets_dir = Path('C:/Datasets/2025')
     log_file = Path('processing_log.txt')
     
@@ -573,9 +726,9 @@ if __name__ == '__main__':
 
 ### Standardflöde
 
-1. **Inmatning**: Mapp som innehåller RAW/JPG-bildpar
-2. **Upptäckt**: CLI skannar automatiskt efter bildfiler som stöds
-3. **Bearbetning**: Parallellt läge skalar till dina CPU-kärnor (Chloros+)
+1. **Indata**: Mapp som innehåller RAW/JPG-bildpar
+2. **Upptäckt**: CLI söker automatiskt efter bildfiler som stöds
+3. **Bearbetning**: Parallellt läge skalar efter dina CPU-kärnor (Chloros+)
 4. **Utdata**: Skapar undermappar för kameramodeller med bearbetade bilder
 
 ### Exempel på utdatastruktur
@@ -596,13 +749,16 @@ MyProject/
 
 Typisk bearbetningstid för 100 bilder (12 MP vardera):
 
-| Läge              | Tid      | Hårdvara                                     |
-| ----------------- | --------- | -------------------------------------------- |
-| **Parallellt läge** | 5–10 min  | i7/Ryzen 7, 16 GB RAM, SSD (upp till 16 arbetare) |
-| **Parallellt läge** | 10–15 min | i5/Ryzen 5, 8 GB RAM, HDD (upp till 8 arbetare)   |
+| Plattform | Läge | Uppskattad tid | Anmärkningar |
+| --- | --- | --- | --- |
+| **Stationär dator med 12 GB+ GPU** | `GPU_PARALLEL` | 5–10 min | Snabbaste alternativet |
+| **Stationär dator med 8 GB GPU** | `GPU_SINGLE` | 10–15 min | Bra prestanda |
+| **Jetson Orin 16 GB** | `GPU_PARALLEL` | 15–25 min | Edge-beräkning |
+| **Jetson Nano 8 GB** | `GPU_SINGLE` | 30–60 min | Begränsat minne |
+| **Endast CPU** | `CPU_PARALLEL` | 20–40 min | Ingen GPU krävs |
 
-{% hint style=&quot;info&quot; %}
-**Prestandatips**: Bearbetningstiden varierar beroende på antal bilder, upplösning och datorspecifikationer.
+{% hint style="info" %}
+**Prestandatips**: Bearbetningstiden varierar beroende på antal bilder, upplösning, debayer-metod och hårdvara. Texture Aware-debayer tar betydligt längre tid än Standard. Se [Dynamic Compute Adaptation](processing-architecture/dynamic-compute-adaptation.md) för mer information.
 {% endhint %}
 
 ***
@@ -611,13 +767,13 @@ Typisk bearbetningstid för 100 bilder (12 MP vardera):
 
 ### CLI hittades inte
 
-**Fel:**
+**Windows-fel:**
 
 ```
 'chloros-cli' is not recognized as an internal or external command
 ```
 
-**Lösningar:**
+**Windows Lösningar:**
 
 1. Kontrollera installationsplatsen:
 
@@ -631,11 +787,38 @@ dir "C:\Program Files\Chloros\resources\cli\chloros-cli.exe"
 "C:\Program Files\Chloros\resources\cli\chloros-cli.exe" process "C:\Datasets\Field_A"
 ```
 
-3. Lägg till manuellt i PATH:
+3. Lägg till i PATH manuellt:
    * Öppna Systemegenskaper → Miljövariabler
    * Redigera variabeln PATH
    * Lägg till: `C:\Program Files\Chloros\resources\cli`
    * Starta om terminalen
+
+**Linux Fel:**
+
+```
+chloros-cli: command not found
+```
+
+**Linux Lösningar:**
+
+1. Kontrollera installationen:
+
+```bash
+which chloros-cli
+dpkg -L chloros-amd64  # or chloros-arm64-jp6
+```
+
+2. Ladda om ditt skal:
+
+```bash
+source ~/.bashrc
+```
+
+3. Kontrollera behörigheter:
+
+```bash
+sudo chmod +x /usr/bin/chloros-cli
+```
 
 ***
 
@@ -649,22 +832,36 @@ Backend failed to start within 30 seconds
 **Lösningar:**
 
 1. Kontrollera om backend redan körs (stäng den först)
-2. Kontrollera att Windows brandväggen inte blockerar
+2. Kontrollera att brandväggen inte blockerar (Windows) eller kontrollera porttillgänglighet (Linux: `lsof -i :5000`)
 3. Prova en annan port:
 
-```powershell
+```bash
+# Windows
 chloros-cli --port 5001 process "C:\Datasets\Field_A"
+
+# Linux
+chloros-cli --port 5001 process ~/datasets/field_a
 ```
 
 4. Tvinga omstart av backend:
 
-```powershell
+```bash
+# Windows
 chloros-cli --restart process "C:\Datasets\Field_A"
+
+# Linux
+chloros-cli --restart process ~/datasets/field_a
+```
+
+5. På Linux, kontrollera att backend-programmet finns:
+
+```bash
+ls -la /usr/lib/chloros/chloros-backend
 ```
 
 ***
 
-### Licens-/autentiseringsproblem**Fel:**
+### Problem med licens/autentisering**Fel:**
 
 ```
 
@@ -673,16 +870,16 @@ Chloros+ license required for CLI access
 
 **Lösningar:**
 
-1. Kontrollera att du har ett aktivt Chloros+-abonnemang
+1. Kontrollera att du har en aktiv Chloros+-prenumeration
 2. Logga in med dina inloggningsuppgifter:
 
-```powershell
+```bash
 chloros-cli login user@example.com 'password'
 ```
 
 3. Kontrollera licensstatus:
 
-```powershell
+```bash
 chloros-cli status
 ```
 
@@ -699,18 +896,18 @@ No images found in the specified folder
 
 **Lösningar:**
 
-1. Kontrollera att mappen innehåller format som stöds (.RAW, .TIF, .JPG).
-2. Kontrollera att mappens sökväg är korrekt (använd citattecken för sökvägar med mellanslag).
-3. Se till att du har läsbehörighet för mappen.
-4. Kontrollera att filändelserna är korrekta.
+1. Kontrollera att mappen innehåller format som stöds (.RAW, .TIF, .JPG)
+2. Kontrollera att mappvägen är korrekt (använd citattecken för sökvägar med mellanslag)
+3. Se till att du har läsbehörighet för mappen
+4. Kontrollera att filändelserna är korrekta
 
 ***
 
-### Bearbetningen avbryts eller hänger sig**Lösningar:**
+### Bearbetningen stannar upp eller hänger sig**Lösningar:**
 
-1. Kontrollera tillgängligt diskutrymme (se till att det finns tillräckligt för utdata).
-2. Stäng andra program för att frigöra minne.
-3. Minska antalet bilder (bearbeta i omgångar).
+1. Kontrollera tillgängligt diskutrymme (se till att det finns tillräckligt för utdata)
+2. Stäng andra program för att frigöra minne
+3. Minska antalet bilder (bearbeta i omgångar)
 
 ***
 
@@ -721,12 +918,22 @@ No images found in the specified folder
 Port 5000 is already in use
 ```
 
-**Lösning:**
+**Lösningar:**
 
-Ange en annan port:
+**Windows:**
 
 ```powershell
 chloros-cli --port 5001 process "C:\Datasets\Field_A"
+```
+
+**Linux:**
+
+```bash
+# Find what's using port 5000
+lsof -i :5000
+
+# Use a different port
+chloros-cli --port 5001 process ~/datasets/field_a
 ```
 
 ***
@@ -737,28 +944,37 @@ chloros-cli --port 5001 process "C:\Datasets\Field_A"
 
 **S:**Ja! CLI kräver en betald**Chloros+-licens**.
 
-* ❌ Standardplan (gratis): CLI inaktiverad
-* ✅ Chloros+ (betald) plan: CLI fullt aktiverad
+* ❌ Standardplan (gratis): CLI inaktiverat
+* ✅ Chloros+ (betald) plan: CLI fullt aktiverat
 
 Prenumerera på: [https://cloud.mapir.camera/pricing](https://cloud.mapir.camera/pricing)
 
 ***
 
-### F: Kan jag använda CLI på en server utan GUI?**S:** Ja! CLI körs helt utan grafiskt gränssnitt. Krav:
-
+### F: Kan jag använda CLI på en server utan GUI?**S:** Ja! CLI körs helt utan grafiskt gränssnitt. Detta är det primära användningsfallet på Linux.**Windows-server:**
 * Windows Server 2016 eller senare
 * Visual C++ Redistributable installerat
-* Tillräckligt med RAM-minne (minst 8 GB, 16 GB rekommenderas)
-* Engångsaktivering av GUI-licens på valfri maskin
+
+**Linux Server:**
+* Ubuntu 20.04+ / Debian 11+ (amd64) eller JetPack 6 (arm64)
+* Installera via `.deb`-paketet
+
+**Båda plattformarna:**
+* Minst 8 GB RAM (16 GB rekommenderas)
+* Engångsaktivering av licens: `chloros-cli login user@example.com 'password'`
 
 ***
 
-### F: Var sparas bearbetade bilder?**S:**Som standard sparas bearbetade bilder i**samma mapp som ingången** i undermappar för kameramodeller (t.ex. `Survey3N_RGN/`).
+### F: Var sparas bearbetade bilder?**S:**Som standard sparas bearbetade bilder i**samma mapp som ingångsfilerna** i undermappar för kameramodeller (t.ex. `Survey3N_RGN/`).
 
-Använd alternativet `-o` för att ange en annan utdatamapp:
+Använd alternativet `-o` för att ange en annan utmatningsmapp:
 
-```powershell
+```bash
+# Windows
 chloros-cli process "C:\Input" -o "D:\Output"
+
+# Linux
+chloros-cli process ~/input -o ~/output
 ```
 
 ***
@@ -777,6 +993,12 @@ chloros-cli process "C:\Datasets\Field_A" | Tee-Object -FilePath "processing.log
 chloros-cli process "C:\Datasets\Field_A" > processing.log 2>&1
 ```
 
+**Linux Bash:**
+
+```bash
+chloros-cli process ~/datasets/field_a 2>&1 | tee processing.log
+```
+
 ***
 
 ### F: Vad händer om jag trycker på Ctrl+C under bearbetningen?**S:** CLI kommer att:
@@ -789,11 +1011,11 @@ Delvis bearbetade bilder kan finnas kvar i utdatamappen.
 
 ***
 
-### F: Kan jag automatisera CLI-bearbetningen?**S:** Absolut! CLI är utformat för automatisering. Se [Automatisering och skriptning](CLI.md#automation--scripting) för exempel på PowerShell, Batch och Python.***
+### F: Kan jag automatisera CLI-bearbetningen?**Svar:** Absolut! CLI är utformat för automatisering. Se [Automatisering och skriptning](CLI.md#automation--scripting) för exempel på PowerShell (Windows), Batch (Windows), Bash (Linux) och Python (plattformsoberoende) exempel.***
 
 ### F: Hur kontrollerar jag versionen av CLI?**S:**
 
-```powershell
+```bash
 chloros-cli --version
 ```
 
@@ -801,18 +1023,18 @@ chloros-cli --version
 
 ```
 
-Chloros CLI 1.0.2
+Chloros CLI 1.1.0
 ```
 
 ***
 
 ## Få hjälp
 
-### Kommandoradshjälp
+### Hjälp via kommandoraden
 
 Visa hjälpinformation direkt i CLI:
 
-```powershell
+```bash
 # General help
 chloros-cli --help
 
@@ -832,22 +1054,41 @@ chloros-cli language --help
 
 ### Exempel 1: Grundläggande bearbetning
 
-Bearbeta med standardinställningar (vignett, reflektans):
+Bearbetning med standardinställningar (vignett, reflektans):
+
+**Windows:**
 
 ```powershell
 chloros-cli process "C:\Datasets\Field_A_2025_01_15"
 ```
 
+**Linux:**
+
+```bash
+chloros-cli process ~/datasets/field_a_2025_01_15
+```
+
 ***
 
-### Exempel 2: Högkvalitativt vetenskapligt resultat
+### Exempel 2: Vetenskaplig utdata av hög kvalitet
 
-32-bitars flytande TIFF:
+32-bitars flyttal TIFF:
+
+**Windows:**
 
 ```powershell
 chloros-cli process "C:\Datasets\Field_A" ^
   --format "TIFF (32-bit, Percent)" ^
   --vignette ^
+  --reflectance
+```
+
+**Linux:**
+
+```bash
+chloros-cli process ~/datasets/field_a \
+  --format "TIFF (32-bit, Percent)" \
+  --vignette \
   --reflectance
 ```
 
@@ -857,10 +1098,21 @@ chloros-cli process "C:\Datasets\Field_A" ^
 
 8-bitars PNG utan kalibrering för snabb granskning:
 
+**Windows:**
+
 ```powershell
 chloros-cli process "C:\Datasets\Field_A" ^
   --format "PNG (8-bit)" ^
   --no-vignette ^
+  --no-reflectance
+```
+
+**Linux:**
+
+```bash
+chloros-cli process ~/datasets/field_a \
+  --format "PNG (8-bit)" \
+  --no-vignette \
   --no-reflectance
 ```
 
@@ -870,17 +1122,29 @@ chloros-cli process "C:\Datasets\Field_A" ^
 
 Tillämpa PPK-korrigeringar med reflektans:
 
+**Windows:**
+
 ```powershell
 chloros-cli process "C:\Datasets\Field_A" ^
   --ppk ^
   --reflectance
 ```
 
+**Linux:**
+
+```bash
+chloros-cli process ~/datasets/field_a \
+  --ppk \
+  --reflectance
+```
+
 ***
 
-### Exempel 5: Anpassad utdataplats
+### Exempel 5: Anpassad utmatningsplats
 
-Bearbeta till annan enhet med specifikt format:
+Bearbeta till en annan plats med specifikt format:
+
+**Windows:**
 
 ```powershell
 chloros-cli process "C:\Input\Raw_Images" ^
@@ -888,13 +1152,21 @@ chloros-cli process "C:\Input\Raw_Images" ^
   --format "TIFF (16-bit)"
 ```
 
+**Linux:**
+
+```bash
+chloros-cli process ~/input/raw_images \
+  -o ~/output/processed \
+  --format "TIFF (16-bit)"
+```
+
 ***
 
-### Exempel 6: Autentiseringsarbetsflöde
+### Exempel 6: Autentiseringsflöde
 
-Slutför autentiseringsflödet:
+Komplett autentiseringsflöde (samma på alla plattformar):
 
-```powershell
+```bash
 # Step 1: Login
 chloros-cli login user@example.com 'MyP@ssw0rd'
 
@@ -902,7 +1174,9 @@ chloros-cli login user@example.com 'MyP@ssw0rd'
 chloros-cli status
 
 # Step 3: Process images
-chloros-cli process "C:\Datasets\Field_A"
+# Windows: chloros-cli process "C:\Datasets\Field_A"
+# Linux:   chloros-cli process ~/datasets/field_a
+chloros-cli process ~/datasets/field_a
 
 # Step 4: Logout (optional, when switching accounts)
 chloros-cli logout
@@ -910,11 +1184,11 @@ chloros-cli logout
 
 ***
 
-### Exempel 7: Flerspråkig användning
+### Exempel 7: Användning av flera språk
 
-Ändra gränssnittsspråk:
+Ändra gränssnittsspråk (samma på alla plattformar):
 
-```powershell
+```bash
 # List available languages
 chloros-cli language --list
 
@@ -922,7 +1196,9 @@ chloros-cli language --list
 chloros-cli language es
 
 # Process with Spanish interface
-chloros-cli process "C:\Vuelos\Campo_A"
+# Windows: chloros-cli process "C:\Vuelos\Campo_A"
+# Linux:   chloros-cli process ~/vuelos/campo_a
+chloros-cli process ~/vuelos/campo_a
 
 # Change back to English
 chloros-cli language en

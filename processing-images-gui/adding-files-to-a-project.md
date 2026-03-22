@@ -1,15 +1,15 @@
-# Lägga till filer till ett projekt
+# Lägga till filer i ett projekt
 
-När du har skapat eller öppnat ett projekt i Chloros är nästa steg att lägga till dina multispektrala bilder för att påbörja bearbetningen. Filbläddraren<img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> gör det enkelt att importera bilder och hantera din dataset.
+När du har skapat eller öppnat ett projekt i Chloros är nästa steg att lägga till dina multispektrala bilder för att påbörja bearbetningen. Fliken Filbläddraren<img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> gör det enkelt att importera bilder och hantera din dataset.
 
 ## Öppna filbläddraren
 
 1. Öppna eller skapa ett projekt i Chloros
-2. Klicka på ikonen **Filbläddraren** <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> i vänster sidofält
-3. Panelen Filbläddraren visar projektets fillista
+2. Klicka på **filbläddraren** <img src="../.gitbook/assets/icon_file-browser.JPG" alt="" data-size="line"> i vänster sidomeny
+3. Panelen Filbläddraren visar ditt projekts fillista
 
 {% hint style="info" %}
-**Filtyper som stöds**: Chloros stöder RAW+JPG- och JPG-bildfiler från MAPIR Survey3W och Survey3N kameror. Endast RAW+JPG rekommenderas.
+**Filtyper som stöds**: Chloros stöder RAW+JPG- och JPG-bildfiler från kamerorna MAPIR, Survey3W och Survey3N. Endast RAW+JPG rekommenderas.
 {% endhint %}
 
 ***
@@ -20,20 +20,20 @@ Det finns två huvudsakliga sätt att lägga till bilder i ditt projekt:
 
 ### Metod 1: Lägg till filer
 
-Använd det här alternativet för att importera enskilda bildfiler eller ett litet urval av filer.
+Använd detta alternativ för att importera enskilda bildfiler eller ett litet urval av filer.
 
-1. Klicka på knappen **&quot;Lägg till filer&quot;** <img src="../.gitbook/assets/image.png" alt="" data-size="line"> längst upp i panelen Filbläddraren
+1. Klicka på **&quot;Lägg till filer&quot;** <img src="../.gitbook/assets/image.png" alt="" data-size="line"> längst upp i filbläddringspanelen
 2. Navigera till mappen som innehåller dina bilder
 3. Välj en eller flera bildfiler (håll ned **Ctrl** för att välja flera filer)
 4. Klicka på **&quot;Öppna&quot;** för att importera de valda filerna
 
 ### Metod 2: Lägg till mapp
 
-Använd det här alternativet för att importera alla bilder från en mapp på en gång.
+Använd detta alternativ för att importera alla bilder från en mapp på en gång.
 
-1. Klicka på knappen **&quot;Lägg till mapp&quot;** <img src="../.gitbook/assets/image (1).png" alt="" data-size="line"> längst upp i filbläddrarpanelen.
-2. Navigera till och välj mappen som innehåller bilderna från din fotograferingssession.
-3. Klicka på **&quot;Välj mapp&quot;** för att importera alla bilder som stöds från den mappen.***
+1. Klicka på knappen **&quot;Lägg till mapp&quot;** <img src="../.gitbook/assets/image (1).png" alt="" data-size="line"> högst upp i filbläddraren
+2. Navigera till och välj mappen som innehåller bilderna från din fotograferingssession
+3. Klicka på **&quot;Välj mapp&quot;** för att importera alla bilder som stöds från den mappen***
 
 ## Förstå filbläddrarens tabell
 
@@ -41,14 +41,14 @@ När bilderna har importerats visas de i en tabell med följande kolumner:
 
 ### Filnamn
 
-* Originalfilnamn från kameran.
-* Behåller kamerans namngivningskonvention (t.ex. IMG\_0001.RAW).
+* Ursprungligt filnamn från kameran
+* Behåller kamerans namngivningskonvention (t.ex. IMG\_0001.RAW)
 
 ### Tidsstämpel
 
-* Datum och tid då bilden togs.
-* Extraherad från bildens EXIF-metadata.
-* Används för PPK-synkronisering och kalibreringsmåldetektering.
+* Datum och tid då bilden togs
+* Hämtas från bildens EXIF-metadata
+* Används för PPK-synkronisering och detektering av kalibreringsmål
 
 ### Kameramodell
 
@@ -59,7 +59,7 @@ När bilderna har importerats visas de i en tabell med följande kolumner:
 ### Målkolumn (kryssruta)
 
 * Markera denna ruta för bilder som innehåller kalibreringsmål
-* Påskyndar måldetekteringen avsevärt under bearbetningen
+* Påskyndar måligenkänningen avsevärt under bearbetningen
 * Se [Välja målbilder](choosing-target-images.md) för mer information
 
 ### Visa bildmetadata
@@ -76,29 +76,29 @@ Om du klickar på växlingsknappen i det övre högra hörnet ovanför tabellen 
 
 Så här tar du bort oönskade bilder från ditt projekt:
 
-1. Välj en eller flera bilder i tabellen Filbläddraren
-2. Klicka på knappen **&quot;Ta bort valda&quot;** <img src="../.gitbook/assets/image (2).png" alt="" data-size="line"> .
-3. Bekräfta borttagningen (filerna raderas inte från disken, utan tas bara bort från projektet).
+1. Markera en eller flera bilder i tabellen Filbläddraren
+2. Klicka på knappen **&quot;Ta bort valda&quot;** <img src="../.gitbook/assets/image (2).png" alt="" data-size="line"> -knappen
+3. Bekräfta borttagningen (filerna raderas inte från hårddisken, utan tas endast bort från projektet)
 
 ### Sortera och filtrera
 
-* **Sortera efter kolumn**: Klicka på valfri kolumnrubrik för att sortera bilderna.
-* **Sortera efter tidsstämpel**: Användbart för att organisera kronologiska bildsekvenser.
-* **Filtrera efter kameramodell**: Gruppera bilder efter kameratyp om du använder flera kameror.***
+* **Sortera efter kolumn**: Klicka på valfri kolumnrubrik för att sortera bilder
+* **Sortera efter tidsstämpel**: Användbart för att organisera bildsekvenser i kronologisk ordning
+* **Filter för kameramodell**: Gruppera bilder efter kameratyp om du använder flera kameror***
 
 ## Bildförhandsgranskning
 
 ### Visa hela bilden
 
-Klicka på valfri miniatyrbild i filbläddraren för att visa den i huvudförhandsgranskningsområdet:
+Klicka på valfri bildminiatyr i filbläddraren för att visa den i huvudförhandsgranskningsområdet:
 
-1. Bilden visas i det centrala förhandsgranskningsfönstret.
-2. Använd zoomkontrollerna för att granska bilddetaljer.
-3. Navigera mellan bilderna med piltangenterna.
+1. Bilden visas i det centrala förhandsgranskningsfönstret
+2. Använd zoomreglagen för att granska bilddetaljer
+3. Navigera mellan bilder med piltangenterna
 
 ### Snabbnavigering
 
-* **Föregående bild**: Klicka på vänsterpilen eller tryck på ←-tangenten.
+* **Föregående bild**: Klicka på vänsterpilen eller tryck på ←-tangenten
 * **Nästa bild**: Klicka på högerpilen eller tryck på →-tangenten
 * **Zooma in/ut**: Använd mushjulet eller zoomknapparna
 * **Panorera**: Klicka och dra på bilden när du har zoomat in***
@@ -117,37 +117,37 @@ Chloros upptäcker och ignorerar automatiskt dubbletter:
 
 ***
 
-## Blandade kameradataset
+## Blandade kameradatauppsättningar
 
 Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 
 1. Chloros upptäcker automatiskt varje kameramodell
 2. Varje kameratyp bearbetas med sin lämpliga kalibreringsprofil
-3. Filbläddraren visar kameramodellen i kolumnen Kameramodell.
-4. Bearbetningen tillämpar korrekta inställningar för varje kameratyp.
+3. Filbläddraren visar kameramodellen i kolumnen Kameramodell
+4. Bearbetningen tillämpar korrekta inställningar för varje kameratyp
 
-**Exempel på scenario**: Survey3W RGN + Survey3N OCN dubbla kameror.***
+**Exempelscenario**: Survey3W RGN + Survey3N OCN dubbelkamerakonfiguration***
 
 ## Bästa praxis
 
 ### Organisera före import
 
-* Förvara kalibreringsmålbilderna i samma mapp som undersökningsbilderna.
-* Behåll den ursprungliga mappstrukturen från din kamera/SD-kort.
-* Blanda inte datamängder från olika sessioner i ett projekt.
+* Spara kalibreringsmålbilderna i samma mapp som undersökningsbilderna
+* Behåll den ursprungliga mappstrukturen från din kamera/SD-kort
+* Blanda inte datamängder från olika sessioner i ett projekt
 
 ### Filnamngivning
 
-* Behåll de ursprungliga kamerafilnamnen (IMG\_0001.RAW, etc.).
-* Byt inte namn på filerna före import.
-* Originalnamnen innehåller viktig metadata.
+* Behåll de ursprungliga kamerafilnamnen (IMG\_0001.RAW, etc.)
+* Byt inte namn på filer före import
+* Originalnamnen innehåller viktig metadata
 
 ### Kalibreringsmålbilder
 
-* Inkludera alltid 1–2 kalibreringsmålbilder per session.
-* Ta bilder av målen före och efter fotograferingssessionen.
-* Placera målen i samma ljusförhållanden som fotograferingsområdet.
-* Markera målbilderna med kryssrutan Mål för att påskynda bearbetningen.
+* Inkludera alltid 1–2 kalibreringsmålbilder per session
+* Ta bilder av målen före och efter fotograferingssessionen
+* Placera målen under samma ljusförhållanden som fotograferingsområdet
+* Markera målbilderna med kryssrutan Target för att påskynda bearbetningen
 
 ***
 
@@ -158,20 +158,20 @@ Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 **Möjliga orsaker:**
 
 * Filformatet stöds inte (endast RAW+JPG och JPG från MAPIR-kameror)
-* Bilderna kommer från kameror som inte är MAPIR (se [Kameror som stöds](../supported-cameras.md))
-* Filskada eller ofullständig överföring från SD-kortet
+* Bilderna kommer från kameror som inte är av märket MAPIR (se [Stödda kameror](../supported-cameras.md))
+* Filskada eller ofullständig överföring från SD-kort
 
-**Lösning**: Kontrollera filformatet och kameramodellens kompatibilitet
+**Lösning**: Kontrollera filformatets och kameramodellens kompatibilitet
 
 ### Kameramodell upptäcks inte
 
 **Möjliga orsaker:**
 
-* Modifierade EXIF-metadata
+* Ändrade EXIF-metadata
 * Bilder redigerade i extern programvara
 * Ofullständig filöverföring
 
-**Lösning**: Importera om originalfilerna, utan modifieringar, från kameran/SD-kortet
+**Lösning**: Importera om originalfilerna, oförändrade, från kameran/SD-kortet
 
 ### Saknade tidsstämplar
 
@@ -186,7 +186,7 @@ Om ditt projekt innehåller bilder från flera MAPIR-kameror:
 
 När dina filer har importerats:
 
-1. **Granska fillistan** – Kontrollera att alla bilder har laddats korrekt
+1. **Granska fillistan** – Se till att alla bilder har laddats korrekt
 2. **Kontrollera kameramodeller** – Kontrollera att kameran har identifierats korrekt
 3. **Markera målbilder** – Se [Välja målbilder](choosing-target-images.md)
 4. **Justera inställningar** – Konfigurera bearbetningsalternativ i [Projektinställningar](adjusting-project-settings.md)

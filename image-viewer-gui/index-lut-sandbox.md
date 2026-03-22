@@ -1,12 +1,12 @@
-# Index/LUT Sandbox
+# Index/LUT-sandlåda
 
-Index/LUT Sandbox är ett interaktivt arbetsområde i Chloros Image Viewer som gör det möjligt att experimentera med multispektrala indexberäkningar och färgvisualiseringar i realtid. Detta kraftfulla verktyg hjälper dig att testa olika index, förfina värdeintervall och skapa publiceringsklara visualiseringar utan att behöva bearbeta hela datasetet på nytt.
+Index/LUT-sandlådan är en interaktiv arbetsyta i bildvisaren Chloros som gör det möjligt att experimentera med beräkningar av multispektrala index och färgvisualiseringar i realtid. Detta kraftfulla verktyg hjälper dig att testa olika index, finjustera värdeintervall och skapa publiceringsklara visualiseringar utan att behöva bearbeta hela datamängden på nytt.
 
 ## Vad är Index/LUT Sandbox?
 
 ### Syfte
 
-Sandbox erbjuder:
+Sandboxen erbjuder:
 
 * **Indexberäkning i realtid** – Tillämpa valfritt vegetationsindex direkt
 * **Interaktiv LUT-justering** – Finjustera färgövergångar och intervall
@@ -19,7 +19,7 @@ Sandbox erbjuder:
 * En bild i taget
 * Omedelbar feedback
 * Experimentell och iterativ
-* Inga permanenta ändringar av filer
+* Inga permanenta ändringar i filerna
 * Perfekt för utforskning och testning
 
 **Projektbearbetning (batch):**
@@ -30,19 +30,19 @@ Sandbox erbjuder:
 * Tidskrävande
 * Bäst när inställningarna är slutgiltiga
 
-{% hint style=&quot;success&quot; %}
-**Bästa arbetsflöde**: Använd Sandbox för att experimentera och hitta optimala index- och LUT-inställningar, och tillämpa sedan dessa inställningar under projektbearbetning för hela din dataset.
+{% hint style="success" %}
+**Bästa arbetsflöde**: Använd Sandbox för att experimentera och hitta optimala index- och LUT-inställningar, och tillämpa sedan dessa inställningar under projektbearbetning för hela ditt dataset.
 {% endhint %}
 
 ***
 
-## Arbeta med Index/LUT Sandbox
+## Arbeta med index-/LUT-sandlådan
 
 ### Förstå förberäknade index
 
-I Chloros kan index tillämpas under projektbearbetningen. För att avgöra vilka index- och LUT-inställningar du vill tillämpa på exporter är det enklast att använda bildvisaren sandbox.
+I Chloros kan index tillämpas under projektbearbetningen. För att avgöra vilka index- och LUT-inställningar du vill tillämpa på exporten är det enklast att använda bildvisarens sandlåda.
 
-Sandboxen låter dig:
+Sandlådan låter dig:
 
 * **Tillämpa nya index och färgövergångar (LUT)** för att visualisera data
 * **Justera visualiseringsinställningar** interaktivt
@@ -51,36 +51,35 @@ Sandboxen låter dig:
 
 ### Öppna sandlådan
 
-Index/LUT-sandlådan nås i **bildvisaren** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> :
+Du kommer åt index-/LUT-sandlådan i **Bildvisaren** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i sidomenyn:
 
-1. Klicka på en bild i bildrutnätet i filbläddraren så öppnas den i fliken **Bildvisare** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> .
-2. Klicka på fliken **Bildvisaren** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> för att öppna den vänstra popup-sidpanelen om den inte redan är öppen
+1. Klicka på en bild i bildrutnätet i filbläddraren så öppnas den i fliken **Bildvisare**<img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> 2. Klicka på fliken**Bildvisaren** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> för att öppna den vänstra popup-sidomenyn om den inte redan är öppen
 
 ### Välja en bild att tillämpa ett index/LUT på
 
-För att arbeta med ett index i bildvisaren <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> sandlåda:
+För att arbeta med ett index i <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> sandlådan:
 
 1. **Öppna en bild** från huvudbildrutnätet genom att klicka på den
-2. Fliken **Bildvisare** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> öppnas
+2. Fliken **Bildvisare** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> öppnas då
 3. Klicka på **Lager-rullgardinsmenyn** (uppe till höger i visaren)
 4. Välj lager från rullgardinsmenyn:
    * RAW (Reflektans)
 
 ### Tillämpa ett index på en bild
 
-När bilden är i helskärmsläge och sidofältet **Bildvisare** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> öppen:
+När bilden är i helskärmsläge och **Bildvisaren** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> är öppen:
 
-1. Markera rutan Index längst upp i sidofältet.
-2. Välj kamerans filter från rullgardinsmenyn till vänster.
-3. Välj önskad indexformel från rullgardinsmenyn till höger.
-4. Dra filterkanalens färgcirklar till platserna i indexformeln nedan.
-5. När formeln är giltig uppdateras bilden och visar indexvärdena.
-6. Flytta muspekaren för att se värdena vid muspekarens position.
-7. Zooma in för att se enskilda pixlar och deras tillhörande värden.
+1. Markera rutan Index högst upp i sidofältet
+2. Välj kamerans filter från rullgardinsmenyn till vänster
+3. Välj önskad indexformel från rullgardinsmenyn till höger
+4. Dra filterkanalens färgcirklar till platserna i indexformeln nedan
+5. När formeln är giltig uppdateras bilden och visar indexvärdena
+6. Flytta muspekaren för att se värdena vid pekarens position
+7. Zooma in för att se enskilda pixlar och deras tillhörande värden
 
 Varje index har ett specifikt värdeintervall och en specifik betydelse:
 
-#### NDVI Exempel
+#### Exempel på NDVI
 
 ```
 
@@ -107,43 +106,44 @@ För fullständig dokumentation om indexformler, se [Multispektrala indexformler
 
 En **uppslagstabell (LUT)** mappar numeriska indexvärden till färger för visualisering:
 
-* **Inmatning**: Indexpixelvärde (t.ex. NDVI 0,65)
-* **Utgång**: RGB-färg (t.ex. ljusgrön)
-* **Syfte**: Göra mönster lättare att se och tolka**Gråskala vs. färg-LUT:**
+* **Indata**: Indexpixelvärde (t.ex. NDVI 0,65)
+* **Utgång**: RGB färg (t.ex. ljusgrön)
+* **Syfte**: Gör mönster lättare att se och tolka**Gråskala vs. färg-LUT:**
 
 * Gråskala: Vetenskaplig och neutral, visar rådata
 * Färg-LUT: Intuitiv och effektfull, lyfter fram mönster och skillnader
 
-{% hint style=&quot;success&quot; %}
-**Visualiseringskraft**: Genom att tillämpa en färg-LUT på en gråskalig indexbild blir det betydligt enklare att identifiera mönster, avvikelser och intressanta områden med ett ögonkast.
+{% hint style="success" %}
+**Visualiseringskraft**: Att tillämpa en färg-LUT på en gråskalig indexbild gör det betydligt enklare att identifiera mönster, avvikelser och områden av intresse med ett ögonkast.
 {% endhint %}
 
 ### Tillämpa en LUT på en indexbild
 
 När du har en indexbild som visar
 
-1. Klicka på <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> &quot;+Lägg till LUT&quot;
-2. Välj färgövergången
-3. Justera klippningens min-/maxändpunkter
+1. Klicka på <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> knappen &quot;+Lägg till LUT&quot;
+2. Välj färggradienten
+3. Justera klippningens min-/max-ändpunkter
 4. Justera klippningsläget
-5. Markera rutan Index i **Bildvisaren** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> i sidofältet för att tillämpa LUT.
+5. Markera rutan Index i **Bildvisaren** <img src="../.gitbook/assets/icon_image-viewer.JPG" alt="" data-size="line"> för att tillämpa LUT
 
-### Välja en färgövergång
+### Välja en färggradient
 
-**Välja en övergång:**
+**Välja en gradient:**
 
-1. I LUT-panelen, leta reda på den**färgade övergångsstapeln**.
-2. Håll muspekaren över den för att se tillgängliga förinställda övergångar.
-3. Välj önskad övergång.
-4. Bilden **uppdateras omedelbart** med nya färger när rutan Index är markerad.
+1. I LUT-panelen, leta reda på**den färgade gradientfältet**
 
-{% hint style=&quot;success&quot; %}
-**Bästa praxis**: För vegetationsindex som NDVI är gradienten Red-Yellow-Green mest intuitiv eftersom den stämmer överens med naturliga färgassociationer (grön = frisk, gul = måttlig, röd = stressad)..
+2. Håll muspekaren över det för att se tillgängliga gradientförinställningar
+3. Välj önskad gradient
+4. Bilden **uppdateras omedelbart** med nya färger när rutan Index är markerad
+
+{% hint style="success" %}
+**Bästa praxis**: För vegetationsindex som NDVI är gradienten Red-Gul-Green mest intuitiv eftersom den stämmer överens med naturliga färgassociationer (grönt = friskt, gult = måttligt, rött = stressat).
 {% endhint %}
 
 ### Justera färgklasser
 
-**Klasskontrollen**avgör hur många diskreta färgsteg som visas i din gradient:**Alternativ för antal klasser:*** **2–5 klasser**: Mycket breda kategorier, distinkta zoner
+**Kontrollen Klasser**avgör hur många diskreta färgsteg som visas i din gradient:**Alternativ för antal klasser:*** **2–5 klasser**: Mycket breda kategorier, tydliga zoner
 * **6–10 klasser**: Balanserade, bra för klassificering
 * **11–20 klasser**: Jämna gradienter, kontinuerligt utseende
 * **20+ klasser**: Nästan kontinuerliga, maximal jämnhet**Så här justerar du:**
@@ -151,108 +151,108 @@ När du har en indexbild som visar
 1. I LUT-panelen hittar du**färgproverna under gradientfältet**
 
 2. Justera antalet klasser genom att lägga till med +-knappen
-3. Ta bort antalet klasser genom att dubbelklicka på en färgpröv
-4. Gradienten uppdateras **i realtid** på bilden**Effekt på visualiseringen:*** **Färre klasser** (3-5): Skapar distinkta zoner, förenklad klassificering, lättare att skilja mellan kategorier
-* **Medelklasser** (6-10): Balanserad approach, bra för de flesta tillämpningar
-* **Fler klasser** (15-20): Smidiga övergångar, detaljerad variation, fotografiskt utseende**När ska man använda:*** **Få klasser (3-5)**: Presentationsbilder, klassificeringskartor, enkla rapporter
-* **Medelklasser (6-10)**: Allmän analys, balanserade detaljer, standardrapporter
-* **Många klasser (15–20)**: Vetenskaplig analys, detaljerad inspektion, utdata av publikationskvalitet
+3. Ta bort klasser genom att dubbelklicka på en färgprovruta
+4. Gradienten uppdateras **i realtid** på bilden**Effekt på visualiseringen:*** **Färre klasser** (3–5): Skapar tydliga zoner, förenklad klassificering, lättare att skilja mellan kategorier
+* **Medelantal klasser** (6–10): Balanserad metod, bra för de flesta tillämpningar
+* **Fler klasser** (15–20): Mjuka övergångar, detaljerad variation, fotografiskt utseende**När ska man använda:*** **Få klasser (3–5)**: Presentationsbilder, klassificeringskartor, enkla rapporter
+* **Medelstora klasser (6–10)**: Allmän analys, balanserad detaljrikedom, standardrapporter
+* **Många klasser (15–20)**: Vetenskaplig analys, detaljerad granskning, utskrifter av publikationskvalitet
 
 ### Finjustering av värdeintervall
 
-**Värdeintervallskontrollerna**avgör vilka indexvärden som mappar till vilka färger i din gradient:**Intervallkontroller i LUT-panelen:*** **Minimivärde**: Nedre gräns för färgskalan
-* **Maxvärde**: Övre gräns för färgskalan
-* **Mellanliggande värden**: Fördelas automatiskt mellan min och max (baserat på antal klasser)
+**Värdeintervallreglagen**avgör vilka indexvärden som mappas till vilka färger i din gradient:**Intervallreglage i LUT-panelen:*** **Minimivärde**: Färgskalans nedre gräns
+* **Maximivärde**: Färgskalans övre gräns
+* **Mellanvärden**: Fördelas automatiskt mellan min och max (baserat på antalet klasser)
 
 #### Justera min-/maxvärden
 
 **Så här justerar du värdeintervall:**
 
-1. I LUT-panelen letar du upp inmatningsfälten**Minvärde**och**Maxvärde**
+1. I LUT-panelen letar du upp inmatningsfälten**Min Value**och**Max Value**
 
-2. Klicka på fältet**Minsta värde**
+2. Klicka på fältet**Min Value**
 
-3. Ange önskat minsta värde (t.ex. `0.2`)
+3. Skriv in önskat minimivärde (t.ex. `0.2`)
 4. Tryck på **Enter** eller klicka utanför fältet
-5. Upprepa för fältet **Maximalt värde** (t.ex. `0.9`)
-6. Visualiseringen **uppdateras omedelbart**{% hint style=&quot;info&quot; %}**Automatisk skalning**: När du först tillämpar en LUT ställer Chloros automatiskt in min/max till det faktiska dataområdet i bilden. Du kan sedan begränsa detta område för att fokusera på specifika värdeintervall av intresse.
+5. Upprepa för fältet **Maxvärde** (t.ex. `0.9`)
+6. Visualiseringen **uppdateras omedelbart**{% hint style="info" %}**Automatisk skalning**: När du först tillämpar en LUT ställer Chloros automatiskt in min/max till det faktiska dataintervalet i bilden. Du kan sedan begränsa detta intervall för att fokusera på specifika värdeintervall av intresse.
 {% endhint %}
 
-**Exempel på NDVI intervalljusteringar:*** **Hela intervallet**: `-1.0` till `1.0` (visa alla möjliga värden)
-* **Vegetationsfokuserat**: `0.2` till `0.9` (uteslut bar mark och vatten)
+**Exempel på NDVI-intervalljusteringar:*** **Hela intervallet**: `-1.0` till `1.0` (visa alla möjliga värden)
+* **Fokuserat på vegetation**: `0.2` till `0.9` (exkludera bar mark och vatten)
 * **Endast frisk vegetation**: `0.5` till `0.9` (markera endast livskraftiga växter)
 * **Stressdetektering**: `0.2` till `0.5` (betona problemområden)
 * **Anpassat intervall**: Justera utifrån dina observerade pixelvärden**Varför justera intervall?*** **Öka kontrasten** i ditt intresseområde
 * **Uteslut irrelevanta värden** (t.ex. vattendrag, bar mark)
 * **Standardisera visualiseringen** över flera bilder eller datum
-* **Markera subtila skillnader** inom ett snävt värdeintervall
+* **Betona subtila skillnader** inom ett snävt värdeintervall
 
 ### Klippa bort värden utanför intervallet
 
-När pixelvärdena ligger utanför ditt definierade min-/maxintervall kan du styra hur de visas med hjälp av **klippningslägen**.
+När pixelvärden faller utanför ditt definierade min/max-intervall kan du styra hur de visas med hjälp av **klippningslägen**.
 
 #### **Tillgängliga alternativ för klippningsläge:**
 
-#### 1. Minsta och största
+#### 1. Minimum och Maximum
 
-* Pixlar **under minsta**→ visas med den**första färgen** i gradienten (t.ex. röd)
-* Pixlar **över maximum**→ visas med den**sista färgen** i gradienten (t.ex. grön)
-* **Användningsfall**: Betona extremvärden, visa hela dataområdet med mättade färger vid gränserna
-* **Exempel**: NDVI-värden under 0,2 visas alla i rött, värden över 0,9 visas alla i grönt
+* Pixlar **under minimum**→ visas med den**första färgen** i gradienten (t.ex. röd)
+* Pixlar **över max**→ visas med den**sista färgen** i gradienten (t.ex. grön)
+* **Användningsfall**: Framhäva ytterligheter, visa hela dataintervallet med mättade färger vid gränserna
+* **Exempel**: NDVI-värden under 0,2 visas alla som röda, värden över 0,9 visas alla som gröna
 
 #### 2. Transparent bakgrund
 
-* Pixlar **utanför intervallet**blir**helt transparenta*** Endast pixlar **inom intervallet** visar färgövergång
-* **Användningsfall**: GIS-överlägg, isolering av specifika värdeintervall, markering av endast områden av intresse
-* **Exempel**: Visa endast NDVI 0,4-0,7 i färg, allt annat transparent
+* Pixlar **utanför intervallet**blir**helt transparenta*** Endast pixlar **inom intervallet** visar färggradient
+* **Användningsfall**: GIS-överlägg, isolera specifika värdeintervall, markera endast områden av intresse
+* **Exempel**: Visa endast NDVI 0,4–0,7 i färg, allt annat transparent
 
-{% hint style=&quot;warning&quot; %}
+{% hint style="warning" %}
 **Begränsning av transparens**: Transparenta pixlar visas som bakgrundsfärg i visningsprogrammet. Vid export under bearbetning bevaras transparensen i PNG-format men inte i JPG.
 {% endhint %}
 
 #### 3. Indexbakgrund
 
 * Pixlar **utanför intervallet**visas i**gråskala** (visar råa indexvärden)
-* Pixlar **inom intervallet**visar**färgövergång*** **Användningsfall**: Subtil markering, bibehåller sammanhanget samtidigt som intressanta områden framhävs
-* **Exempel**: Markera stressad vegetation med färg (NDVI 0,3–0,5) och visa friska områden i grått
+* Pixlar **inom intervallet**visar**färgövergång*** **Användningsfall**: Subtil markering, bibehåller sammanhanget samtidigt som områden av intresse framhävs
+* **Exempel**: Markera stressad vegetation med färg (NDVI 0,3–0,5) samtidigt som friska områden visas i grått
 
 #### 4. Originalbakgrund
 
-* Pixlar **utanför intervallet**visas som**originalbilden i multispektralformat*** Pixlar **inom intervallet**visar**färgövergång*** **Användningsfall**: Mest intuitivt – kombinerar naturligt bildkontext med analytisk färgöverlagring
-* **Exempel**: Se det faktiska utseendet på fältet/grödan med färgkodade stressade områden överlagrade
+* Pixlar **utanför intervallet**visar den**ursprungliga multispektrala bilden*** Pixlar **inom intervallet**visar**färggradient*** **Användningsfall**: Mest intuitivt – kombinerar naturligt bildsammanhang med analytiskt färgöverlägg
+* **Exempel**: Se fältets/grödans faktiska utseende med färgkodade stressområden överlagrade
 
 ### Välja rätt klippningsläge
 
 | Klippningsläge              | Bäst för                                   | Visualiseringsstil          |
 | -------------------------- | ------------------------------------------ | ---------------------------- |
-| **Minimum och maximum**    | Fullständig datavisning, vetenskaplig analys     | Alla pixlar färgade           |
+| **Minimum och Maximum**    | Fullständig datavisning, vetenskaplig analys     | Alla pixlar färgade           |
 | **Transparent bakgrund** | GIS-överlägg, isolering av specifika intervall    | Färg inom intervallet, tomt utanför |
-| **Indexbakgrund**       | Subtil betoning, bibehållande av datakontext  | Färg inom intervallet, grått utanför  |
+| **Indexbakgrund**       | Subtil betoning, bibehåller datakontexten  | Färg inom intervallet, grått utanför  |
 | **Originalbakgrund**    | Rapporter, presentationer, intuitiv analys | Färg inom intervallet, foto utanför |
 
 ### Skapa anpassade LUT-färger
 
-För full kontroll över din visualisering kan du skapa **anpassade färgövergångar** genom att redigera enskilda färgstopp.**Så här skapar du en anpassad övergång:**
+För full kontroll över din visualisering kan du skapa **anpassade färgövergångar** genom att redigera enskilda färgstopp.**Så här skapar du en anpassad gradient:**
 
-1. I LUT-panelen hittar du**förhandsgranskningsfältet för övergångar**
+1. I LUT-panelen letar du upp**förhandsgranskningsfältet för gradienter**
 
-2. Leta efter**färgprover** under övergången
+2. Leta efter**färgproverna** under gradienten
 3. **Klicka på ett färgstopp** för att välja det
 4. En **färgväljare** öppnas
 5. Välj en ny färg med hjälp av:
-   * **Färghjul**: Visuell färgval
-   * **RGB/HSV-reglage**: Exakt färgkontroll
-   * **Hex-kodinmatning**: Exakt färgspecifikation (t.ex. `#FF0000` för rött)
+   * **Färghjulet**: Visuellt färgval
+   * **RGB/HSV-reglagen**: Exakt färgkontroll
+   * **Inmatning av hexkod**: Exakt färgspecifikation (t.ex. `#FF0000` för rött)
 6. Klicka utanför färgväljaren **för att tillämpa den nya färgen**
 
-7. Gradienten**uppdateras omedelbart** på bilden**Lägga till eller ta bort färgstopp:*** **Lägg till ett stopp**: Klicka på +-ikonen för att lägga till en ny färgruta i slutet
+7. Gradienten**uppdateras omedelbart** på bilden**Lägga till eller ta bort färgstopp:*** **Lägg till ett stopp**: Klicka på +-ikonen för att lägga till en ny färgprov i slutet
 * **Ta bort ett stopp**: Dubbelklicka på färgrutan för att ta bort färgprovet**Anpassningsstrategier:*** **Invertera gradient**: Vänd på färgordningen för att vända på betydelsen (t.ex. grönt = lågt, rött = högt)
-* **Varumärkesfärger**: Anpassa rapportens färgpalett efter din organisations färgpalett
-* **Färgblindvänligt**: Använd orange-blå eller lila-gula kombinationer
+* **Varumärkesfärger**: Anpassa efter din organisations färgpalett för rapporter
+* **Färgblindvänligt**: Använd kombinationer av orange-blått eller lila-gult
 * **Utskriftsoptimering**: Välj färger som fungerar både vid färg- och gråskaleutskrift
 * **Flera tröskelvärden**: Använd distinkta färger vid specifika värdetrösklar för klassificering
 
-{% hint style=&quot;info&quot; %}
+{% hint style="info" %}
 **Spara anpassade gradienter**: Anpassade gradienter kan sparas och återanvändas. Klicka på spara-ikonen i LUT-panelen för att spara dina anpassade färgscheman för framtida bruk.
 {% endhint %}
 
@@ -268,46 +268,46 @@ Alla LUT-justeringar i sandlådan uppdaterar bilden **omedelbart och interaktivt
 * **Välj gradient** → Färgerna uppdateras omedelbart
 * **Justera värdeintervall** → Kontrasten ändras i realtid
 * **Ändra klasser** → Gradientens jämnhet uppdateras omedelbart
-* **Ändra beskärning** → Bakgrundsvisningen ändras omedelbart
-* **Redigera färger** → Anpassad gradient tillämpas omedelbart**Ingen &quot;Tillämpa&quot;-knapp behövs** – alla ändringar är live och interaktiva!
+* **Ändra klippning** → Bakgrundsvisningen ändras omedelbart
+* **Redigera färger** → Den anpassade gradienten tillämpas omedelbart**Ingen &quot;Apply&quot;-knapp behövs** – alla ändringar är live och interaktiva!
 
-{% hint style=&quot;success&quot; %}
+{% hint style="success" %}
 **Live-feedback**: Den omedelbara visuella feedbacken gör att du snabbt kan experimentera med olika inställningar tills du hittar den optimala visualiseringen för dina analysbehov.
 {% endhint %}
 
-### Iterativ förfiningsarbetsflöde
+### Iterativt förfiningsflöde
 
-**Typiskt LUT-optimeringsarbetsflöde:**
+**Typiskt LUT-optimeringsflöde:**
 
-1.**Välj indexlager** (t.ex. RAW (Reflektans))
-2. **Tillämpa index** – Välj kamerafilter och indexformel, dra färgade cirklar till lämplig plats i indexformeln
-3. **Tillämpa LUT-gradient** – Börja med Red-Yellow-Green förinställning
-4. **Kontrollera pixelvärden** – Flytta markören och notera värdeintervallen
+1.**Välj indexlager** (t.ex. RAW (reflektans))
+2. **Tillämpa index** – Välj kamerafilter och indexformel, dra de färgade cirklarna till rätt plats i indexformeln
+3. **Tillämpa LUT-gradient** – Börja med förinställningen Red-Yellow-Green
+4. **Granska pixelvärden** – Flytta markören runt och notera värdeintervallen
 5. **Justera min/max** – Begränsa för att fokusera på vegetation (t.ex. 0,2 till 0,9)
-6. **Välj beskärning** – Prova ”Original Background” för sammanhang
+6. **Välj klippning** – Prova ”Original Background” för sammanhang
 7. **Förfina färger** – Anpassa gradienten vid behov för specifik betoning
-8. **Slutför inställningarna**– Dokumentera inställningarna och kopiera till Projektinställningar för exportbearbetning
+8. **Slutför inställningarna**– Dokumentera inställningarna och kopiera till projektinställningarna för exportbearbetning
 
-### Inspektion av pixelvärden
+### Granskning av pixelvärden
 
-Det är viktigt att förstå de faktiska pixelvärdena för att kunna ställa in effektiva LUT-intervall:**Så här inspekterar du värden:**
+Att förstå de faktiska pixelvärdena är avgörande för att ställa in effektiva LUT-intervall:**Så här inspekterar du värden:**
 
-1. Pixelvärden visas när bilden har antingen Index eller både Index och LUT**markerade**.
-2. **Flytta markören** över olika områden i bilden
-3. **Observera pixelvärdena** som visas i legenden när du håller muspekaren över dem
+1. Pixelvärden visas när bilden har antingen rutan Index, eller både rutorna Index och LUT**markerade**.
+2. **Flytta markören** över olika områden av bilden
+3. **Observera pixelvärden** som visas i legenden när du håller markören över dem
 4. Zooma in för att se enskilda pixlar markerade med ett flytande värde
-5. **Anteckna** värdeintervall för olika funktioner:
+5. **Notera** värdeintervall för olika egenskaper:
    * **Frisk vegetation**: t.ex. NDVI 0,55–0,85
    * **Stressad vegetation**: t.ex. NDVI 0,30–0,50
-   * **Bar mark**: t.ex. NDVI 0,05–0,25
-   * **Vatten** (om sådant förekommer): t.ex. NDVI -0,05 till 0,10**Använda pixelvärden för att ställa in LUT-intervall:**Efter att ha kontrollerat pixelvärdena justerar du LUT min/max därefter:**Exempel:*** **Observation**: Jordvärden = 0,05–0,25, stressad = 0,25–0,50, frisk = 0,50–0,85
-* **Mål**: Visualisera endast växthälsa (exkludera jord)
+   * **Bara mark**: t.ex. NDVI 0,05–0,25
+   * **Vatten** (om det finns): t.ex. NDVI -0,05 till 0,10**Använda pixelvärden för att ställa in LUT-intervall:**Efter att ha granskat pixelvärdena, justera dina LUT-min/max-värden därefter:**Exempelscenario:*** **Observation**: Jordvärden = 0,05–0,25, Stressad = 0,25–0,50, Frisk = 0,50–0,85
+* **Mål**: Visualisera endast växternas hälsa (exkludera jord)
 * **LUT-inställningar**: Min = `0.25`, Max = `0.85`
-* **Klippning**: ”Originalbakgrund” för att se jorden i naturlig färg
-* **Resultat**: Färgövergången gäller endast vegetation, jorden visas som originalbild
+* **Klippning**: &quot;Originalbakgrund&quot; för att se marken i naturliga färger
+* **Resultat**: Färgövergången gäller endast vegetationen, marken visas som originalbilden
 
-{% hint style=&quot;info&quot; %}
-**Dynamiskt intervall**: Olika grödor, årstider och tillväxtstadier har olika värdeintervall. Kontrollera alltid pixelvärdena i din specifika dataset innan du ställer in LUT-intervall.
+{% hint style="info" %}
+**Dynamiskt omfång**: Olika grödor, årstider och tillväxtstadier har olika värdeintervall. Kontrollera alltid pixelvärdena i din specifika dataset innan du ställer in LUT-intervall.
 {% endhint %}
 
 ***
@@ -316,20 +316,20 @@ Det är viktigt att förstå de faktiska pixelvärdena för att kunna ställa in
 
 ### Skapa anpassade indexformler
 
-{% hint style=&quot;info&quot; %}
-**Var du skapar dem**: Anpassade index kan konfigureras i**Projektinställningar** före bearbetning, samt i sidofältet i Image Viewer-sandboxen.
+{% hint style="info" %}
+**Var man skapar**: Anpassade index kan konfigureras i**Projektinställningar** före bearbetning, samt i sidopanelen i Image Viewer-sandboxen.
 {% endhint %}
 
 **Så här skapar du ett anpassat index:**
 
-1.**Öppna Projektinställningar** (före bearbetning) eller bildvisarens sandlåda-sidfält
-2. Navigera till **rullgardinsmenyn Indexformel**
+1.**Öppna Projektinställningar** (före bearbetning) eller sidfältet i Image Viewer-sandboxen
+2. Gå till **rullgardinsmenyn för indexformler**
 
 3. Leta efter alternativet**&quot;Anpassad&quot;** (du måste vara inloggad med Chloros+-licens)
 4. **Definiera din formel** med hjälp av bandvariabler:
    * Bandnamn: `NIR`, `Red`, `Green`, `Blue`, `RedEdge`, etc.
    * Operatörer: `+`, `-`, `*`, `/`, `^` (exponent)
-   * Funktioner: `sqrt()`, `abs()`, etc. (om det stöds)
+   * Funktioner: `sqrt()`, `abs()`, etc. (om stödjas)
    * Parenteser: `()` för operationsordning
 5. **Namnge ditt index** (t.ex. &quot;MyIndex&quot; eller &quot;CustomNDVI&quot;)
 6. **Spara konfigurationen**
@@ -351,8 +351,8 @@ Exponential index:
 (NIR / Red) ^ 2
 ```
 
-{% hint style=&quot;warning&quot; %}
-**Formelvalidering**: Se till att din formel använder band som är tillgängliga i din kamera. Till exempel är RedEdge endast tillgängligt på kameror med ett RedEdge-filter.
+{% hint style="warning" %}
+**Formelvalidering**: Se till att din formel använder band som finns tillgängliga i din kamera. Till exempel är RedEdge endast tillgängligt på kameror med ett RedEdge-filter.
 {% endhint %}
 
 ***
@@ -361,7 +361,7 @@ Exponential index:
 
 Nu när du förstår Index/LUT Sandbox:
 
-* **Tillämpa på bearbetning**: Använd upptäckta inställningar i [Projektinställningar](../project-settings/project-settings.md)
+* **Tillämpa på bearbetning**: Använd inställningarna du hittat i [Projektinställningar](../project-settings/project-settings.md)
 * **Batchbearbetning**: Tillämpa optimerade index på hela datamängder
 * **Läs mer**: Läs [Multispektrala indexformler](../project-settings/multispectral-index-formulas.md)
 
