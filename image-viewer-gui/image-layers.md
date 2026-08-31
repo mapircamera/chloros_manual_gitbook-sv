@@ -1,334 +1,200 @@
 # Bildlager
 
-I rullgardinsmenyn Bildlager i Chloros Image Viewer kan du snabbt växla mellan olika versioner av samma bild – från originalbilderna till bearbetade reflektansutdata och beräknade indexbilder.
+Med **rullgardinsmenyn för lager** längst upp till höger i bildvisaren kan du växla mellan alla versioner av den bild du tittar på – från källbilden via varje bearbetad produkt till de beräknade indexbilderna – utan att behöva lämna visaren.
 
 ## Vad är bildlager?
 
-I Chloros avser **lager** de olika bildutdata som finns tillgängliga för en enskild källbild. När du bearbetar bilder skapar Chloros flera versioner:
+Ett ”lager” i Chloros är en **produktfil**som är kopplad till en källbild. Importen ger dig källfilerna; bearbetningen lägger till ett lager för varje produkt som körningen genererade. Exporterade filer behåller källfilens namn – det är**mappen** som identifierar produkten, och lager namnet är Chloros:s etikett för den mappen.
 
-* **Originalbilder** (JPG- och RAW-filer från din kamera)
-* **Reflektanskalibrerade** utdata (om reflektanskalibrering var aktiverad)
-* **Målbilder** (om bilden innehåller kalibreringsmål)
-* **Indexbilder** (NDVI, NDRE, GNDVI, etc. om index var konfigurerade)
+<!-- SCREENSHOT-NEEDED: Image Viewer full screen with the layer dropdown open on a processed LATTICE multispectral image, showing the full list: TIFF base, RAW (Original), RAW (Debayered), RAW (Preview), RAW (Radiance), RAW (Reflectance), and one RAW (NDVI Index) entry. -->
 
-Med **rullgardinsmenyn för lagerval** längst upp till höger i bildvisaren kan du omedelbart växla mellan dessa versioner utan att lämna visaren.***
+***
 
-## Tillgängliga lagertyper
+## Lagerlistan
 
-### JPG
+### Alltid närvarande
 
-* Den ursprungliga JPG-förhandsvisningsbilden från din kamera
-* Alltid tillgänglig för alla bilder
-* Obearbetad, precis som den togs av kameran
-* Snabbast att ladda och visa
+| Lager | Vad det är |
+| --- | --- |
+| **JPG**(eller**PNG**/**TIFF**) | Basfilen som kom in med inspelningen. Survey3 importerar en `.JPG` bredvid varje `.RAW`; LATTICE-inspelningar medför en förhandsgranskning av typen PNG eller TIFF. Märkt enligt vad som faktiskt importerades |
+| **RAW (Original)** | Den ursprungliga råbilden, avbayered för visning utan tillämpade korrigeringar. Tillgänglig från importögonblicket — kräver ingen bearbetning |
 
-**När ska du visa:**
+En LATTICE-inspelning vars basfil **är** dess råbild har ingen separat baspost: `RAW (Original)` täcker redan den.
 
-* Snabb förhandsgranskning av originalbilden
-* Kontrollera bildkomposition och bildutsnitt
-* Verifiera bildkvaliteten före bearbetning
+### Survey3-bearbetningsprodukter
 
-### RAW (Original)
-
-* De ursprungliga RAW-sensordata från din kamera
-* Debayered utan efterbearbetning
-* Högre bitdjup än JPG (vanligtvis 12-bitars eller 14-bitars sensordata)
-
-**När ska man visa:**
-
-* Kontrollera kvaliteten på den ursprungliga sensordatan
-* Kontrollera om det finns sensorproblem eller artefakter
-* Jämföra resultat före och efter bearbetning
-
-### RAW (Mål)
-
-* Visas endast för bilder som identifierats som innehållande kalibreringsmål
-* Visar den ursprungliga RAW-bilden med detekterat mål
-* Används för att verifiera att måldetekteringen lyckades
-
-**När ska man visa:**
-
-* Bekräfta att kalibreringsmålen detekterades korrekt
-* Kontrollera målbildens kvalitet
-* Felsöka kalibreringsproblem
+| Lager | Skrivs till | Finns när |
+| --- | --- | --- |
+| **RAW (Mål)** | — | Bilden identifierades som innehållande ett kalibreringsmål |
+| **RAW (reflektans)** | `Reflectance_Calibrated_Images/` | Reflektanskalibreringen genomfördes framgångsrikt på denna bildruta |
+| **Vignettkorrigerad**| `Vignette_Corrected_Images/` | Bilden kunde inte reflektanskalibreras**och** *vignettkorrigering* var aktiverad |
+| **Sensorsvar**| `Sensor_Response_Images/` | Bilden kunde inte kalibreras för reflektans**och** *vignettkorrigering* var avstängd |
+| **Vitbalanserad** | `White_Balanced_Images/` | En vitbalanserad produkt skrevs ut |
 
 {% hint style="info" %}
-**Målskikt**: Detta skikt visas endast i rullgardinsmenyn för bilder som innehåller kalibreringsmål. Vanliga bilder har inte detta alternativ.
+**Vignettkorrigering och sensorns respons är alternativ, aldrig båda samtidigt.** Det finns exakt en okalibrerad reservprodukt per körning för varje kameramodell, och *Vignettkorrigering*-knappen väljer vilken. Se [Projektinställningar](../project-settings/project-settings.md).
 {% endhint %}
 
-### RAW (reflektans)
+### LATTICE-nivåer
 
-* Den kalibrerade reflektansutgångsbilden
-* Vignettkorrigerad (om aktiverat vid bearbetning)
-* Reflektans kalibrerad med hjälp av måldata (om aktiverat)
-* Multibands TIFF med alla kamerakanaler
-* Pixelvärden representerar procentuell reflektans (vid användning av procentläge)
-* Redo att bearbetas med [Index/LUT Sandbox](index-lut-sandbox.md)
+LATTICE sammanställer dessa i ett enda bearbetningssteg. Vilka som finns beror på exportinställningarna per produkt i Projektinställningar och på vad som gäller för kameran.
 
-**När ska man visa:**
+| Lager | Skrivs till | Gäller för |
+| --- | --- | --- |
+| **RAW (Debayered)** | `Debayered_Images/` | RGB och multispektralt |
+| **RAW (förhandsgranskning)** | `Preview_Images/` | Multispektrala (falskfärgssträckning) |
+| **Vitbalanserad** | `Preview_Images/` | RGB-huvudkameror — förhandsvisningen RGB är registrerad under detta namn så att den stämmer överens med lagret Survey3 med samma namn |
+| **RAW (strålning)** | `Radiance_Images/` | Endast multispektralt |
+| **RAW (reflektans)** | `Reflectance_Calibrated_Images/` | Endast multispektralt, och endast när en matchande `.daq`-nedåtriktad post eller ett QA-godkänt mål inom bilden täcker bilden |
 
-* Granska kalibrerade resultat
-* Verifiera kalibreringskvaliteten
-* Kontrollera pixelvärden för vetenskaplig noggrannhet
-* Jämföra med originalet för att se kalibreringseffekter
+RGB-huvudkameror har ingen radiometri per band, så strålning och reflektans hoppas över för dem som **ej tillämpligt** — loggen anger detta istället för att tyst misslyckas.
 
-{% hint style="success" %}
-**Rekommenderat**: Använd RAW (reflektans)-lager när du kontrollerar pixelvärden för vetenskapliga mätningar och analyser.
-{% endhint %}
+### Index-, LUT- och sandbox-lager
 
-### RAW (NDVI-index)... och liknande
+| Lagermönster | Exempel | Varifrån det kommer |
+| --- | --- | --- |
+| **RAW (`<INDEX>`-index)** | `RAW (NDVI Index)` | Ett per index konfigurerat i projektinställningarna, beräknat under bearbetningen |
+| **`<INDEX>` LUT** | `NDVI LUT` | Den färgkartlagda versionen av ett index |
+| **Sandlåda (`<Name>` `<Index\|LUT>` `<NNN>`)** | `Sandbox (NDVI LUT 003)` | En per exportkörning av [Index/LUT Sandbox](index-lut-sandbox.md) |
 
-* Beräknad bild av vegetationsindex (NDVI i detta exempel)
-* Indexnamnet ändras beroende på vilket index som konfigurerades under bearbetningen
-* Exempel: RAW (NDVI-index), RAW (NDRE-index), RAW (GNDVI-index) osv.
-* Enbandsgråskalebild som visar indexberäkningsresultaten
-* Ett lager visas för varje index som konfigurerats i projektinställningarna
-
-**Möjliga indexnamn:**
-
-* RAW (NDVI Index)
-* RAW (NDRE Index)
-* RAW (GNDVI Index)
-* RAW (OSAVI-index)
-* RAW (EVI-index)
-* RAW (SAVI-index)
-* Och många fler... (se [Formler för multispektrala index](../project-settings/multispectral-index-formulas.md))
-
-**När ska man visa:**
-
-* Granska resultat av indexberäkningar
-* Kontrollera indexvärdesintervall
-* Identifiera områden av intresse
-* Verifiera indexbilder innan de används i GIS eller analys
+Om samma indexnamn konfigureras mer än en gång med olika inställningar får den andra och efterföljande versionerna ett nummer i namnet (`RAW (NDVI2 Index)`) så att lagren förblir urskiljbara.
 
 ***
 
 ## Använda lagerväljaren
 
-### Öppna rullgardinsmenyn
+1. Öppna en bild i helskärmsläge genom att klicka på en miniatyr i rutnätet
+2. Klicka på **lagermenyn** längst upp till höger i visningsfönstret
+3. Välj ett lager – bilden uppdateras omedelbart
 
-1. Öppna en bild i helskärmsläge (klicka på valfri miniatyrbild i bildvisaren)
-2. Leta reda på **lagermenyn** i det övre högra hörnet av visaren
-3. Menyn visar det lager som för närvarande är valt (t.ex. &quot;JPG&quot;)
-4. Klicka på menyn för att se alla tillgängliga lager
+I rullgardinsmenyn visas **JPG, RAW (Original), RAW (Target), RAW (Reflectance)** först, i den ordningen, och allt annat listas efter dem i den ordning produkterna registrerades.
 
-### Byta lager
+### Lagerinställning när du navigerar
 
-1. Klicka på lagermenyn för att öppna listan
-2. Alla tillgängliga lager för den aktuella bilden visas
-3. Klicka på valfritt lagernamn för att byta till den versionen
-4. Bilden uppdateras omedelbart för att visa det valda lagret
+Genom att trycka på **←**/**→** går du till nästa bild och systemet försöker hålla dig kvar på samma lager:
 
-**Snabbt byte:**
+1. **Exakt matchning först** – om nästa bild har ett lager med samma namn, får du det. Det är detta som gör att du stannar kvar på `RAW (NDVI Index)` när du bläddrar igenom en hel uppsättning
+2. **Därefter en matchning efter typ** — ett indexlager söker efter vilket indexlager som helst, en LUT efter vilken LUT som helst, reflektans efter reflektans, mål efter mål, original efter original, bas efter bas
+3. **Därefter, endast för exportlager** — namnet behålls även om lagerlistan inte hunnit ikapp ännu, eftersom filen redan finns på disken. Det är detta som gör att du kan granska produkter medan en körning fortfarande skriver ut dem
+4. **I övriga fall** — det första tillgängliga lagret, vilket normalt är basbilden
 
-* Rullgardinsmenyn kommer ihåg ditt senaste val
-* När du navigerar till nästa bild försöker Chloros visa samma lagertyp
-* Om det lagret inte finns på nästa bild används JPG som standard
+Sidokarfilerna `.daq` och `.csv` i projektet hoppas över vid navigering med piltangenterna, så att man vid bläddring genom bilderna aldrig hamnar på en ljussensorinspelning.
 
-### Lagertillgänglighet
-
-Alla lager är inte tillgängliga för varje bild:
-
-**Alltid tillgängliga:*** ✅ JPG (varje bild har en JPG-förhandsgranskning)
-
-**Villkorligt tillgängliga:**
-
-* ⚠️ RAW (Original) – Endast om bilden togs i RAW- eller RAW+JPG-läge
-* ⚠️ RAW (Mål) – Endast om bilden innehåller upptäckta kalibreringsmål
-* ⚠️ RAW (reflektans) – Endast efter bearbetning med reflektanskalibrering aktiverad
-* ⚠️ RAW (\[Index] Index) – Endast efter bearbetning med konfigurerade index
-
-***
-
-## Lagerbeständighet
-
-### Navigera mellan bilder
-
-När du navigerar till en annan bild (med piltangenterna eller genom att klicka på miniatyrer):**Lagerinställningen bevaras:**
-
-* Om du visar &quot;RAW (Reflektans)&quot; visas nästa bild som &quot;RAW (Reflektans)&quot; (om tillgängligt)
-* Om du visar &quot;RAW (NDVI Index)&quot;, visas nästa bild som &quot;RAW (NDVI Index)&quot; (om tillgängligt)
-* Om samma lager inte finns, används JPG som standard
-
-**Exempel på arbetsflöde:**
-
-1. Öppna bild 1, växla till RAW (NDVI Index)
-2. Tryck på → för att visa bild 2
-3. Bild 2 visar automatiskt lagret RAW (NDVI Index)
-4. Fortsätt navigera – alla bilder visar NDVI-lagret
-5. Mycket effektivt för att granska indexresultat över många bilder
-
-***
-
-## Vanliga arbetsflöden
-
-### Arbetsflöde 1: Före/efter-jämförelse
-
-**Mål**: Jämför originalbilden med den kalibrerade bilden
-
-1. Öppna den bearbetade bilden i bildvisaren
-2. Välj **RAW (Original)** från rullgardinsmenyn
-3. Notera vinjetteringen och de okalibrerade värdena
-4. Byt till **RAW (Reflectance)** från rullgardinsmenyn
-5. Jämför – vinjettering borttagen, värden kalibrerade
-
-### Arbetsflöde 2: Granskning av index
-
-**Mål**: Granska snabbt NDVI-resultat över hela datasetet
-
-1. Öppna den första bearbetade bilden
-2. Välj **RAW (NDVI Index)** i rullgardinsmenyn
-3. Använd →-piltangenten för att navigera till nästa bild
-4. NDVI-lagret kvarstår automatiskt
-5. Fortsätt genom alla bilder och kontrollera NDVI-mönstren
-6. Byt till **RAW (NDRE Index)** för att jämföra
-
-### Arbetsflöde 3: Verifiering av mål
-
-**Mål**: Verifiera att alla målbilder har detekterats korrekt
-
-1. Navigera till en målbild
-2. Välj **RAW (Target)** från rullgardinsmenyn
-3. Verifiera att kalibreringsmålen är tydligt synliga och detekterade
-4. Navigera till nästa målbild
-5. Upprepa verifieringen för alla mål
-
-### Arbetsflöde 4: Inspektion av pixelvärden
-
-**Mål**: Kontrollera reflektansvärden för vetenskaplig noggrannhet
-
-1. Öppna den bearbetade bilden
-2. Välj **RAW (Reflectance)**-lagret
-3. Aktivera läget **Pixel Percent** (knappen i verktygsfältet uppe till höger)
-4. Flytta markören över vegetationsområden
-5. Kontrollera att pixelvärdena ligger inom förväntade intervall (30–70 % för NIR, 5–15 % för Red)
-6. Kontrollera att mark- och vattenområdena har lämpliga värden
+Zoom och panorering överförs även mellan bilderna, vilket gör det enkelt att jämföra samma fältposition före och efter.
 
 ***
 
 ## Förstå pixelvärden per lager
 
-Olika lager visar olika intervall för pixelvärden:
+Panelen [Cursor Values](opening-an-image-full-screen.md#cursor-values) visar det faktiska värdet per kanal under markören, i den enhet som lagret är lagrat i. Kolumnerna ändras beroende på lagret:
 
-### JPG-lager
+| Lager | Visad enhet | Anmärkningar |
+| --- | --- | --- |
+| Base (JPG / PNG / TIFF förhandsgranskning) | DN, 0–255 | Visningsvärden, gammakorrigerade i RGB. Endast för visuell granskning |
+| RAW (Original) | DN | Råa digitala värden från sensorn. Histogramaxeln anger djupet: 255 (8-bit), 4095 (12-bit) eller 65535 (16-bit) |
+| RAW (Debayered) | DN | Linjär, ingen bildsträckning |
+| RAW (Förhandsgranskning) / Vitbalanserad | DN | Visningsresultat — sträckt eller gammakorrigerat. Inte avsett för mätning |
+| RAW (Strålning) | **W/m²/sr/nm** | Float32 fysisk strålning. Ingen DN-kolumn |
+| RAW (reflektans) | DN **och %** | Procent beräknat med filens egen skala — se nedan |
+| Index / LUT / sandbox-exporter | Indexvärde, eller RGB-komponenter | En enkelkanalig indexfil rapporterar indexvärdet; en färgkartlagd LUT-fil rapporterar komponenterna Red/Green/Blue |
 
-* **Intervall**: 0–255 (8-bitars)
-* **Betydelse**: Visningsvärden, gammakorrigerade
-* **Användning**: Endast visuell inspektion, inte för vetenskapliga mätningar
+### Reflektans: skalan är per fil
 
-### RAW (Original)
+{% hint style="warning" %}
+**”Dela med 65 535” är endast korrekt för Survey3.** LATTICE-reflektansen lagras i en annan skala, och att blanda ihop de två divisorerna är det vanligaste sättet att få reflektansvärden som är exakt hälften av vad de borde vara.
+{% endhint %}
 
-* **Intervall**: 0–65535 (16-bitars)
-* **Betydelse**: Råa digitala siffror från sensorn
-* **Användning**: Kontroll av sensorns prestanda, inte kalibrerade
+| Källa | DN som motsvarar reflektans 1,0 | Identifieras av |
+| --- | --- | --- |
+| **LATTICE**(M3C / M3M) |**32768** | XMP-taggen `Chloros:PixelScale=32768` som finns med i varje LATTICE-reflektans-export. Tack vare 2× headroom kan ρ över 1,0 återges istället för att klippas bort |
+| **Survey3**|**65535** | Ingen Chloros XMP-skalatagg – kalibreringen Survey3 skriver ut ρ × dtype-max och beskär vid 1,0 |
 
-### RAW (reflektans)
+För GIS och skript: läs in `Chloros:PixelScale` från filen och dividera med det. Om taggen saknas är filen i Survey3-skala (65535). Visningsprogrammet, index-/LUT-sandlådan och indexexporten beräknar alla skalan på samma sätt, så det tal du läser vid markören är det tal som indexberäkningen använde.
 
-* **Intervall**: 0–65 535 (16-bitars TIFF) eller 0,0–1,0 (32-bitars procent)
-* **Betydelse**: Kalibrerad reflektans i procent
-* **Användning**: Vetenskapliga mätningar och analyser**För 16-bitars TIFF:**Dela med 65 535 för att få reflektansen i procent**För 32-bitars procent:** Värdena representerar direkt procent (0,5 = 50 % reflektans)
+Formatspecifik lagring utöver den skalan:
 
-### RAW (indexbilder)
+* **TIFF (32-bitars, procent)** lagrar DN / 65535 som ett flyttal
+* **PNG (8-bitars)**och**JPG (8-bitars)** lagrar DN × 255 / 65535
+* En **8-bitars TIFF-export av en 8-bitars källinspelning** beskärs till 0–255 istället för att omskalas, och har medvetet ingen skalningsetikett. Panelen visar endast DN för dessa filer, utan procentkolumn
 
-* **Intervall**: Varierar beroende på index (vanligtvis -1,0 till +1,0 för normaliserade index)
-* **Betydelse**: Resultat av indexberäkning
-* **Exempel**:
-  * NDVI: -1 till +1 (vegetation vanligtvis 0,4 till 0,9)
-  * NDRE: -1 till +1 (stressdetektering)
-  * EVI: 0 till 1 (förbättrad vegetation)
+### Indexvärdesintervall
+
+| Indexfamilj | Typiskt intervall | Avläsning |
+| --- | --- | --- |
+| Normaliserad skillnad (NDVI, GNDVI, NDRE, ENDVI…) | −1 till +1 | Frisk vegetation vanligtvis 0,4–0,9; bar mark nära 0; vatten negativt |
+| Jordjusterad (SAVI, OSAVI, MSAVI2…) | ungefär −1 till +1,5 | Värde liknande NDVI med jordbakgrunden undertryckt |
+| Förhållande (GRVI, GCI, MSR, CIRE…) | obegränsat uppåt | Förhållandena ökar obegränsat när nämnarens band går mot noll |
+| EVI / LAI | 0 till ~1, 0 till ~3,5 | Moln och andra mättade pixlar pressar båda utanför intervallområdet – maskera dem först |
+
+Se [Formler för multispektrala index](../project-settings/multispectral-index-formulas.md) för den exakta formeln bakom varje förinställning.
 
 ***
 
-## Tips och bästa praxis
+## Vanliga arbetsflöden
 
-### Effektiv växling mellan lager
+### Jämförelse före/efter
 
-* **Tangentbordsgenvägar**: Det finns inga tangentbordsgenvägar för lager, men navigationspilarna (←/→) fungerar för alla lager
-* **Konsekventa arbetsflöden**: Välj ett lager (t.ex. NDVI) och granska hela datasetet innan du byter till ett annat
-* **Snabba jämförelser**: Växla mellan Original och Reflektans för att verifiera bearbetningskvaliteten
+1. Välj **RAW (Original)** och notera vinjetteringen och de okalibrerade värdena
+2. Byt till **RAW (Reflectance)**
 
-### Prestandaöverväganden
+3. Jämför — vinjetteringen är borttagen, värdena kalibrerade. Zoom och panorering förblir oförändrade, så att du tittar på samma markyta
 
-* **JPG laddas snabbast**: Använd för snabb navigering genom många bilder
-* **RAW-lager laddas långsammare**: Högre upplösning och bitdjup
-* **Indexlager**: Liknande hastighet som Reflektans-lager
-* **Första laddningen är långsam**: Efterföljande visningar av samma lager cachas och går snabbare
+### Granska ett index över en hel bildserie
 
-### Kvalitetskontroll
+1. Öppna den första bearbetade bilden och välj indexlagret
+2. Tryck på **→** upprepade gånger – indexlagret följer med dig från bild till bild
+3. Håll koll på histogrammet i sidofältet medan du går igenom bilderna: en bildruta där fördelningen hoppar är värd att titta närmare på
 
-* **Kontrollera alltid RAW (Original)**: Kontrollera källdatakvaliteten innan du litar på de bearbetade resultaten
-* **Jämför lager**: Använd lagerväxling för att verifiera att bearbetningen fungerade korrekt
-* **Kontrollera indexintervall**: Använd läget Pixelprocent med indexlager för att verifiera att värdena är rimliga***
+### Verifiera kalibreringsmål
+
+1. Välj **RAW (Target)** på en målbildruta
+2. Kontrollera att målet är tydligt synligt och detekterat
+3. Gå vidare till nästa målbildruta — mållagret följer med
+
+### Kontrollera reflektansvärdenas noggrannhet
+
+1. Välj **RAW (Reflectance)**
+
+2. Läs av kolumnen**%** i panelen Cursor Values — den är redan korrekt skalad för den filen
+3. Kontrollera mot kända material i bilden: frisk vegetation har höga värden i NIR och låga värden i rött; ett kalibreringsmål bör visa värden som ligger nära dess publicerade reflektans
+
+***
 
 ## Felsökning
 
-### Lager inte tillgängligt
+### Ett lager som jag förväntade mig finns inte i rullgardinsmenyn
 
-**Problem**: Förväntat lager visas inte i rullgardinsmenyn**Möjliga orsaker:**
+**Möjliga orsaker**
 
-* Bilden har inte bearbetats (endast JPG och RAW (Original) tillgängliga)
-* Reflektanskalibrering var inaktiverad under bearbetningen
-* Specifikt index var inte konfigurerat i projektinställningarna
-* Bilden är en ren målbild (inga index genereras för mål)
+* Bilden har aldrig bearbetats — endast baslagret och `RAW (Original)` finns
+* Produktens exportknapp är avmarkerad i projektinställningarna
+* Produkten gäller inte för den kameran (radian och reflektans på en RGB-master; valfritt index på en enkelbands M3M-monokamera)
+* Reflektanskalibreringen hade inget att utgå ifrån – ingen `.daq`-täckning i nedåtriktad riktning och inget QA-godkänt mål inom bilden – så bilden återgick till ”Vignette Corrected” eller ”Sensor Response”
 
-**Lösningar:**
+**Åtgärder**
 
-1. Kontrollera att bilden har bearbetats (kontrollera utdatamappen för bearbetade filer)
-2. Kontrollera projektinställningarna för att bekräfta att index har konfigurerats
-3. Bearbeta om med önskade index aktiverade
+1. Kontrollera körloggen: Chloros anger när en begärd exportprodukt inte kunde genereras och varför
+2. Kontrollera exportinställningarna per produkt i [Projektinställningar](../project-settings/project-settings.md)
+3. Kontrollera att produktmappen finns i projektets utdataträd
+4. Kör om med produkten aktiverad
 
-### Fel lager visas
+### Lagerlistan ser ut att vara inaktuell
 
-**Problem**: Bilden öppnas i ett oväntat lager**Orsak**: Lagerinställningen från föregående bild har överförts, men det lagret finns inte i den aktuella bilden**Lösning**: Chloros faller automatiskt tillbaka till JPG när det önskade lagret inte är tillgängligt – detta är normalt beteende
+Chloros skannar om projektets produktmappar medan en körning pågår och åtgärdar saknade lagerregistreringar utifrån vad som faktiskt finns på disken, så ett lager som har exporterats normalt visas av sig själv vid en avläsning. Att växla bort från bilden och tillbaka tvingar fram en ny upplösning.
 
-### Kan inte se kalibreringsmål
+### Reflektansvärdena verkar vara hälften av vad de borde vara
 
-**Problem**: RAW-lagret (mål) visar inte måldetektering**Möjliga orsaker:**
+Du delar med största sannolikhet en LATTICE-fil med 65535. Använd `Chloros:PixelScale` (32768), eller läs kolumnen **%**, där detta redan har tillämpats.
 
-* Mål detekterades inte under bearbetningen
-* Bilden innehåller faktiskt inga mål
-* Inställningarna för måldetektering är för strikta
+### Indexlagret finns men bilden är tom
 
-**Lösningar:**
-
-1. Kontrollera felsökningsloggen efter meddelanden om &quot;Mål hittat&quot;
-2. Kontrollera att bilden faktiskt innehåller synliga kalibreringsmål
-3. Justera inställningarna för måldetektering i projektinställningarna
-4. Se [Välja målbilder](../processing-images-gui/choosing-target-images.md)
-
-***
-
-## Relaterade funktioner
-
-### Verktyg i bildvisaren
-
-När du visar ett lager kan du använda:
-
-* **Zoomkontroller**: Förstora för att granska detaljer
-* **Panorera**: Klicka och dra för att flytta runt i den zoomade bilden
-* **Pixelvärdesgranskning**: Se värden vid markörens position
-* **Navigeringspilar**: Flytta mellan bilder medan du behåller lagret
-* **Pixelprocentläge**: Växla mellan DN- och procentvisning
-
-Se [Öppna en bild i helskärmsläge](opening-an-image-full-screen.md) för fullständig dokumentation om bildvisaren.
-
-### Index/LUT-sandlåda
-
-För interaktivt indexprovning och visualisering:
-
-* **Indexberäkning i realtid**: Testa olika indexformler
-* **LUT-färgkartläggning**: Tillämpa färgövergångar på gråskaliga index
-* **Exportera visualiseringar**: Spara färgade indexbilder
-
-Se [Index/LUT-sandlåda](index-lut-sandbox.md) för mer information.
+Indexet kräver band som ditt lager inte har – till exempel ett index som läser en tredje kanal som tillämpas på en en- eller tvåkanalsfil. Byt till ett flerbandslager (reflektans eller debayerat), eller välj ett index som passar kamerans filter.
 
 ***
 
 ## Nästa steg
 
-Nu när du förstår bildlager:
-
-* [**Öppna en bild i helskärmsläge**](opening-an-image-full-screen.md) – Komplett guide till Image Viewer
-* [**Index/LUT Sandbox**](index-lut-sandbox.md) – Interaktiv indexvisualisering
-* [**Formler för multispektrala index**](../project-settings/multispectral-index-formulas.md) – Referens över tillgängliga index
-* [**Avsluta bearbetningen**](../processing-images-gui/finishing-the-processing.md) – Förstå bearbetade resultat
+* [**Öppna en bild i helskärmsläge**](opening-an-image-full-screen.md) — marköravläsning, histogram och GSD-kontroll
+* [**Index/LUT-sandlåda**](index-lut-sandbox.md) — interaktiv indexvisualisering och export
+* [**Multispektrala indexformler**](../project-settings/multispectral-index-formulas.md) — indexreferensen
+* [**Avsluta bearbetningen**](../processing-images-gui/finishing-the-processing.md) — utdatamappstrukturen som dessa lager pekar mot

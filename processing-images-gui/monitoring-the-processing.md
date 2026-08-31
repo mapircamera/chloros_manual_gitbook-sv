@@ -1,54 +1,58 @@
-# Övervaka bearbetningen
+# Övervakning av bearbetningen
 
-När bearbetningen har startat erbjuder Chloros flera sätt att övervaka förloppet, kontrollera om det finns problem och förstå vad som händer med din dataset. På den här sidan förklaras hur du följer bearbetningen och tolkar den information som Chloros tillhandahåller.
+När bearbetningen har startat erbjuder Chloros flera sätt att övervaka framstegen, kontrollera om det finns problem och förstå vad som händer med din datamängd. På den här sidan förklaras hur du kan följa bearbetningen och tolka den information som Chloros tillhandahåller.
 
 ## Översikt över förloppsindikatorn
 
-Förloppsindikatorn i den övre rubriken visar bearbetningsstatus i realtid och procentuell färdigställandegrad.
+Förloppsindikatorn i den övre rubriken visar bearbetningsstatus i realtid och hur stor andel som är klar. Förloppet strömmas live från backend via Server-Sent Events (SSE), så indikatorn återspeglar vad bearbetningskedjan faktiskt gör.
 
-### Förloppsindikator i fritt läge
+### Förloppsindikator i gratisläget
 
 För användare utan Chloros+-licens:
 
-**2-stegs visning av förlopp:**
+**Visning av framsteg i två steg:**
 
-1.**Målidentifiering** – Att hitta kalibreringsmål i bilder
-2. **Bearbetning** – Tillämpa korrigeringar och exportera**Förloppsindikatorn visar:**
+1.**Måldetektering** – Att hitta kalibreringsmål i bilder
+2. **Bearbetning** – Att tillämpa korrigeringar och exportera**Framstegsindikatorn visar:**
 
 * Total procentuell färdigställandegrad (0–100 %)
 * Namn på aktuellt steg
 * Enkel horisontell stapelvisualisering
 
-### Chloros+ förloppsindikator
+### Chloros+-förloppsindikator
 
 För användare med Chloros+-licens:
 
 **4-stegs förloppsvisning:**
 
-1.**Detektering** – Hitta kalibreringsmål
-2. **Analys** – Granska bilder och förbereda pipeline
-3. **Kalibrering** – Tillämpa korrigeringar för vinjettering och reflektans
-4. **Export** – Spara bearbetade filer**Interaktiva funktioner:*** **Håll muspekaren över** förloppsindikatorn för att se den utökade panelen med 4 steg
+1.**Detektering** – Att hitta kalibreringsmål
+2. **Analys** – Att granska bilder och förbereda bearbetningsflödet
+3. **Kalibrering** – Att tillämpa korrigeringar för vinjettering och reflektans
+4. **Export** – Att spara bearbetade filer**Interaktiva funktioner:*** **Håll muspekaren över** förloppsindikatorn för att se den utökade panelen med fyra steg
 * **Klicka på** förloppsindikatorn för att frysa/fästa den utökade panelen
-* **Klicka igen** för att låsa upp och automatiskt dölja när muspekaren flyttas bort
-* Varje steg visar individuell framsteg (0–100 %)
+* **Klicka igen** för att låsa upp den och dölja den automatiskt när muspekaren flyttas bort
+* Varje steg visar individuell framstegsprocent (0–100 %)
+
+{% hint style="info" %}
+**CLI-paritet**: under en `chloros-cli process`-körning rapporterar samma fyra trådar att de är i fas med ”Detecting”, ”Analyserar”, ”Bearbetar”, ”Exporterar”, och `chloros-cli export-status` visar realtidsförloppet för tråd 4:s export från en annan terminal. Se [CLI-referensen](../reference/cli-reference.md).
+{% endhint %}
 
 ***
 
 ## Förstå varje bearbetningssteg
 
 {% hint style="info" %}
-**Pipeline-arkitektur**: Dessa fyra GUI-steg motsvarar [4-trådsbehandlingspipeline](../processing-architecture/processing-pipeline.md). På system med GPU-acceleration drar tråd 3 (Kalibrering) nytta av [Dynamic Compute Adaptation](../processing-architecture/dynamic-compute-adaptation.md) som optimerar bearbetningen för din specifika hårdvara.
+**Pipelinearkitektur**: Dessa fyra GUI-steg motsvarar [4-tråds bearbetningspipeline](../processing-architecture/processing-pipeline.md). På system med GPU-acceleration drar tråd 3 (Kalibrering) nytta av [Dynamisk beräkningsanpassning](../processing-architecture/dynamic-compute-adaptation.md) som optimerar bearbetningen för just din hårdvara.
 {% endhint %}
 
 ### Steg 1: Detektering (måldetektering)
 
-**Vad händer:**
+**Vad som händer:**
 
-* Chloros skannar bilder som är markerade med kryssrutan Mål
-* Datorvisionsalgoritmer identifierar de fyra kalibreringspanelerna
+* Chloros skannar de bilder du markerat med kryssrutan ”Mål” (alla bilder om ingen är markerad)
+* Datorvisionsalgoritmer identifierar kalibreringspanelerna
 * Reflektansvärden extraheras från varje panel
-* Målens tidsstämplar registreras för korrekt kalibreringsplanering
+* Tidsstämplar för målen registreras för korrekt kalibreringsplanering
 
 **Varaktighet:**
 
@@ -58,10 +62,10 @@ För användare med Chloros+-licens:
 **Framstegsindikator:**
 
 * Detektering: 0 % → 100 %
-* Antal skannade bilder
+* Antal skannade bilder (räknar endast de bilder som faktiskt skannas)
 * Antal hittade mål
 
-**Vad du ska hålla utkik efter:**
+**Vad du bör hålla koll på:**
 
 * Bör slutföras snabbt om målen är korrekt markerade
 * Om det tar för lång tid kan det hända att målen inte är markerade
@@ -72,132 +76,128 @@ För användare med Chloros+-licens:
 **Vad som händer:**
 
 * Läser bildens EXIF-metadata (tidsstämplar, exponeringsinställningar)
-* Fastställer kalibreringsstrategi baserat på målets tidsstämplar
+* Fastställer kalibreringsstrategi baserat på målets tidsstämplar och tillgängliga DAQ-data
 * Organiserar bildbehandlingskön
 * Förbereder parallella bearbetningsprocesser (endast Chloros+)
 
-**Varaktighet:** 5–30 sekunder**Förloppsindikator:**
+**Varaktighet:** 5–30 sekunder**Framstegsindikator:**
 
 * Analyserar: 0 % → 100 %
-* Snabb fas, slutförs vanligtvis snabbt
+* Snabbt steg, avslutas vanligtvis snabbt
 
-**Vad du ska hålla utkik efter:**
+**Vad man ska hålla utkik efter:**
 
-* Bör fortskrida stadigt utan pauser
+* Bör fortskrida stadigt utan avbrott
 * Varningar om saknade metadata visas i felsökningsloggen
 
 ### Steg 3: Kalibrering
 
-**Vad som händer:*** **Debayering**: Konvertering av RAW-Bayer-mönster till 3 kanaler
-* **Vignettkorrigering**: Tar bort mörkare kanter på linsen
-* **Reflektanskalibrering**: Normaliserar med målvärden
-* **Indexberäkning**: Beräknar multispektrala index
-* Bearbetar varje bild genom hela processen
+**Vad som händer:*** **Debayering**: Konvertering av RAW-Bayer-mönster till 3 kanaler (hoppas över för LATTICE-monomoduler, med en anmärkning)
+* **Vignettkorrigering**: Borttagning av mörkare kanter vid objektivets ytterkanter
+* **Reflektanskalibrering**: Normalisering med målvärden och/eller DAQ-nedviktning
+* **Indexberäkning**: Beräkning av multispektrala index
+* Bearbetning av varje bild genom hela bearbetningskedjan
 
-**Varaktighet:** Största delen av den totala bearbetningstiden (60–80 %)**Framstegsindikator:**
+**Varaktighet:** Merparten av den totala bearbetningstiden (60–80 %)**Framstegsindikator:**
 
 * Kalibrering: 0 % → 100 %
 * Bild som bearbetas just nu
-* Färdigbehandlade bilder / Totalt antal bilder
+* Bearbetade bilder / Totalt antal bilder
 
-**Bearbetningsbeteende:*** **Fritt läge**: Bearbetar en bild i taget i sekventiell ordning
-* **Chloros+ läge**: Bearbetar upp till 16 bilder samtidigt
+**Bearbetningsbeteende:*** **Fritt läge**: Bearbetar en bild i taget sekventiellt
+* **Chloros+-läge**: Kör en hårdvaruanpassad arbetspool – 1–4 samtidiga arbetsprocesser på GPU-system (beroende på VRAM), en arbetsprocess per fysisk kärna (minus en) på system med enbart CPU. Se [Dynamisk beräkningsanpassning](../processing-architecture/dynamic-compute-adaptation.md)
 * **GPU-acceleration**: Påskyndar detta steg avsevärt**Vad du ska hålla utkik efter:**
 
-* Jämn framsteg genom bildräkningen
-* Kontrollera felsökningsloggen för meddelanden om slutförande per bild
+* Jämn framsteg genom bildantalet
+* Kontrollera felsökningsloggen för meddelanden om slutförda bilder
 * Varningar om bildkvalitet eller kalibreringsproblem
 
-### Steg 4: Exportera
+### Steg 4: Export
 
 **Vad som händer:**
 
-* Skriver kalibrerade bilder till disk i valt format
-* Exporterar multispektrala indexbilder med LUT-färger
-* Skapar undermappar för kameramodeller
-* Bevarar ursprungliga filnamn med lämpliga suffix
+* Skriver bearbetade bilder till disk i det valda formatet allteftersom de blir färdiga
+* **LATTICE**: varje bildruta fördelas till alla aktiverade produkter (debayering / förhandsgranskning / strålning / reflektans)
+* Exportering av multispektrala indexbilder med LUT-färger
+* Skapande av utdataträdet `<project>/<camera>/<format>/<Product>_Images/` — exporterade filer behåller källfilnamnet; mappen identifierar produkten
 
-**Varaktighet:** 10–20 % av den totala bearbetningstiden**Framstegsindikator:**
+**Varaktighet:** 10–20 % av den totala bearbetningstiden**Förloppsindikator:**
 
-* Exportering: 0 % → 100 %
-* Filer som skrivs
-* Exportformat och destination
+* Exporterar: 0 % → 100 %
+* Filer skrivs
+* Exportformat och målplats
 
-**Vad du ska hålla koll på:**
+**Vad du bör hålla utkik efter:**
 
 * Varningar om diskutrymme
 * Fel vid filskrivning
-* Slutförande av alla konfigurerade utdata
+* Att alla konfigurerade utdata är färdiga
 
 ***
 
 ## Fliken Debug Log
 
-Debug Log ger detaljerad information om bearbetningens framsteg och eventuella problem som uppstår.
+Debug Log ger detaljerad information om bearbetningens framsteg och eventuella problem som uppstått. Startmeddelanden från backend återges också i loggkonsolen, så loggen ger en fullständig bild även om du öppnar den senare.
 
-### Öppna Debug Log
+### Så här öppnar du felsökningsloggen
 
-1. Klicka på **Debug Log** <img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line"> i vänster sidomeny
+1. Klicka på ikonen **Felsökningslogg**<img src="../.gitbook/assets/icon_log.JPG" alt="" data-size="line">
+
+i vänster sidofält
 2. Loggpanelen öppnas och visar bearbetningsmeddelanden i realtid
-3. Bläddrar automatiskt för att visa de senaste meddelandena
+3. Rullar automatiskt för att visa de senaste meddelandena
+
+<!-- SCREENSHOT-NEEDED: Debug Log tab open at the end of a completed run, showing real backend log lines including the [RUN-SUMMARY] lines (images / camera groups / targets / calibrated / files written) -->
 
 ### Förstå loggmeddelanden
 
+Chloros-loggrader inleds med taggar inom parentes som anger delsystemet – till exempel `[PROCESSING]`, `[RUN-SUMMARY]`, `[LATTICE-EXPORT]`, `[EXPORT-CHECK]`, `[IMPORT-LEVEL]`. Det viktigaste att känna till är **körningssammanfattningen**, som visas i slutet av varje körning (inklusive avbrutna körningar):
+
+```
+[RUN-SUMMARY] 49 image(s) in 2 camera group(s); 4 target(s) detected; 45 image(s) calibrated; 180 file(s) written.
+```
+
+Extra `[RUN-SUMMARY]`-rader med förklaringar följer när något behöver förklaras — till exempel en körning som inte gav något resultat, eller en kamera vars begärda produkt hoppades över eftersom den inte var tillämplig. `[EXPORT-CHECK]`-rader förklarar utelämnanden per kamera (t.ex. varför en RGB-kamera inte fick någon strålningsprodukt).
+
+De allmänna allvarlighetsgraderna för meddelanden (exemplen nedan är illustrativa, inte ordagrant återgivna):
+
 #### Informationsmeddelanden (vita/grå)
 
-Normala bearbetningsuppdateringar:
+Normala uppdateringar om bearbetningen: bearbetning påbörjad, mål upptäckta (med antal paneler), kalibreringsförlopp per bild, filer exporterade, bearbetning slutförd.
 
-```
-[INFO] Processing started
-[INFO] Target detected in IMG_0015.RAW - 4 panels found
-[INFO] Calibrating IMG_0234.RAW
-[INFO] Exported NDVI image: IMG_0234_NDVI.tif
-[INFO] Processing complete
-```
+#### Varningsmeddelanden (gult)
 
-#### Varningsmeddelanden (gula)
+Icke-kritiska problem som inte stoppar bearbetningen – t.ex. saknade GPS-data i en bildram, ett stort tidsmässigt glapp mellan målbilderna eller låg kontrast i en kalibreringspanel.
 
-Icke-kritiska problem som inte stoppar bearbetningen:
-
-```
-[WARN] No GPS data found in IMG_0145.RAW
-[WARN] Target image timestamp gap > 30 minutes
-[WARN] Low contrast in calibration panel - results may vary
-```
-
-**Åtgärd:** Granska varningarna efter bearbetningen, men avbryt inte
+**Åtgärd:** Granska varningarna efter bearbetningen, men avbryt inte processen
 
 #### Felmeddelanden (Red)
 
-Kritiska problem som kan orsaka att bearbetningen misslyckas:
+Kritiska problem som kan leda till att bearbetningen misslyckas – t.ex. full disk, en skadad bildfil eller inga mål upptäckta när reflektanskalibrering begärdes.
 
-```
-[ERROR] Cannot write file - disk full
-[ERROR] Corrupted image file: IMG_0299.RAW
-[ERROR] No targets detected - enable reflectance calibration or mark target images
-```
+**Åtgärd:** Avbryt bearbetningen, åtgärda felet och starta om
 
-**Åtgärd:** Avbryt bearbetningen, åtgärda felet, starta om
+### Vanliga loggsituationer
 
-### Vanliga loggmeddelanden
-
-| Meddelande                          | Betydelse                                | Åtgärd som krävs                                         |
-| -------------------------------- | -------------------------------------- | ----------------------------------------------------- |
-| &quot;Mål upptäckt i \[filnamn]&quot; | Kalibreringsmål hittat  | Ingen – normalt                                         |
-| &quot;Bearbetar bild X av Y&quot;        | Aktuell uppdatering av förloppet                | Ingen – normalt                                         |
-| &quot;Inga mål hittade&quot;               | Inga kalibreringsmål upptäckta        | Markera målbilder eller inaktivera reflektanskalibrering |
-| &quot;Otillräckligt diskutrymme&quot;        | Otillräckligt lagringsutrymme för utdata          | Frigör diskutrymme                                    |
-| &quot;Hoppar över skadad fil&quot;        | Bildfilen är skadad                  | Kopiera om filen från SD-kortet                             |
-| &quot;PPK-data tillämpad&quot;               | GPS-korrigeringar från .daq-fil tillämpade | Ingen - normalt                                         |
+| Situation                             | Betydelse                                       | Nödvändig åtgärd                                         |
+| ------------------------------------- | --------------------------------------------- | ----------------------------------------------------- |
+| Mål upptäckt i \[filnamn]        | Kalibreringsmål hittat utan problem         | Ingen – normalt                                         |
+| Förloppslinjer per bild              | Aktuell uppdatering av förloppet                       | Ingen – normalt                                         |
+| Inga mål hittade                      | Inga kalibreringsmål upptäckta               | Markera målbilder eller inaktivera reflektanskalibrering |
+| Otillräckligt diskutrymme               | Inte tillräckligt med lagringsutrymme för utdata                 | Frigör diskutrymme                                    |
+| Hoppar över skadad fil               | Bildfilen är skadad                         | Kopiera om filen från SD-kortet                             |
+| `[IMPORT-LEVEL] Skipping ... no raw source` | En bildtagning utan en råbild kan inte bearbetas | Ta en ny bild med råbild, eller använd CLI `--input-level`  |
+| `[RUN-SUMMARY] ... 0 file(s) written` | Körningen genererade inga bildprodukter — rapporterades som ett fel med tips | Läs tipsen; kontrollera vad som hoppades över och varför |
 
 ### Kopiera loggdata
 
 Så här kopierar du loggen för felsökning eller support:
 
-1. Öppna panelen Debug Log
-2. Klicka på knappen **&quot;Copy Log&quot;** (eller högerklicka → Välj allt)
-3. Klistra in i en textfil eller e-post
-4. Skicka till MAPIR support vid behov
+1. Öppna panelen **Felsökningslogg**
+
+2. Klicka på knappen**&quot;Kopiera logg&quot;** (eller högerklicka → Markera allt)
+3. Klistra in i en textfil eller i ett e-postmeddelande
+4. Skicka till MAPIR-supporten vid behov
 
 ***
 
@@ -211,26 +211,25 @@ Så här kopierar du loggen för felsökning eller support:
 * Övriga kärnor är inaktiva eller tillgängliga
 * Systemet förblir responsivt
 
-**Chloros+ Parallellt läge:**
+**Chloros+ Parallellläge:**
 
-* Flera kärnor på 80–100 % (upp till 16 kärnor)
-* Hög total CPU-användning
-* Systemet kan kännas mindre responsivt
+* Flera kärnor med hög utnyttjandegrad — antalet beror på den strategi som valts av [Dynamic Compute Adaptation](../processing-architecture/dynamic-compute-adaptation.md)
+* Systemet kan upplevas som mindre responsivt
 
-**För att övervaka:**
+**För övervakning:**
 
 * Windows Aktivitetshanteraren (Ctrl+Shift+Esc)
-* Fliken Prestanda → Avsnittet CPU
-* Leta efter processerna &quot;Chloros&quot; eller &quot;chloros-backend&quot;
+* Fliken Prestanda → avsnittet CPU
+* Leta efter processerna ”Chloros” eller ”chloros-backend”
 
-### Minne (RAM)
+### Minnesanvändning (RAM)
 
 **Typisk användning:**
 
 * Små projekt (&lt; 100 bilder): 2–4 GB
 * Medelstora projekt (100–500 bilder): 4–8 GB
 * Stora projekt (500+ bilder): 8–16 GB
-* Chloros+ parallellt läge använder mer RAM
+* Chloros+ i parallellläge använder mer RAM
 
 **Om minnet är lågt:**
 
@@ -242,11 +241,11 @@ Så här kopierar du loggen för felsökning eller support:
 
 När GPU-acceleration är aktiverad:
 
-* NVIDIA GPU visar hög utnyttjandegrad (60–90 %)
-* VRAM-användningen ökar (kräver 4 GB+ VRAM)
+* NVIDIA-GPU:n visar hög utnyttjandegrad (60–90 %)
+* VRAM-användningen ökar (kräver minst 4 GB VRAM; minst 7 GB för samtidig Texture Aware-debayering)
 * Kalibreringsfasen går betydligt snabbare
 
-**Att övervaka:**
+**För att övervaka:**
 
 * NVIDIA-ikonen i systemfältet
 * Aktivitetshanteraren → Prestanda → GPU
@@ -256,7 +255,7 @@ När GPU-acceleration är aktiverad:
 
 **Vad du kan förvänta dig:**
 
-* Hög diskläsning under analysfasen
+* Hög diskavläsning under analysfasen
 * Hög diskskrivning under exportfasen
 * SSD är betydligt snabbare än HDD
 
@@ -268,14 +267,14 @@ När GPU-acceleration är aktiverad:
 
 ***
 
-## Upptäcka problem under bearbetning
+## Upptäcka problem under bearbetningen
 
 ### Varningssignaler
 
-**Framstegen stannar upp (ingen förändring på 5+ minuter):**
+**Framstegen avstannar (ingen förändring på 5+ minuter):**
 
-* Kontrollera felsökningsloggen för fel
-* Kontrollera tillgängligt diskutrymme
+* Kontrollera felsökningsloggen för eventuella fel
+* Kontrollera att det finns ledigt diskutrymme
 * Kontrollera Aktivitetshanteraren för att säkerställa att Chloros körs
 
 **Felmeddelanden visas ofta:**
@@ -286,7 +285,7 @@ När GPU-acceleration är aktiverad:
 
 **Systemet svarar inte:**
 
-* Chloros+ parallellt läge använder för mycket resurser
+* Chloros+ i parallellt läge använder för mycket resurser
 * Överväg att minska antalet samtidiga uppgifter eller uppgradera hårdvaran
 * Fritt läge är mindre resurskrävande
 
@@ -294,17 +293,18 @@ När GPU-acceleration är aktiverad:
 
 Avbryt bearbetningen om du ser:
 
-* ❌ Felmeddelanden som ”Disk full” eller ”Kan inte skriva fil”
-* ❌ Upprepade fel på bildfiler
+* ❌ Felmeddelanden som ”Disken full” eller ”Kan inte skriva fil”
+* ❌ Upprepade fel på grund av skadade bildfiler
 * ❌ Systemet har fryst helt (svarar inte)
-* ❌ Insåg att felaktiga inställningar hade konfigurerats
-* ❌ Felaktiga bilder importerade
+* ❌ Upptäckt att felaktiga inställningar har konfigurerats
+* ❌ Felaktiga bilder har importerats
 
 **Så här avbryter du:**
 
-1. Klicka på**knappen Stopp/Avbryt** (ersätter Start-knappen)
-2. Bearbetningen avbryts, framstegen går förlorade
-3. Åtgärda problemen och starta om från början
+1. Klicka på**knappen Stopp** (ersätter Start-knappen) – en gång räcker
+2. Indikatorstapeln visar ”Avslutar...” medan den pågående bilden bearbetas klart, därefter avslutas körningen i ett avbrutet tillstånd
+3. Produkter som redan har exporterats finns kvar på disken; loggen visar en detaljerad `[RUN-SUMMARY]`-rapport över vad som har slutförts
+4. Åtgärda problemen och starta om – körningen börjar från början
 
 ***
 
@@ -314,15 +314,15 @@ Avbryt bearbetningen om du ser:
 
 **Möjliga orsaker:**
 
-* Omärkta målbilder (skannar alla bilder)
-* HDD istället för SSD-lagring
+* Omärkta målbilder (alla bilder skannas)
+* Lagring på HDD istället för SSD
 * Otillräckliga systemresurser
 * Många index konfigurerade
-* Åtkomst till nätverksenhet
+* Åtkomst via nätverksenhet
 
 **Lösningar:**
 
-1. Om du just har startat och befinner dig i detekteringsfasen: Avbryt, markera mål, starta om
+1. Om processen just har startat och befinner sig i detekteringsfasen: Avbryt, markera mål, starta om
 2. För framtiden: Använd SSD, minska antalet index, uppgradera hårdvaran
 3. Överväg CLI för batchbearbetning av stora datamängder
 
@@ -333,36 +333,37 @@ Avbryt bearbetningen om du ser:
 1. Frigör diskutrymme omedelbart
 2. Flytta projektet till en enhet med mer utrymme
 3. Minska antalet index som ska exporteras
-4. Använd JPG-format istället för TIFF (mindre filer)
+4. Inaktivera LATTICE-exportprodukter som du inte behöver (Projektinställningar → Bearbetning)
+5. Använd JPG-format istället för TIFF (mindre filer)
 
-### Frekventa meddelanden om &quot;skadade filer&quot;
+### Återkommande meddelanden om ”skadade filer”
 
 **Lösningar:**
 
-1. Kopiera om bilderna från SD-kortet för att säkerställa integriteten
-2. Testa SD-kortet för fel
+1. Kopiera om bilderna från SD-kortet för att säkerställa att de är oskadda
+2. Kontrollera SD-kortet för fel
 3. Ta bort skadade filer från projektet
 4. Fortsätt bearbeta återstående bilder
 
-### Systemöverhettning / Throttling
+### Systemöverhettning / prestandabegränsning
 
 **Lösningar:**
 
 1. Se till att ventilationen är tillräcklig
 2. Rengör datorns ventilationsöppningar från damm
-3. Minska bearbetningsbelastningen (använd Free-läge istället för Chloros+)
+3. Minska bearbetningsbelastningen (använd Free-läget istället för Chloros+)
 4. Bearbeta under svalare tider på dygnet
 
 ***
 
-## Meddelande om att bearbetningen är klar
+## Meddelande om avslutad bearbetning
 
 När bearbetningen är klar:
 
-* Visas en förloppsindikator som når 100 %
-* Visas meddelandet **”Bearbetning klar”** i felsökningsloggen
-* Blir startknappen aktiverad igen
-* Finns alla utdatafiler i undermappen för kameramodellen
+* Visas förloppsindikatorn 100 %
+* Visas raderna `[RUN-SUMMARY]` i felsökningsloggen med slutliga siffror
+* Aktiveras Start-knappen igen
+* Finns alla utdatafiler i projektets utdatastruktur per kamera: `<project>/<camera>/<format>/<Product>_Images/`
 
 ***
 
@@ -373,6 +374,6 @@ När bearbetningen är klar:
 1. **Granska resultaten** – Se [Avsluta bearbetningen](finishing-the-processing.md)
 2. **Kontrollera utdatamappen** – Kontrollera att alla filer har exporterats korrekt
 3. **Granska felsökningsloggen** – Kontrollera om det finns några varningar eller fel
-4. **Förhandsgranska bearbetade bilder** – Använd bildvisaren eller extern programvara
+4. **Förhandsgranska de bearbetade bilderna** – Använd Bildvisaren eller extern programvara
 
 För information om hur du granskar och använder dina bearbetade resultat, se [Avsluta bearbetningen](finishing-the-processing.md).

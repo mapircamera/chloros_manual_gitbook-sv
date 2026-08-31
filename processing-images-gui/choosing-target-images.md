@@ -1,56 +1,54 @@
 # Välja målbilder
 
-Att markera vilka bilder som innehåller kalibreringsmål är ett avgörande steg som avsevärt påskyndar Chloros:s bearbetningsflöde. Genom att i förväg välja ut målbilder slipper du att Chloros behöver söka igenom varje bild i din datamängd efter kalibreringsmål.
+Genom att markera vilka bilder som innehåller kalibreringsmål anger du för Chloros exakt var programmet ska leta efter dem. När minst en bild är markerad i kolumnen ”Mål” skannar Chloros **endast de markerade bilderna** – så genom att markera mål kan du både påskynda bearbetningen och förhindra att kartläggningsbilder misstas för mål.
+
+<figure><img src="../.gitbook/assets/image (40).png" alt=""><figcaption></figcaption></figure>
 
 ## Varför markera målbilder?
 
-### Bearbetningshastighet
+### Markeringen styr skanningen
 
-Utan att markera målbilder måste Chloros:
+När du markerar specifika bilder i kolumnen ”Mål”:
 
-* Skanna varje enskild bild i ditt projekt
-* Köra algoritmer för måldetektering på varje bild
-* Kontrollera hundratals eller tusentals bilder i onödan
+* Chloros skannar endast de markerade bilderna efter mål
+* Målidentifieringen slutförs mycket snabbare
+* Kartläggningsbilder kan inte orsaka falska målidentifieringar
 
-**Resultat**: Bearbetningen kan ta betydligt längre tid, särskilt för stora dataset.
+Om **inga** bilder är markerade går Chloros tillbaka till att skanna varje bild i projektet:
 
-### Med markerade målbilder
-
-När du markerar kolumnen Mål för specifika bilder:
-
-* Skannar Chloros endast de markerade bilderna efter mål
-* Sluts måldetekteringen mycket snabbare
-* Minskas den totala bearbetningstiden avsevärt
+* Algoritmerna för måldetektering körs på varje bild
+* Hundratals eller tusentals bilder kontrolleras i onödan
+* Bearbetningen tar betydligt längre tid, särskilt för stora datamängder
 
 {% hint style="success" %}
-**Hastighetsförbättring**: Att markera 2–3 målbilder i en dataset med 500 bilder kan minska måldetekteringstiden från över 30 minuter till under 1 minut.
+**Hastighetsförbättring**: Genom att markera 2–3 målbilder i en datamängd med 500 bilder kan tiden för måldetektering minskas från över 30 minuter till under 1 minut.
 {% endhint %}
 
 ***
 
-## Hur man markerar målbilder
+## Så här markerar du målbilder
 
 ### Steg 1: Identifiera dina målbilder
 
 Bläddra igenom dina importerade bilder i filbläddraren och identifiera vilka bilder som innehåller kalibreringsmål.
 
-**Vanliga scenarier:*** **Mål före bildtagning**: Taget före sessionens start
-* **Mål efter bildtagning**: Taget efter sessionens slut
-* **Mål i fältet**: Mål placerade inom bildtagningsområdet
+**Vanliga scenarier:*** **Mål före bildtagning**: Taget innan sessionen påbörjas
+* **Mål efter bildtagning**: Tagna efter att sessionen avslutats
+* **Mål i fält**: Mål placerade inom bildtagningsområdet
 * **Flera mål**: 2–3 målbilder per session (rekommenderas)
 
-### Steg 2: Kontrollera kolumnen Mål
+### Steg 2: Markera rutan i kolumnen **Target** <img src="../.gitbook/assets/image (33).png" alt="" data-size="original">
 
 För varje bild som innehåller ett kalibreringsmål:
 
-1. Leta reda på bilden i filbläddrarens tabell
-2. Hitta kolumnen **Mål** (kolumnen längst till höger)
-3. Klicka i kryssrutan i kolumnen Mål för den bilden
+1. Leta reda på bilden i tabellen i filbläddraren
+2. Leta reda på kolumnen **Target** (kolumnen längst till höger)
+3. Markera rutan i kolumnen **Target** för den bilden
 4. Upprepa för alla bilder som innehåller mål
 
-### Steg 3: Verifiera ditt val
+### Steg 3: Kontrollera ditt val
 
-Innan bearbetning, dubbelkolla:
+Innan bearbetningen påbörjas, kontrollera noga att:
 
 * [ ] Alla bilder med kalibreringsmål är markerade
 * [ ] Inga bilder som inte är mål är av misstag markerade
@@ -58,41 +56,58 @@ Innan bearbetning, dubbelkolla:
 
 ***
 
+## LATTICE: Mål är valfria när en DAQ spelar in
+
+För LATTICE-multispektralkameror är ett kalibreringsmål i bildrutan **en av två** möjliga reflektansreferenser:
+
+* **Målobjekt i bildrutan**: när en markerad målbild klarChloross kvalitetskontroll (QA) blir målobjektet den**absoluta reflektansreferensen** för bildmaterialet runt omkring.
+* **DAQ-nedåtriktad strålning**: när inget mål finns (eller om QA-kontrollen misslyckas) beräknar Chloros istället reflektansen utifrån den nedåtriktade strålningsintensiteten från DAQ-ljussensorn (ρ = π·L/E). Om en `.daq`- eller DAQ-M `.csv`-inspelning täcker dina bilder får du kalibrerad reflektans**utan några målbilder alls**.
+
+Detta automatiska beteende är standardinställningen. I CLI / SDK motsvarar det `--reflectance-source auto`; du kan också tvinga fram `target` (strikt — ingen DAQ-ersättning) eller `daq` (DAQ-auktoritativt). Se [CLI-referensen](../reference/cli-reference.md#per-product-export-toggles-lattice-multispectral).
+
+**LATTICE-målgeometrier**: förutom den klassiska paneldetekteringen som används för Survey3 stöder LATTICE-bearbetningen**ArUco-märkta mål**,**mål med fast ROI**och**remsmål**, konfigurerade per projekt.**Uppmätta** skanningar av målets reflektans per enhet kan tillhandahållas via serienummer (CLI: `--target-reflectance-dir`, en `<serial>.csv` per målenhet), med de nominella T3/T4P-spektren som reserv.
+
+{% hint style="info" %}
+**F988-modul**: F988-reflektansen kalibreras med hjälp av en reflektanspanel i scenen: bandet ligger utanför DAQ-ljussensorns kalibrerade område, så Chloros använder din senaste panelavläsning och behåller den mellan panelavläsningarna. Om en F988-modul bearbetas enbart med DAQ avvisar Chloros DAQ-baserad reflektans för det bandet (hoppningsorsak `dls-uncalibrated-band-988`) – arbetsflödet med paneler är den stödda metoden.
+{% endhint %}
+
+***
+
 ## Bästa praxis för målbilder
 
-### Riktlinjer för målbildstagning
+### Riktlinjer för målbildsinsamling
 
 **Tidpunkt:**
 
-* Ta målbilder omedelbart före och under hela din bildtagning
+* Ta målbilder omedelbart före och under hela din insamlingssession
 * Under samma ljusförhållanden som din DAQ-ljussensor
-* För bästa resultat bör du helst ta målbilder så ofta som möjligt. Annars kommer ljussensorns data att användas för att justera kalibreringen över tid.
+* Ta helst målbilder så ofta som möjligt för bästa resultat. I annat fall kommer ljussensordata att användas för att justera kalibreringen över tid.
 
 **Kameraposition:**
 
 * Håll kameran ovanför målet så att det är centrerat och fyller cirka 40–60 % av bildens mitt.
-* Håll kameran parallell/nadir mot målytan
+* Håll kameran parallell med/vinkelrätt mot målytan
 
 **Belysning:**
 
 * Samma omgivande belysning som din DAQ-ljussensor
 * Undvik skuggor på målytorna
 * Blockera inte ljuskällan med din kropp, ditt fordon eller vegetation
-* Molnigt väder ger de mest konsekventa resultaten
+* Molnigt väder ger de mest jämna resultaten
 
-**Målförhållanden:**
+**Målets skick:**
 
 * Håll målpanelerna rena och torra
-* Alla 4 paneler ska vara tydligt synliga och fria från hinder
-* Målen ska om möjligt vara vinkelräta mot/i nadirläge i förhållande till ljuskällan
+* Alla paneler på ditt mål (t.ex. alla 4 på en T4) ska vara tydligt synliga och fria från hinder
+* Placera målen vinkelrätt mot/rakt under ljuskällan om möjligt
 
 ### Hur många målbilder?
 
-**Minimum:**1 målbild per session.**Rekommenderat:** 3–5 målbilder per session.**Bästa praxis-schema:**
+**Minimum:**1 målbild per session.**Rekommenderat:** 3–5 målbilder per session.**Rekommenderat schema:**
 
-* 3–5 bilder tagna strax efter att ljussensorn börjat spela in
-* Rotera kameran mellan tagningarna för bästa resultat
-* Valfritt: regelbundet under sessionen om ljusförhållandena förändras konstant
+* Ta 3–5 bilder strax efter att ljussensorn börjat registrera
+* Rotera kameran mellan bildtagningarna för bästa resultat
+* Valfritt: med jämna mellanrum under sessionen om ljusförhållandena förändras kontinuerligt
 
 ***
 
@@ -102,10 +117,10 @@ Innan bearbetning, dubbelkolla:
 
 Om du använder två MAPIR-kameror samtidigt (t.ex. Survey3W RGN + Survey3N OCN):
 
-1. Ta bilder av målet med **båda kamerorna** samtidigt
+1. Ta målbilder med **båda kamerorna** samtidigt
 2. Använd **samma fysiska mål** för båda kamerorna
 3. Markera målbilderna för **båda kameratyperna** i filbläddraren
-4. Chloros använder lämpliga mål för kalibrering av varje kamera
+4. Chloros kommer att använda lämpliga mål för kalibreringen av respektive kamera
 
 ### Kolumnen Kameramodell
 
@@ -113,8 +128,9 @@ Kolumnen **Kameramodell** hjälper till att identifiera vilka bilder som kommer 
 
 * Survey3W\_RGN
 * Survey3N\_OCN
-* Survey3W\_RGB
-* etc.
+* LATT-M3M-L41-F550
+* LATT-M3C-L87-FRGN
+* osv.
 
 Använd denna kolumn för att kontrollera att du har markerat mål för varje kameratyp i ditt projekt.
 
@@ -124,28 +140,34 @@ Använd denna kolumn för att kontrollera att du har markerat mål för varje ka
 
 ### Justera detekteringskänsligheten
 
-Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Projektinställningar](adjusting-project-settings.md):**Minsta kalibreringsprovområde:*** **Standard**: 25 pixlar
+Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Projektinställningar](adjusting-project-settings.md):**Minsta kalibreringsprovområde (px):*** **Standard**: 25 pixlar
 * **Öka** om du får falska detekteringar på små artefakter
-* **Minska** om mål inte detekteras**Minsta målkluster:*** **Standard**: 60
-* **Öka** om mål delas upp i flera detekteringar
-* **Minska** om mål med färgvariationer inte detekteras fullständigt***
+* **Minska** om målen inte detekteras**Minsta målkluster (0–100):*** **Standard**: 60
+* **Öka** om målen delas upp i flera detekteringar
+* **Minska** om mål med färgvariationer inte detekteras fullständigt
+
+{% hint style="info" %}
+**Tips från CLI**: `chloros-cli process` accepterar samma reglage (`--min-target-size`, `--target-clustering`), och dess flagga `--target`/`--targets` markerar en hel inmatningsmapp som endast för målpanelen. Se [CLI-referensen](../reference/cli-reference.md).
+{% endhint %}
+
+***
 
 ## Vanliga problem med målbilder
 
-### Problem: Inga mål detekterade
+### Problem: Inga mål upptäckta
 
 **Möjliga orsaker:**
 
-* Målbilder är inte markerade i filbläddraren
-* Målet är för litet i bilden (&lt; 30 % av bilden)
+* Målbilderna är inte markerade i filbläddraren
+* Målet är för litet i bildrutan (&lt; 30 % av bilden)
 * Dålig belysning (skuggor, bländning)
 * Inställningarna för måldetektering är för strikta
 
 **Lösningar:**
 
-1. Kontrollera att kolumnen Mål är markerad för rätt bilder
-2. Granska målbildens kvalitet i förhandsgranskningen
-3. Ta om bilder på målen om kvaliteten är dålig
+1. Kontrollera att kolumnen ”Mål” är markerad för rätt bilder
+2. Kontrollera målbildernas kvalitet i förhandsgranskningen
+3. Ta om bilderna på målen om kvaliteten är dålig
 4. Justera inställningarna för måldetektering vid behov
 
 ### Problem: Felaktiga måldetekteringar
@@ -158,7 +180,7 @@ Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Pr
 
 **Lösningar:**
 
-1. Markera endast faktiska målbilder för att begränsa detekteringsomfånget
+1. Markera endast faktiska målbilder – endast markerade bilder skannas
 2. Öka det minsta kalibreringsprovområdet
 3. Öka det minsta värdet för målkluster
 4. Se till att målbilderna endast visar målet (minimalt med störande bakgrund)
@@ -169,29 +191,38 @@ Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Pr
 
 Innan bearbetningen påbörjas, kontrollera ditt urval av målbilder:
 
-* [ ] Minst 1 målbild markerad per session
+* [ ] Minst 1 målbild markerad per session (eller, för LATTICE, en `.daq`/`.csv`-inspelning som täcker sessionen)
 * [ ] Kryssrutorna i målkolumnen är markerade för alla målbilder
 * [ ] Målbilder tagna inom samma tidsram som undersökningen
-* [ ] Mål tydligt synliga i förhandsgranskningen när man klickar på dem
-* [ ] Alla 4 kalibreringspaneler synliga i varje målbild
+* [ ] Målen syns tydligt i förhandsgranskningen när man klickar på dem
+* [ ] Alla kalibreringspaneler syns i varje målbild
 * [ ] Inga skuggor eller hinder på målen
-* [ ] För dubbla kameror: Mål markerade för båda kameratyperna
+* [ ] Vid användning av dubbla kameror: Målmarkeringar finns för båda kameratyperna
 
 ***
 
-## Bearbetning utan mål
+## Bearbetning utan målmarkeringar
 
-### Bearbetning utan kalibreringsmål
+### LATTICE: Med en DAQ-inspelning
 
-Även om det inte rekommenderas för vetenskapligt arbete kan du bearbeta utan mål:
+Om en DAQ-ljussensor har registrerat nedåtriktad strålningsintensitet under dina LATTICE-inspelningar behövs inga målmarkeringar:
 
-1. Lämna alla kryssrutor i kolumnen Mål avmarkerade
-2. **Inaktivera** &quot;Reflektanskalibrering&quot; i Projektinställningar
-3. Vignettkorrigering kommer fortfarande att tillämpas
-4. Utdata kommer inte att kalibreras för absolut reflektans
+1. Importera filen `.daq` (eller DAQ-M `.csv`) med bildmaterialet
+2. Lämna kolumnen ”Mål” avmarkerad
+3. Reflektansen beräknas automatiskt utifrån DAQ:s nedåtriktade referens
+4. Strålningsintensiteten behöver aldrig något mål eller någon DAQ – den härleds enbart från kamerans fabriksinställda radiometriska kalibrering
+
+### Bearbetning utan någon referens
+
+Du kan även bearbeta utan mål och utan en DAQ:
+
+1. Lämna alla kryssrutor i kolumnen ”Mål” avmarkerade
+2. **Inaktivera** ”Reflektanskalibrering / vitbalans” i projektinställningarna – då hoppas måldetekteringen över helt
+3. Vignettkorrigering tillämpas fortfarande
+4. Utdata kalibreras inte för absolut reflektans (LATTICE multispektral exporterar fortfarande debayered-, förhandsgransknings- och radiance-produkter)
 
 {% hint style="warning" %}
-**Rekommenderas inte**: Utan reflektanskalibrering representerar pixelvärdena endast relativ ljusstyrka, inte vetenskapliga reflektansmätningar. Använd kalibreringsmål för exakta, repeterbara resultat.
+**Rekommenderas inte för vetenskapligt arbete med Survey3**: Utan reflektanskalibrering representerar pixelvärdena i Survey3 endast relativ ljusstyrka, inte vetenskapliga reflektansmätningar. Använd kalibreringsmål (eller, för LATTICE, en DAQ-ljussensor) för exakta, repeterbara resultat.
 {% endhint %}
 
 ***
@@ -204,4 +235,4 @@ När du har markerat dina målbilder:
 2. **Starta bearbetningen** – Se [Starta bearbetningen](starting-the-processing.md)
 3. **Övervaka förloppet** – Se [Övervaka bearbetningen](monitoring-the-processing.md)
 
-För mer information om kalibreringsmål, se [Kalibreringsmål](../calibration-targets.md).
+För mer information om själva kalibreringsmålen, se [Kalibreringsmål](../calibration-targets.md).
