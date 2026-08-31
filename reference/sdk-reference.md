@@ -2,11 +2,11 @@
 
 **Version:**
 
-1.2.0**Skapad:**2026-07-29 19:19 ·**Reviderad:** 2026-08-30**Paket:** `chloros-sdk` (PyPI)**Målgrupp:** Optimerad för användning av stora språkmodeller (LLM); läsbar för människor.**Omfattning:** Alla offentliga klasser, funktioner och hjälpfunktioner som exponeras av `import chloros_sdk`, med exempel som kan kopieras och klistras in och som täcker bildbehandling, styrning av enstaka kameror, synkroniserade arrayer, DAQ-sensorer och projektautomatisering.
+1.2.0**Skapad:**2026-07-29 19:19 ·**Uppdaterad:** 2026-08-30**Paket:** `chloros-sdk` (PyPI)**Målgrupp:** Optimerad för användning av stora språkmodeller (LLM); läsbar för människor.**Omfattning:** Alla offentliga klasser, funktioner och hjälpfunktioner som exponeras av `import chloros_sdk`, med exempel som går att kopiera och klistra in och som täcker bildbehandling, styrning av enstaka kameror, synkroniserade arrayer, DAQ-sensorer och projektautomatisering.
 
-Om du bara behöver det viktigaste, gå till:
+Om du bara vill ha det viktigaste, gå till:
 - [Installation och snabbstart](#installation)
-- [Smart-Connect för LATTICE-matriser](#smart-connect-for-lattice-cameras)
+- [Smart-Connect för LATTICE-kameror](#smart-connect-for-lattice-cameras)
 - [DAQ-sensorsessioner](#daq-sensor-sessions)
 - [Projektautomatisering](#project-automation--chlorosproject)
 - [Smart-AE / Smart-Capture](#smart-ae--smart-capture)
@@ -15,30 +15,30 @@ Om du bara behöver det viktigaste, gå till:
 
 ## Arkitekturen på 60 sekunder
 
-SDK är ett tunt Python-lager ovanpå Chloros-backend (samma Flask-server som används av desktop-GUI:n och CLI använder). För automatisering importerar du `chloros_sdk` och anropar högnivåmetoder; under huven blir varje anrop en HTTP-förfrågan till den lokala backend-servern på port 5000 — `http://127.0.0.1:5000/api/...` (medvetet inte `localhost`, som först omdirigeras till `::1` på Windows och kostar ~2 s per förfrågan mot en backend som endast stöder IPv4). Backenden äger hårdvarupoolen — kameror, DAQ-sensorer, justeringsprofiler, bildbuffertar — så att SDK-skript kan samexistera med GUI:n utan att behöva konkurrera om seriella portar eller nätverkskortets bandbredd.
+SDKen är ett tunnPythonsskikt ovanpå backend-systemet Chloros (samma Flask-server som används av desktop-GUI:n och CLI). För automatisering importerar du `chloros_sdk` och anropar metoder på hög nivå; bakom kulisserna omvandlas varje anrop till en HTTP-förfrågan till den lokala backend-servern på port 5000 — `http://127.0.0.1:5000/api/...` (medvetet inte `localhost`, som först omdirigeras till `::1` på Windows och tar cirka 2 sekunder per begäran mot en backend som endast stöder IPv4). Backenden hanterar hårdvarupoolen — kameror, DAQ-sensorer, justeringsprofiler, bildbuffertar — så att SDK-skript kan samexistera med GUI:t utan att tävla om seriella portar eller nätverkskortets bandbredd.
 
 Det finns tre gränssnitt som dukommer att använda:
 
-1. **`ChlorosLocal` + fria funktioner** (`process_folder`, `process_lattice_capture`) – Bildbehandlingspipeline. Kör en hel mapp genom kalibrering / debayer / indexexport från ett enda Python-anrop.
-2. **Smart-connect-hanterare** (`connect_camera`, `connect_array`, `connect_daq_sensor`) — Öppna en permanent backend-session för live-hårdvara. Samma ”smart-prep”-flöde som i GUI: nätverkssond, automatisk val av nivå, PTP, AE-seeding, GPIO-triggerkonfiguration.
+1. **`ChlorosLocal` + fria funktioner** (`process_folder`, `process_lattice_capture`) — Bildbehandlingspipeline. Kör en hel mapp genom kalibrering / debayer / indexexport med ett enda anrop till Python.
+2. **Smart-connect-hanterare** (`connect_camera`, `connect_array`, `connect_daq_sensor`) — Öppna en beständig backend-session för live-hårdvara. Samma ”smart-prep”-flöde som i GUI: nätverkssond, automatisk val av nivå, PTP, AE-seeding, GPIO-triggerkonfiguration.
 3. **`ChlorosProject` / `open_project`** — Ladda ett sparat projekt (mapp med `cameras.json` + `sensors.json` + `project.json`), anslut allt på en gång och kör inspelningar med namngivna handtag.
 
-Ytorna 1 och 2 **startar automatiskt en lokal backend** om ingen redan lyssnar (samma medföljande binärfil som GUI/CLI startar) — så ett enkelt skript fungerar från ett nytt skal utan att du behöver starta en backend först. Ange `auto_start_backend=False` för att avaktivera detta (t.ex. när du pekar på en fjärrbackend, som aldrig startas). Se [Automatisk start av backend](#backend-auto-start). Surface 3 beter sig annorlunda: `open_project()` tar inga `auto_start_backend`-parametrar, och `connect_all()` startar aldrig en backend — den söker efter `http://127.0.0.1:5000` en gång och, om inget svarar, faller den tyst tillbaka till direkt (backend-fri) `lattice_sdk`-enhetsstyrning. Endast `proj.process()` och `stream(..., overlays=True)` skapar en `ChlorosLocal()` (som har automatisk-start).
+Ytorna 1 och 2 **startar automatiskt en lokal backend** om ingen redan lyssnar (samma medföljande binärfil som GUI/CLI startar) — så ett enkelt skript fungerar från ett nytt skal utan att du behöver starta en backend först. Ange `auto_start_backend=False` för att avaktivera detta (t.ex. när du pekar på en fjärrbackend, som aldrig startas). Se [Automatisk start av backend](#backend-auto-start). Surface 3 beter sig annorlunda: `open_project()` tar inga `auto_start_backend`-parametrar, och `connect_all()` startar aldrig en back— den söker efter `http://127.0.0.1:5000` en gång och, om inget svarar, faller den tyst tillbaka till direkt (backend-fri) `lattice_sdk`-enhetsstyrning. Endast `proj.process()` och `stream(..., overlays=True)` skapar en `ChlorosLocal()` vid behov (vilket sker automatiskt vid start).
 
-Alla tre är behörighetsbegränsade: kör `chloros-cli login` en gång på maskinen, eller logga in via skrivbordets grafiska gränssnitt. SDK-anrop utan en giltig session genererar felet `ChlorosAuthenticationError`.
+Alla tre är åtkomstbegränsade: kör `chloros-cli login` en gång på maskinen, eller logga in via skrivbordets grafiska gränssnitt. Anrop till SDK utan en giltig session genererar `ChlorosAuthenticationError`.
 
 Krav:
 - Python 3.7+ (enligt paketets specifikation; utvecklat/testat på 3.10)
-- Chloros Desktop installerat lokalt (backend-binären ingår i installationsprogrammet)
-- Aktiv inloggning på Chloros+. Gränsen för SDK/CLI-nivån måste vara **Copper**eller högre (Copper / Bronze / Silver / Gold); den kostnadsfria**Iron**-nivån har ingen SDK/CLI-åtkomst. Detta tillämpas**på serversidan**: varje förfrågan som är flaggad med SDK/CLI måste innehålla både en aktiv session och ett betalt abonnemang, annars returnerar `403` med `error_code: PLAN_UPGRADE_REQUIRED` (visas som `ChlorosLicenseError` av `ChlorosLocal`, och som `ChlorosConnectError` av `connect_*`-hjälpfunktionerna). En utloggad anropare får istället `401` / `AUTH_REQUIRED` (`ChlorosAuthenticationError`) istället — de två är olika eftersom en ny körning av `chloros-cli login` åtgärdar den första men inte den andra.
-- Offlineanvändning stöds inom planens respitperiod: nivån läses från cacheminnet för servervalidering (5 minuter) eller från cacheminnet för signerade, maskinbundna licenser (30 dagar för månadsplaner, fram till abonnemangets utgångsdatum för årsplaner). När denna övergångsperiod löper ut övergår planen till gratisversionen och åtkomsten via SDK/CLI avbryts tills datorn kan ansluta till servern åtminstone en gång. `chloros-cli status` (`GET /api/license-status`) förblir tillgänglig på gratisnivån så att orsaken syns – det är den enda SDK/CLI-rutten som undantas från nivåbegränsningen.
-- Windows 10/11 64-bitars, **Ubuntu 22.04 LTS eller nyare**, eller Jetson (JetPack 6). Ubuntu 20.04**stöds inte** stöds: `.deb`:s beroenden härrör från vad backend länkar mot, inklusive `libc6 (>= 2.34)`, och Focal levereras med glibc 2.31.
+- Chloros Desktop installerat lokalt (backend-binären medföljer i installationsprogrammet)
+- Aktiv inloggning på Chloros+. Miniminivån för SDK / CLI är **Copper**eller högre (Copper / Bronze / Silver / Gold); den kostnadsfria**Iron**-nivån har ingen åtkomst till SDK / CLI. Detta tillämpas**på serversidan**: varje begäran med flaggan SDK / CLI måste innehålla både en aktiv session och ett betalt abonnemang, annars returnerar backend-systemet `403` med `error_code: PLAN_UPGRADE_REQUIRED` (visas som `ChlorosLicenseError` av `ChlorosLocal`, och som `ChlorosConnectError` av hjälpfunktionerna `connect_*`). En utloggad användare får istället `401` / `AUTH_REQUIRED` (`ChlorosAuthenticationError`) istället — de två är olika eftersom en ny körning av `chloros-cli login` åtgärdar den första men inte den andra.
+- Offlineanvändning stöds inom planens respitperiod: nivån läses från cacheminnet för servervalidering (5 min) eller den signerade, maskinbundna licenscachen (30 dagar för månadsabonnemang, till abonnemangets utgångsdatum för årsabonnemang). När denna respitperiod löper ut övergår abonnemanget till gratisversionen och åtkomsten till SDK / CLI upphör tills maskinen kan nå servern en gång. `chloros-cli status` (`GET /api/license-status`) förblir tillgänglig på gratisnivån så att orsaken syns – det är den enda vägen SDK / CLI som är undantagen från nivåbegränsningen.
+- Windows 10/11 64-bitars, **Ubuntu 22.04 LTS eller nyare**, eller Jetson (JetPack 6). Ubuntu 20.04 stöds**inte**: `.deb`:s beroenden härrör från vad backend länkar mot, inklusive `libc6 (>= 2.34)`, och Focal levereras med glibc 2.31.
 
 ---
 
 ## Installation
 
-Python SDK är ett tunt Python-lager över Chloros-backend. För allt utöver några få arbetsflöden som enbart avser datainsamling, behöver du **Chloros-skrivbordspaketet installerat lokalt** (Windows-installationsprogrammet eller Linux `.deb`) — det är det som tillhandahåller backend-binären, Arena SDK-runtime för LATTICE-kameror och kalibreringspaketen.
+Python SDK är ett tunt Python-lager ovanpå backend-modulen Chloros. För allt utöver några få DAQ-arbetsflöden behöver du **det lokalt installerade Chloros-paketet** (Windows installer eller Linux `.deb`) — det är det som tillhandahåller backend-binären, Arena-SDK-runtime för LATTICE-kameror och kalibreringspaketen.
 
 Senaste nedladdningar: [`https://mapir.gitbook.io/chloros/download`](https://mapir.gitbook.io/chloros/download)
 
@@ -70,11 +70,11 @@ chloros-cli login user@example.com 'YourPassword'
 
 ### Steg 2 — Installera Python SDK
 
-**Installationsprogrammet Chloros levereras med ett matchande SDK-wheel.** Varje Windows-installationsprogram och Linux .deb-fil placerar en `chloros_sdk-X.Y.Z-py3-none-any.whl` på disken som exakt matchar GUI- / CLI- / backend-versionen. Du behöver inte hålla koll på PyPI för att hålla dig synkroniserad.
+**Chloros-installationsprogrammet levereras med ett matchande SDK-wheel.** Varje Windows-installationsprogram och Linux .deb placerar en `chloros_sdk-X.Y.Z-py3-none-any.whl` på disken som exakt matchar GUI-/CLI-/backend-versionen. Du behöver inte hålla koll på PyPI för att hålla dig synkroniserad.
 
 #### Windows
 
-Installationsprogrammet kör automatiskt `pip install` mot det medföljande wheel-paketet med hjälp av ditt systems Python (`py.exe`-startprogrammet föredras, faller tillbaka till `python -m pip`). Ingen åtgärd krävs — `import chloros_sdk` fungerar i din Python-miljö efter en lyckad installation. Om ingen Python finns på datorn, hoppar installationsprogrammet tyst över detta steg och GUI + CLI fortsätter att fungera.
+Installationsprogrammet kör automatiskt`pip install` mot det medföljande wheel-paketet med hjälp av ditt systemPythont (`py.exe`-startprogrammet föredras, faller tillbaka på `python -m pip`). Ingen åtgärd krävs — `import chloros_sdk` fungerar i din Python-miljö efter en lyckad installation. Om det inte finns någon Python på datorn hoppar installationsprogrammet tyst över detta steg och GUI + CLI fortsätter att fungera.
 
 #### Linux (.deb)
 
@@ -84,7 +84,7 @@ Installationsprogrammet kör automatiskt `pip install` mot det medföljande whee
 pip install --user /usr/lib/chloros/sdk/chloros_sdk-*.whl
 ```
 
-För Jetson-installationer i air-gapped-miljöer sker detta helt offline – hjulet finns redan på disken.
+För Jetson-installationer i air-gapped-miljöer sker detta helt offline – wheel-filen finns redan på disken.
 
 #### Offentlig PyPI
 
@@ -94,7 +94,7 @@ För värdar som endast använder pip (inget Chloros-skrivbordspaket installerat
 pip install chloros-sdk
 ```
 
-PyPI uppdateras vid installatörsbyggnader av release-versioner, så det publicerade wheel-paketet matchar den senaste stabila versionen. Utvecklingsversioner (t.ex. `1.1.4.dev1`) levereras endast via det medföljande installationsprogrammet.
+PyPI uppdateras vid installationer av release-versioner, så det publicerade wheel-paketet matchar den senaste stabila versionen. Utvecklingsversioner (t.ex. `1.1.4.dev1`) levereras endast via det medföljande installationsprogrammet.
 
 #### Verifiera
 
@@ -106,28 +106,28 @@ print("DAQ_AVAILABLE    =", chloros_sdk.DAQ_AVAILABLE)
 print("PROJECT_AVAILABLE =", chloros_sdk.PROJECT_AVAILABLE)
 ```
 
-> **Chloros+-abonnemang krävs.** Alla SDK-anrop kräver en aktiv Chloros+-inloggning. Kör `chloros-cli login user@example.com 'YourPassword'` en gång per maskin; inloggningsuppgifterna sparas i `~/.chloros/`.
+> **Chloros+ prenumeration krävs.** Alla SDK-anrop kräver en aktiv Chloros+ inloggning. Kör `chloros-cli login user@example.com 'YourPassword'` en gång per maskin; inloggningsuppgifterna sparas i `~/.chloros/`.
 
 ### Behöver jag skrivbordspaketet?
 
-Pip-paketet räcker **inte** för de flesta arbetsflöden. Här är vad varje SDK-yta behöver:
+Enbart pip-paketet är **inte** tillräckligt för de flesta arbetsflöden. Här är vad varje SDK-yta behöver:
 
 | SDK-yta | Behöver Desktop-paketet? | Varför |
 | --- | --- | --- |
-| `ChlorosLocal`, `process_folder`, `process_lattice_capture` | **Ja** | Startar automatiskt backend-binären vid `/usr/lib/chloros/chloros-backend` (Linux) eller `C:\Program Files\MAPIR\Chloros\…` (Windows). |
-| `connect_camera`, `connect_array`, `connect_daq_sensor`, `analyze_array_network`, `list_*`, `discover_*` | **Ja**(lokalt)**/ Nej**(fjärr) | Rena HTTP-klienter via backend. Lokal backend → skrivbordspaket krävs. Fjärrbackend → `backend_url=`**genom en tunnel** (se Läget Fjärrbackend — medföljande backends binder endast till loopback). |
-| `ChlorosProject` / `open_project` | **Ja** | Kör sparade projekt via backend. |
-| Direkta LATTICE-klasser (`LatticeCamera`, `CameraPool`, `Calibration`, `DLS`, …) | **Ja** | Kräver Arena SDK:s inbyggda runtime som ingår i desktop-paketet. `CAMERA_AVAILABLE` är annars `False` vid import. |
+| `ChlorosLocal`, `process_folder`, `process_lattice_capture` | **Ja** | Startar backend-binären automatiskt på `/usr/lib/chloros/chloros-backend` (Linux) eller `C:\Program Files\MAPIR\Chloros\…` (Windows). |
+| `connect_camera`, `connect_array`, `connect_daq_sensor`, `analyze_array_network`, `list_*`, `discover_*` | **Ja**(lokalt)**/ Nej**(fjärr) | Rena HTTP-klienter via backend. Lokal backend → skrivbordspaket krävs. Fjärrbackend → `backend_url=`**genom en tunnel** (se Läget för fjärrbackend — medföljande backends binder endast till loopback). |
+| `ChlorosProject` / `open_project` | **Ja** | Kör sparade projekt via backenden. |
+| Direkta LATTICE-klasser (`LatticeCamera`, `CameraPool`, `Calibration`, `DLS`, …) | **Ja** | Kräver den inbyggda runtime-miljön för Arena-SDK, som ingår i desktop-paketet. Annars är `CAMERA_AVAILABLE` identiskt med `False` vid import. |
 | Direkta DAQ-klasser (`DAQUSensor`, `DAQMSensor`, `DAQESensor`, `SensorFleet`, `discover_all`) | **Nej** | Ren Python via pyserial/bleak/zeroconf. En miljö som endast använder pip kan styra DAQ:er från början till slut. |
 
-### Fjärr-backend-läge (enbart pip-värd, via tunnel)
+### Fjärr-backend-läge (värd som endast använder pip, via tunnel)
 
-> **Den medföljande backenden är inte nåbar via LAN.** Produktionsversionen
-> binder endast till loopback (båda loopback-familjerna) och avvisar kategoriskt det
+> **Den medföljande backenden är inte nåbar via LAN.** Produktions
+> -versioner binder endast till loopback (båda loopback-familjerna) och avvisar kategoriskt det
 > enda icke-loopback-läget (`CHLOROS_CLOUD_MODE`), så
-> `backend_url="http://<lan-ip>:5000"` **fungerar inte mot en installerad
-> Chloros** — det mönstret har alltid endast fungerat mot en source/dev-
-> backend. För att styra en backend på en annan maskin, vidarebefordra dess loopback-
+> `backend_url="http://<lan-ip>:5000"` **kan inte fungera mot en installerad
+> Chloros** — det mönstret har endast fungerat mot en source/dev-
+> backend. För att driva en backend på en annan maskin, vidarebefordra dess loopback-
 > port själv och peka SDK mot tunneln:
 
 ```bash
@@ -145,13 +145,13 @@ chloros_sdk.connect_array(serials, backend_url=BACKEND)
 chloros_sdk.connect_daq_sensor(eth_host="daq-e-1.local", backend_url=BACKEND)
 ```
 
-Headless / CI / robotikvärdar kan ha en maskin med fullständig skrivbordsinstallation som ”Chloros-servern” och `pip install chloros-sdk` överallt annars — men transporten mellan dem sker via den-arrangerad tunnel ovan, inte en direkt LAN-anslutning.
+Headless-/CI-/robotikvärdar kan ha en maskin med fullständig skrivbordsinstallation som ”Chloros-server” och `pip install chloros-sdk` överallt annars — men transporten mellan dem sker via den ovan nämnda, användararrangerade tunneln, inte via en direkt LAN-URL
 
-> **Känd begränsning — `ChlorosLocal` stöder inte enbart pip.** `ChlorosLocal(backend_url=BACKEND)` löser för närvarande en lokal backend-binärfil i sin konstruktor *innan* den söker efter URL, och genererar `ChlorosBackendError` (&quot;Chloros-backend hittades inte…”) när inget skrivbordspaket är installerat — även om en fjärrbackend är tillgänglig. Endast den smarta-connect-gränssnittet ovan (`connect_camera` / `connect_array` / `connect_daq_sensor`, plus `analyze_array_network` och `list_*` / `discover_*`-hjälpprogrammen) fungerar från en värd som endast använder pip.
+> **Känd begränsning — `ChlorosLocal` stöder inte enbart pip.** `ChlorosLocal(backend_url=BACKEND)` löser för närvarande en lokal backend-binärfil i sin konstruktor *innan* URLen undersöks, och genererar felet `ChlorosBackendError` (”Chloros-backend hittades inte…”) när inget skrivbordspaket är installerat — även om en fjärrbackend är tillgänglig. Endast smart-connect-gränssnittet ovan (`connect_camera` / `connect_array` / `connect_daq_sensor`, plus `analyze_array_network` och hjälpfunktionerna `list_*` / `discover_*`) fungerar från en värd med endast pip.
 
-### Arbetsflöde endast för DAQ (pip-only-värd)
+### Arbetsflöde enbart för DAQ (värd enbart med pip)
 
-Om du endast behöver DAQ-sensorer och inte använder LATTICE-kameror eller bildbearbetning är pip-paketet fristående:
+Om du endast behöver DAQ-sensorer och inte använder LATTICE-kameror eller bildbehandling är pip-paketet fristående:
 
 ```bash
 pip install chloros-sdk
@@ -168,7 +168,7 @@ sensor.connect()
 sensor.start_streaming()
 ```
 
-Ingen backend, ingen .deb, ingen inloggning krävs för direkt hårdvarubaserat DAQ-arbete.
+Ingen backend, inget .deb-paket och ingen inloggning via Chloros+ krävs för direkt hårdvarubaserad DAQ-användning.
 
 ---
 
@@ -207,7 +207,7 @@ proj.disconnect_all()
 
 ---
 
-## Huvudindex för API
+## Index över toppnivåAPIer
 
 ```python
 import chloros_sdk
@@ -288,16 +288,16 @@ ChlorosLocal(
 | Metod | Beskrivning |
 | --- | --- |
 | `create_project(project_name, camera=None)` | Skapa ett nytt projekt (valfritt med en kameramall som `"Survey3N_RGN"`). |
-| `import_images(folder_path, recursive=False)` | Importera RAW/TIF/JPG/DNG-bilder **och `.daq`-inspelningar från ljussensorn**. Returnerar `count` (bilder) och `scan_count` (inspelningar). Visar en varning endast om mappen inte innehåller något av dessa. |
-| `export_light_sensor(daq=True, csv=True)` | Skriv kalibrerade `.daq` + `.csv` för varje ljussensorinspelning i projektet till `<project>/Light Sensor/`. Se [Ljussensorinspelningar](#light-sensor-recordings--calibrated-daq--csv). |
+| `import_images(folder_path, recursive=False)` | Importerar RAW-/TIF-/JPG-/DNG-bilder **och `.daq`-ljussensorinspelningar**. Returnerar `count` (bilder) och `scan_count` (inspelningar). Visar en varning endast om mappen inte innehåller något av dessa. |
+| `export_light_sensor(daq=True, csv=True)` | Skriv kalibrerade `.daq` + `.csv` för varje ljussensorinspelning i projektet, till `<project>/Light Sensor/`. Se [Ljussensorinspelningar](#light-sensor-recordings--calibrated-daq--csv). |
 | `configure(debayer=..., vignette_correction=..., reflectance_calibration=..., indices=[...], export_format=..., ppk=..., daq_log_path=..., input_level=..., radiometric_output=..., array_alignment=..., array_alignment_crop=..., array_alignment_interpolation=..., custom_settings=None)` | Ställ in bearbetningsreglagen. |
-| `process(mode="parallel", wait=True, progress_callback=None, poll_interval=2.0)` | Kör bearbetningskedjan. Returnerar `{"status": "complete", "async": False}`, plus en `summary`-nyckel när backend-modulen tillhandahåller en — se [Sammanfattning och tips efter körning](#post-run-summary--hints). |
+| `process(mode="parallel", wait=True, progress_callback=None, poll_interval=2.0)` | Kör bearbetningskedjan. Returnerar `{"status": "complete", "async": False}`, plus en `summary`-nyckel när backend tillhandahåller en — se [Sammanfattning och tips efter körning](#post-run-summary--hints). |
 | `get_config()` / `get_status()` / `status()` | Kontrollera backendens status. |
-| `logout()` | Rensa cachade inloggningsuppgifter. |
-| `shutdown_backend()` | Avsluta backend (om SDK har startats). |
-| `discover_cameras()` | Upptäck LATTICE-kameror **via denna instans backend** (`/api/camera/discover`). Returnerar en lista med ordböcker (`serial`, `model`, `ip`, …) — samma form som GUI/CLI visar. Tom lista om inga hittas eller om backend inte kan nås. |
-| `camera_capture(output_dir, format="tiff", **settings)` | Ta en enskild bild**via backend**(startas automatiskt av detta handtag) så att den får samma förberedelse som GUI/CLI (12-bitars standard, återanvändning av pool, inbäddade kalibreringsmetadata). Bestäm målet med `serial=` eller `device_index=`; skicka `exposure`/`gain`/`pixel_format`/`preset` som `**settings`. Returnerar den äldre metadatadiktionen (`filepath`, `width`, `height`, `pixel_format`, `exposure_time`, `gain`, `timestamp`). |
-| `camera_stream(serial, *, fps=10.0, overlay=None, decode=True, connect_timeout=10.0, read_timeout=15.0)` | Generera överlagrade sammansatta förhandsgranskningsbilder från en sammanslagen kamera — tunn MJPEG-klient via backendens `/api/camera/<serial>/stream-annotated`-rutt (zebra / rutnät / siktkors / histogram / peaking / spot ritade på serversidan). `decode=True` genererar BGR-matriser; `False` genererar råa JPEG-byte. Kan även nås per projekt som `ChlorosProject.stream(overlays=True)`. |
+| `logout()` | Rensa cachade autentiseringsuppgifter. |
+| `shutdown_backend()` | Avsluta backend (om SDK -started). |
+| `discover_cameras()` | Upptäck LATTICE-kameror **via denna instans backend** (`/api/camera/discover`). Returnerar en lista med ordböcker (`serial`, `model`, `ip`, …) — samma form som GUI/CLI . Tom lista om inga hittas eller om backend inte kan nås. |
+| `camera_capture(output_dir, format="tiff", **settings)` | Fånga en enskild bildruta**genom backend**(startas automatiskt av detta handtag) så att den får samma förberedelse som GUI/CLI (12-bitars standard, återanvändning av pool, inbäddade kalibrerings- metadata). Bestäm målet med `serial=` eller `device_index=`; skicka vidare `exposure`/`gain`/`pixel_format`/`preset` som `**settings`. Returnerar den äldre metadatadiktionen (`filepath`, `width`, `height`, `pixel_format`, `exposure_time`, `gain`, `timestamp`). |
+| `camera_stream(serial, *, fps=10.0, overlay=None, decode=True, connect_timeout=10.0, read_timeout=15.0)` | Genererar överlagrade sammansatta förhandsgranskningsbilder från en sammanslagen kamera — tunn MJPEG-klient via backendens `/api/camera/<serial>/stream-annotated`-väg (zebra / rutnät / hårkors / histogram / peaking / punkt ritad på serversidan). `decode=True` genererar BGR-matriser; `False` genererar råa JPEG-byte. Kan även nås per projekt som `ChlorosProject.stream(overlays=True)`. |
 
 Använd som kontextmanager för garanterad rensning:
 
@@ -315,43 +315,43 @@ with chloros_sdk.ChlorosLocal() as cl:
 print(results["summary"])
 ```
 
-### Ljussensorinspelningar — kalibrerad `.daq` + `.csv`
+### Ljussensorinspelningar — kalibrerade `.daq` + `.csv`
 
-En DAQ-U / DAQ-M / DAQ-E kan registreras **utan** sitt kalibreringspaket. Det är
+En DAQ-U / DAQ-M / DAQ-E kan spelas in **utan** sitt kalibreringspaket. Det är
 vad de offentliga [`chloros_scripts`](https://github.com/mapircamera/chloros_scripts)
-inspelare (`record_daq.py`) gör som standard: de skriver ut råa sensordata och stämplar
-filen så att Chloros hämtar sensorns fabrikskalibrering **via seriell anslutning** — först från den lokala cachen
-, sedan från MAPIR Cloud — och tillämpar den vid importen.
+inspelarna (`record_daq.py`) gör som standard: de skriver ut råa sensordata och märker
+filen så att Chloros hämtar sensorns fabrikskalibrering **via serienummer** — först från den lokala cachen
+och sedan från MAPIR Cloud — och tillämpar den vid import.
 
 Chloros skriver ut resultatet som två produkter per inspelning, under
 `<project>/Light Sensor/`:
 
 | Produkt | Vad det är |
 | --- | --- |
-| `<name>_calibrated.daq` | Det ombearbetningsbara arkivet — samma schema som en liveinspelning, men nu med angivelse av det paket som skapade det. Att importera det på nytt innebär **inte** att det kalibreras en andra gång. |
-| `<name>_calibrated.csv` | Spektral irradians i W/m²/nm på sensorns eget våglängdsraster, en rad per avläsning, plus fotometriska kolumner (total effekt, fotopisk/skotopisk lux, PPFD och dess uppdelning i blått/grönt/rött, toppvåglängd). |
-| `<name>_raw.daq` / `<name>_raw.csv` | **Endast sensorer utan datapaket (DAQ-A).** Råa spektrala sensorräknestal — *inte* irradians. Se nedan. |
+| `<name>_calibrated.daq` | Det ombearbetningsbara arkivet — samma schema som en liveinspelning, men nu med angivelse av det paket som genererade den. Om den importeras på nytt kalibreras den **inte** en andra gång. |
+| `<name>_calibrated.csv` | Spektral irradians i W/m²/nm på sensorns eget våglängdsnät, en rad per avläsning, plus fotometriska kolumner (total effekt, fotopisk/skotopisk lux, PPFD och dess uppdelning i blått/grönt/rött, toppvåglängd). |
+| `<name>_raw.daq` / `<name>_raw.csv` | **Endast sensorer utan paket (DAQ-A).** Råa spektrala sensortal — *inte* irradians. Se nedan. |
 
 `process()` utför denna export som ett av sina steg. Det kräver **inte** bilder:
 en ljussensor som flygs på egen hand är ett förstklassigt arbetsflöde, och ett sådant projekt har noll
-bilder enligt konstruktionen.
+bilder per definition.
 
-**DAQ-A-inspelningar exporteras som råa räkneställningar.** DAQ-A-familjen är äldre än systemet med
-serienummerbundlar och har ingen bunt att hämta – den kalibreras istället i fält mot ett
-reflektansmål, vilket är anledningen till att den aldrig behövt någon. Dessa inspelningar exporteras
-med en `_raw`-stam istället för `_calibrated`: ett annat filnamn istället för en flagga
-inuti filen, eftersom uppgiften måste klara att skickas vidare via e-post som ett rent filnamn. Rubriken
+**DAQ-A-inspelningar exporteras som råa värden.** DAQ-A-familjen är äldre än systemet med
+serienummerbundlar och har ingen bunt att hämta — den kalibreras istället i fält mot ett
+reflektansmål istället, vilket är anledningen till att den aldrig behövt någon. Dessa inspelningar exporteras
+under stammen `_raw` istället för `_calibrated`: ett annat filnamn istället för en flagga
+inuti filen, eftersom uppgiften måste klara att skickas via e-post som ett rent namn. Rubriken
 `.csv` anger `raw spectral sensor counts (NOT irradiance)` och varnar för att
 värdena är jämförbara **inom** filen — precis vad målbaserad kalibrering använder
-dem till — och inte mellan sensorer. De effektberoende fotometriska kolumnerna (total effekt,
-fotopisk/skotopisk lux, PPFD) returneras som **NULL** istället för att integreras från räknade värden.
+dem till — och inte mellan olika sensorer. De effektberoende fotometriska kolumnerna (total effekt,
+fotopisk/skotopisk lux, PPFD) returneras som **NULL** istället för att integreras utifrån räknevärden.
 
 En DAQ-U / DAQ-M / DAQ-E vars paket helt enkelt inte kunde hämtas **hoppas fortfarande över**,
-och skrivs inte i råformat: där finns paketet och ”anslut om och bearbeta om” är ett konkret råd.
+och skrivs inte ut i råformat: där finns paketet och ”anslut om och bearbeta om” är ett konkret råd.
 
 Äldre **v1.01 / v1.02**-inspelningar (en DAQ-A-SD skriver dessa) har ingen epok per avläsning,
-utan endast filens skrivtid. Bild↔nedåtriktad matchare avvisar dem fortfarande — att matcha en
-bildram mot en skrivtid skulle vara fel utan att det syns — men exportören läser dem, och
+utan endast filens skrivtid. Bild↔nedåtriktad matchare vägrar fortfarande att — att matcha en
+ram mot en skrivtid skulle ge osynliga fel — men exportören läser dem, och
 CSV skriver ut `clock=daq_created_on` så att produkten anger vilken klocka den använder.
 
 ```python
@@ -370,10 +370,10 @@ for rec in result["skipped"]:
 
 En inspelning vars kalibreringspaket inte kan hämtas (offline, eller en sensor utan
 kalibrering i filen) rapporteras under `skipped` **med orsaken**. Den skrivs aldrig
-ut som en ”kalibrerad” fil med råa mätvärden — anslut till internet och
+ut som en ”kalibrerad” fil som innehåller råa räknevärden — anslut till internet och
 kör om, så slutförs exporten.
 
-### Återanrop för förlopp
+### Återkopplingar om förlopp
 
 ```python
 def show_progress(percent, message):
@@ -386,9 +386,9 @@ with chloros_sdk.ChlorosLocal() as cl:
     cl.process(progress_callback=show_progress, poll_interval=1.0)
 ```
 
-### Sammanfattning efter körning &amp; tips
+### Sammanfattning och tips efter körning
 
-När processen är klar hämtar `process()` filen `GET /api/processing-summary` och bifogar innehållet som `result["summary"]`. Hämtningen sker efter bästa förmåga och blockerar aldrig en lyckad återgång — om sammanfattningen inte är tillgänglig faller `process()` tillbaka till den vanliga `{"status": "complete", "async": False}`-formen. Varje post i `summary["hints"]` — fullständiga meningar med föreslagna åtgärder, t.ex. varför en körning gav nollutdata — återges också som en Python `UserWarning`, så att körningar med nollutdata är självdiagnostiserande även om du aldrig granskar ordlistan:
+När processen är klar hämtar `process()` `GET /api/processing-summary` och bifogar huvudtexten som `result["summary"]`. Hämtningen sker efter bästa förmåga och blockerar aldrig ett lyckat retur — om sammanfattningen inte är tillgänglig faller `process()` tillbaka till den vanliga `{"status": "complete", "async": False}`-formen. Varje post i `summary["hints"]` — fullständiga meningar med föreslagna åtgärder, t.ex. varför en körning gav nollutdata — skickas också ut på nytt som en Python `UserWarning`, så körningar med nollutdata är självdiagnostiserande även om du aldrig granskar ordlistan:
 
 ```python
 result = cl.process()
@@ -407,34 +407,34 @@ for hint in result.get("summary", {}).get("hints", []):
 | `targets_found` | Detekterade reflektansmål. |
 | `images_calibrated` | Bilder som körningen kalibrerade. |
 | `exported_files` | **Bildproduktfiler som körningen skapade.** |
-| `daq_recordings_exported` / `daq_recordings_skipped` | Ljussensorregistreringar, som medvetet räknas separat — de kommer från ett annat steg och finns även för körningar utan bilder alls, så att inkludera dem skulle få en körning som endast avser datainsamling att se ut som om den exporterade bilder. |
+| `daq_recordings_exported` / `daq_recordings_skipped` | Ljussensorregistreringar, räknade separat avsiktligt – de kommer från ett annat steg och finns även för körningar utan bilder alls, så att inkludera dem skulle få en körning som endast omfattar datainsamling att se ut som om den exporterade bilder. |
 
-Tillsammans med dessa: `summary["output_dirs"]` (varje katalog som skrivits till),
-`summary["light_sensor_export"]`, `summary["stopped"]` (sant när användaren avbröt
-körningen, så att partiella räkningar inte tolkas som en avslutad körning med för låg produktion), och
+Vid sidan av dessa: `summary["output_dirs"]` (varje katalog som skrivits till),
+`summary["light_sensor_export"]`, `summary["stopped"]` (gäller när användaren avbröt
+körningen, så att partiella räkningar inte tolkas som en avslutad körning som underpresterade), och
 `summary["groups"]` (uppdelningen per grupp).
 
 `exported_files` registreras av pipelinen **medan den skriver**, inte genom att skanna av
 projektets bildobjekt i efterhand. Parallell- och GPU-strategierna bygger sina egna bildobjekt
-(i arbetarsubprocesser för GPU-vägarna), så den gamla skanningen rapporterade
-`0 file(s) written` för varje sådan körning och skickade sedan ut tipset om noll-exporter – vid körningar
-där allt hade fungerat. Om du skriver ett skript baserat på detta nummer rapporterar en felfri parallellkörning nu
+objekt (i arbetarsubprocesser för GPU-vägarna), så den gamla skanningen rapporterade
+`0 file(s) written` för varje sådan körning och skickade sedan ut tipset om nollexporter — vid körningar
+där allt hade fungerat. Om du skapar ett skript baserat på detta nummer rapporterar en felfri parallellkörning nu
 ett värde som inte är noll.
 
-Hopp av ljussensorn rapporterar den orsak som läsaren faktiskt fastställde för varje fil – ett
-oläsbart schema, ett saknat paket, ett skrivfel – **deduplicerat**, så tjugo filer
-som hoppades över av en orsak räknas som en orsak istället för tjugo upprepningar av den.
+Hoppade ljussensorer rapporterar den orsak som läsaren faktiskt fastställde för varje fil – ett
+oläsbart schema, ett saknat paket, ett skrivfel – **deduplicerat**, så att tjugo filer
+som hoppades över på grund av en orsak räknas som en orsak istället för tjugo upprepningar av den.
 
 > **`process()` utlöses inte när en körning inte producerar några bilder.** Detta är det enda stället där SDK och
 > CLI medvetet skiljer sig åt: `chloros-cli process` behandlar ”produkter begärdes, inga
-> skrevs” som ett fel och avslutas med ett värde som inte är noll, medan SDK återgår normalt och rapporterar
-> tillståndet via `summary` / hints. Om din pipeline avbryts vid en tom körning, kontrollera den
+> skrivna” som ett fel och avslutas med ett värde som inte är noll, medan SDK avslutas normalt och rapporterar
+> tillståndet via `summary` / hints. Om din pipeline ska avbrytas vid en tom körning, kontrollera den
 > själv – granska `summary` (eller räkna filerna i projektmappen) istället för att förlita dig på
-> frånvaron av ett undantag. De vanligaste orsakerna är en inmatningsmapp som inte kändes igen som en
-> inspelning och produkter som hoppats över enligtgäller för de kameror som finns (t.ex. strålning från kameror som endast använder RGB
->).
+> frånvaron av ett undantag. Vanliga orsaker är en inmatningsmapp som inte kändes igen som en
+> inspelning och produkter som hoppats över eftersom de inte var tillämpliga för de närvarande kamerorna (t.ex. strålningsvärden från kameror som endast stöder RGB
+> ).
 
-### Hjälpfunktioner
+### Bekvämlighetsfunktioner
 
 ```python
 # One-call process: project + import + configure + process
@@ -496,9 +496,9 @@ False         # export in native sensor geometry / skip the common-overlap crop
 "cubic"
 ```
 
-#### Radiometrisk utdata (LATTICE multispektral pipeline)
+#### Radiometrisk utdata (LATTICE-pipeline för multispektral data)
 
-`process`-pipelinens LATTICE multispektrala (M3C/M3M) exportnivå — `reflectance` (standard), `radiance`, `sensor-response` eller `all` (alla tillämpliga lägen per bild) — motsvarar projektets bearbetningsinställning **”Radiometric output”**. `configure()` har ett särskilt nyckelord för detta:
+`process`-pipelinensLATTICE-multispektrala (M3C/M3M) exportnivå — `reflectance` (standard), `radiance`, `sensor-response` eller `all` (alla tillämpliga lägen per bild) — motsvarar projektets bearbetningsinställning **”Radiometrisk utdata”**. `configure()` har ett särskilt nyckelord för detta:
 
 ```python
 with chloros_sdk.ChlorosLocal() as cl:
@@ -511,7 +511,7 @@ with chloros_sdk.ChlorosLocal() as cl:
     cl.process()
 ```
 
-Den avancerade nödutvägen — att skriva in projektets `"Radiometric output"`-nyckel via `custom_settings` — fungerar fortfarande, men kom ihåg att den ersätter hela inställningsblocket (se varningen nedan):
+Den avancerade utvägen — att skriva in projektets `"Radiometric output"`-nyckel via `custom_settings` — fungerar fortfarande, men kom ihåg att den ersätter hela inställningsblocket (se varningen nedan):
 
 ```python
 cl.configure(custom_settings={
@@ -522,15 +522,15 @@ cl.configure(custom_settings={
 })
 ```
 
-`reflectance` (standard) dividerar kamerans strålningsintensitet med **tidsstämpelmatchnad DAQ-nedstrålning**, som automatiskt beräknas från en inspelad `.daq` (DAQ-U/M/E)**eller en DAQ-M-inbyggd `.csv`**som finns tillsammans med bildmaterialet; eventuella kalibreringspaket per kamera eller DAQ som saknas lokalt**hämtas automatiskt från AWS** vid första användningen. CLI exponerar detta enligttyp av produktväljare på `chloros-cli process`: `--radiance`/`--no-radiance`, `--reflectance`/`--no-reflectance`, `--debayered`, `--preview`.
+`reflectance` (standardinställningen) dividerar kamerans strålning med **tidsstämpelmatchad DAQ-nedstrålning**, som automatiskt beräknas utifrån en inspelad `.daq` (DAQ-U/M/E)**eller en DAQ-M-inbyggd `.csv`**som finns tillsammans med bildmaterialet; eventuella kalibreringspaket per kamera eller DAQ som saknas lokalt**hämtas automatiskt från AWS** vid första användningen. CLI visar detta som produktväljare per typ på `chloros-cli process`: `--radiance`/`--no-radiance`, `--reflectance`/`--no-reflectance`, `--debayered`, `--preview`.
 
-> `custom_settings` **ersätter** hela blocket med beräknade inställningar (det kringgår `configure()`:s övriga nyckelord och validering enligt design). När du använder det ska du inkludera alla `Project Settings`-nycklar som är viktiga för dig, precis som i exemplet ovan.
+> `custom_settings` **ersätter** hela blocket med beräknade inställningar (det kringgår `configure()`:s övriga nyckelord och validering enligt designen). När du använder det ska du inkludera alla `Project Settings`-nycklar som är viktiga för dig, precis som i exemplet ovan.
 
 ---
 
 ## Smart-Connect för LATTICE-kameror
 
-Persistenta backend-sessioner för live-hårdvara. Samma slutpunkter som GUI:n använder, så beteendet är identiskt i SDK / CLI / GUI.
+Persistenta backend-sessioner för live-hårdvara. Samma slutpunkter som GUI:n använder, så beteendet är identiskt på SDK / CLI / GUI.
 
 ### Enstaka kamera — `CameraSession`
 
@@ -570,8 +570,8 @@ connect_camera(
 | --- | --- |
 | `read_nodes(names, enum_names=(), timeout=30.0)` | Läser GenICam-noder; returnerar `{nodes, errors, enums, device}`. |
 | `set_settings(**kwargs)` | Skriver noder med vänligt namn (`exposure_time`, `gain`, `pixel_format`, `width`, `height`, `target_brightness`, `ae_damping`, `ae_upper_limit`, `trigger_mode`, `trigger_source`, …). |
-| `capture(output_dir="output", ext=".tiff", jpeg_quality=95, processing=None, levels=None, force_daq=None, settings=None, timeout=None)` | Ta en **enskild** bildruta. Returnerar en lista med ett element bestående av ordböcker med bildrutemetadata. (Burst/multibildtagning har tagits bort — anropa `capture()` i en loop om du behöver en serie.) |
-| `disconnect()` | Frigör från poolen. Ingen åtgärd om vi är kopplade till en redan öppen session. |
+| `capture(output_dir="output", ext=".tiff", jpeg_quality=95, processing=None, levels=None, force_daq=None, settings=None, timeout=None)` | Ta en **enskild** bild. Returnerar en lista med ett element som består av bildmetadata-diktionärer. (Serietagning/tagning av flera bilder har tagits bort — anropa `capture()` i en loop om du behöver en serie.) |
+| `disconnect()` | Frigör från poolen. Ingen åtgärd om vi är anslutna till en redan öppen session. |
 
 `capture()`-exportkontroller (samma modell som arrayen + GUI):
 
@@ -580,15 +580,15 @@ connect_camera(
 
 ### Synkroniserad matris — `ArraySession` (Smart-Prep)
 
-`connect_array` är **den rekommenderade startpunkten** för uppställningar med flera kameror. Den kör hela GUI-flödet för smart-prep i bakgrunden:
+`connect_array` är **den rekommenderade startpunkten** för uppsättningar med flera kameror. Den kör hela Smart-Prep-flödet via GUI i bakgrunden:
 
-1. **Nätverksanalys** (`/api/camera/array/recommend`) — hittar den största bildstorlek som passar sim-emit-nivån utan att bilder tappas bort.
-2. **Automatisk nivåval** — `sim-capture-sim-emit` om kabeln klarar det; annars `sim-capture-ftd-stagger` eller `slip-emit-and-capture`.
-3. **Automatisk minskning**— minskar ramstorleken i bakgrunden / ökar binningen när kabeln inte klarar den begärda upplösningen.**Detta säkerhetsnät täcker inte aggregerad överteckning**: för många kameror för kabeln kan inte åtgärdas genom att minska ramarna — se [Överteckning](#over-subscription-the-per-cam-floor).
-4. **PTP aktiverat** som standard — tidsstämplar mellan kameror är jämförbara med en noggrannhet på mikrosekunder.
-5. **Automatisk val av pixelformat per kamera** — RGB-kameror → `BayerRG8`, multispec → `BayerRG12`.
-6. **AE-seeding** — tar en ögonblicksbild av varje kameras aktuella AE-tillstånd så att anslutningen inte återställer exponeringen mitt i flygningen.
-7. **GPIO-triggerkonfiguration** — `connect_array` aktiverar alla kameror (`TriggerMode=On`, `TriggerSource=Line2`) så att master-enhetens puls styr slavkamerorna via M8-kabeln. Detta steg gäller endast för array-konfiguration: en enskild kamera som öppnas med `LatticeCamera` körs istället fritt.
+1. **Nätverksanalys** (`/api/camera/array/recommend`) — hittar den största bildstorleken som passar sim-emit-nivån utan att bildrutor tappas bort.
+2. **Automatisk val av nivå** — `sim-capture-sim-emit` om kabeln klarar det; annars `sim-capture-ftd-stagger` eller `slip-emit-and-capture`.
+3. **Automatisk minskning**— minskar ramstorleken utan varning / ökar binningen när kabeln inte klarar den begärda upplösningen.**Detta säkerhetsnät täcker inte aggregerad överteckning**: för många kameror för kabeln kan inte åtgärdas genom att minska ramarna — se [Överteckning](#over-subscription-the-per-cam-floor).
+4. **PTP aktiverat**som standard — tidsstämplar mellan kameror hamnar på en gemensam klocka med en avvikelse på**~1 ms**. Samtidig exponering sker via M8-hårdvarutriggaren (**&lt; 100 µs** mellan moduler), inte via PTP: PTP synkroniserar *tidsstämplar*, inte exponeringar.
+5. **Automatiskval** — RGB-kameror → `BayerRG8`, multispektrala → `BayerRG12`.
+6. **AE-seeding** — tar en ögonblicksbild av varje kameras aktuella AE-tillstånd så att anslutningen inte återställer exponeringen mitt i en bildserie.
+7. **GPIO-triggerkonfiguration** — `connect_array` aktiverar varje kamera (`TriggerMode=On`, `TriggerSource=Line2`) så att masterkameraens puls styr slavkamerorna via M8-kabeln. Detta steg gäller endast för en array: en enskild kamera som öppnas med `LatticeCamera` körs istället i fritt läge.
 
 ```python
 import chloros_sdk
@@ -600,7 +600,7 @@ with chloros_sdk.connect_array(
     arr.capture("output/", processing="reflectance")
 ```
 
-#### `connect_array()`-signatur
+#### `connect_array()` Signatur
 
 ```python
 connect_array(
@@ -624,12 +624,12 @@ connect_array(
 
 `force_tier`-värden:
 - `"sim-capture-sim-emit"` — verkligt simultant (alla kameror avfyras vid samma klockkant).
-- `"sim-capture-ftd-stagger"` — flexibel förskjutning i tidsdomänen (kamerorna sänder vid något förskjutna tidpunkter så att paketen serialiseras på ledningen).
-- `"slip-emit-and-capture"` — sekventiell inspelning per kamera (ingen tidsmässig synkronisering; enda alternativet när ingen ramstorlek passar sim).
+- `"sim-capture-ftd-stagger"` — flexibel tidsförskjutning (kamerorna avfyras vid något förskjutna tidpunkter så att paketen serialiseras på ledningen).
+- `"slip-emit-and-capture"` — sekventiell insamling per kamera (ingen tidssynkronisering; enda alternativet när ingen ramstorlek passar sim).
 
-`wire_ceiling_mbps` åsidosätter **värdens kontinuerliga bandbreddsbudget** i MB/s — det enda
-talet som hela arraytilldelningen hänger på. Lämna det som `None` för att använda det automatiskt detekterade
-värdet. Sänk det när arrayen rapporterar GVSP-korrupta ramar: det automatiska värdet härleds
+`wire_ceiling_mbps` åsidosätter **värdens kontinuerliga nätverksbandbredd** i MB/s — det enda
+siffran som hela arraytilldelningen baseras på. Lämna inställningen på `None` för att använda det automatiskt detekterade
+värdet. Sänk värdet när arrayen rapporterar GVSP-korrupta ramar: det automatiska värdet härleds
 från nätverkskortets angivna länkhastighet, vilket överskattar USB-adaptrar, smala PCIe-banor och
 upptagna delade nätverk — och överskattningen visar sig som korrupta ramar snarare än som en
 synligt långsam länk. Värdet sparas i projektets array-insamlingsblock, så en
@@ -638,37 +638,37 @@ Se [Array Health](#array-health--which-subsystem-is-losing-frames).
 
 #### Överteckning (minimigränsen per kamera)
 
-Sim-emit-pacing tilldelar varje kamera en andel av den kollisionssäkra bandbreddskvoten, med en lägsta gräns på **8 MB/s per kamera**(`per_cam_floor_bps`). När `N × floor` överskrider den kollisionssäkra övre gränsen**överskrider**arrayen-prenumererar på bandbredden**— felmoden är GVSP-paketförlust, inte en lägre bildfrekvens — och det finns ingen åtgärd som påverkar bildstorleken:**binning och ROI minskar antalet byte per bildruta, inte de reglerade byte per sekund**som den aggregerade kontrollen jämför. Praktiska tak för full upplösning på en 1 GbE-värd:**6 kameror @ 1500 MTU, 9 med jumbo-ramar** (`max_cams_collision_safe` i analyssvaret anger gränsvärdet för din kabel). Lösningar: färre kameror, jumbo-ramar från ände till ände eller ett snabbare nätverkskort.
+Sim-emit-pacing tilldelar varje kamera en andel av den kollisionssäkra bandbreddsbudgeten, med en lägsta gräns på **8 MB/s per kamera**(`per_cam_floor_bps`). När `N × floor` överskrider det kollisionssäkra taket**övertecknar arrayen bandbredden**— felmoden är GVSP-paketförlust, inte en lägre bildfrekvens — och det finns ingen lösning genom att minska bildstorleken:**binning och ROI minskar antalet byte per bildruta, inte de reglerade byte per sekund**som den aggregerade kontrollen jämför. Praktiska takvärden för full upplösning på en 1 GbE-värd:**6 kameror @ 1500 MTU, 9 med jumbo-ramar** (`max_cams_collision_safe` i analyssvaret anger gränsvärdet för din anslutning). Åtgärder: färre kameror, jumbo-ramar fråntill-till, eller ett snabbare nätverkskort.
 
 - Svaren `analyze_array_network()` och `/api/camera/array/connect` innehåller `oversubscribed`, `aggregate_demand_bps`, `collision_safe_ceiling_bps`, `max_cams_collision_safe` och `per_cam_floor_bps`. När `oversubscribed` är sant nollställer projektionen **fps-fälten** (`achievable_fps_max` / `fps_bright` / `fps_dark`) istället för att rapportera en missvisande hastighet som är långsam men fungerar.
-- `POST /api/camera/array/connect` accepterar en `pin_resolution`-kroppsparameter (**HTTP-endast — inte en SDK-kwarg**; `connect_array` exponerar den inte). Fastställning tar bort säkerhetsnätet för binning-walk-down, så en övertecknad anslutning där `pin_resolution` är inställt**avvisas kategoriskt** med ett felmeddelande som anger alla möjliga lösningar. Utan pinning fortsätter anslutningen med nedskalningen men varnar för att minskningen inte kan rensa aggregatet.
-- Nödutväg för testmiljö: ställ in `CHLOROS_ARRAY_ALLOW_OVERSUBSCRIBED=1` i backend-miljön för att nedgradera avvisningen till en tydlig varning – du ansluter ändå och accepterar paketförlusten.
+- `POST /api/camera/array/connect` accepterar en `pin_resolution`-kroppsparameter (**endast HTTP — inte en SDK-kwarg**; `connect_array` exponerar den inte). Fastställning avlägsnar säkerhetsnätet för nedtrappning av binning, så en övertecknad anslutning med `pin_resolution` inställt**avvisas kategoriskt** med ett felmeddelande som anger alla möjliga åtgärder. Utan pinning fortsätter anslutningen med nedskärningen men varnar för att minskningen inte kan rensa aggregatet.
+- Nödutväg för testmiljö: ställ in `CHLOROS_ARRAY_ALLOW_OVERSUBSCRIBED=1` i backendensmiljö för att nedgradera avvisningen till en tydlig varning — du ansluter ändå och accepterar paketförlusten.
 
 #### Arrayhälsa — vilket delsystem tappar ramar
 
 `GET /api/camera/array/<array_id>/capability` bär ett aktivt `health`-block på en
 ansluten array, omvärderat i ett rullande **10-sekunders** fönster. Den delar upp ramförlusten
-i de två orsakerna som kräver motsatta åtgärder, istället för en enda ”ofullständig” frekvens som
+i de två orsakerna som kräver motsatta åtgärder, istället för en ”ofullständig” frekvens som
 inte specificerar någon av dem:
 
 | Fält | Vad det betyder | Vilket delsystem |
 | --- | --- | --- |
-| `gvsp_corrupt_rate_pct` (per serienummer) | Bilden **anlände men var strukturellt felaktig**— GVSP-paketförlust. |**Nätverk**: kabelkapacitet, pacing, NIC RX-ring, MTU |
-| `never_arrived_rate_pct` (per serienummer) | Ramen **kom aldrig alls**— kameran utlöste inte, eller så skickades inget ut. |**Utlösare/synkronisering**: M8-kabel, `line=`, `TriggerMode` |
-| `worst_gvsp_corrupt_pct` / `worst_never_arrived_pct` | Sämsta bildhastighet för respektive kamera. | — |
+| `gvsp_corrupt_rate_pct` (per seriell port) | Ramen **anlände men var strukturellt felaktig**— GVSP-paketförlust. |**Nätverk**: kabelkapacitet, pacing, NIC RX-ring, MTU |
+| `never_arrived_rate_pct` (per seriell port) | Ramen **kom aldrig alls**— kameran utlöste inte, eller så lämnade ingenting den. |**Utlösare/synkronisering**: M8-kabel, `line=`, `TriggerMode` |
+| `worst_gvsp_corrupt_pct` / `worst_never_arrived_pct` | Sämsta kamerans andel för varje. | — |
 | `per_cam_rate_pct` | Kombinerad andel ofullständiga bilder per kamera (båda orsakerna tillsammans). | — |
 | `stable_for_seconds` | Hur länge varje kamera har legat under 0,01 %. | — |
 
-Tillsammans med `health` visar samma post hur länge hela tilldelningen har hängt kvar:
+Tillsammans med `health` anger samma post det värde som hela tilldelningen hänger på:
 
 | Fält | Vad det betyder |
 | --- | --- |
-| `wire_ceiling_mbps` | Värdens gällande kontinuerliga bandbreddsbudget, MB/s. |
-| `wire_ceiling_source` | Varifrån det värdet kommer, i ord — t.g. `USB-capped 200 MB/s (was theoretical 1062; …)` eller `user override 120 MB/s (auto said 200)`. |
-| `wire_ceiling_is_user_set` | `true` när `wire_ceiling_mbps=` ställer in det. |
+| `wire_ceiling_mbps` | Värdens gällande kontinuerliga bandbredd, MB/s. |
+| `wire_ceiling_source` | Varifrån siffran kommer, i ord — t.ex. `USB-capped 200 MB/s (was theoretical 1062; …)` eller `user override 120 MB/s (auto said 200)`. |
+| `wire_ceiling_is_user_set` | `true` när `wire_ceiling_mbps=` ställde in den. |
 | `nic_is_usb` | `true` för en USB-Ethernet-adapter. |
 
-Det finns ingen SDK-wrapper för denna slutpunkt — läs den direkt:
+Det finns inget SDK-wrapper för denna ändpunkt — läs den direkt:
 
 ```python
 import requests, chloros_sdk
@@ -689,25 +689,25 @@ if (health.get("worst_gvsp_corrupt_pct") or 0) > 1.0:
     arr = chloros_sdk.connect_array(serials, wire_ceiling_mbps=120)
 ```
 
-**Avläsning:** `gvsp_corrupt_rate_pct` som inte är noll och `never_arrived_rate_pct` på 0 betyder att
-utlösning och kabelsynkronisering är perfekta och att 100 % av förlusten ligger på nätverksvägen — sänk
+**Avläsning:** ett värde som inte är noll `gvsp_corrupt_rate_pct` med `never_arrived_rate_pct` på 0 betyder
+att triggning och kabelsynkronisering är perfekta och att 100 % av förlusten ligger på nätverksvägen — sänk
 `wire_ceiling_mbps` och anslut på nytt. Det omvända mönstret pekar istället på synkroniseringskabeln eller
 triggerledningen.
 
-> **`target_fps` är inte avgörande för korrupta ramar.** GevSCPD-takten skrivs in en gång vid
-> anslutning, så att sänka triggerfrekvensen ändrar arbetscykeln men inte
-> burstfrekvensen för samtidig sändning. En uppmätt sänkning av efterfrågan med 5× gav ingen förbättring, medan
-> en sänkning av ledningens tak från 240 till 200 MB/s minskade andelen korrupta ramar för samma rigg från 10,4 % till
+> **`target_fps` är inte indikatorn för korrupta ramar.** GevSCPD-takten ställs in en gång vid
+> anslutning, så att sänka triggerfrekvensen ändrar arbetscykeln och inte
+> burstfrekvensen för samtidig sändning. En uppmätt 5× sänkning av efterfrågan gav ingen förbättring, medan
+> en sänkning av kabelns tak från 240 till 200 MB/s tog samma rigg från 10,4 % korrupta ramar till
 > 0,00 %.
 
 > **Automatisk krympning mitt i strömmen är inte tillgänglig i TRI032S-firmware.** En pågående array kan inte
 > åtgärda detta själv; koppla bort och anslut på nytt så att anslutningstidsväljaren planerar om utifrån
-> den nya gränsen.
+> det nya taket.
 
-En **USB-Ethernet-adapter begränsas till 200 MB/s** av sonden oavsett dess
-typbeteckning: effektivitetstabellen som omvandlar en länkhastighet till ett kontinuerligt värde är
+En **USB-Ethernet-adapter begränsas till 200 MB/s** av proben oavsett dess
+typskylt: effektivitetstabellen som omvandlar en länkhastighet till ett kontinuerligt värde är
 hämtad från PCIe, och ett USB-nätverkskort anger sin Ethernet-länkhastighet samtidigt som det begränsas av
-USB-bussen och dess drivrutin. Begränsningen är absolut, inte en bråkdel – en USB 1 GbE-adapter
+USB-bussen och dess drivrutin. Begränsningen är absolut, inte en bråkdel — en USB 1 GbE-adapter
 uppnår ~80 MB/s och påverkas inte.
 
 #### `ArraySession`-metoder
@@ -715,28 +715,28 @@ uppnår ~80 MB/s och påverkas inte.
 | Metod | Beskrivning |
 | --- | --- |
 | `status(timeout=10.0)` | Live `{fps, ptp, frame_count, last_error, …}`. |
-| `capture(output_dir="output", format="tiff", processing="debayered", levels=None, aligned=None, render_index=None, force_daq=None, smart=False, timeout=300.0)` | En synkroniserad insamlingsgrupp. Returnerar en `CaptureResult` (lista över bilddiktionärer + `.skipped`). Exportkontroller nedan. |
-| `capture(..., smart=True)` | **Smart inspelning** — väntar tills AE har stabiliserats på alla kameror och utlöser sedan. |
+| `capture(output_dir="output", format="tiff", processing="debayered", levels=None, aligned=None, render_index=None, force_daq=None, smart=False, timeout=300.0)` | En synkroniserad inspelningsgrupp. Returnerar en `CaptureResult` (lista över ramordböcker + `.skipped`). Exportkontroller nedan. |
+| `capture(..., smart=True)` | **Smart inspelning** — väntar tills AE har stabiliserats på alla kameror, sedan utlöses. |
 | `capture_fastest(output_dir="output", force_daq=True, render_index=True, timeout=120.0)` | Snabbaste inspelning: endast rådata + den tilldelade DAQ-avläsningen (+ det fria kombinerade indexet). Speglar GUI-knappen ”Fastest Capture”. |
-| `capture_repeated(output_dir="output", count=None, duration_s=None, interval_s=0.0, on_capture=None, **capture_kwargs)` | Enstaka / Kontinuerlig / Intervall i en avgränsad slinga. Returnerar `list[CaptureResult]`.**Kräver `count` och/eller `duration_s`** för att den ska avslutas (SDK har ingen Ctrl+C). |
-| `record(output_dir="output", fps=10.0, duration_s=None, video=True, gif=False, timeout=30.0)` | Starta inspelning av den kombinerade live-indexvyn till video/GIF → `RecorderHandle`. En sammansatt inspelare per matris. |
-| `burst(output_dir="output", duration_s=None, max_frames=None, index_config=None, serial_index_config=None, timeout=30.0)` | Starta en rå-Bayer-bildserie med hög bildfrekvens → `RecorderHandle`. Bearbeta offline med `build_video()`. |
-| `build_video(burst_dir, products=None, fps=10.0, video=True, gif=False, save_tiffs=False, wait=True, poll_s=2.0, timeout=1800.0)` | Bearbeta en sparad råbildserie offline till kalibrerad(a) video(er). Blockerar tills det är klart (`wait=True`) och returnerar `{outputs, errors, combined}`. |
+| `capture_repeated(output_dir="output", count=None, duration_s=None, interval_s=0.0, on_capture=None, **capture_kwargs)` | Enstaka / Kontinuerlig / Intervall i en avgränsad slinga. Returnerar `list[CaptureResult]`.**Kräver `count` och/eller `duration_s`** för att avslutas (SDKen har ingen Ctrl+C). |
+| `record(output_dir="output", fps=10.0, duration_s=None, video=True, gif=False, timeout=30.0)` | Starta inspelning av den kombinerade indexvyn i realtid till video/GIF → `RecorderHandle`. En sammansatt inspelare per array. |
+| `burst(output_dir="output", duration_s=None, max_frames=None, index_config=None, serial_index_config=None, timeout=30.0)` | Starta en rå-Bayer-bildserie med hög bildfrekvens → `RecorderHandle`. Bearbeta om offline med `build_video()`. |
+| `build_video(burst_dir, products=None, fps=10.0, video=True, gif=False, save_tiffs=False, wait=True, poll_s=2.0, timeout=1800.0)` | Bearbeta en sparad råbildsserie offline till kalibrerad video. Blockerar tills processen är klar (`wait=True`) och returnerar `{outputs, errors, combined}`. |
 | `build_video_status(job_id, timeout=15.0)` | Avfråga ett offline-byggjobb: `{running, result, error, burst_dir}`. |
-| `disconnect()` | Släpp hela matrisen. |
+| `disconnect()` | Frigör hela arrayen. |
 
-`capture()`-exportkontroller (samma slutpunkt som GUI/CLI använder):
+`capture()` exportkontroller (samma slutpunkt som GUI/CLI använder):
 
 - `processing` / `levels` — `processing="all"` (eller `levels=["raw","radiance",…]`) sparar alla tillämpliga exporttyper per kamera; ett enda `processing`-värde sparar endast den nivån.
-- `aligned=True` — förvränger varje medlems icke-råa export till arrayens[inriktningsprofil](#array-alignment) (samregistrerad); rådata förblir oförvrängda men bär med sig transformationen i metadata. Faller tillbaka till oinriktat (med en varning som visas i resultatets `alignment`) om matrisen saknar profil.
-- `render_index=False` — hoppa över överlägget med vegetationsindex per kamera; standardinställningen visar det där det har konfigurerats.
-- `force_daq=True` — spara den tilldelade DAQ/DLS-avläsningen som en `.daq`-sidokar även när ingen vald nivå behöver den.
+- `aligned=True` — förvränger varje medlems icke-råa export till arrayens [justeringsprofil](#array-alignment) (samregistrerad); rådata förblir oförskjutna men bär med sig transformationen i metadata. Faller tillbaka till oalignerad (med en varning som visas i resultatets `alignment`) om matrisen saknar profil.
+- `render_index=False` — hoppa över överlägget för vegetationsindex per kamera; standardinställningen renderar det där det är konfigurerat.
+- `force_daq=True` — spara den tilldelade DAQ/DLS-avläsningen som en `.daq`-sidecar även när ingen vald nivå behöver den.
 
-**TIFF-komprimering (endast HTTP-reglage):**`ArraySession.capture()` skickar ingen `compression`-nyckel, så backendens standardinställning gäller — `POST /api/camera/array/capture` läser en `compression`-body-parameter, `"deflate"` som standard (förlustfri zlib L1 + horisontell prediktor, ~4,1 MB per bildruta i full upplösning). `"none"` skriver okomprimerat (~6,3 MB/bildruta) med en**~5× snabbare skrivhastighet** — båda är förlustfria och läses identiskt vid import. SDK exponerar inga kwarg för detta; nödutgången är `chloros-cli lattice array-capture --compression none` eller rå HTTP. DEFLATE håller också Python GIL, så komprimerade skrivningar kan inte parallelliseras över skrivtrådarna per kamera — kontinuerlig inspelning i full upplösning med 8 kameror vid sensorns hastighet kräver `compression: "none"`. Detaljer: [CLI Referens → array-capture](cli-reference.md).**Överskrivningar per medlem (endast HTTP):**samma slutpunkt accepterar även `exclude_serials` (lista — ta bort medlemmar från den sparade uppsättningen; arrayen utlöses fortfarande som en synkroniserad grupp och uteslutna medlemmar returneras i `excluded`), `serial_levels` (`{serial: [level tokens]}`-överskrivningar per kameranivå) och `serial_index` (`{serial: bool}`-överskrivningar för indexöverlägg per kamera). Dessa är GUI-paritetsparametrar och**ännu inte SDK kwargs**; medlemmar som saknas i kartorna faller tillbaka till de arrayomfattande `levels` / `render_index`.
+**TIFF komprimering (endast reglaget HTTP):**`ArraySession.capture()` skickar ingen `compression`-nyckel, så backendens standardinställning gäller — `POST /api/camera/array/capture` läser in en `compression`-kroppsparametern, `"deflate"` som standard (förlustfri zlib L1 + horisontell prediktor, ~4,1 MB per bildruta i full upplösning). `"none"` skriver okomprimerat (~6,3 MB/bildruta) med en**~5× snabbare skrivhastighet** — båda är förlustfria och läses identiskt vid import. SDK exponerar inga kwarg för detta; genvägen är `chloros-cli lattice array-capture --compression none` eller rå HTTP. DEFLATE håller också GIL:en Python, så komprimerade skrivningar kan inte parallelliseras över skrivtrådarna per kamera — kontinuerlig inspelning i full upplösning med 8 kameror vid sensorhastighet kräver `compression: "none"`. Detaljer: [CLI Referens → array-capture](cli-reference.md).**Överskrivningar vid export per medlem (endast HTTP):**samma slutpunkt accepterar även `exclude_serials` (lista — ta bort medlemmar från den sparade uppsättningen; matrisen utlöses fortfarande som en synkroniserad grupp och uteslutna medlemmar returneras i `excluded`), `serial_levels` (`{serial: [level tokens]}`-överskrivningar på kameranivå) och `serial_index` (`{serial: bool}`-överskrivningar av indexöverlägg per kamera). Dessa är GUI-paritetsparametrar och**ännu inte **SDK-kwargs**; medlemmar som saknas i kartorna faller tillbaka till de array-omfattande `levels` / `render_index`.
 
-##### Granskade hoppade över kamerna — `CaptureResult.skipped`
+##### Granska hoppade kammer — `CaptureResult.skipped`
 
-`ArraySession.capture()` returnerar en `CaptureResult`, som är en underklass till `list`: iterera den, indexera den, `len()` den — alla befintliga mönster fortsätter att fungera. Ny kod kan inspektera attributet `.skipped` för att se vilka kameror som uteslöts och varför. Det vanligaste fallet är RGB-kameror i en blandad-filtermatris när du begär `processing="radiance"` eller `"reflectance"` — strålning per Bayer-pixel är meningslöst för en bredbandssensor, så backend-modulen hoppar över dessa kameror istället för att producera nonsens.
+`ArraySession.capture()` returnerar ett `CaptureResult`, vilket är en underklass till `list`: iterera det, indexera det, `len()` det — alla befintliga mönster fortsätter att fungera. Ny kod kan inspektera attributet `.skipped` för att se vilka kammar som uteslöts och varför. Det vanligaste fallet är RGB-kameror i en blandad filtermatris när du begär `processing="radiance"` eller `"reflectance"` — strålning per Bayer-matris är meningslöst för en bredbandssensor, så backend-systemet hoppar över dessa kameror istället för att producera nonsens.
 
 ```python
 with chloros_sdk.connect_array(serials) as arr:
@@ -754,24 +754,24 @@ with chloros_sdk.connect_array(serials) as arr:
         #       'filter': 'RGB'}
 ```
 
-Orsaktoken följer mönstret `<level>-not-applicable-to-rgb-cam` (en post per hoppad nivå, var och en med `level`). De reflektansspecifika uteslutningarna är `reflectance-skipped-no-fresh-dls` (ingen ny nedåtriktad avläsning tillgänglig), `reflectance-skipped-bound-daq-unavailable (…)` (den bundna DAQ:en kunde inte nås) och `dls-uncalibrated-band-<nm>` — bandet ligger till största delen utanför DAQ-ljussensorns radiometriskt kalibrerade område (~374–974 nm), varför den absoluta DAQ-baserade reflektansindelningen avvisas och ramen nedgraderas tydligt till sensorns respons. Bland de levererade SKU:erna är det endast F988 som utlöser detta; den kamerans stödda arbetsflöde är arbetsflödet med reflektanspanel.
+Orsaktoken följer mönstret `<level>-not-applicable-to-rgb-cam` (en post per utelämnad nivå, var och en med `level`). De reflektansspecifika hoppningarna är `reflectance-skipped-no-fresh-dls` (ingen ny nedåtriktad avläsning tillgänglig), `reflectance-skipped-bound-daq-unavailable (…)` (den bundna DAQ:en kunde inte nås) och `dls-uncalibrated-band-<nm>` — bandet ligger till största delen utanför DAQ-ljussensorns radiometriskt kalibrerade intervall (~374–974 nm), varför den absoluta DAQ-baserade reflektansuppdelningen avvisas och ramen nedgraderas tydligt till sensorns respons. Bland de levererade SKU:erna är det endast F988 som utlöser detta; den kamerans stödda väg är arbetsflödet med reflektanspaneler.
 
 `processing`-nivåer:
 
-| Nivå | Utdata |
+| Nivå | Utgång |
 | --- | --- |
 | `"raw"` | Enkanalig Bayer (monokameror: det enda bandet) direkt från sensorn. |
-| `"debayered"` *(SDK standard)* | 3-kanals BGR via bilineär demosaik (monokromkameror: 1-kanals gråskala). |
+| `"debayered"` *(standardinställning för SDK)* | 3-kanals BGR via bilineär demosaik (monokromkameror: 1-kanals gråskala). |
 | `"radiance"` | float32 W/m²/sr/nm via hela den radiometriska kedjan. Endast multispektralt — RGB-kameror hoppas över. |
-| `"reflectance"` | uint16 0..32768 (Pix4D-kompatibel); kräver en live-DAQ-koppling för absolut referens. Endast multispektral. |
-| `"display"` | Fullständig kedja som stämmer överens med förhandsvisningen i GUI (CCM + WB + gamma enligt kamerans profil). |
-| `"all"` | **En fil per tillämplig nivå** för varje kamera (motsvarar GUI &quot;Capture All&quot; / CLI-standard). Den returnerade `CaptureResult` innehåller då ett bilddiktat per `(cam, level)`, med nivån i varje diktat; icke tillämpliga nivåer visas i `.skipped`. Den DAQ-avläsning som används för varje reflektansram sparas som en `.daq`-sidfil. |
+| `"reflectance"` | uint16 0..32768 (Pix4D-kompatibel); kräver en aktiv DAQ-koppling för absolut referens. Endast multispektral. |
+| `"display"` | Hela kedjan matchar förhandsvisningen i GUI (CCM + WB + gamma enligt kamerans profil). |
+| `"all"` | **En fil per tillämplig nivå** för varje kamera (överensstämmer med standardinställningen ”Capture All”/CLI i GUI). Den returnerade filen `CaptureResult` innehåller då ett bilddikt per `(cam, level)`, med nivån i varje dikt; icke tillämpliga nivåer visas i `.skipped`. Den DAQ-avläsning som används för varje reflektansbild sparas som en `.daq`-sidecar. |
 
-> **Obs! — standardvärdet skiljer sig från CLI.** `ArraySession.capture()` har som standardvärde `processing="debayered"`; kommandot `chloros-cli lattice array-capture` har som standardvärde `processing="all"`. Ange `processing="all"` explicit från SDK för att spegla CLI/GUI:s flernivåsparning.
+> **Obs! – Standardvärdet skiljer sig från det som anges i CLI.** `ArraySession.capture()` har som standardvärde `processing="debayered"`; kommandot `chloros-cli lattice array-capture` har som standardvärde `processing="all"`. Ange `processing="all"` explicit från SDK för att spegla CLI /GUI-sparandet på flera nivåer.
 
 ### Inspelningslägen och inspelningsenheter
 
-Matrisyta speglar GUI-panelen för inspelning: lägena Enstaka / Kontinuerlig / Intervall / Snabbaste slutartid, plus två inspelningsenheter (live-kompositvideo och rå bildserie → offline-bearbetning).
+Matrisyta speglar GUI-inspelningspanelen: Enstaka / Kontinuerlig / Intervall / Snabbaste slutarlägen, plus två inspelningsalternativ (live-kompositvideo och rå bildserie → ombearbetning offline).
 
 ```python
 import time, chloros_sdk
@@ -802,22 +802,22 @@ with chloros_sdk.connect_array(serials) as arr:
     print(out["outputs"])
 ```
 
-- **`capture_repeated`**är SDK:s kontinuerliga/intervall-loop. Eftersom detfinns inget `Ctrl+C` för att avbryta den från ett skript,**måste** du ange `count` och/eller `duration_s` (den avslutas när någon av dessa nås). `interval_s` mäts från början av varje genomgång (i enlighet med GUI). Återstående kwargs skickas direkt vidare till `capture()`.
-- **`record`** är av *övervakningsklass*: det fångar den kombinerade indexkompositen i realtid så som den visas, så den kombinerade strömmen måste vara öppen för att bildrutor ska kunna tas emot. En kompositinspelare per array (ger ett felmeddelande om en redan körs).
-- **`burst` → `build_video`** är *analysklass*: `burst` skriver råa bildrutor + ett manifest per bildruta + en `.daq` per distinkt DLS-avläsning under `<output>/bursts/<base>/` med hämtningsslingans fulla hastighet (ingen kedja, inget exiftool, ingen live-visning). `build_video` tidsmatchar varje bildruta till närmaste `.daq` och kör om importpipelinens kedja för strålning/reflektans/index. `products` är en lista över `{"kind": "per_cam"|"combined", "level": "radiance"|"reflectance"|"index"}` (standard: det kombinerade indexet). `burst().stop()` startar också automatiskt en ”best-effort”-kombineradindexkonstruktion, som returneras som `build_job` i stoppresultatet.
+- **`capture_repeated`**är SDKs kontinuerliga/intervall-loop. Eftersom det inte finns något `Ctrl+C` för att avbryta den från ett skript,**måste** du skicka `count` och/eller `duration_s` (den stannar när någon av dem nås). `interval_s` mäts från början av varje genomgång (i enlighet med GUI:n). Återstående kwargs skickas direkt vidare till `capture()`.
+- **`record`** är *av övervakningsklass*: den fångar den kombinerade indexkompositen i realtid så som den visas, så den kombinerade strömmen måste vara öppen för att bildrutor ska kunna registreras. En kompositinspelare per array (utlöser ett fel om en redan körs).
+- **`burst` → `build_video`** är *analysklass*: `burst` skriver råa bildrutor + ett manifest per bildruta + en `.daq` per distinkt DLS-avläsning under `<output>/bursts/<base>/` vid inspelningsslingans fulla hastighet (ingen kedja, inget exiftool, ingen live-visning). `build_video` tidsanpassar varje bildruta till närmaste `.daq` och körkör importpipelinens kedja för strålning/reflektans/index. `products` är en lista över `{"kind": "per_cam"|"combined", "level": "radiance"|"reflectance"|"index"}` (standard: det kombinerade indexet). `burst().stop()` startar också automatiskt en ”best-effort”-konstruktion av det kombinerade indexet, som returneras som `build_job` i stopp-resultatet.
 
 #### `RecorderHandle`
 
-Returneras av `ArraySession.record()` och `ArraySession.burst()`. Använd det som en kontextmanager för att automatiskt avsluta vid utgång ur omfattningen, eller styra den manuellt.
+Returneras av `ArraySession.record()` och `ArraySession.burst()`. Använd den som en kontextmanager för att automatiskt avbryta vid utgång ur omfattningen, eller kör den manuellt.
 
 | Medlem | Beskrivning |
 | --- | --- |
 | `job_id` | Backend-jobb-id (str). |
 | `kind` | `"composite"` (från `record`) eller `"raw"` (från `burst`). |
 | `start_stats` | Dict som returneras av anropet `start`. |
-| `result` | `None` under körning; den slutliga stoppresultatdiktionen när körningen har avslutats. |
+| `result` | `None` under körning; den slutliga stoppresultatdiktionen när stoppet har genomförts. |
 | `stats(timeout=10.0)` | Live-jobbstatistik (skrivna bildrutor, uppnådd bildhastighet, förfluten tid). |
-| `stop(timeout=60.0)` | Stoppa inspelaren; returnerar och cachelagrar det slutliga resultatet. Idempotent (ett andra anrop returnerar det cachelagrade resultatet). |
+| `stop(timeout=60.0)` | Stoppa inspelaren; returnerar och cachar det slutliga resultatet. Idempotent (ett andra anrop returnerar det cachade resultatet). |
 
 ```python
 rec = arr.burst("capture/")
@@ -829,7 +829,7 @@ print(result["out_dir"], result.get("build_job"))
 
 ### Ansluta till en redan ansluten array — `attach_array`
 
-Om arrayen redan är igång (GUI:n har öppnat den, eller en tidigare SDK-session har anropat `connect_array`), använd `attach_array` för att hämta ett handtag till den istället för att ansluta på nytt. `connect_array` ger alltid felmeddelandet ”Kameran  finns<sn> redan i arrayen <id>” i den situationen, eftersom POST-anropet till `/array/connect` för en medlem i poolen inte är idempotent; `attach_array` läser `/api/camera/array/list` och matchar antingen efter array_id eller serienummer.
+Om arrayen redan är igång (GUI:n har öppnat den, eller en tidigare SDK-session har anropat `connect_array`), använd `attach_array` för att hämta ett handtag till den istället för att ansluta på nytt. `connect_array` ger alltid felmeddelandet &quot;Kameran  finns<sn> redan i arrayen<id>” i den situationen, eftersom en POST-begäran med `/array/connect` för en medlem ipool inte är idempotent; `attach_array` läser `/api/camera/array/list` och matchar antingen via array_id eller serienummer.
 
 ```python
 import chloros_sdk
@@ -845,7 +845,7 @@ arr = chloros_sdk.attach_array("array-1779862544497")
 arr.capture("output/", processing="reflectance")
 ```
 
-Mönster: SDK-skript som delar resurser med skrivbordsgränssnittet bör först försöka med `attach_array` och sedan fallera tillbaka till `connect_array` om det ännu inte finns någon array i poolen.
+Mönster: SDK-skript som körs parallellt med skrivbordsgränssnittet bör först försöka med `attach_array` och sedan fallera till `connect_array` om det ännu inte finns någon array i poolen.
 
 ```python
 import chloros_sdk
@@ -856,7 +856,7 @@ except chloros_sdk.ChlorosConnectError:
     arr = chloros_sdk.connect_array(serials)
 ```
 
-> **Viktigt — avslutning av kontext-manager AVBRYTER anslutningen.**`ArraySession.disconnect()` skickar alltid en POST-begäran till `/array/disconnect`; det finns inget skydd mot ”attached-not-owned” som det finns för `CameraSession` / `DAQSensorSession`. Om du delar resurser med GUI:et och inte vill riva ned arrayen vid utgång ur scope,**använd inte `with`-blocket** — spara handtaget i en vanlig variabel och hoppa över det explicita `disconnect()`:
+> **Viktigt — avslutning av context-manager kopplar INTE bort anslutningen.**`ArraySession.disconnect()` skickar alltid en POST-begäran till `/array/disconnect`; det finns ingen ”attached-not-owned”-kontroll som för `CameraSession` / `DAQSensorSession`. Om du delar resurser med GUI:n och intevill riva ner arrayen vid scope-exit,**använd inte `with`-blocket** — spara handtaget i en vanlig variabel och hoppa över det explicita `disconnect()`:
 >
 > ```python
 > arr = chloros_sdk.attach_array(serials)
@@ -889,14 +889,14 @@ elif result["status"] == "needs_force_slip":
     print("Sim-sync impossible on this wire; force_tier='slip-emit-and-capture' required")
 ```
 
-`status` är en av `ok` / `auto_capped_fps` / `auto_shrunk` / `needs_force_slip` (annars `error`). `auto_capped_fps` innebär att den begärda upplösningen endast passar RX-ringen vid en begränsad triggfrekvens — behåll upplösningen och skicka vidare `target_fps=result["recommended"]["recommended_target_fps"]` till `connect_array` (se [Exempel 6](#6-capability-probe-before-connecting-a-4-cam-array)).
+`status` är en av `ok` / `auto_capped_fps` / `auto_shrunk` / `needs_force_slip` (annars `error`). `auto_capped_fps` innebär att den begärda upplösningen endast passar RX-ringen vid en begränsad utlösningsfrekvens – behåll upplösningen och skicka `target_fps=result["recommended"]["recommended_target_fps"]` till `connect_array` (se [Exempel 6](#6-capability-probe-before-connecting-a-4-cam-array)).
 
 **Hur man tolkar projektionen** (samma modell som panelen Arrayinställningar i GUI):
 
-- **Burst (`frame_bytes_total`) summeras per kamera i varje kameras faktiska pixelformat.**Mono**M3M**-kameror strömmar Mono12 (2 B/px) oavsett vilket `pixel_format`-värde du anger, så en bild i full upplösning från 4 kameror är**~25 MB** med tre monokameror, inte de ~12.6 MB som antagandet om enbart 8-bitarsdata ger. Backenden avgör varje kameras format utifrån dess modell.
-- **Admittance (`burst_fits_nic_ring`) är dräneringsmedveten**, inte hel-burst-vs-ring: sim-emit passar när värden tömmer RX-ringen snabbare än kamerorna fyller den. En 10G-värd + 1 GbE-kameror**släpper igenom** full upplösning även när bursten överskrider ringen; en 1 GbE-värd blockerar (`needs_force_slip` / `auto_shrunk`).
-- **`achievable_fps_max` är ett konservativt tak för seriell hämtning** — `max(readout+emit, N×emit)` med utsändning per kamera begränsad till 1 GbE-kameralänken, oberoende av exponering. T.ex. ~2,8 fps för en array med 4 kameror i full upplösning och 12 bitar (stämmer överens med de uppmätta värdena på ~2,7–3,0 i runtime). Fullständig modell: [CLI Referens → Modell för bildhastighet och burst-läge för bildmatriser](cli-reference.md#array-fps--burst-model).
-- **Översubskribering (`oversubscribed: true`) innebär att N × lägsta gränsen per kamera överskrider den kollisionssäkra övre gränsen** — fps-fälten (`achievable_fps_max` / `fps_bright` / `fps_dark`) visar 0, och automatisk krympning/binning kan inte åtgärda det (de minskar antalet byte per bildruta, inte antalet byte per sekund). Lösningarna är färre kameror, jumbo-ramar eller ett snabbare nätverkskort; `max_cams_collision_safe` rapporterar takvärdet (6 kameror med full upplösning på 1 GbE vid 1500 MTU, 9 med jumbo). Svaret innehåller även `aggregate_demand_bps`, `collision_safe_ceiling_bps` och `per_cam_floor_bps` (8 MB/s). Se [Överteckning](#over-subscription-the-per-cam-floor).
+- **Burst (`frame_bytes_total`) summeras per kamera i varje kameras faktiska pixelformat.**Mono**M3M**-kameror strömmar Mono12 (2 B/px) oavsett vilket `pixel_format`-värde du anger, så en bildram med full upplösning från 4 kameror är**~25 MB** med tre monokameror, inte de ~12,6 MB som antagandet om enbart 8-bitarsformat ger. Backend avgör varje kameras format utifrån dess modell.
+- **Admittans (`burst_fits_nic_ring`) är dräneringsmedveten**, inte helburst-vs-ring: sim-emit passar när värden tömmer RX-ringen snabbare än kamerorna fyller den. En 10G-värd + 1 GbE-kameror**tillåter** full upplösning även när bursten överskrider ringen; en 1 GbE-värd blockerar (`needs_force_slip` / `auto_shrunk`).
+- **`achievable_fps_max` är ett konservativt tak för seriell hämtning** — `max(readout+emit, N×emit)` med utsändning per kamera begränsad till 1 GbE-kameralänken, oberoende av exponering. T.ex. ~2,8 fps för en 4-kameras array med full upplösning och 12 bitar (stämmer överens med runtime-mätningarna på ~2,7–3,0). Fullständig modell: [CLI Referens → Array fps &amp; burst-modell](cli-reference.md#array-fps--burst-model).
+- **Överskrivning (`oversubscribed: true`) innebär att N × lägsta gränsen per kamera överskrider den kollisionssäkra övre gränsen** — fps-fälten (`achievable_fps_max` / `fps_bright` / `fps_dark`) visar 0, och automatisk krympning/binning kan inte åtgärda det (de minskar antalet byte per bildruta, inte antalet byte per sekund). Lösningarna är färre kameror, jumbo-ramar eller ett snabbare nätverkskort; `max_cams_collision_safe` rapporterar taket (6 kameror med full upplösning på 1 GbE @ 1500 MTU, 9 med jumbo). Svaret innehåller även `aggregate_demand_bps`, `collision_safe_ceiling_bps`, och `per_cam_floor_bps` (8 MB/s). Se [Överteckning](#over-subscription-the-per-cam-floor).
 
 ### Upptäckt och listning
 
@@ -910,7 +910,7 @@ chloros_sdk.list_arrays()                # active arrays in the pool
 
 ## Smart-AE / Smart-Capture
 
-LATTICE-matriser kör kontinuerlig AE i bakgrunden så snart de är anslutna, men det tar en stund för en nyinsatt scen att konvergera. **Smart-capture** är en praktisk funktion: den avläser exponeringen för varje kamera, väntar tills arrayen är stabil över hela fönstret och utlöser sedan bildtagningen. Det motsvarar GUI:n – den ”smarta” bildtagningsknappen i skrivbordsappen anropar samma backend-ändpunkt.
+LATTICE-matriser kör kontinuerlig AE i bakgrunden så snart de är anslutna, men det tar en stund för en nyinsatt scen att konvergera. **Smart-capture** är den praktiska lösningen: den avläser varje kamerasexponering, väntar tills arrayen är stabil över ett fönster och utlöser sedan bildtagningen. Det motsvarar GUI: desktop-appens ”smart”-knapp för bildtagning anropar samma backend-ändpunkt.
 
 ```python
 import chloros_sdk
@@ -924,7 +924,7 @@ with chloros_sdk.connect_array([
     arr.capture("pose_b/", processing="reflectance", smart=True)
 ```
 
-När du använder `ChlorosProject` (nästa avsnitt) får du fler inställningsmöjligheter:
+När du styr via `ChlorosProject` (nästa avsnitt) får du fler inställningsmöjligheter:
 
 ```python
 proj.arrays["main_rig"].capture_smart(
@@ -936,13 +936,13 @@ proj.arrays["main_rig"].capture_smart(
 )
 ```
 
-Smart-AE-inställningen är konservativ som standard. Skärp inställningen med `exposure_tolerance_pct` för noggrant radiometriskt arbete; lätta på den för snabbt föränderliga scener där du bara vill ha ”nära nog”.
+Smart-AE-inställningen är konservativ som standard. Skärp `exposure_tolerance_pct` för noggrant radiometriskt arbete; lätta på inställningen för snabbt föränderliga scener där du bara vill ha ”nära nog”.
 
 ---
 
 ## DAQ-sensorsessioner
 
-Persistent backend-pool för spektralsensorer (DAQ-U via USB, DAQ-M via BLE, DAQ-E via Ethernet). Speglar kamerans yta: smart-detect, återanvändning av pool, idempotent anslutning.
+Persistent backend-pool för spektralsensorer (DAQ-U via USB, DAQ-M via BLE, DAQ-E via Ethernet). Speglar kamerans yta: smart-detect, återanvändning av poolen, idempotent anslutning.
 
 ### Smart-Detect (Zero-Config)
 
@@ -960,7 +960,7 @@ with chloros_sdk.connect_daq_sensor() as daq:
 
 Prioritet: Ethernet → BLE → USB. Ange valfri explicit hint för att låsa transporten.
 
-### Låst transport
+### Fastställd transport
 
 ```python
 # DAQ-U on a specific serial port
@@ -986,18 +986,18 @@ daq = chloros_sdk.connect_daq_sensor(
 
 | Metod | Beskrivning |
 | --- | --- |
-| `status(timeout=10.0)` | Sammanfattning av poolpost (strömnings-/inspelningsstatus, våglängdsintervall, kalibrerings-SHA, integrationstid, frame_avg, AE-status). |
+| `status(timeout=10.0)` | Sammanfattning av poolpost (strömnings-/inspelningsstatus, våglängdsområde, kalibrerings-SHA, integrationstid, frame_avg, AE-status). |
 | `latest(n=1, timeout=10.0)` | Returnerar upp till N senaste spektrumramar. |
-| `stream_start()` / `stream_stop()` | Återuppta/pausa strömning (handtaget förblir öppet). |
+| `stream_start()` / `stream_stop()` | Återuppta / pausa strömning (handtaget förblir öppet). |
 | `record_start(output_dir=None, device_name=None)` | Starta inspelning av en .daq-fil. Returnerar filvägen. Avvisas för DAQ-U/M utan ett AWS-kalibreringspaket (DAQ-E undantaget). |
-| `record_stop()` | Avsluta inspelning. Returnerar `{path, rows}`. |
-| `disconnect()` | Frigör från poolen. Ingen effekt för anslutnahandtag som inte ägs av användaren. |
+| `record_stop()` | Avbryt inspelning. Returnerar `{path, rows}`. |
+| `disconnect()` | Frigör från poolen. Ingen effekt för anslutna men icke-ägda handtag. |
 
-> **Kapacitetskorrigeringsprofiler (`cap_id`) är inte en SDK-reglage.** `connect_daq_sensor()` / `DAQSensorSession` exponerar inga `cap_id`-parametrar eller `set_cap`-metoder. Välj en flotta-cap-korrigeringsprofil via CLI (`chloros-cli daq pool-connect --cap-id …` / `chloros-cli daq pool-set-cap …`) eller backendenss `/api/daq` och HTTP-vägar (`/api/daq/connect` och `/api/daq/<id>/cap-id` accepterar `cap_id`).
+> **Kapacitetskorrigeringsprofiler (`cap_id`) är inte en SDK-reglage.** `connect_daq_sensor()` / `DAQSensorSession` exponerar ingen `cap_id`-parameter eller `set_cap`-metod. Välj en flotta-cap-korrigeringsprofil viaCLI (`chloros-cli daq pool-connect --cap-id …` / `chloros-cli daq pool-set-cap …`) eller backendens `/api/daq`-HTTP-rutter (`/api/daq/connect` och `/api/daq/<id>/cap-id` accepterar `cap_id`).
 
-### Upptäckt — hitta en adress att ansluta till
+### Upptäckt — att hitta en adress att ansluta till
 
-`discover_daq_sensors()` söker igenom USB / BLE / ETH efter sensorer som du *skulle kunna* öppna. Det är DAQ-motsvarigheten till `discover_lattice_cameras()`, och det enda sättet att få fram en **DAQ-M:ss BLE-MAC** — en DAQ-E har ett värdnamn och en DAQ-U en COM-port, men en MAC-adress finns varken tryckt på enheten eller listad av operativsystemet.
+`discover_daq_sensors()` skannar USB / BLE / ETH efter sensorer som du *skulle kunna* öppna. Det är DAQ-motsvarigheten till `discover_lattice_cameras()`, och det enda sättet att få fram en **DAQ-M:s BLE-MAC** — en DAQ-E har ett värdnamn och en DAQ-U en COM-port, men en MAC-adress är varken tryckt på enheten eller listad av operativsystemet.
 
 ```python
 for s in chloros_sdk.discover_daq_sensors():
@@ -1014,19 +1014,19 @@ for s in chloros_sdk.discover_daq_sensors(transports=["ble"]):
 | Fält | Beskrivning |
 | --- | --- |
 | `transport` | `usb` \| `ble` \| `eth`. |
-| `address` | COM-port / BLE MAC / värdnamn — vidarebefordras till `connect_daq_sensor` som `port=` / `mac=` / `eth_host=`. |
-| `display` | Mänskligtläsbar etikett. |
-| `model` | `DAQ-U` \| `DAQ-M` \| `DAQ-E`, eller `None` för en port som skanningen inte kan identifiera (USB-serieadaptrar går inte att skilja åt utan en sond, så okända poster visas istället för att döljas). |
+| `address` | COM-port / BLE-MAC / värdnamn — vidarebefordras till `connect_daq_sensor` som `port=` / `mac=` / `eth_host=`. |
+| `display` | Läsbar etikett. |
+| `model` | `DAQ-U` \| `DAQ-M` \| `DAQ-E`, eller `None` för en port som skanningen inte kan identifiera (USB-serieadaptrar är omöjliga att skilja åt utan en sond, så okända poster visas istället för att döljas). |
 | `extra` | Detaljer per transport (BLE-annonserat namn, USB-tillverkare, DAQ-E ip/fw/…). Tomma värden utelämnas. |
 
-| Parameter | Standardvärde | Beskrivning |
+| Parameter | Standard | Beskrivning |
 | --- | --- | --- |
 | `transports` | alla tre | Sekvens (eller CSV-sträng) som begränsar skanningen. Värt att ange när du vet vad du vill ha — BLE är den långsamma delen. |
-| `scan_timeout` | 5 | Sökfönster per transport i sekunder; backend begränsar värdet till 1–20. |
-| `timeout` | 60,0 | HTTP-tak för hela anropet (precis som på andra ställen i SDK). |
-| `auto_start_backend` | `True` | Starta en lokal backend om ingen körs. Startas aldrig för en fjärransluten `backend_url`. |
+| `scan_timeout` | 5 | Sökfönster per transport i sekunder; backend begränsar till 1–20. |
+| `timeout` | 60.0 | HTTP-tak för hela anropet (precis som på andra ställen i SDK). |
+| `auto_start_backend` | `True` | Starta en lokal backend om ingen körs. Starts aldrig för en fjärr-`backend_url`. |
 
-> **Sensorer som redan är öppna i poolen visas inte.** En ansluten BLE-periferienhet slutar sända annonser och en öppen COM-port kan inte undersökas, så upptäcktsfunktionen listar vad som är *tillgängligt för anslutning*. Ett tomt resultat direkt efter att du har anslutit något är förväntat — använd `list_daq_sensors()` för det du redan har. Transportprotokoll vars skanning inte kan köras (ingen bleak / zeroconf installerat) hoppas över istället för att generera ett fel, så en maskin utan Bluetooth får fortfarande sina USB- och ETH-svar.
+> **Sensorer som redan är öppna i poolen visas inte.** En ansluten BLE-enhet slutar sända ut information och en öppen COM-port kan inte undersökas, så upptäckten listar vad som är *tillgängligt för anslutning*. Ett tomt resultat direkt efter att du har anslutit något är förväntat — använd `list_daq_sensors()` för det du redan har. Transportprotokoll vars skanning inte kan köras (ingen bleak/zeroconf installerad) hoppas över istället för att generera ett fel, så en maskin utan Bluetooth får fortfarande sina USB- och ETH-svar.
 
 ### Lista
 
@@ -1035,15 +1035,15 @@ for s in chloros_sdk.list_daq_sensors():
     print(s["sensor_id"], s["model"], s["transport"], s["wavelength_range"])
 ```
 
-### Samkörning med GUI / CLI
+### Samtidig användning med GUI/CLI
 
-Om GUI:n redan har en sensor öppen returnerar ett anrop av `connect_daq_sensor(port="COM3")` från Python ett handtag märkt `already_connected=True`. sessionens `disconnect()` är då en no-op, så att ditt SDK-skript inte rycker bort sensorn från GUI:n när scope avslutas.
+Om GUI redan har en sensor öppen, returnerar ett anrop av `connect_daq_sensor(port="COM3")` från Python ett handtag märkt `already_connected=True`. Sessionens `disconnect()` är då en no-op, så ditt SDK-skript river inte sensorn ur GUI:n när programmet avslutas.
 
 ### Direkt-hårdvaruklasser (Ingen backend)
 
-`daq_sdk` återexporteras av `chloros_sdk`, så att du även kan styra sensorer från början till slut i processen utan backend:
+`daq_sdk` återexporteras av `chloros_sdk`, så du kan även styra sensorer från början till slut i processen utan backend:
 
-> **Tillgänglighet:**`daq_sdk` levereras med Chloros-installationen för skrivbordet,**inte** med PyPI-paketet — `pip install chloros-sdk` ger dig `lattice_sdk` men utelämnar `chloros_sdk.DAQ_AVAILABLE == False`. Kontrollera den flaggan innan du använder dessa klasser; på en värd som endast använder pip ska du istället styra sensorn via [`connect_daq_sensor()`](#daq-sensor-sessions), vilket inte kräver några lokala transportbibliotek.
+> **Tillgänglighet:**`daq_sdk` levereras med Chloros-installationen för skrivbordet,**inte** med PyPI-paketet — `pip install chloros-sdk` ger dig `lattice_sdk` men lämnar kvar `chloros_sdk.DAQ_AVAILABLE == False`. Kontrollera den flaggan innan du använder dessa klasser; på en värd som endast använder pip ska du istället styra sensorn via [`connect_daq_sensor()`](#daq-sensor-sessions) istället, vilket inte kräver några lokala transportbibliotek.
 
 ```python
 from chloros_sdk import DAQUSensor, DAQMSensor, DAQESensor, discover_all
@@ -1060,13 +1060,13 @@ sensor.start_streaming()
 sensor.stop()
 ```
 
-Använd helst smart-connect-vägen (`connect_daq_sensor`) när du vill dela äganderätten med GUI; använd de direkta klasserna för skript utan grafiskt gränssnitt som äger sensorn exklusivt.
+Använd helst smart-connect-vägen (`connect_daq_sensor`) när du vill ha delat ägande med GUI; använd de direkta klasserna för skript utan grafiskt gränssnitt som äger sensorn exklusivt.
 
 ---
 
 ## Projektautomatisering — `ChlorosProject`
 
-Ett sparat Chloros-projekt är en mapp som innehåller `cameras.json` + `sensors.json` + `project.json`. `open_project` laddar manifestet, och `connect_all` kopplar upp alla sparade enheter med sina sparade inställningar — samma hårdvarutillstånd som GUI:n skulle skapa.
+Ett sparat Chloros-projekt är en mapp som innehåller `cameras.json` + `sensors.json` + `project.json`. `open_project` laddar manifestet, och `connect_all` kopplar upp alla sparade enheter med sina sparade inställningar — samma hårdvarutillstånd som GUI:n skulle åstadkomma.
 
 ### Minimalt exempel
 
@@ -1105,17 +1105,17 @@ with chloros_sdk.open_project("/path/to/proj") as proj:
 
 | Metod | Beskrivning |
 | --- | --- |
-| `connect_all(cameras=True, arrays=True, sensors=True, verbose=False, align=None)` | Upptäck och anslut alla sparade enheter. Returnerar en anslutningsrapport per klass. Använder en igångvarande backend om en sådan lyssnar på `127.0.0.1:5000`; i annat fall faller den tyst tillbaka till direkt (backend-fri) `lattice_sdk`-enhetsstyrning — den startar aldrig en backend. |
+| `connect_all(cameras=True, arrays=True, sensors=True, verbose=False, align=None)` | Upptäck och anslut alla sparade enheter. Returnerar en anslutningsrapport per klass. Använder en körande backend om en sådan lyssnar på `127.0.0.1:5000`; i annat fall faller den tyst tillbaka till direkt (backend-fri) `lattice_sdk`-enhetsstyrning — den startar aldrig en backend. |
 | `disconnect_all()` | Avsluta allt. |
 | `capture_all(output_dir=".")` | En bildruta från varje kamera + matris + spektrum från varje sensor. |
-| `stream(camera, overlays=False, fps=10.0)` | Generator som genererar BGR `numpy`-bilder från en namngiven kamera (eller matris). `overlays=False` är en direkt `lattice_sdk`-insamlingsslinga (matriser genererar `{serial: frame}`-ordlistor). `overlays=True` dirigeras via `ChlorosLocal.camera_stream()` → backendenss `/api/camera/<serial>/stream-annotated` MJPEG-ström, där kamerans sparade `ui.overlay`-block skickas vidare som frågeparametrar. Kräver backend-läge och en **fristående kamera**: en kamera i direktläge genererar `RuntimeError` (backenden kan inte hämta en kamera som denna process äger) och en array genererar `NotImplementedError` (överlagrar sammansatt bild per kamera — strömmar en medlem efter namn). En-skott-motsvarighet: `CameraHandle.capture(annotated=True)`. |
+| `stream(camera, overlays=False, fps=10.0)` | Generator som genererar BGR-ramar från en namngiven kamera (eller array). `overlays=False` är en direkt `lattice_sdk`-hämtningsslinga (matriser genererar `{serial: frame}`-dikt). `overlays=True` dirigeras via `ChlorosLocal.camera_stream()` → backendens `/api/camera/<serial>/stream-annotated` MJPEG-ström, där kamerans sparade `ui.overlay`-block skickas vidare som sökparametrar. Kräver backend-läge och en **fristående kamera**: en kamera i direktläge genererar `RuntimeError` (backenden kaninte hämta en kamera som denna process äger) och en array genererar `NotImplementedError` (överlagrar komposit per kamera — strömmar en medlem efter namn). Motsvarighet för engångsbruk: `CameraHandle.capture(annotated=True)`. |
 | `align_arrays(align=True, verbose=False)` | Kör justering på varje array som för närvarande är ansluten. |
-| `process(mode="parallel", wait=True, progress_callback=None, poll_interval=2.0)` | Kör kalibrerings-/indexeringspipeline på projektets bilder (omsluter `ChlorosLocal.process`; dessa fyra är de **enda** godkända kwargs — `indices=` etc. genererar `TypeError`; ställ in index via `ChlorosLocal.configure()`). Konstruerar en `ChlorosLocal()` med fördröjd bearbetning, vilket automatiskt startar en backend. |
+| `process(mode="parallel", wait=True, progress_callback=None, poll_interval=2.0)` | Kör kalibrerings-/indexeringspipeline på projektets bilder (omsluter `ChlorosLocal.process`; dessa fyra är de **enda** godkända kwargs — `indices=` etc. ger upphov till `TypeError`; ställ in index via `ChlorosLocal.configure()`). Konstruerar en `ChlorosLocal()` på ett lat sätt, vilket automatiskt startar en backend. |
 
 Attribut:
-- `proj.cameras` — `Dict[str, CameraHandle]` indexerad efter namn OCH serienummer.
-- `proj.arrays` — `Dict[str, ArrayHandle]` med namn och array_id som nyckel.
-- `proj.sensors` — `Dict[str, SensorHandle]` med namn och slot_id som nyckel.
+- `proj.cameras` — `Dict[str, CameraHandle]` med nyckel baserad på namn OCH serienummer.
+- `proj.arrays` — `Dict[str, ArrayHandle]` indexerad efter namn OCH array_id.
+- `proj.sensors` — `Dict[str, SensorHandle]` sorterad efter namn OCH slot_id.
 - `proj.config` — `project.json["config"]` ordlista.
 
 ### `CameraHandle`
@@ -1143,49 +1143,49 @@ for arr in cam.frame_stream(processing="debayered", fps=5, count=100):
     my_analysis(arr)
 ```
 
-**Bearbetningsnivåer.** `capture()`, `grab()` och `frame_stream()` använder alla samma `processing`
-token, och kedjan är kumulativ — varje nivå kör allt som ligger ovanför den:
+**Bearbetningsnivåer.** `capture()`, `grab()` och `frame_stream()` tar alla samma `processing`-
+token, och kedjan är kumulativ — varje nivå kör allt ovanför sig:
 
 | Nivå | Utgång | Anmärkningar |
 | --- | --- | --- |
 | `raw` | 1-kanals Bayer, sensornativ | Ingen demosaik. Överlagringar är inte tillgängliga på denna nivå. |
 | `debayered` | 3-kanals BGR (**standard**) | Bilineär demosaik. Den enda nivån som fungerar utan backend-läge. |
-| `radiance` | float32, W/m²/sr/nm | Fullständig radiometrisk kedja: demosaik + 3×3 unmix (multispec) + DSNU + flat-field + NIST-skala, där exponering × förstärkning har dividerats bort så att värdena är absoluta. |
-| `reflectance` | uint16, 32768 = 1.0 | Strålning dividerad med nedåtriktad irradians (ρ = π·L/E). Kräver en DLS/DAQ-avläsning — se anmärkningen nedan. |
-| `display` | 8-bitars sRGB-liknande | GUI-motsvarande återgivning: CCM + vitbalans + gamma via kamerans aktiva färgprofil. |
+| `radiance` | float32, W/m²/sr/nm | Fullständig radiometrisk kedja: demosaik + 3×3-avblandning (multispektral) + DSNU + flat-field + NIST-skala, där exponering × förstärkning har dividerats bort så att värdena är absoluta. |
+| `reflectance` | uint16, 32768 = 1,0 | Strålning dividerad med nedåtriktad irradians (ρ = π·L/E). Kräver en DLS/DAQ-avläsning — se anmärkningen nedan. |
+| `display` | 8-bitars sRGB-liknande | GUI-motsvarande rendering: CCM + vitbalans + gamma via kamerans aktiva färgprofil. |
 
 Allt annat än `debayered` kräver backend-läge; en kamera i direktläge genererar
-`NotImplementedError`. `reflectance` kräver en användbar nedåtriktad avläsning — bildramens slutpunkt drar
+`NotImplementedError`. `reflectance` kräver en användbar nedåtriktad avläsning — bildrutan hämtar
 automatiskt in den samlade DAQ:n i kamerans DLS-plats, men utan någon bunden DAQ vägrar kedjan
-reflektansutgången och markerar ärligt nedgraderingen i den returnerade metadatan istället för att tyst
-lämna tillbaka ett sämre resultat.
+reflektansutgången och markerar ärligt nedgraderingen i de returnerade metadata istället för att tyst
+lämna tillbaka en sämre produkt.
 
-> **Reflektans DN-skala —hårdkoda den.** LATTICE-reflektans använder `32768` = ρ 1,0 och markerar
-> XMP `Chloros:PixelScale=32768`; Survey3-reflektans använder `65535` = ρ 1,0 och innehåller inga
-> `Chloros:*` taggar. Läs av taggen och dividera med den. Den är definierad i uint16-domänen, så den förblir
-> `32768` för alla format som skalas om (16-bitars TIFF, 8-bitars PNG/JPG, 32-bitars procent) — normalisera
-> den lagrade datatypen tillbaka till uint16 först (×257 från 8-bitars, ×65535 från float). Det enda undantaget:
-> en 8-bitars källinspelning skriven som 8-bitars TIFF *beskärs*, inte omskalas, så ingen skala beskriver
-> den — Chloros utelämnar i det fallet `PixelScale` och MicaSense-tuplen helt. Behandla en saknad
+> **Reflektans DN-skala – kod den inte in.** LATTICE-reflektans använder `32768` = ρ 1,0 och markerar
+> XMP `Chloros:PixelScale=32768`; Survey3 reflektans använder `65535` = ρ 1,0 och innehåller inga
+> `Chloros:*`-taggar. Läs av taggen och dividera med den. Den är definierad i uint16-domänen, så den förblir
+> `32768` för varje format som skalar om (16-bitars TIFF, 8-bitars PNG /JPG, 32-bitars procent) — normalisera
+> först den lagrade datatypen tillbaka till uint16 (×257 från 8-bitars, ×65535 från float). Det enda undantaget:
+> en 8-bitars källinspelning som skrivs som 8-bitars TIFF *klipps*, inte skalas om, så ingen skala beskriver
+> den — Chloros utelämnar `PixelScale` och MicaSense-tuplen helt i det fallet. Behandla en saknad
 > tagg i en LATTICE-reflektansfil som ”ingen giltig skala”, inte som ett standardvärde.
 
-> **EXIF som överförts till exporten.** `process()` kopierar källbildens GPS-block
-> **och dess ExifIFD** till varje produkt, så exportfilerna innehåller `FocalLength`, `FNumber`,
+> **EXIF överförs till exporten.** `process()` kopierar källbildens GPS-block
+> **och dess ExifIFD** till varje produkt, så exporterna innehåller `FocalLength`, `FNumber`,
 > `ExposureTime`, `ISO`, `DateTimeOriginal` och `CameraSerialNumber` samt
-> georeferensen. `FocalLength` är det som Pix4D använder för att beräkna markprovavståndet – utan det
-> hamnar rekonstruktionen i en helt felaktig skala (i ett uppmätt fall förvandlades en plats på 411 m
+> georefereringen. `FocalLength` är det som Pix4D använder för att beräkna markprovavståndet utifrån – utan det
+> faller rekonstruktionen tillbaka till en helt felaktig skala (i ett uppmätt fall förvandlades en 411 m stor plats
 > till en på 47,8 km). Kopian är medvetet inte `-all:all`: IFD0:s strukturtaggar stör
 > LATTICE-utdata, och `ExifImageWidth`/`Height` utesluts eftersom de beskriver källans
-> insamling snarare än den exporterade rasterbilden.
+> bildtagning snarare än den exporterade rasterbilden.
 
-Subflaggor för insamlingsfasen-flaggor (gäller de radiometriska nivåerna — `radiance`, `reflectance`, `display`):
+Underflaggor för inspelningsstadiet (gäller de radiometriska nivåerna — `radiance`, `reflectance`, `display`):
 
 | Flagga | Standard | Betydelse |
 | --- | --- | --- |
 | `apply_calibration` | `True` | DSNU + flat-field + 3x3 unmix + NIST-radiometrisk skala. |
 | `apply_white_balance` | `True` | WB LUT. DLS-medveten när en DAQ är kopplad till kameran. |
 | `apply_index` | `False` | Utvärdering av vegetationsindex. |
-| `index_expression` | `None` | Överskrivningsformel. Icke-tom → aktiverar indexet automatiskt. |
+| `index_expression` | `None` | Åsidosätt formel. Tomtom → aktiverar indexet automatiskt. |
 | `annotated` | `False` | Överlagring av GUI-dekorationer (zebra/rutnät/peaking). Ej tillgängligt för `raw`. |
 
 ### `ArrayHandle`
@@ -1229,12 +1229,12 @@ print(counts)  # frames written per serial
 
 > **Returtypen är `CapturePathMap`, inte `Dict[str, str]`.**
 > `chloros_sdk.CapturePathMap` är `Dict[str, Union[str, List[str]]]`: en en-nivå
-> `processing` ger varje serie en väg, medan en flernivåvariant (`"all"`, eller en
-> explicit `levels`-lista) ger den en **ordnad lista** över alla produkter som sparats för den
-> kameran. En live-komposit, om en sådan strömmas, hamnar under den extra
-> `"combined"`-nyckeln istället för under en serienummer. Kod som utgår från `str` fungerar på
-> listform utan att någon typkontroll invänder — anteckningen angav `Dict[str, str]`
-> ett tag efter att listformen släpptes, vilket är anledningen till att aliaset finns. Normalisera
+> `processing` ger varje serienummer en väg, medan en flernivåvariant (`"all"`, eller en
+> explicit `levels`-lista) ger den den **ordnade listan** över alla produkter som sparats för den
+> kameran. En live-komposit, om en sådan strömmas, placeras under den extra
+> `"combined"`-nyckeln snarare än under en serienummer. Kod som förutsätter `str` slutar fungera vid
+> listformen utan att någon typkontroll invänder — anteckningen angav `Dict[str, str]`
+> en tid efter att listformen släpptes, vilket är anledningen till att aliaset finns. Normalisera
 > när du vill ha den platta formen:
 >
 > ```python
@@ -1310,7 +1310,7 @@ spectrum = proj.sensors["Sky"].read()
 
 ## Direkt hårdvara (utan backend)
 
-När du vill ha noll beroende av backend (CI, headless-robotar, inbyggda system), importera `lattice_sdk` och `daq_sdk` direkt — båda återexporteras av `chloros_sdk`. Observera angående `CAMERA_AVAILABLE` / `DAQ_AVAILABLE`: `lattice_sdk` ingår i PyPI-paketet (men kräver att Arena SDK-runtime finns installerat), medan `daq_sdk` endast levereras med desktop-installationen.
+När du vill ha noll beroende av backend (CI, headless-robotar, inbäddad), importera `lattice_sdk` och `daq_sdk` direkt — båda återexporteras av `chloros_sdk`. Skydda med `CAMERA_AVAILABLE` / `DAQ_AVAILABLE`: `lattice_sdk` ingår i PyPI-paketet (men kräver att Arena-SDK-runtime finns installerat), medan `daq_sdk` endast levereras med desktop-installationen.
 
 ```python
 from chloros_sdk import (
@@ -1337,23 +1337,23 @@ with LatticeCamera(serial="213800234", settings=settings) as cam:
 
 ##### Förinställningar och utlösaren
 
-Tre av de fyra förinställningarna är **free-run**: kameran exponerar kontinuerligt och en
-`capture()` returnerar nästa bildruta. `triggered` är undantaget – den aktiverar
-kameran för en hårdvarukant på linje 2, så den tar inga bilder förrän en sådan anländer.
+Tre av de fyra förinställningarna **free-run**: kameran exponerar kontinuerligt och en
+`capture()` returnerar nästa bildruta. `triggered` är undantaget — den aktiverar
+kameran för en hårdvarukant på linje 2, så den fångar ingenting förrän en sådan anländer.
 
 | Förinställning | Utlösare | Används när |
 | --- | --- | --- |
-| `default` | fri körning | allmänt bruk |
-| `high_speed` | fri körning | 8-bitars, max 60 fps, kort exponering |
-| `high_quality` | frilöpande | 12-bitars, ingen fps-begränsning — det vanligaste valet för stillbilder |
-| `triggered` | **aktiverad, linje 2** | kameran är ansluten till en M8-synkroniseringskabel och något annat utlöser den |
+| `default` | free-run | allmänt bruk |
+| `high_speed` | free-run | 8-bitars, max 60 fps, kort exponering |
+| `high_quality` | frilöp | 12-bitars, ingen fps-begränsning — det vanliga valet för stillbilder |
+| `triggered` | **förberedd, linje 2** | kameran är ansluten via en M8-synkroniseringskabel och något annat utlöser den |
 
 Om du väljer `triggered` (eller själv ställer in `trigger_mode="On"`) utan att något
-styr Linje 2, kommer varje `capture()` att gå ut – vilket är korrekt, eftersom du bad
-kameran att vänta. SDK förklarar detta när det inträffar; se
+styr linje 2, kommer varje `capture()` kommer att gå i timeout — vilket är korrekt, eftersom du bad
+kameran att vänta. SDK förklarar detta när det händer; se
 [SC_ERR_TIMEOUT under inspelning](#direct-hardware-backend-free).
 
-> **Observera — ”GVSP probe” / `SC_ERR_TIMEOUT -1011`-meddelanden vid anslutning är inga fel.**&gt; Vid anslutning försöker SDK förhandla fram**jumbo-ramar** (9000-byte GVSP-paket) för högre genomströmning. På en direkt punkt-till-punkt-NIC-länk (t.ex. en länklokal `169.254.x.x`-adress) kan nätverket vanligtvis inteinte hantera jumbo-ramar, så denna sond går ut och loggar rader som:
+> **Obs! — ”GVSP-probe” / `SC_ERR_TIMEOUT -1011`-meddelanden vid anslutning är inga fel.**&gt; Vid anslutning försöker SDK förhandla fram**jumbo-ramar** (9000-byte GVSP-paket) för högre genomströmning. På en direkt punkt-till-punkt-NIC-länk (t.ex. en länk-lokal `169.254.x.x`-adress) kan nätverket vanligtvis inte hantera jumbo-ramar, så denna sond går ut och loggar rader som:
 >
 > ```
 > [Network] GVSP probe: unexpected error (TimeoutError: ... SC_ERR_TIMEOUT -1011)
@@ -1361,15 +1361,15 @@ kameran att vänta. SDK förklarar detta när det inträffar; se
 > [Network] GVSP packet size: 1500 bytes (standard)
 > ```
 >
-> Detta är den **avsedda reservlösningen**: SDK återgår automatiskt till standardpaket på 1 500 bytete-paket och kameran fortsätter att ansluta som vanligt (de `[chunk-enable …]`-raderna som följer är en del av den normala anslutningssekvensen). Inspelningen fungerar fortfarande.
+> Detta är den **inbyggda reservlösningen**: SDK återgår automatiskt till standardpaket på 1500 byte och kameran fortsätter att ansluta som vanligt (de följande `[chunk-enable …]`-raderna ingår i den normala anslutningssekvensen). Inspelningen fungerar fortfarande.
 >
-> Du kan hoppa över denna sond, men **den är inte bara en logg-dämpare – den stänger av jumbo-ramar.** Kameran svarar på ”Don&#x27;t-Fragment”-pingar endast upp till 1500 byte oavsett hur bra ditt nätverk är, så ping-testet i sig kan aldrig upptäcka jumbo-ramar; denna sond är det enda som kan göra det. Inaktivera den så kör kameran standardpaket på 1 500 byte för alltid, i vilket nätverk som helst:
+> Du kan hoppa över denna sond, men **det är inte bara en logg-dämpare — den stänger av jumbo-ramar.** Kameran svarar på ”Don&#x27;t-Fragment”-pingar endast upp till 1500 byte oavsett hur bra ditt nätverk är, så ping-testet i sig kan aldrig upptäcka jumbo-ramar; denna sond är det enda som kan göra det. Inaktiverar du den kommer kameran skickar standardpaket på 1500 byte för alltid, oavsett nätverk:
 >
 > ```bash
 > CHLOROS_GVSP_PROBE_FALLBACK=0   # gives up jumbo — see the warning it prints
 > ```
 >
-> Det lönar sig endast i ett nätverk som du *vet* inte klarar jumbo, där det sparar ungefär en sekund i anslutningstid per kamera. Eftersom det är en verklig avvägning snarare än en kosmetisk förändring, anger SDK nu detta när du använder den:
+> Det lönar sig endast i ett nätverk som du *vet* inte klarar jumbo, där det sparar ungefär en sekund i anslutningstid per kamera. Eftersom det är en verklig avvägning snarare än en kosmetisk förändring, anger nu ”SDK” detta när du använder funktionen:
 >
 > ```
 > [Network] ⚠️ GVSP probe disabled (CHLOROS_GVSP_PROBE_FALLBACK=0) — staying at
@@ -1377,11 +1377,11 @@ kameran att vänta. SDK förklarar detta när det inträffar; se
 > up ~1.45x wire ceiling. Unset the variable to test for jumbo.
 > ```
 >
-> **Låt det vara som det är om du inte har en anledning.** Om den lämnas aktiverad mäter varje anslutning om det nätverk du faktiskt har: anslut till en jumbo-kompatibel switch så upptäcker nästa anslutning jumbo automatiskt, utan att något behöver konfigureras och utan omstart.
+> **Låt det vara som det är om du inte har en anledning.** Om funktionen är aktiverad mäter varje anslutning om det nätverk du faktiskt har: anslut till en switch som stöder jumbo-paket så upptäcker nästa anslutning jumbo-paket automatiskt, utan att du behöver konfigurera något eller starta om.
 >
-> Om du *vill* ha jumbo-genomströmning, aktivera jumbo från ände till ände (NIC MTU 9000 + en switch som släpper igenom dem), eller lås storleken med `CHLOROS_GVSP_PACKET_SIZE_FORCE=9000` när du vet att länken stöder det — men föredra ett kommandobaserat `CHLOROS_GVSP_PACKET_SIZE_FORCE=9000 python …` framför en permanent inställning, eftersom en låst storlek hoppar över sonden och slutar anpassa sig till nätverket framför den. **Varje** enhet i vägen måste släppa igenom jumbo-paket – inklusive eventuella PoE-splitters eller -injektorer, vilket är den vanligaste anledningen till att en annars jumbo-kompatibel installation inte kan hantera dem.
+> Om du *vill* ha jumbo-genomströmningen, aktivera jumbo från ändpunkt till ändpunkt (NIC MTU 9000 + en switch som släpper igenom dem), eller lås det med `CHLOROS_GVSP_PACKET_SIZE_FORCE=9000` när du vet att länken stöder det — men föredra ett `CHLOROS_GVSP_PACKET_SIZE_FORCE=9000 python …` per kommando framför att ställa in det permanent, eftersom en fastställd storlek hoppar över sondningen och slutar anpassa sig till nätverket framför den. **Varje** enhet i vägen måste kunna vidarebefordra jumbo-paket – inklusive eventuella PoE-splitters eller -injektorer, vilket oftast är anledningen till att en annars jumbo-kompatibel installation inte kan hantera dem.
 
-> **`SC_ERR_TIMEOUT -1011` under `capture()` / `grab*()` är ett annat problem – det är ett verkligt fel.**&gt; Anmärkningen ovan gäller endast `-1011` som loggats av**anslutningstidsproben**. Samma fel som uppstår vid en**inspelning** innebär att kameran anslutits korrekt men inte skickar några bilder:
+> **`SC_ERR_TIMEOUT -1011` under `capture()` / `grab*()` är ett annat problem – det är ett verkligt fel.**&gt; Anmärkningen ovan gäller endast `-1011` som loggats av**connect-time probe**. Samma fel som uppstår vid en**inspelning** innebär att kameran anslöt utan problem men inte skickar några bilder:
 >
 > ```
 > File ".../lattice_sdk/camera.py", line ..., in grab_frame_with_metadata
@@ -1389,34 +1389,34 @@ kameran att vänta. SDK förklarar detta när det inträffar; se
 > lattice_sdk.exceptions.CaptureError: Capture failed: ... SC_ERR_TIMEOUT -1011
 > ```
 >
-> Det som avslöjar detta är en kamera vars *kontroll*-kanal fungerar som den ska – upptäckten fungerar, inställningarna och `[chunk-enable …]`-skrivningarna lyckas alla – medan *varje* bildram går över tiden.
+> Det som avslöjar problemet är en kamera vars *kontroll*kanal fungerar som den ska – upptäckten fungerar, inställningarna och `[chunk-enable …]`-skrivningarna lyckas alla – medan *varje* bildram går över tiden.
 >
-> **Den vanligaste orsaken är att kameran är inställd på en hårdvarutrigger.** Med `trigger_mode="On"` och `trigger_source="Line2"` sänder kameran ingenting alls förrän en elektrisk flanke anländer på M8-synkroniseringskabeln. Om du inte har någon kabel som driver den linjen, väntar varje bildinsamling i evighet. Kameran är inte trasig och nätverket fungerar som det ska — den gör precis som den blivit instruerad.
+> **Den vanligaste orsaken är att kameran är inställd på en hårdvarutrigger.** Med `trigger_mode="On"` och `trigger_source="Line2"` sänder kameran ingenting alls förrän en elektrisk flank anländer på M8-synkroniseringskabeln. Om du inte har någon kabel som driver den linjen, väntar varje bildtagning i evighet. Kameran är inte trasig och nätverket fungerar som det ska – den gör exakt vad den blivit beordrad att göra.
 >
-> `CameraSettings()` samt förinställningarna `default` / `high_speed` / `high_quality` körs i friläge, och en bildtagning som sker medan den är aktiverad ger en förklaring istället för att bara visa `-1011`. `PRESETS["triggered"]` aktiverar Line2, enligt design.
+> `CameraSettings()` och `default` / `high_speed` / `high_quality` förinställer frilöpning, och en bildtagning som går ut medan den är aktiverad förklarar sig själv istället för att skriva ut ett naket `-1011`. `PRESETS["triggered"]` aktiverar Line2, enligt design.
 >
-> För att tvinga vilken kamera som helst till fri drift:
+> För att tvinga en kamera till friläge:
 >
 > ```python
 > settings = PRESETS["high_quality"]
 > settings.trigger_mode = "Off"        # free-run; don't wait for an M8 edge
 > ```
 >
-> Om den fortfarande går ut med `trigger_mode="Off"` levererar kameran verkligen inte data — skicka oss loggen och `ip link show`.
+> Om den fortfarande går i timeout med `trigger_mode="Off"`, levererar kameran verkligen inte data — skicka loggen och `ip link show` till oss.
 
-#### Färgprofiler (RGB liveförhandsvisning) — `set_color_profile`
+#### Färgprofiler (liveförhandsgranskning av RGB) — `set_color_profile`
 
-`LatticeCamera.set_color_profile(profile, custom_cct_k=None)` väljer skärmens färgprofil för **liveförhandsvisningen** på RGB-kameror (multispec-kameror ignorerar inställningen):
+`LatticeCamera.set_color_profile(profile, custom_cct_k=None)` väljer skärmens färgprofil för **förhandsvisningen** på RGB-kameror (multispec-kameror ignorerar inställningen):
 
 | Profil | Betydelse |
 | --- | --- |
 | `raw` | Kringgå den radiometriska kedjan helt. |
 | `linear` | DSNU + flat + WB, ingen CCM, ingen gamma. |
-| `natural` | Linjär + uppmätt CCM + sRGB-gamma, endast med den enkla efterbehandlingen (kromatisk utjämning + desaturering av högdagrar) – det realistiska standardalternativet. |
-| `enhanced` | `natural` plus den fullständiga Hub-Parity-efterbehandlingen (avfärgning, vibrans, CLAHE lokal kontrast). Rikare utseende till ungefär **dubbla bearbetningskostnaden per bildruta**, vilket ger en lägre LIVE-bildfrekvens. |
+| `natural` | Linjär + uppmätt CCM + sRGB-gamma, endast med den enkla finishen (kromatisk utjämning + desaturering av höjdpunkter) — den realistiska standardinställningen. |
+| `enhanced` | `natural` plus den fullständiga Hub-Parity-finishen (defringe, vibrance, CLAHE lokal kontrast). Rikare utseende till ungefär **dubbla bearbetningskostnaden per bildruta**, vilket ger en lägre LIVE-bildfrekvens. |
 | `custom_temp` | `natural` men vitbalansen låst till `custom_cct_k` Kelvin (DLS ignoreras; begränsad till 2000–10000 K på backend-sidan-sidan). |
 
-Profilen är en **endast för live-förhandsgranskning** avsedd hastighets-/utseendeknapp: sparade bilder får alltid den fullständiga, rika finishen oavsett vilken profil som valts, så att välja `natural` för att köpa tillbaka bildruts-tid sänker inte kvaliteten på det som hamnar på disken. En okänd profil höjer `ValueError`; när en chloros-backend är tillgänglig skickas ändringen även via POST till den så att nästa förhandsgranskningsram återspeglar den (användare av direct-SDK utan backend får ändå inställningsändringen).
+Profilen är en hastighets-/utseendeknapp som **endast gäller för liveförhandsgranskning**: sparade bilder får alltid den fulla, rika finishen oavsett vilken profil som valts, så att välja `natural` för att spara inramtid sänker inte kvaliteten på det som sparas på disken. En okänd profil höjer `ValueError`; när en chloros-backend är tillgänglig skickas ändringen även via POST till den så att nästa förhandsgranskningsram återspeglar den (användare av direct-SDK utan backend får ändå inställningsändringen).
 
 ```python
 with LatticeCamera(serial="214701292") as cam:   # RGB cam
@@ -1426,7 +1426,7 @@ with LatticeCamera(serial="214701292") as cam:   # RGB cam
 
 #### Monokameror (M3M) och `Calibration`
 
-En mono **M3M**-kamera (`M3M-<lens>-F<wavelength>`) är enkelbandig: ett gråskalplan, ingen Bayer-mosaik, ingen 3×3 spektral-överspridningsmatris. `Calibration` känner igen den och exponerar en `is_mono`-flagga. Reflektansen gäller fortfarande som en radiometrisk karta per band (avblandningen är identitetsmatrisen), men multibandsberäkningar på en enda kamera ger ett meningsfullt resultat istället för nonsens:
+En monokrom **M3M**-kamera (`M3M-<lens>-F<wavelength>`) är enkelbands: ett gråskalplan, ingen Bayer-mosaik, ingen 3×3 spektral-crosstalk-matris. `Calibration` känner igen den och visar en `is_mono`-flagga. Reflektansen gäller fortfarande som en radiometrisk karta per band (avblandningen är identitetsmatrisen), men multibandsberäkningar på en enda kamera ger meningsfulla resultat istället för nonsens:
 
 ```python
 from chloros_sdk import Calibration, CalibrationError
@@ -1442,9 +1442,9 @@ except CalibrationError as e:
     print(e)   # "...single-band mono (M3M) camera. Combine multiple..."
 ```
 
-För att skapa ett vegetationsindex från monokromatisk hårdvara kombinerar man flera M3M-kameror med olika våglängder till en justerad multibandsstapel (se [Arrayjustering](#array-alignment)) och beräknar indexet över hela stapeln istället för på en enskild kamera.
+För att skapa ett vegetationsindex från monokromatisk hårdvara, kombinera flera M3M-kameror med olika våglängder till en justerad multibandsstapel (se [Arrayjustering](#array-alignment)) och beräkna indexet över hela stapeln istället för på en enda kamera.
 
-DAQ direktläge:
+DAQ direkt-läge:
 
 ```python
 from chloros_sdk import (
@@ -1464,9 +1464,9 @@ sensor.start_streaming()
 sensor.stop()
 ```
 
-> **`apply_sensor_settings` godkända nycklar**— exakt `integration_time_ms`, `frame_avg`, `ae_enabled`, `sunshine_diffuser_installed` (DAQ-E; utfasat till förmån för `cap_id`), `filter_model` (DAQ-M)och `cap_id` (alla DAQ-typer; `None`/`""`/`"none"` = ren sensor, ingen kap-korrigering). Okända nycklar**ignoreras tyst** — t.ex. gör `{"integration_time": 64}` ingenting (det måste vara `integration_time_ms`). Returnerar `{"applied": [...], "errors": {...}}` och genererar aldrig ett undantag.
+> **`apply_sensor_settings` godkända nycklar**— exakt `integration_time_ms`, `frame_avg`, `ae_enabled`, `sunshine_diffuser_installed` (DAQ-E; utfasad till förmån för `cap_id`), `filter_model` (DAQ-M) och `cap_id` (alla DAQ-typer; `None`/`""`/`"none"` = ren sensor, ingen kondensatorkorrigering). Okända nycklar**ignoreras utan meddelande** — t.ex. `{"integration_time": 64}` gör ingenting (det måste vara `integration_time_ms`). Returnerar `{"applied": [...], "errors": {...}}` och genererar aldrig ett undantag.
 
-`chloros_sdk` exporterar-exporterar endast den kärnyta som används ovan. Den fullständiga offentliga `daq_sdk` (22 namn) lägger till följande — importera dem direkt från `daq_sdk`:
+`chloros_sdk` återexporterar endast den kärnyta som används ovan. Den fullständiga offentliga APIen för `daq_sdk` (22 namn) lägger till följande — importera dem direkt från `daq_sdk`:
 
 ```python
 from daq_sdk import (
@@ -1484,7 +1484,7 @@ from daq_sdk import (
 
 ## Undantag
 
-Fånga basklassen för att hantera ”allt som gick fel i Chloros”:
+Fånga basklassen för att hantera ”allt som gick fel i Chloros&quot;:
 
 ```python
 import chloros_sdk
@@ -1499,7 +1499,7 @@ except chloros_sdk.ChlorosError as e:
     print(f"Chloros error: {e}")
 ```
 
-> `ChlorosAuthenticationError` och `ChlorosConfigurationError` exporteras på högsta nivå tillsammans med resten; de kan också importeras från `chloros_sdk.exceptions` enligt vad som visas.
+> `ChlorosAuthenticationError` och `ChlorosConfigurationError` exporteras på högsta nivå tillsammans med resten; de kan också importeras från `chloros_sdk.exceptions`, som visas.
 
 Hierarki:
 
@@ -1556,7 +1556,7 @@ with ChlorosLocal() as cl:
 print()
 ```
 
-### 2. Live LATTICE-array → Reflektans + DAQ-referens
+### 2. Live LATTICE-matris → Reflektans + DAQ-referens
 
 ```python
 import chloros_sdk
@@ -1629,7 +1629,7 @@ with chloros_sdk.open_project("/path/to/proj") as proj:
             print(serial, frame.shape, frame.dtype, frame.mean())
 ```
 
-### 5. Skript för inspelning direkt på hårdvaran utan gränssnitt (utan backend)
+### 5. Skript för inspelning direkt på hårdvaran utan backend
 
 ```python
 from chloros_sdk import LatticeCamera, PRESETS, discover_cameras
@@ -1644,7 +1644,7 @@ for c in cams:
         print(c.serial, result.filepath)
 ```
 
-### 6. Kapacitetskontroll före anslutning av en 4-kamerasystem
+### 6. Funktionskontroll före anslutning av en 4-kamerasuppsättning
 
 ```python
 import chloros_sdk
@@ -1684,9 +1684,9 @@ else:
     raise RuntimeError(f"Probe error: {probe.get('error')}")
 ```
 
-### 7. Motsvarande inspelningsrecept (ren Python)
+### 7. Motsvarighet till inspelningsrecept (ren Python)
 
-CLI:s recept-DSL har en direkt motsvarighet i Python:
+CLIs recept-DSL har en direkt motsvarighet i Python:
 
 ```python
 import time, chloros_sdk
@@ -1720,13 +1720,13 @@ with chloros_sdk.open_project("/path/to/proj") as proj:
 
 ## Automatisk start av backend
 
-Smart-connect-ingångspunkterna — `connect_camera`, `connect_array`, `connect_daq_sensor` och `discover_lattice_cameras` — är tunna HTTP-klienter som utgår från att en backend lyssnar på `127.0.0.1:5000` (standardinställningen för smart-connect-gränssnittet URL). När GUI:t eller CLI redan körs, finns det redan en. Från ett rent skript kanske det inte finns någon — så dessa funktioner **startar automatiskt den medföljande backend-binären** (utan fönster, på samma sätt som `ChlorosLocal` gör) innan de anropas för första gången, och väntar sedan upp till `backend_startup_timeout` på att den ska starta.
+Smart-Connect-ingångspunkterna — `connect_camera`, `connect_array`, `connect_daq_sensor` och `discover_lattice_cameras` — är tunna HTTP-klienter som utgår från att att en backend lyssnar på `127.0.0.1:5000` (standardURL för smart-connect-gränssnittet). Om GUI:n eller CLI redan körs, finns det en. Från ett rent skript kanske det inte finns någon – därför **startar dessa funktioner automatiskt-startar den medföljande backend-binären** (utan fönster, på samma sätt som `ChlorosLocal` gör) innan de anropas för första gången, och väntar sedan upp till `backend_startup_timeout` på att den ska starta.
 
 Regler:
 
-- **Endast en lokal URL som någonsin startas.** En `backend_url` som pekar på `localhost` / `127.0.0.1` / `[::1]` är tillåten; alla andra värdar antas vara någon annans dator och skapas aldrig.
-- **Backend-delen lämnas igång för återanvändning** (samma som CLI) — det sker ingen implicit avstängning när ditt skript avslutas. Om du kör skriptet igen återanvänds den aktiva backend-instansen.
-- **Välj bort med `auto_start_backend=False`** vid något av dessa anrop (t.ex. när du har pekat på en fjärrbackend, eller om du själv hanterar backendens livscykel).
+- **Endast en lokal URL någonsin startas.** En `backend_url` som pekar på `localhost` / `127.0.0.1` / `[::1]` är tillåten; alla andra värdar antas vara någon annansmaskin och startas aldrig.
+- **Backenden lämnas igång för återanvändning** (precis som vid CLI) — det sker ingen implicit avstängning när ditt skript avslutas. Om du kör skriptet igen återanvänds den aktiva backenden.
+- **Välj bort med `auto_start_backend=False`** vid något av dessa anrop (t.ex. när du har pekat på en fjärrbackend eller om du själv hanterar backendens livscykel).
 
 ```python
 import chloros_sdk
@@ -1741,17 +1741,17 @@ arr = chloros_sdk.connect_array(serials,
                                 auto_start_backend=False)
 ```
 
-Om den medföljande binäreninte hittas eller startas, genererar det efterföljande HTTP-anropet ett åtgärdbart, **plattformsanpassat** `ChlorosConnectError`-fel istället för ett enkelt spårningsmeddelande om avvisad anslutning — på Windows hänvisar det dig till skrivbordsappen eller ett `chloros-cli`-kommando; på Linux (utan GUI) hänvisar det till ett `chloros-cli`-kommando eller `.deb`.
+Om den medföljande binären inte kan hittas eller startas, genererar det efterföljande anropet HTTP ett åtgärdbart, **plattform-anpassat** `ChlorosConnectError` istället för en ren spårningsrapport om avvisad anslutning — på Windows hänvisar det dig till skrivbordsappen eller ett `chloros-cli`-kommando; på Linux (utan GUI) hänvisar det dig till ett `chloros-cli`-kommandot eller `.deb`.
 
 ---
 
 ## Miljö och rubriker
 
-SDK markerar varje backend-anrop HTTP med `X-Chloros-Client: sdk`. Backenden tillämpar licensreglerna för SDK/CLI (inloggning **och** ett betalt Chloros+-abonnemang krävs) istället för GUI:ns kostnadsfria nivå. Detta ställs in automatiskt vid import — du behöver inte göra någonting.
+SDK markerar varje backend-HTTP-anrop med `X-Chloros-Client: sdk`. Backenden tillämpar licensreglerna för SDK / CLI (inloggning **och** ett betalt Chloros+-abonnemang krävs) istället för GUI:ns kostnadsfria nivå. Detta ställs in automatiskt vid import – dubehöver inte göra någonting.
 
-`http://localhost` och `http://127.0.0.1` identifieras som den lokala backenden. Anrop till andra värdar (t.ex. din egen analystjänst) påverkas inte.
+`http://localhost` och `http://127.0.0.1` identifieras som den lokala backend-miljön. Anrop till andra värdar (t.ex. din egen analystjänst) påverkas inte.
 
-Åsidosätt backend-inställningen URL genom att ange `backend_url=` (eller `api_url=` på `ChlorosLocal`):
+Åsidosätt backend-URLen genom att ange `backend_url=` (eller `api_url=` på `ChlorosLocal`):
 
 ```python
 chloros_sdk.connect_camera("213800234", backend_url="http://127.0.0.1:5000")
@@ -1761,33 +1761,33 @@ chloros_sdk.connect_daq_sensor(eth_host="daq-e-1.local",
 chloros_sdk.ChlorosLocal(backend_url="http://127.0.0.1:5000")
 ```
 
-(En icke-loopback-`backend_url` når endast en source/dev-backend — medföljande backends binder endast till loopback; se Remote-Backend Mode för tunnelmönstret.)
+(En `backend_url` som inte är loopback når endast en source/dev-backend — medföljande backends binder endast loopback; se Remote-Backend Mode för tunnelmönstret.)
 
 ---
 
-## Versionering och kompatibilitet
+## Versionshantering och kompatibilitet
 
 - Versionen SDK exponeras som `chloros_sdk.__version__`.
-- SDK kopplar beteendet till den medföljande backend-versionen. Att blanda en äldre SDK med en nyare backend fungerar vanligtvis (framåtkompatibla ändpunkter), men att blanda en nyare SDK med en äldre backend kan orsaka `404`-fel på nya ändpunkter — uppgradera skrivbordsappen så att den stämmer överens.
-- Smart-Connect-gränssnittet (`connect_camera` / `connect_array` / `connect_daq_sensor`) och nätverksanalysändpunkten returnerar stabila JSON-scheman; nya fält läggs till.
+- SDK låser beteendet till den medföljande backend-versionen. Att blanda en äldre SDK med en nyare backend fungerar vanligtvis (framåtkompatibla slutpunkter), men att blanda en nyare SDK med en äldre backend kan orsaka `404`-fel på nya slutpunkter — uppgradera skrivbordsappen så att den stämmer överens.
+- Smart-Connect-gränssnittet (`connect_camera` / `connect_array` / `connect_daq_sensor`) och nätverksanalys-ändpunkten returnerar stabila JSON-scheman; nya fält läggs till.
 
 ---
 
 ## Tips för felsökning
 
-- **`ChlorosAuthenticationError: Login required`** → Kör `chloros-cli login EMAIL PASSWORD` en gång på den här datorn, eller logga in via Chloros-datorappen.
-- **`ChlorosConnectError: No Chloros backend is running …`** → Smart-connect-anropen startar automatiskt en lokal backend, så detta visas endast när den medföljande binärfilen inte kan hittas/startas (t.ex. en värd som endast använder pip och saknar skrivbordspaket). Meddelandet är plattformsanpassat: på Windows öppnar du skrivbordsappen eller kör valfritt `chloros-cli`-kommando; på Linux kör du ett `chloros-cli`-kommando (det finns inget grafiskt gränssnitt) eller installera `.deb`. För en fjärrbackend, ange `backend_url=` (och `auto_start_backend=False`).
-- **`CAMERA_AVAILABLE == False`** vid import → `lattice_sdk` kunde inte laddas (vanligtvis är Arena SDK runtär inte installerade). Ytan utan kamera fungerar fortfarande.
-- **Array connect returnerar upplösning lägre än den ursprungliga**→ Backendens smart-prep krymper automatiskt bildstorleken för att passa bandbredden. Använd `analyze_array_network()` för att se varför, och uppgradera sedan länken, acceptera krympningen eller ange `force_tier="slip-emit-and-capture"` för sekventiell inspelning. Krympningens säkerhetsnätet täcker**inte** aggregerad överteckning (`oversubscribed: true`, fps-fält 0): för många kameror för bandbredden kan inte åtgärdas med binning/ROI — minska antalet kameror, aktivera jumbo-ramar eller byt till ett snabbare nätverkskort (se [Överteckning](#over-subscription-the-per-cam-floor)).
-- **`analyze_array_network()` rapporterar att nätverkskortets RX-ring är mycket liten (~0,26 MB) / anslutningsgrindar med ”FRAMES WILL DROP”** → Värd-nätverkskortetsmottagningsring är inställd på standardvärdet (återställs ofta till 32 efter en uppdatering av nätverkskortdrivrutinen). På ett Realtek USB 10GbE-kort ställer du in `ReceiveBufferLen=256` och `PendingReceives=64` (förhöjd), och startar sedan om backend så att denläser av ringen på nytt. Fullständig procedur: [CLI Referens → Konfiguration och finjustering av värd-NIC](cli-reference.md#host-nic-setup--tuning-lattice-arrays).
-- **Värden hänger sig vid omstart/avstängning, senare WMI `Invalid class`-fel / NIC kan inte aktiveras** → Föråldrad USB 10GbE-drivrutin orsakar `DRIVER_POWER_STATE_FAILURE` (BSOD `0x9F`). Uppdatera nätverkskortets drivrutin till en aktuell version (≥ 2026) ochtillämpa inställningarna för mottagningsringen. Se [CLI Referens → Konfiguration och inställning av värdens nätverkskort](cli-reference.md#host-nic-setup--tuning-lattice-arrays).
-- **Reflektans avvisad** → En aktiv DAQ måste vara kopplad till kameran (eller matrisen) för reflektans i absolut skala. Koppla antingen via GUI eller använd `processing="radiance"` (W/m²/sr/nm) som inte kräver en kopplad sensor.
-- **`smart=True`-inspelningen tar längre tid än väntat** → AE-konvergensen beror på scenens dynamik; skärp inställningen för `exposure_tolerance_pct` eller förkorta `stability_window_s` om du vill ha en snabbare (mindre stabil) utlösare.
+- **`ChlorosAuthenticationError: Login required`** → Kör `chloros-cli login EMAIL PASSWORD` en gång på den här datorn, eller logga in via skrivbordsappen Chloros.
+- **`ChlorosConnectError: No Chloros backend is running …`** → Smart-connect-anropen startar automatiskt en lokal backend, så detta meddelande visas endast när den medföljande binärfilen inte kan hittas eller startas (t.ex. en värd som endast använder pip och saknar skrivbordspaket). Meddelandet är plattformsberoende: på Windows öppnar du skrivbordsappen eller kör valfritt `chloros-cli`-kommando; på Linux kör du ett `chloros-cli`-kommando (inget GUI finns) eller installerar `.deb`. För en fjärrbackend, ange `backend_url=` (och `auto_start_backend=False`).
+- **`CAMERA_AVAILABLE == False`** vid import → `lattice_sdk` kunde inte laddas (vanligtvis är Arena-SDK-körnings-DLL:er inte installerade). Ytan utanför kameran fungerar fortfarande.
+- **Array connect returnerar en upplösning som är lägre än den ursprungliga**→ Backendens smart-prep krymper automatiskt bildstorleken så att den passar överföringsvägen. Använd `analyze_array_network()` för att se varför, och uppgradera sedan länken, acceptera krympningen eller skicka `force_tier="slip-emit-and-capture"` för sekventiell inspelning. Krympningen säkerhetsnätet täcker**inte** aggregerad överteckning (`oversubscribed: true`, fps-fält 0): för många kameror för nätverkskabeln kan inte åtgärdas med binning/ROI — minska antalet kameror, aktivera jumbo-ramar eller byt till ett snabbare nätverkskort (se [Överteckning](#over-subscription-the-per-cam-floor)).
+- **`analyze_array_network()` rapporterar att nätverkskortets mottagningsring är mycket liten (~0,26 MB) / anslutningsgrindar med ”FRAMES WILL DROP”** → Värd-nätverkskortets mottagningsring är inställd på standardvärdet (återställs ofta till 32 efter en uppdatering av nätverkskortdrivrutinen). På en Realtek USB 10GbE-adapter ska du ställa in `ReceiveBufferLen=256` och `PendingReceives=64` (höjd), och sedan starta om backend så att den läser av ringen på nytt. Fullständig procedur: [CLI Referens → Konfiguration och inställning av värd-NIC](cli-reference.md#host-nic-setup--tuning-lattice-arrays).
+- **Värden hänger sig vid omstart/avstängning, senare WMI-fel `Invalid class` / nätverkskortet aktiveras inte** → Föråldrad USB 10GbE-drivrutin orsakar `DRIVER_POWER_STATE_FAILURE` (BSOD `0x9F`). Uppdatera nätverkskortets drivrutin till en aktuell version (≥ 2026) och tillämpa inställningarna för mottagningsringen på nytt. Se [CLI Referens → Konfiguration och inställning av värd-NIC](cli-reference.md#host-nic-setup--tuning-lattice-arrays).
+- **Reflektans avvisad** → En aktiv DAQ måste vara kopplad till kameran (eller arrayen) för reflektans i absolut skala. Koppla antingen via GUI eller använd `processing="radiance"` (W/m²/sr/nm) som inte kräver en kopplad sensor.
+- **`smart=True`-insamlingen tar längre tid än förväntat** → AE-konvergensen beror på scenens dynamik; skärp inställningen för `exposure_tolerance_pct` eller förkorta `stability_window_s` om du vill ha en snabbare (mindre stabil) utlösare.
 
 ---
 
 ## Se även
 
-- [CLI-referens](cli-reference.md) — varje CLI-underkommando motsvarar ett SDK-anrop.
+- [Referens för CLI](cli-reference.md) — varje CLI-underkommando motsvarar ett SDK-anrop.
 - [DAQ-sensorguide](../daq/README.md) — sensorspecifika regler för anslutning, kalibrering och registrering.
 - Online-dokumentation: `https://mapir.gitbook.io/chloros/api-python-sdk`</id></sn>
