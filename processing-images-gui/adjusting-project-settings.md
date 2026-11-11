@@ -20,16 +20,12 @@ Innan du bearbetar dina bilder är det viktigt att konfigurera projektinställni
 
 ### Standardinställningar (rekommenderas för de flesta användare)
 
-Standardinställningarna fungerar bra för typiska arbetsflöden med Survey3
-och LATTICE:
+Standardinställningarna fungerar bra för typiska arbetsflöden med Survey3 och LATTICE:
 
 * ✅ **Vignettkorrigering**: Aktiverad
-* ✅ **Reflektanskalibrering / vitbalans**: Aktiverad (använder MAPIR
--mål och/eller data från DAQ-ljussensorer)
+* ✅ **Reflektanskalibrering / vitbalans**: Aktiverad (använder MAPIR-mål och/eller data från DAQ-ljussensorer)
 * ✅ **Debayer-metod**: Standard (Snabb, medelhög kvalitet)
-* ✅ **Exportformat**: TIFF
-(16-bit) (TIFF
-(8-bit) för ett projekt helt i 8-bit)
+* ✅ **Exportformat**: TIFF (16-bit) (TIFF (8-bit) för ett projekt helt i 8-bit)
 * ✅ **Alla exportprodukter**: Aktiverat (LATTICE exporterar automatiskt fan-out till debayered, förhandsgranskning, radiance och reflektans)
 
 Importera bara dina bilder och börja bearbeta med dessa standardinställningar.
@@ -46,8 +42,7 @@ Panelen Projektinställningar är indelad i avsnitten nedan. Två ytterligare av
 
 ### Måldetektering
 
-Styr hur Chloros
-identifierar kalibreringsmål i dina bilder.
+Styr hur Chloros identifierar kalibreringsmål i dina bilder.
 
 **Viktiga inställningar:*** **Minsta kalibreringsprovområde (px)**: Storlekströskel för måldetektering (standard:**25**, intervall 0–10000)
 * **Minsta målkluster (0–100)**: Tröskelvärde för likhet vid gruppering av målregioner (standard:**60**)**När ska du justera:**
@@ -65,19 +60,15 @@ Dessa inställningar är gråmarkerade när **reflektanskalibrering/vitbalans** 
 Huvudsakliga alternativ för bildbearbetning och kalibrering.
 
 **Viktiga inställningar:*** **Vignettkorrigering**: Kompenserar för mörkare kanter på bilden ✅ Rekommenderas
-* **Reflektanskalibrering / vitbalans**: Kalibrerar bilder med hjälp av detekterade mål (Survey3
-) och/eller data från DAQ:s ljussensor (LATTICE) ✅ Rekommenderas
+* **Reflektanskalibrering / vitbalans**: Kalibrerar bilder med hjälp av detekterade mål (Survey3) och/eller data från DAQ:s ljussensor (LATTICE) ✅ Rekommenderas
 * **Debayer-metod**: Algoritm för att konvertera RAW till 3-kanals multispektral
 * **Minsta omkalibreringsintervall**: Minsta tid i sekunder mellan användning av kalibreringsmål (standard:**0** = använd alla, intervall 0–3600)**Okalibrerade reservprodukter:**När en bildruta inte kan reflektanskalibreras (inget mål tillgängligt eller kalibrering inaktiverad) exporteras den som en av två reservprodukter —**exakt en av de två finns per körning**, vald av omkopplaren för Vignette-korrigering:
 
 * **Exportera sensorns respons**: skriver `Sensor_Response_Images` — används när vignettkorrigering är**av*** **Exportera vignettkorrigerad**: skriver `Vignette_Corrected_Images` — används när vignettkorrigering är**på**Den kryssruta som inte är aktiv är gråmarkerad. Om du avmarkerar den aktiva rutan stoppas skrivningen av den filen helt.**LATTICE-exportprodukter** (visas för varje projekt; de gäller för LATTICE-bildtagningar):
 
-* **Exportera debayered**: den linjära debayered-bilden (`Debayered_Images`): kalibreringspaketets mörka offset avlägsnas, därefter demosaicerad, utan flat field eller unmix — samma fil som en bildspara sparar på sin debayered-nivå — i sensorns ursprungliga orientering. Gäller för RGB
-- och multispektrala moduler.
-* **Exportera förhandsgranskning**: förhandsgranskningen på skärmen (`Preview_Images`). RGB
-= vitbalans (DAQ-ljuskälla om tillgänglig, annars gråskala) + gamma; multispektral = falskfärgssträckning.
-* **Exportera strålningsintensitet**: spektral strålningsintensitet av typen float32 (`Radiance_Images`, W/m²/sr/nm). Endast multispektrala moduler – gäller inte för RGB
--masterfiler.
+* **Exportera debayered**: den linjära debayered-bilden (`Debayered_Images`): kalibreringspaketets mörka offset avlägsnas, därefter demosaicerad, utan flat field eller unmix — samma fil som en bildspara sparar på sin debayered-nivå — i sensorns ursprungliga orientering. Gäller för RGB- och multispektrala moduler.
+* **Exportera förhandsgranskning**: förhandsgranskningen på skärmen (`Preview_Images`). RGB = vitbalans (DAQ-ljuskälla om tillgänglig, annars gråskala) + gamma; multispektral = falskfärgssträckning.
+* **Exportera strålningsintensitet**: spektral strålningsintensitet av typen float32 (`Radiance_Images`, W/m²/sr/nm). Endast multispektrala moduler – gäller inte för RGB-masterfiler.
 * **Exportera reflektans**: uint16-reflektans (`Reflectance_Calibrated_Images`, DN 32768 = ρ 1,0) när en `.daq`-avläsning av nedåtriktad strålning eller ett mål inom bildrutan täcker bildrutan. Endast multispektrala moduler.
 
 Alla fyra är **aktiverade som standard**— en importerad LATTICE-råbild fördelas till alla aktiverade och tillämpliga produkter i ett enda bearbetningssteg. Kryssrutan**Exportera reflektans** är gråmarkerad när reflektanskalibrering är avstängd. Inställningar som inte kan användas på grund av en överordnad inställning är alltid gråmarkerade med ett verktygstips som anger vilken inställning som måste ändras.**Avancerade inställningar:*** **Tidszonsförskjutning för ljussensor**: Timmar från UTC för tidsanpassning av ljussensorn (standard: 0, intervall −12 till +12)
@@ -85,28 +76,23 @@ Alla fyra är **aktiverade som standard**— en importerad LATTICE-råbild förd
 * **Exponeringsstift 1/2**: Tilldelar kameror till exponeringsstift för konfigurationer med två kameror
 
 {% hint style="info" %}
-**LATTICE-ingångsnivån är automatisk.** LATTICE-bildtagningar har sin bearbetningsnivå angiven i XMP-metadata, och bearbetningen påbörjas alltid vid råbilden – det finns inget att konfigurera i GUI:n. (CLI
--flaggan `--input-level` finns som en överstyrningsfunktion för avancerade användare vid bildtagningar där metadata har gått förlorat; se [CLI
--referensen](../reference/cli-reference.md).)
+**LATTICE-ingångsnivån är automatisk.** LATTICE-bildtagningar har sin bearbetningsnivå angiven i XMP-metadata, och bearbetningen påbörjas alltid vid råbilden – det finns inget att konfigurera i GUI:n. (CLI-flaggan `--input-level` finns som en överstyrningsfunktion för avancerade användare vid bildtagningar där metadata har gått förlorat; se [CLI-referensen](../reference/cli-reference.md).)
 {% endhint %}
 
 ### Debayer-metod
 
-Vi erbjuder för närvarande två debayering-metoder i Chloros
-:
+Vi erbjuder för närvarande två debayering-metoder i Chloros:
 
 #### Standard (snabb, medelhög kvalitet)
 
 Standard-debayern bearbetar snabbt men visar färgbrus från debayeringen, vilket resulterar i mindre exakta och mer brusiga bilder.
 
-#### Texture Aware (långsam, högsta kvalitet) \[Endast Chloros
-+]
+#### Texture Aware (långsam, högsta kvalitet) \[Endast Chloros+]
 
 Texture Aware använder en högkvalitativ kantmedveten debayer i kombination med en AI/ML-brusreduceringsmodell som tar bort nästan allt brus från debayeringen. Modellen kräver GPU-minne (VRAM) för att köras: med **7 GB eller mer VRAM** kan den bearbeta flera bilder samtidigt; under 7 GB körs en bild i taget (märkbart långsammare). Se [Dynamic Compute Adaptation](../processing-architecture/dynamic-compute-adaptation.md).
 
 {% hint style="info" %}
-**LATTICE-bilderna använder alltid standarddemosaikeringen.** Det finns ingen LATTICE-tränad Texture Aware-modell, så alternativet erbjuds inte för LATTICE-bilder — Survey3
--bilder i samma projekt kan fortfarande använda den.
+**LATTICE-bilderna använder alltid standarddemosaikeringen.** Det finns ingen LATTICE-tränad Texture Aware-modell, så alternativet erbjuds inte för LATTICE-bilder — Survey3-bilder i samma projekt kan fortfarande använda den.
 {% endhint %}
 
 ### Index (multispektrala index)
@@ -115,10 +101,7 @@ Konfigurera vilka vegetationsindex som ska beräknas och exporteras. I rullgardi
 
 1. Klicka på knappen**”Lägg till index”**
 
-2. Välj ett index från rullgardinsmenyn (NDVI
-, NDRE
-, GNDVI
-osv.)
+2. Välj ett index från rullgardinsmenyn (NDVI, NDRE, GNDVI osv.)
 3. Konfigurera visualiseringsinställningarna (LUT-färger, värdeintervall)
 4. Lägg till flera index efter behov
 
@@ -126,42 +109,29 @@ osv.)
 * **NDRE**: Tidig stressdetektering med RedEdge
 * **GNDVI**: Känslig för klorofyllkoncentration
 * **OSAVI**: Fungerar bra med synlig mark
-* **EVI**: Områden med högt bladarealindex (LAI
-)
+* **EVI**: Områden med högt bladarealindex (LAI)
 
 **Anpassade formler:**
 
 * Skapa anpassade multispektrala indexformler med bandberäkningar över alla bildkanaler
 * Spara anpassade formler för återanvändning
-* Anpassade formler är en funktion i Chloros
-+; tillgängligheten beror på vilken plan du har
+* Anpassade formler är en funktion i Chloros+; tillgängligheten beror på vilken plan du har
 
-För alla tillgängliga index och formler – inklusive vilka namn som endast finns i GUI och vilka som även fungerar i CLI
-/SDK
-– se [Multispektrala indexformler](../project-settings/multispectral-index-formulas.md).
+För alla tillgängliga index och formler – inklusive vilka namn som endast finns i GUI och vilka som även fungerar i CLI/SDK – se [Multispektrala indexformler](../project-settings/multispectral-index-formulas.md).
 
 ### Exportera
 
 Styr utdatafilformatet.
 
-**Tillgängliga format**(inställning:**Kalibrerat bildformat**, standard**TIFF
-(16-bit)**):
+**Tillgängliga format**(inställning:**Kalibrerat bildformat**, standard**TIFF (16-bit)**):
 
-* **TIFF
-(16-bit)**: Rekommenderas för GIS och vetenskaplig analys
-* **TIFF
-(8-bit)**: 8-bitars TIFF
-* **TIFF
-(32-bit, procent)**: Flyttalsvärden
-* **PNG
-(8-bit)**: Förlustfri komprimering för visualisering
+* **TIFF (16-bit)**: Rekommenderas för GIS och vetenskaplig analys
+* **TIFF (8-bit)**: 8-bitars TIFF
+* **TIFF (32-bit, procent)**: Flyttalsvärden
+* **PNG (8-bit)**: Förlustfri komprimering för visualisering
 * **JPG (8-bit)**: Minsta filstorlek, förlustkomprimering
 
-Listan visar vad projektets bilder kan innehålla: Chloros
-ökar inte bitdjupet. Alla 8-bitarsbilder erbjuder endast TIFF
-(8-bit), PNG
-(8-bit) och JPG (8-bit), och standardinställningen är TIFF
-(8-bit). I ett blandat projekt exporteras varje bild med sitt eget bitdjup eller lägre. Radiance förblir 32-bitars flyttal.
+Listan visar vad projektets bilder kan innehålla: Chloros ökar inte bitdjupet. Alla 8-bitarsbilder erbjuder endast TIFF (8-bit), PNG (8-bit) och JPG (8-bit), och standardinställningen är TIFF (8-bit). I ett blandat projekt exporteras varje bild med sitt eget bitdjup eller lägre. Radiance förblir 32-bitars flyttal.
 
 Utdata sparas i projektmappen, grupperade efter kamera och format: `<project>/<camera>/<format>/<Product>_Images/`. Radiance sparas **alltid** som float32 i mappen `tiff32`, oavsett denna inställning. Exporterade filer behåller källfilnamnet – mappen identifierar produkten. Multispektrala LATTICE-exporter kan också skriva klämmasker per pixel till en `clamp_masks/`-mapp bredvid produktmapparna. Se [Avsluta bearbetningen](finishing-the-processing.md) för den fullständiga utdatastrukturen.
 
@@ -174,8 +144,7 @@ använder 65535. Läs av taggen istället för att anta ett konstant värde. Se 
 
 I detta avsnitt listas alla DAQ-filer för nedåtriktad strålning (`.daq` / `.csv`) i ditt projekt, en rad per fil, med uppgifter om sensormodell, filnamn och vilken diffusor**kåpa** korrigering som gäller för den filen.
 
-* **Överskrivning av lock (alla filer)**: en enda rullgardinsmeny som gäller för hela projektet.**Auto** (standard) använder den registrerade cap-värdet för varje fil — solsken antas där inget har registrerats, men DAQ-U, DAQ-M och DAQ-E levereras utan cap-värde och Chloros
-kan inte se vad som har anpassats, så bearbetningen varnar vid ett antaget cap-värde: välj det cap-värde som har anpassats. Att välja ett tak åsidosätter alla filer utom DAQ-E-S-filerna, vars diffusor ingår i dess kalibrering: råa registreringar korrigeras med den, och registreringar som redan har ett angivet tak omrefereras (den registrerade korrigeringen ångras och det valda taket tillämpas).
+* **Överskrivning av lock (alla filer)**: en enda rullgardinsmeny som gäller för hela projektet.**Auto** (standard) använder den registrerade cap-värdet för varje fil — solsken antas där inget har registrerats, men DAQ-U, DAQ-M och DAQ-E levereras utan cap-värde och Chloros kan inte se vad som har anpassats, så bearbetningen varnar vid ett antaget cap-värde: välj det cap-värde som har anpassats. Att välja ett tak åsidosätter alla filer utom DAQ-E-S-filerna, vars diffusor ingår i dess kalibrering: råa registreringar korrigeras med den, och registreringar som redan har ett angivet tak omrefereras (den registrerade korrigeringen ångras och det valda taket tillämpas).
 * Raderna visar en varning när ett inspelat lock var navets antagna standardvärde snarare än bekräftat av operatören, och när det valda locket saknar profil för den enhetsmodellen (överskrivningen nekas för den filen).
 
 DAQ-inspelningar som gjorts på fliken Ljussensorer läggs automatiskt till i det öppna projektet, och importerade `.daq`-/`.csv`-filer visas här så snart de har lagts till.
@@ -196,9 +165,7 @@ Skapa återanvändbara mallar för enhetliga arbetsflöden:
 
 1. Konfigurera alla önskade inställningar i panelen Projektinställningar
 2. Bläddra till avsnittet **”Spara projektmall”** längst ned
-3. Ange ett beskrivande namn på mallen (t.ex. ”Survey3N
-
-_RGN_Agriculture”)
+3. Ange ett beskrivande namn på mallen (t.ex. ”Survey3N_RGN_Agriculture”)
 4. Klicka på spara-ikonen
 
 **Fördelar:**
@@ -217,16 +184,12 @@ När du skapar ett nytt projekt:
 
 ### Arbetsmapp
 
-Inställningen **&quot;Arbetsmapp&quot;** anger var nya projekt skapas som standard:
+Inställningen **"Arbetsmapp"** anger var nya projekt skapas som standard:
 
-* **Standardplats**: `Documents\MAPIR\Chloros Projects` i mappen Dokument i Windows
-
-(vanligtvis `C:\Users\[Username]\Documents\MAPIR\Chloros Projects`; den följer mappen Dokument om OneDrive eller en roamingprofil flyttar den)
+* **Standardplats**: `Documents\MAPIR\Chloros Projects` i mappen Dokument i Windows (vanligtvis `C:\Users\[Username]\Documents\MAPIR\Chloros Projects`; den följer mappen Dokument om OneDrive eller en roamingprofil flyttar den)
 * **Ändra plats**: Klicka på redigeringsikonen och välj en ny mapp
 * **Delad med CLI**: `chloros-cli` använder samma standardinställning för projektmappen
-* **Håll namnet kort i Windows**: om inte Windows
-
-långa sökvägar är aktiverade avvisas en projektmapp med ett namn som är längre än cirka 130 tecken innan bearbetningen påbörjas — se [Starta bearbetningen](starting-the-processing.md#the-project-folder-is-too-deep-for-this-computer)
+* **Håll namnet kort i Windows**: om inte Windows långa sökvägar är aktiverade avvisas en projektmapp med ett namn som är längre än cirka 130 tecken innan bearbetningen påbörjas — se [Starta bearbetningen](starting-the-processing.md#the-project-folder-is-too-deep-for-this-computer)
 * **När ska du ändra**:
   * Nätverksenhet för teamsamarbete
   * Annan enhet med mer lagringsutrymme
@@ -236,15 +199,11 @@ långa sökvägar är aktiverade avvisas en projektmapp med ett namn som är lä
 
 ## PPK-inställningar (Post-Processed Kinematic)
 
-Om du använder MAPIR
-
--DAQ-inspelare med GPS för exakt geolokalisering:
+Om du använder MAPIR-DAQ-inspelare med GPS för exakt geolokalisering:
 
 ### Förutsättningar
 
-* MAPIR
-
-DAQ med GPS-modul (GNSS)
+* MAPIR DAQ med GPS-modul (GNSS)
 * .daq-loggfil med exponeringstappspår
 * Kamera ansluten till DAQ:s exponeringstappar under inspelningssessionen
 
@@ -270,32 +229,14 @@ DAQ med GPS-modul (GNSS)
 
 ### Projekt med flera kameror
 
-När du bearbetar bilder från flera MAPIR
+När du bearbetar bilder från flera MAPIR-kameror i ett projekt:
 
--kameror i ett projekt:
-
-1. Chloros
-
-identifierar automatiskt varje kameramodell (både Survey3
-
-och LATTICE)
+1. Chloros identifierar automatiskt varje kameramodell (både Survey3 och LATTICE)
 2. Varje kamera tilldelas lämpliga bearbetningsprofiler och får sin egen mappstruktur för utdata
-3. PPK: Tilldela varje Survey3
-
--kamera manuellt till rätt exponeringsstift
+3. PPK: Tilldela varje Survey3-kamera manuellt till rätt exponeringsstift
 4. Alla kameror använder samma exportformat och index
 
-**Exempel**: Survey3W
-
-RGN
-
-+ Survey3N
-
-OCN
-
--rigg med två kameror, eller en LATTICE-uppsättning som kombinerar en RGB
-
--huvudkamera med smalbandsmoduler
+**Exempel**: Survey3W RGN + Survey3N OCN-rigg med två kameror, eller en LATTICE-uppsättning som kombinerar en RGB-huvudkamera med smalbandsmoduler
 
 ### Time-lapse- eller flerdatumsundersökningar
 
@@ -312,14 +253,8 @@ För upprepade undersökningar av samma område över tid:
 För projekt med många bilder (500+):
 
 * Överväg att dela upp i mindre projekt efter datum eller område
-* Använd parallellbearbetning i Chloros
-
-+ för snabbare resultat
-* Överväg att använda CLI
-
-eller API
-
-för automatisering av batchbearbetning
+* Använd parallellbearbetning i Chloros+ för snabbare resultat
+* Överväg att använda CLI eller API för automatisering av batchbearbetning
 * Justera det minsta omkalibreringsintervallet för att minska tiden för måligenkänning
 
 ***
@@ -331,9 +266,7 @@ Innan du börjar bearbeta, granska dessa viktiga inställningar:
 * [ ] Kameramodellen har identifierats korrekt i filbläddraren
 * [ ] Vignettkorrigering aktiverad
 * [ ] Reflektanskalibrering aktiverad
-* [ ] För Survey3
-
-: minst en kalibreringsmålbild importerad och kontrollerad; för LATTICE: ett mål och/eller en `.daq`-nedåtriktad inspelning finns
+* [ ] För Survey3: minst en kalibreringsmålbild importerad och kontrollerad; för LATTICE: ett mål och/eller en `.daq`-nedåtriktad inspelning finns
 * [ ] Önskade multispektrala index har lagts till
 * [ ] Exportformat som passar ditt arbetsflöde
 * [ ] PPK-inställningar konfigurerade (om du använder .daq med exponeringshändelser)

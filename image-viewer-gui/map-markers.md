@@ -84,7 +84,7 @@ Varje bild med GPS-data får en markör vid sina koordinater.
 
 Välj kartlagerstyp med knapparna (från vänster till höger):
 
-![](&lt;../.gitbook/assets/image (14).png&gt;)
+![](<../.gitbook/assets/image (14).png>)
 
 | Typ                 | Visar                                                                |
 | -------------------- | -------------------------------------------------------------------- |

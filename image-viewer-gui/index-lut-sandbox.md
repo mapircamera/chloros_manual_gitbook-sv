@@ -79,7 +79,7 @@ En **uppslagstabell** mappar indexvärden till färger: mat in NDVI 0,65, få ut
 
 ### Lägga till en LUT
 
-1. Klicka på knappen **&quot;+ Lägg till LUT&quot;** under formeln <img src="../.gitbook/assets/image (1) (1) (1).png" alt="" data-size="line">
+1. Klicka på knappen **"+ Lägg till LUT"** under formeln <img src="../.gitbook/assets/image (1) (1) (1).png" alt="" data-size="line">
 2. Välj en färggradient
 3. Ställ in minimivärde och maximivärde för beskärningen
 4. Välj ett beskärningsläge
@@ -101,7 +101,7 @@ Håll muspekaren över **gradientfältet**för att öppna listan med förinstäl
 | 6 | Lila → Blue → Green → Gul      | Sekventiell, mörk till ljus                                           |
 | 7 | Orange → Vit → Lila             | Divergerande runt en ljus mittpunkt                                   |
 
-En **divergerande**gradient placerar en neutral färg i mitten av fönstret, vilket fungerar bra när mittpunkten har en specifik betydelse (ett tröskelvärde, ett basdatum). En**sekventiell** gradient löper monotont från mörkt till ljust, vilket fungerar bra för en kvantitet som endast har &quot;mer&quot; och &quot;mindre&quot;.
+En **divergerande**gradient placerar en neutral färg i mitten av fönstret, vilket fungerar bra när mittpunkten har en specifik betydelse (ett tröskelvärde, ett basdatum). En**sekventiell** gradient löper monotont från mörkt till ljust, vilket fungerar bra för en kvantitet som endast har "mer" och "mindre".
 
 Varje förinställning har sju färgsteg. Klicka på en förinställning så uppdateras bilden omedelbart (när rutan för LUT är markerad).
 
@@ -143,14 +143,14 @@ När en pixels indexvärde faller utanför min/max-fönstret avgör klippningsl�
 
 | Rullgardinsmeny                  | Lagrad värde      | Pixlar utanför intervallet ritas som                                                                                                |
 | ------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **Minimum &amp; Maximum** (standard) | `clip`            | Den närmaste ändfärgen i gradienten — värden under minimum får den första färgen, värden över maximum får den sista |
+| **Minimum & Maximum** (standard) | `clip`            | Den närmaste ändfärgen i gradienten — värden under minimum får den första färgen, värden över maximum får den sista |
 | **Transparent bakgrund**      | `transparent`     | Helt transparent (verklig alfa)                                                                                                  |
 | **Indexbakgrund**| `indexColor`      | Gråskala, utsträckt över bildens**hela** indexintervall, så att strukturer utanför intervallet fortfarande syns i grått                |
 | **Originalbakgrund**         | `backgroundColor` | Själva den underliggande bilden, så att färgöverlägget ligger ovanpå den verkliga scenen                                                |
 
 | Läge                       | Bäst för                               | Utseende                                      |
 | -------------------------- | -------------------------------------- | ----------------------------------------- |
-| **Minimum &amp; Maximum**      | Fullständig datavisning, vetenskaplig analys | Varje pixel färglagd                      |
+| **Minimum & Maximum**      | Fullständig datavisning, vetenskaplig analys | Varje pixel färglagd                      |
 | **Transparent bakgrund** | GIS-överlägg, isolering av ett värdeintervall   | Färg inuti fönstret, inget utanför |
 | **Indexbakgrund**       | Betoningen bevaras samtidigt som datakontexten bibehålls    | Färg inuti, grått utanför               |
 | **Originalbakgrund**    | Rapporter och presentationer              | Färg inuti, fotografi utanför         |

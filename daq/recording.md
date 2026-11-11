@@ -1,8 +1,6 @@
 # Inspelning och .daq-formatet
 
-En `.daq`-fil är Chloros
-
-ljussensorns inspelningsformat: en **SQLite-databas** med kalibrerade spektralbilder från en DAQ-sensor. Spela in en sådan fil under en inspelningssession så kan reflektanspipeline senare dividera varje bild med den nedåtriktade strålningsintensiteten som mättes just i det ögonblicket.
+En `.daq`-fil är Chloros ljussensorns inspelningsformat: en **SQLite-databas** med kalibrerade spektralbilder från en DAQ-sensor. Spela in en sådan fil under en inspelningssession så kan reflektanspipeline senare dividera varje bild med den nedåtriktade strålningsintensiteten som mättes just i det ögonblicket.
 
 ## Vad en .daq-fil innehåller
 
@@ -16,15 +14,11 @@ ljussensorns inspelningsformat: en **SQLite-databas** med kalibrerade spektralbi
 
 Formatet är identiskt för DAQ-U, DAQ-M, DAQ-E och DAQ-E-S, så vid vidare bearbetning spelar det ingen roll vilken enhet som registrerade data. En DAQ-E-S-inspelning lagrar även enhetens lutning, rullning och tippning bredvid varje spektrum.
 
-**Inspelningar överlever ett strömavbrott (1.3.0).**En liveinspelning skrivs med en logg och en fullständig disksynkronisering vid varje bekräftelse, så ett strömavbrott eller en avbruten process kostar endast de senaste 3 sekunderna, inte hela filen. En inspelning som avbröts mitt i skrivningen kan lämna kvar en `<name>.daq-journal`-fil bredvid `.daq`:**behåll och kopiera de båda tillsammans.** Chloros
-
-rullar tillbaka journalen första gången den läser filen. En upptagen disk fördröjer filen, men aldrig sensorns avläsningar.
+**Inspelningar överlever ett strömavbrott (1.3.0).**En liveinspelning skrivs med en logg och en fullständig disksynkronisering vid varje bekräftelse, så ett strömavbrott eller en avbruten process kostar endast de senaste 3 sekunderna, inte hela filen. En inspelning som avbröts mitt i skrivningen kan lämna kvar en `<name>.daq-journal`-fil bredvid `.daq`:**behåll och kopiera de båda tillsammans.** Chloros rullar tillbaka journalen första gången den läser filen. En upptagen disk fördröjer filen, men aldrig sensorns avläsningar.
 
 **En DAQ-E som slutar leverera data återansluts (1.3.0).** När en DAQ-E:s ström tystnar (om strömmen till dess switch har slagits av och på, eller om en länk har brutits), återansluter backend-systemet den med de inställningar den hade, och en inspelning på den fortsätter i samma `.daq`-fil med avbrottet markerat i filen.
 
-Kalibrerad inspelning kräver sensorns fabrikskalibreringspaket. För DAQ-U och DAQ-M hämtar backend-systemet paketet från MAPIR
-
-s moln utifrån sensor-ID (inspelning nekas om detta inte går); DAQ-E-enheter undantas eftersom de lagrar sin kalibrering på enheten.
+Kalibrerad inspelning kräver sensorns fabrikskalibreringspaket. För DAQ-U och DAQ-M hämtar backend-systemet paketet från MAPIRs moln utifrån sensor-ID (inspelning nekas om detta inte går); DAQ-E-enheter undantas eftersom de lagrar sin kalibrering på enheten.
 
 ## Inspelning från GUI
 
@@ -45,11 +39,7 @@ Filerna skrivs till `<project>/light_sensor/`, och när en inspelning avslutas �
 
 
 
-CLI
-
-spelar in via backendens sensorpool (backenden måste vara igång – dessa kommandon är tunna HTTP
-
--klienter):
+CLI spelar in via backendens sensorpool (backenden måste vara igång – dessa kommandon är tunna HTTP-klienter):
 
 ```bash
 # Connect the sensor into the backend pool
@@ -69,40 +59,22 @@ Hämta värdet `--sensor-id` från `chloros-cli daq pool-list`. Två standardvä
 | Alternativ | Standard |
 | --- | --- |
 | `--duration` | `0` — spela in tills `pool-record --stop` |
-| `--output` / `-o` | `~/Documents/DAQ Live View/` på **backendens** filsystem, inte på CLI
+| `--output` / `-o` | `~/Documents/DAQ Live View/` på **backendens** filsystem, inte på CLI:s |
 
-:s |
-
-Skillnaden mellan utdatakatalogerna är viktig när CLI
-
-:n riktar sig mot en backend på en annan maskin: filen hamnar där backenden körs. Om backend finns på samma dator tolkas en relativ `-o` (t.ex. `./out` ovan) utifrån den mapp där du körde kommandot.
+Skillnaden mellan utdatakatalogerna är viktig när CLI:n riktar sig mot en backend på en annan maskin: filen hamnar där backenden körs. Om backend finns på samma dator tolkas en relativ `-o` (t.ex. `./out` ovan) utifrån den mapp där du körde kommandot.
 
 ## Inspelning från Python
 
-`DAQSensorSession` (returneras av `chloros_sdk.connect_daq_sensor()`) exponerar samma samlade inspelning: `record_start(output_dir=None, device_name=None)` returnerar filvägen, `record_stop()` returnerar `{path, rows}`. Se [SDK
-
--referensen](../reference/sdk-reference.md) för det fullständiga sessions-API
-
-:et. SDK
-
-:s klasser för direkt hårdvaruhantering (endast för stationära installationer) skriver inspelningar till `~/Documents/DAQ/` som standard; för släppta versioner är den samlade sökvägen ovan den stödda vägen.
+`DAQSensorSession` (returneras av `chloros_sdk.connect_daq_sensor()`) exponerar samma samlade inspelning: `record_start(output_dir=None, device_name=None)` returnerar filvägen, `record_stop()` returnerar `{path, rows}`. Se [SDK-referensen](../reference/sdk-reference.md) för det fullständiga sessions-API:et. SDK:s klasser för direkt hårdvaruhantering (endast för stationära installationer) skriver inspelningar till `~/Documents/DAQ/` som standard; för släppta versioner är den samlade sökvägen ovan den stödda vägen.
 
 ## Använda en .daq-fil vid bearbetning
 
-För att beräkna reflektans från bilder behöver Chloros
-
--värden för nedåtriktad strålningsintensitet som matchar varje exponering:
+För att beräkna reflektans från bilder behöver Chloros-värden för nedåtriktad strålningsintensitet som matchar varje exponering:
 
 * **Spara `.daq` tillsammans med bilderna.**Vid bearbetning beräknar bearbetningskedjan automatiskt den**tidsstämplade nedåtriktade strålningen** från en inspelad `.daq` (valfri DAQ-modell) — eller från en DAQ-M-specifik `.csv` — som finns tillsammans med bilderna. GUI-inspelningar uppfyller detta krav automatiskt, eftersom de läggs till i projektet så fort de avslutas.
-* **Kalibreringen hämtas vid behov.** Om ett fabrikskalibreringspaket per kamera eller per DAQ inte redan finns cachelagrat lokalt hämtar Chloros
-
-det automatiskt från MAPIR
-
-s moln vid första användningen (internet krävs en gång; cachelagrad under `~/.chloros/`).
+* **Kalibreringen hämtas vid behov.** Om ett fabrikskalibreringspaket per kamera eller per DAQ inte redan finns cachelagrat lokalt hämtar Chloros det automatiskt från MAPIRs moln vid första användningen (internet krävs en gång; cachelagrad under `~/.chloros/`).
 * **Liveinspelningar skriver sin egen sidokar.** För varje reflektansbild som fångas live sparas det DAQ-värde som faktiskt användes som en `.daq`-fil i inspelningens `daq/`-mapp, så att inspelningen kan bearbetas på nytt senare utan den ursprungliga inspelningen.
-* **Inspelningar från `chloros_scripts`-inspelarna (1.3.0).**En `.daq`-fil som skrivits av de allmänna [`chloros_scripts`](https://github.com/mapircamera/chloros_scripts)-inspelarna anges som den DAQ-modell som skapade den, och dess gränsvärde kan ställas in i**Projektinställningar → DAQ-ljussensor** precis som för alla andra inspelningar. Dessa inspelningsenheter skriver ut råa sensorräkneställningar; Chloros
-
-hämtar sensorns fabrikskalibrering via seriell anslutning och tillämpar den.
+* **Inspelningar från `chloros_scripts`-inspelarna (1.3.0).**En `.daq`-fil som skrivits av de allmänna [`chloros_scripts`](https://github.com/mapircamera/chloros_scripts)-inspelarna anges som den DAQ-modell som skapade den, och dess gränsvärde kan ställas in i**Projektinställningar → DAQ-ljussensor** precis som för alla andra inspelningar. Dessa inspelningsenheter skriver ut råa sensorräkneställningar; Chloros hämtar sensorns fabrikskalibrering via seriell anslutning och tillämpar den.
 * **Vems avläsning det är (1.3.0).**Bredvid varje inspelning `.daq` finns en `.daq.cameras.json` som anger vilken eller vilka kameror vars bildrutor avläsningen avser, och bearbetningen matchar den**endast mot bilder från dessa kameror**. En fristående kamera utan egen ljussensor lånar därför inte längre en annan kameras avläsning – koppla en sensor till den, eller spela in en. En inspelning gjord med själva DAQ:en (GUI Record, `daq pool-record`), och alla `.daq` utan den filen (även äldre inspelningar), fungerar fortfarande för alla kameror.
 
 ## Hämta tillbaka irradiansvärdena
@@ -111,9 +83,7 @@ När ett projekt bearbetas exporteras även alla ljussensorinspelningar som det 
 `Light Sensor/`-mapp bredvid bildprodukterna. Detta kräver **inte** bilddata: en
 ljussensorinspelning i sig är en komplett inspelning, och en mapp som endast innehåller `.daq`-
 filer är en giltig indata. Ett projekt som endast innehåller ljussensorinspelningar listar dem och
-bearbetas både från appen och CLI
-
-, och de förblir listade efter körningen. Körningen
+bearbetas både från appen och CLI, och de förblir listade efter körningen. Körningen
 rapporterar hur många ljussensorprodukter den skrev.
 
 | Produkt | Vad det är |
@@ -132,9 +102,7 @@ inget finns cachelagrat lokalt.
 **DAQ-A** är äldre än systemet med kalibreringspaket per seriell anslutning och har inget paket att
 hämta. Det är inget förbiseende: en DAQ-A kalibreras ute på fältet mot ett
 reflektansmål, och målbaserad kalibrering behöver endast sensorns *relativa*
-respons – vilket är precis vad dess råa räkneställningar är. Chloros
-
-kalibrerar med dem idag.
+respons – vilket är precis vad dess råa räkneställningar är. Chloros kalibrerar med dem idag.
 
 Så en DAQ-A-inspelning kan exporteras, men under ett annat namn:
 
@@ -153,12 +121,8 @@ betydelse för verklig irradians — total effekt, lux, PPFD — lämnas tomma i
 beräknas utifrån räknevärden.
 
 Äldre DAQ-A-SD-inspelningar (schema v1.01 / v1.02) registrerar endast filens skrivtid, inte en
-tidsstämpel per avläsning. Chloros
-
-kommer inte att matcha bilder mot dessa – att koppla en bildruta till en
+tidsstämpel per avläsning. Chloros kommer inte att matcha bilder mot dessa – att koppla en bildruta till en
 skrivtid skulle vara fel utan att det någonsin ser fel ut – men exporten läser dem utan problem och
-CSV
-
--filen anger vilken klocka det gäller.
+CSV-filen anger vilken klocka det gäller.
 
 För en fullständig beskrivning av reflektansmätningar – en sensor med kamera och två sensorer för omgivning/objekt – se [Arbetsflöden för reflektans](reflectance.md).

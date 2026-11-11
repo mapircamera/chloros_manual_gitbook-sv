@@ -62,7 +62,7 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 2. **Bearbetning** – Tillämpar kalibrering och exporterar bilder**Bearbetningstid:**
 
 * Mycket långsammare än Chloros+ parallellt läge
-* Lämpligt för små till medelstora datamängder (&lt; 200 bilder)
+* Lämpligt för små till medelstora datamängder (< 200 bilder)
 
 ### Chloros+-läge (parallell bearbetning)
 
@@ -305,7 +305,7 @@ Se [CLI-referensen](../reference/cli-reference.md#a-run-that-writes-no-images-fa
 **Lösningar:**
 
 1. Förvara projekten i en kortare mapp – ändra**Arbetsmappen** i [Projektinställningar](../project-settings/project-settings.md) och skapa projektet på nytt, eller
-2. Aktivera långa sökvägar i Windows och starta om Chloros: kör Chloros-installationsprogrammet igen med **Aktivera långa sökvägar i Windows** markerat (det är markerat som standard), eller använd grupprincip: *Datorkonfiguration &gt; Administrativa mallar &gt; System &gt; Filsystem &gt; Aktivera långa Win32-sökvägar*.
+2. Aktivera långa sökvägar i Windows och starta om Chloros: kör Chloros-installationsprogrammet igen med **Aktivera långa sökvägar i Windows** markerat (det är markerat som standard), eller använd grupprincip: *Datorkonfiguration > Administrativa mallar > System > Filsystem > Aktivera långa Win32-sökvägar*.
 
 ### Varningen ”Inga mål upptäckta”
 

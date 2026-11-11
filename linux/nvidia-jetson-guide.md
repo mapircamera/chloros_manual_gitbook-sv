@@ -1,8 +1,6 @@
 # NVIDIA Jetson-guide
 
-Chloros
-på NVIDIA Jetson möjliggör multispektral bildbehandling i kanten – ute på fältet, på drönare och i avlägsna installationer. Chloros
-1.3.0 identifierar din Jetson-modell vid uppstart och optimerar bearbetningsstrategin efter den hårdvara som upptäcks. **Ingen manuell inställning krävs.**
+Chloros på NVIDIA Jetson möjliggör multispektral bildbehandling i kanten – ute på fältet, på drönare och i avlägsna installationer. Chloros 1.3.0 identifierar din Jetson-modell vid uppstart och optimerar bearbetningsstrategin efter den hårdvara som upptäcks. **Ingen manuell inställning krävs.**
 {% hint style="info" %}
 **Jetson-paketet 1.3.0 körs på Jetsons GPU.** `chloros_1.3.0_arm64_jp6.deb` är byggt för JetPack 6 och använder JetPack 6:s CUDA-version av PyTorch, så bearbetningen – inklusive den texturmedvetna debayern – körs på Orins GPU. Paketet innehåller inte CUDA i sig: det använder de CUDA- och cuDNN-bibliotek som JetPack 6 installerar (`sudo apt install nvidia-jetpack` på en image som saknar dem). Om ingen CUDA-GPU kan användas körs bearbetningen på CPU:n och Texture Aware använder Standard-debayern.
 {% endhint %}
@@ -18,8 +16,7 @@ på NVIDIA Jetson möjliggör multispektral bildbehandling i kanten – ute på 
 | **Jetson Orin Nano** | 8 GB delat     | `GPU_SINGLE` (1 arbetsenhet, sekventiell)                     | Edge-beräkning på instegsnivå                                 |
 
 {% hint style="info" %}
-Linux
--paketet för arm64 kräver **JetPack 6**, som är tillgängligt för Jetson Orin-familjen. Äldre modeller (Nano, TX2, Xavier NX) kan inte köra JetPack 6 och stöds inte av det aktuella paketet.
+Linux-paketet för arm64 kräver **JetPack 6**, som är tillgängligt för Jetson Orin-familjen. Äldre modeller (Nano, TX2, Xavier NX) kan inte köra JetPack 6 och stöds inte av det aktuella paketet.
 {% endhint %}
 
 ***
@@ -28,10 +25,7 @@ Linux
 
 * **JetPack 6.x** (senaste versionen rekommenderas)
 * **NVIDIA CUDA och cuDNN** från JetPack 6 (`sudo apt install nvidia-jetpack` om din image saknar dem)
-* **Betald Chloros
-+-plan** — Copper-nivå eller högre (krävs för all åtkomst till CLI
-/SDK
-; tillämpas på serversidan)
+* **Betald Chloros+-plan** — Copper-nivå eller högre (krävs för all åtkomst till CLI/SDK; tillämpas på serversidan)
 
 ## Installation
 
@@ -48,15 +42,10 @@ python3 -c "import chloros_sdk; print(chloros_sdk.__version__)"   # the .deb ins
 chloros-cli selftest
 ```
 
-`.deb` installerar Python
--SDK
-:et för systemet `python3`, som matchar denna version. Endast en virtualenv behöver det medföljande wheel-paketet installerat: `pip install /usr/lib/chloros/sdk/chloros_sdk-*.whl` (helt offline). För allmän information om installation på Linux
-, filplatser och felsökning, se [Linux
--installation](linux-installation.md).
+`.deb` installerar Python-SDK:et för systemet `python3`, som matchar denna version. Endast en virtualenv behöver det medföljande wheel-paketet installerat: `pip install /usr/lib/chloros/sdk/chloros_sdk-*.whl` (helt offline). För allmän information om installation på Linux, filplatser och felsökning, se [Linux-installation](linux-installation.md).
 
 {% hint style="info" %}
-**Ingen uppackning vid start längre.** Från och med version 1.3.0 installeras backend och CLI
-, uppackade, under `/usr/lib/chloros/`, så de packas inte längre upp till en tillfällig katalog varje gång de startas. Tillfälliga filer placeras fortfarande automatiskt i `/mnt/ssd/tmp` om den mappen finns; annars kan du ställa in `TMPDIR` till en sökväg på din NVMe (`export TMPDIR=/mnt/nvme/tmp`).
+**Ingen uppackning vid start längre.** Från och med version 1.3.0 installeras backend och CLI, uppackade, under `/usr/lib/chloros/`, så de packas inte längre upp till en tillfällig katalog varje gång de startas. Tillfälliga filer placeras fortfarande automatiskt i `/mnt/ssd/tmp` om den mappen finns; annars kan du ställa in `TMPDIR` till en sökväg på din NVMe (`export TMPDIR=/mnt/nvme/tmp`).
 {% endhint %}
 
 ***
@@ -65,8 +54,7 @@ chloros-cli selftest
 
 ### Så fungerar det
 
-Vid uppstart skapar Chloros
-en profil av ditt system:
+Vid uppstart skapar Chloros en profil av ditt system:
 
 1. **Detekterar Jetson-modellen** via `/proc/device-tree/model`
 2. **Läser av tillgängligt delat GPU-/CPU-minne** (Jetson använder enhetligt minne)
@@ -110,13 +98,10 @@ För fullständig information om beräkningsanpassning, se [Dynamisk beräknings
 
 ## GPU-frekvensbegränsning för Texture Aware på Nano och Orin Nano
 
-Texture Aware-debayern kör inferens i ett neuralt nätverk på GPU:n, vilket kan utlösa **varningar om överström**på Jetson-modeller med låg effekt (10–15 W-klassen) vid full GPU-klockfrekvens. När du skickar `--debayer texture-aware` på en**Jetson Nano eller Orin Nano**, kontrollerar CLI
-:n GPU:ns maximala frekvens och begränsar den till **510 MHz** (510000000) om den för närvarande är högre:
+Texture Aware-debayern kör inferens i ett neuralt nätverk på GPU:n, vilket kan utlösa **varningar om överström**på Jetson-modeller med låg effekt (10–15 W-klassen) vid full GPU-klockfrekvens. När du skickar `--debayer texture-aware` på en**Jetson Nano eller Orin Nano**, kontrollerar CLI:n GPU:ns maximala frekvens och begränsar den till **510 MHz** (510000000) om den för närvarande är högre:
 
-* Om CLI
-:n kan skriva till sysfs-noden för GPU-frekvensen **tillämpas begränsningen automatiskt** och en bekräftelse visas.
-* Om inte (kräver root-behörighet) visar CLI
-:n det exakta kommandot `sudo` för att tillämpa begränsningen manuellt, väntar en stund så att du hinner läsa det och fortsätter sedan — bearbetningen pågår fortfarande men kan visa varningar om överström.
+* Om CLI:n kan skriva till sysfs-noden för GPU-frekvensen **tillämpas begränsningen automatiskt** och en bekräftelse visas.
+* Om inte (kräver root-behörighet) visar CLI:n det exakta kommandot `sudo` för att tillämpa begränsningen manuellt, väntar en stund så att du hinner läsa det och fortsätter sedan — bearbetningen pågår fortfarande men kan visa varningar om överström.
 
 Så här tillämpar du begränsningen själv före bearbetningen:
 
@@ -127,20 +112,18 @@ echo 510000000 | sudo tee /sys/devices/platform/bus@0/17000000.gpu/devfreq/17000
 Modeller med högre effekt (Orin NX 25W, AGX Orin 60W) körs med full GPU-hastighet; ingen begränsning tillämpas. Standard-debayern utlöser aldrig begränsningen på någon modell.
 
 {% hint style="info" %}
-**Texture Aware på Jetson kör alltid en bild i taget.** Varje arbetare skulle behöva sitt eget CUDA-kontext (~1 GB) plus sin egen kopia av brusreduceringsmodellen, vilket det enhetliga minnet inte klarar av — därför är Texture Aware-vägen på Jetson knuten till en enda arbetare med serialiserad GPU-åtkomst. Räkna med att Texture Aware är märkbart långsammare än Standard på alla Jetson-enheter. Texture Aware gäller för Survey3
--bilder: LATTICE-bilderna får alltid Standard-debayer. Utan en användbar CUDA-GPU använder körningen Standard, och backend-loggen visar en rad med koden `[DEBAYER] … needs a CUDA GPU …` som förklarar varför (visas tillsammans med `chloros-cli --verbose`).
+**Texture Aware på Jetson kör alltid en bild i taget.** Varje arbetare skulle behöva sitt eget CUDA-kontext (~1 GB) plus sin egen kopia av brusreduceringsmodellen, vilket det enhetliga minnet inte klarar av — därför är Texture Aware-vägen på Jetson knuten till en enda arbetare med serialiserad GPU-åtkomst. Räkna med att Texture Aware är märkbart långsammare än Standard på alla Jetson-enheter. Texture Aware gäller för Survey3-bilder: LATTICE-bilderna får alltid Standard-debayer. Utan en användbar CUDA-GPU använder körningen Standard, och backend-loggen visar en rad med koden `[DEBAYER] … needs a CUDA GPU …` som förklarar varför (visas tillsammans med `chloros-cli --verbose`).
 {% endhint %}
 
 ***
 
 ## Värmehantering
 
-Jetson-enheter har begränsat värmeutrymme, särskilt vid installationer i slutna utrymmen eller i luften. Chloros
-övervakar SoC-temperaturen och begränsar batchstorlekarna automatiskt:
+Jetson-enheter har begränsat värmeutrymme, särskilt vid installationer i slutna utrymmen eller i luften. Chloros övervakar SoC-temperaturen och begränsar batchstorlekarna automatiskt:
 
 | Temperatur         | Åtgärd                                            |
 | ------------------- | ------------------------------------------------- |
-| **&lt; 70 °C**          | Normal drift — full bearbetningshastighet          |
+| **< 70 °C**          | Normal drift — full bearbetningshastighet          |
 | **70 °C** (Varning)  | Batchstorleken minskas gradvis (100 % → 50 % mellan 70 °C och 80 °C) |
 | **80 °C** (Kritiskt) | Aggressiv begränsning (50 % → 0 % mellan 80 °C och 90 °C) |
 | **90 °C** (Avstängning) | Stoppa GPU-bearbetningen helt — nedkylning krävs |
@@ -157,8 +140,7 @@ Jetson-enheter använder **enhetligt minne** — GPU:n och CPU:n delar samma fys
 
 ### Varning och rekommendationer angående swap
 
-Innan bearbetning på Jetson påbörjas räknar CLI
-:n antalet RAW-bilder i din inmatningsmapp (`.tif`, `.tiff`, `.raw`, `.dng` — JPG-förhandsvisningar räknas inte med), uppskattar det maximala minnesbehovet för körningen och **varnar innan start** om RAM + swap sannolikt är otillräckligt. Varningen har rubriken `LOW MEMORY WARNING - Jetson Detected`, visar antalet bilder, RAM, aktuell swap och uppskattat toppbehov, och ger sedan de exakta kommandona `fallocate` / `chmod` / `mkswap` / `swapon` anpassade för ditt projekt (aldrig mindre än 8 GB). Den pausar några sekunder så att meddelandet inte försvinner i rullningsloggen, därefter fortsätter bearbetningen.**Minnesuppskattningar som används av varningen:**
+Innan bearbetning på Jetson påbörjas räknar CLI:n antalet RAW-bilder i din inmatningsmapp (`.tif`, `.tiff`, `.raw`, `.dng` — JPG-förhandsvisningar räknas inte med), uppskattar det maximala minnesbehovet för körningen och **varnar innan start** om RAM + swap sannolikt är otillräckligt. Varningen har rubriken `LOW MEMORY WARNING - Jetson Detected`, visar antalet bilder, RAM, aktuell swap och uppskattat toppbehov, och ger sedan de exakta kommandona `fallocate` / `chmod` / `mkswap` / `swapon` anpassade för ditt projekt (aldrig mindre än 8 GB). Den pausar några sekunder så att meddelandet inte försvinner i rullningsloggen, därefter fortsätter bearbetningen.**Minnesuppskattningar som används av varningen:**
 
 | Debayer-läge | Bas | Per bild |
 | --- | --- | --- |
@@ -188,8 +170,7 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 ### Hantering av OOM (Out of Memory)
 
-Under bearbetningen övervakar Chloros
-GPU-minnet och trappar ner prestandan smidigt istället för att krascha:
+Under bearbetningen övervakar Chloros GPU-minnet och trappar ner prestandan smidigt istället för att krascha:
 
 1. När GPU-minnesutnyttjandet överstiger **85 %** minskas batchstorlekarna förebyggande
 2. Om en minnesbrist ändå inträffar **halveras** batchstorleken, och halveras igen vid varje efterföljande OOM; varje efterföljande lyckad batch återställer den straffnivån ett steg
@@ -220,9 +201,7 @@ Planera din strömförbrukning för kontinuerlig bearbetning — den högsta str
 ### Headless-drift via SSH
 
 
-Chloros
-CLI
-är idealiskt för headless Jetson-installationer:
+Chloros CLI är idealiskt för headless Jetson-installationer:
 
 ```bash
 # SSH into the Jetson
@@ -237,16 +216,14 @@ chloros-cli export-status
 
 ### Alltid påslagen backend för LATTICE / DAQ-E-tidssynkronisering
 
-Om din Jetson styr LATTICE-kameror eller DAQ-E-ljussensorer utan skärm, aktivera backend-systemd-tjänsten **som din användare** så att PTP-grandmastern körs kontinuerligt och SDK
--skript hittar en körande backend (enheten är installerad men inte aktiverad som standard):
+Om din Jetson styr LATTICE-kameror eller DAQ-E-ljussensorer utan skärm, aktivera backend-systemd-tjänsten **som din användare** så att PTP-grandmastern körs kontinuerligt och SDK-skript hittar en körande backend (enheten är installerad men inte aktiverad som standard):
 
 ```bash
 sudo systemctl enable --now chloros-backend@$USER.service    # $USER expands to your user name
 chloros-cli time-sync status
 ```
 
-Backenden körs då som du: de inspelningar den skriver är dina, och den använder din `chloros-cli login`. Se [Linux
--installation](linux-installation.md#always-on-ptp-for-headless-hosts) för mer information, inklusive root-`chloros-backend.service` och hur paketet gör PTP-portarna 319/320 bindbara utan root-behörighet.
+Backenden körs då som du: de inspelningar den skriver är dina, och den använder din `chloros-cli login`. Se [Linux-installation](linux-installation.md#always-on-ptp-for-headless-hosts) för mer information, inklusive root-`chloros-backend.service` och hur paketet gör PTP-portarna 319/320 bindbara utan root-behörighet.
 
 ### Automatiserad bearbetning med systemd
 
@@ -306,9 +283,7 @@ chloros-cli process /data/flights/flight_042 \
     --indices NDVI GNDVI OSAVI
 ```
 
-### Python
--SDK
-på Jetson
+### Python-SDK på Jetson
 
 ```python
 from chloros_sdk import ChlorosLocal
@@ -352,26 +327,17 @@ För fält- och flygbaserade installationer bör du överväga följande alterna
 * **Krävande fältmiljö**: Vattentäta höljen enligt IP67/IP69K med PoE GigE-kameranslutning
 * **Minimal/budget**: Utvecklingskit med tillbehörshöljen
 
-Kontakta [MAPIR
--support](https://www.mapir.camera/community/contact) för specifika hårdvarurekommendationer för just ditt användningsscenario.
+Kontakta [MAPIR-support](https://www.mapir.camera/community/contact) för specifika hårdvarurekommendationer för just ditt användningsscenario.
 
 ***
 
 ## Nästa steg
 
-* [Linux
--installation](linux-installation.md) — Allmän information om Linux
--installation
+* [Linux-installation](linux-installation.md) — Allmän information om Linux-installation
 * [Dynamisk beräkningsanpassning](../processing-architecture/dynamic-compute-adaptation.md) — Fullständig referens för beräkningsstrategier
 * [Bearbetningspipeline](../processing-architecture/processing-pipeline.md) — Förstå den 4-trådiga pipelinen
 * [CLI: Kommandoraden](../CLI.md) — Guiden för CLI
 
-* [API
-: Python
-SDK
-](../api-python-sdk.md) — Guiden för SDK
+* [API: Python SDK](../api-python-sdk.md) — Guiden för SDK
 
-* [Referens för CLI
-](../reference/cli-reference.md) och [Referens för SDK
-](../reference/sdk-reference.md) — Utförliga listor över kommandon och API
-för version 1.3.0
+* [Referens för CLI](../reference/cli-reference.md) och [Referens för SDK](../reference/sdk-reference.md) — Utförliga listor över kommandon och API för version 1.3.0

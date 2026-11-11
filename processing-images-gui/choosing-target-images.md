@@ -159,7 +159,7 @@ Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Pr
 **Möjliga orsaker:**
 
 * Målbilderna är inte markerade i filbläddraren
-* Målet är för litet i bildrutan (&lt; 30 % av bilden)
+* Målet är för litet i bildrutan (< 30 % av bilden)
 * Dålig belysning (skuggor, bländning)
 * Inställningarna för måldetektering är för strikta
 

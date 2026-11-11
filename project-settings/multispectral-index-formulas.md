@@ -207,7 +207,7 @@ $$
 
 Skogsområden kommer att ha lägre FCI1-värden på grund av trädens lägre reflektans och förekomsten av skuggor inom trädkronorna.
 
-_Referens: Becker, Sarah J., Craig S.T. Daughtry och Andrew L. Russ. ”Robust forest cover indices for multispectral images.” Photogrammetric Engineering &amp; Remote Sensing 84.8 (2018): 505–512._
+_Referens: Becker, Sarah J., Craig S.T. Daughtry och Andrew L. Russ. ”Robust forest cover indices for multispectral images.” Photogrammetric Engineering & Remote Sensing 84.8 (2018): 505–512._
 
 ***
 
@@ -223,7 +223,7 @@ $$
 
 Skogsområden kommer att ha lägre FCI2-värden på grund av trädens lägre reflektans och förekomsten av skuggor inom trädkronorna.
 
-_Referens: Becker, Sarah J., Craig S.T. Daughtry och Andrew L. Russ. ”Robust forest cover indices for multispectral images.” Photogrammetric Engineering &amp; Remote Sensing 84.8 (2018): 505–512._
+_Referens: Becker, Sarah J., Craig S.T. Daughtry och Andrew L. Russ. ”Robust forest cover indices for multispectral images.” Photogrammetric Engineering & Remote Sensing 84.8 (2018): 505–512._
 
 ***
 
@@ -489,7 +489,7 @@ $$
 TDVI = 1.5 * {(NIR- Red) \over \sqrt{NIR^{2} + Red + 0.5}  }
 $$
 
-_Referens: Bannari, A., H. Asalhi och P. Teillet. ”Transformed Difference Vegetation Index (TDVI) for Vegetation Cover Mapping” I Proceedings of the Geoscience and Remote Sensing Symposium, IGARSS &#x27;02, IEEE International, volym 5 (2002)._
+_Referens: Bannari, A., H. Asalhi och P. Teillet. ”Transformed Difference Vegetation Index (TDVI) for Vegetation Cover Mapping” I Proceedings of the Geoscience and Remote Sensing Symposium, IGARSS '02, IEEE International, volym 5 (2002)._
 
 ***
 

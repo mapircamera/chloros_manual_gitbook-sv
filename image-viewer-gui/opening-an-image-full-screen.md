@@ -47,7 +47,7 @@ Klicka och håll ned vänster musknapp över bilden och dra. Panoreringen är be
 
 När den effektiva förstoringen överstiger **60×** ritar Chloros en markeringsruta runt den enskilda visade pixeln under markören och visar ett flytande värde bredvid den.
 
-&quot;Den ”effektiva” förstoringen räknar utifrån GSD-blockstorleken: med en blockstorlek på 8 visas markeringen vid 7,5× zoom istället för 60×, eftersom en visad pixel redan motsvarar 8 × 8 källpixlar. Zooma ut till under tröskelvärdet så försvinner markeringen.
+"Den ”effektiva” förstoringen räknar utifrån GSD-blockstorleken: med en blockstorlek på 8 visas markeringen vid 7,5× zoom istället för 60×, eftersom en visad pixel redan motsvarar 8 × 8 källpixlar. Zooma ut till under tröskelvärdet så försvinner markeringen.
 
 ### Tangentbordsgenvägar
 

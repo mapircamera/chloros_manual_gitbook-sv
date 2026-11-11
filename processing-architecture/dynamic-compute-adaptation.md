@@ -1,17 +1,14 @@
 # Dynamisk anpassning av beräkningskapacitet
 
-Chloros
-1.3.0 använder hårdvaruavkänning och automatiskt val av bearbetningsstrategi. Bearbetningsmotorn anpassar sig till din hårdvara – från en Jetson Orin Nano till en arbetsstation med flera GPU:er – utan någon manuell konfiguration.
+Chloros 1.3.0 använder hårdvaruavkänning och automatiskt val av bearbetningsstrategi. Bearbetningsmotorn anpassar sig till din hårdvara – från en Jetson Orin Nano till en arbetsstation med flera GPU:er – utan någon manuell konfiguration.
 
 ***
 
 ## Så här fungerar det
 
-När Chloros
-startar profilerar det ditt system:
+När Chloros startar profilerar det ditt system:
 
-1. **Upptäcker operativsystemet** – Windows
-eller Linux
+1. **Upptäcker operativsystemet** – Windows eller Linux
 2. **Identifierar CPU-kärnor och totalt RAM-minne**
 
 3.**Upptäcker förekomst av GPU** – NVIDIA CUDA-kapacitet, VRAM, modell
@@ -24,19 +21,16 @@ Den upptäckta profilen cachelagras för sessionen i minnet och på disken, så 
 
 | Plattform | Cachelagrad profil |
 | --- | --- |
-| **Linux
-/ Jetson** | `~/.config/chloros/system_config.json` (prioriterar `XDG_CONFIG_HOME`) |
+| **Linux / Jetson** | `~/.config/chloros/system_config.json` (prioriterar `XDG_CONFIG_HOME`) |
 | **Windows** | `%LOCALAPPDATA%\Chloros\config\system_config.json` |
 
-Ta bort den filen för att tvinga fram en ny detektering — användbart efter att du har lagt till en GPU eller mer RAM-minne. Chloros
-utför också automatiskt en ny detektering när cachen har skrivits av en inkompatibel äldre version.
+Ta bort den filen för att tvinga fram en ny detektering — användbart efter att du har lagt till en GPU eller mer RAM-minne. Chloros utför också automatiskt en ny detektering när cachen har skrivits av en inkompatibel äldre version.
 
 ***
 
 ## Beräkningsstrategier
 
-Chloros
-väljer en av tre beräkningsstrategier baserat på din hårdvara:
+Chloros väljer en av tre beräkningsstrategier baserat på din hårdvara:
 
 | Strategi | Väljs när | Arbetare | Exekverare | Pipeline |
 | --- | --- | --- | --- | --- |
@@ -50,11 +44,7 @@ Exempel på hur formeln för antalet arbetare (`GPU_PARALLEL`) fungerar: 12 GB V
 **GPU-strategierna kräver en PyTorch-version som kan använda CUDA.** En maskin vars PyTorch inte har någon användbar CUDA-enhet tilldelas `CPU_PARALLEL`, oavsett vilken GPU den har. Jetson-paketet 1.3.0 använder JetPack 6:s CUDA-version av PyTorch, så en Jetson uppfyller kraven så snart JetPacks CUDA- och cuDNN-bibliotek har installerats. En Jetson med mindre än 12 GB RAM bearbetar alltid en bild i taget, i processen (loggas som `GPU_SINGLE`).
 {% endhint %}
 
-GPU-strategier kör en pool av arbetsprocesser, var och en en separat OS-process med sitt eget CUDA-kontext, vilket Chloros
-startar genom att återigen köra sitt eget installerade backend-program (inte via Python
-s `multiprocessing`, vars start av arbetsprocesser inte fungerar inuti den paketerade applikationen). CPU-strategin använder en trådpool (Python
-s `ThreadPoolExecutor`). Chloros
-använder inget distribuerat ramverk från tredje part (såsom Ray).
+GPU-strategier kör en pool av arbetsprocesser, var och en en separat OS-process med sitt eget CUDA-kontext, vilket Chloros startar genom att återigen köra sitt eget installerade backend-program (inte via Pythons `multiprocessing`, vars start av arbetsprocesser inte fungerar inuti den paketerade applikationen). CPU-strategin använder en trådpool (Pythons `ThreadPoolExecutor`). Chloros använder inget distribuerat ramverk från tredje part (såsom Ray).
 
 ### Pipelinityper
 
@@ -75,8 +65,7 @@ Ställ in miljövariabeln `CHLOROS_STRATEGY` för att tvinga fram en specifik st
 CHLOROS_STRATEGY=CPU_PARALLEL chloros-cli process ~/datasets/flight001
 ```
 
-Variabeln matchas utan hänsyn till versaler och gemener; allt som inte är ett av de tre namnen ignoreras och den automatiska detekteringen fortsätter som vanligt. Vid en överskrivning väljer Chloros
-fortfarande antalet arbetare åt dig:
+Variabeln matchas utan hänsyn till versaler och gemener; allt som inte är ett av de tre namnen ignoreras och den automatiska detekteringen fortsätter som vanligt. Vid en överskrivning väljer Chloros fortfarande antalet arbetare åt dig:
 
 | Överskrivning | Antal arbetare som används |
 | --- | --- |
@@ -124,8 +113,7 @@ Diskreta GPU:er reserverar endast 0,5 GB för systemet, eftersom de inte delar s
 
 ## Dynamisk tilldelning av GPU-minne
 
-Chloros
-använder en [bearbetningspipeline med 4 trådar](processing-pipeline.md):
+Chloros använder en [bearbetningspipeline med 4 trådar](processing-pipeline.md):
 
 * **Tråd 1** (Detektering) — Bildinläsning, EXIF-analys, måldetektering
 * **Tråd 2** (Kalibrering) — Beräkning av reflektanskalibrering
@@ -152,26 +140,23 @@ Det värde som faktiskt används vid körning är det **lägsta** av plattformsp
 
 ## Texturmedveten bearbetning
 
-Den texturmedvetna debayern (**endast Chloros
-+** — `--debayer texture-aware`) kör en AI/ML-brusreduceringsmodell som behöver ungefär 1,75 GB VRAM i FP16 per kopia, så den använder betydligt mer GPU-minne än standardmetoden:
+Den texturmedvetna debayern (**endast Chloros+** — `--debayer texture-aware`) kör en AI/ML-brusreduceringsmodell som behöver ungefär 1,75 GB VRAM i FP16 per kopia, så den använder betydligt mer GPU-minne än standardmetoden:
 
 * System med **mindre än 7 GB VRAM**bearbetar texturmedveten bearbetning i en**synkron slinga, en bild i taget** – flera modellkopior får inte plats, och en arbetspool skulle bara öka konkurrensen
 * System med **7 GB eller mer VRAM** kan bearbeta Texture Aware samtidigt, dock med ett lägre antal arbetare jämfört med standardmetoden
 * På **Jetson** är Texture Aware alltid knuten till en enda arbetare
 * Om det **inte finns någon användbar CUDA-GPU** använder körningen Standard-debayern, och backend-loggen visar en rad med koden `[DEBAYER] … needs a CUDA GPU …` som förklarar varför
-* På Jetson-enheter med låg strömförbrukning (Nano, Orin Nano) tillämpar CLI
-:n en GPU-frekvensbegränsning när du begär Texture Aware — se [NVIDIA Jetson-guiden](../linux/nvidia-jetson-guide.md#gpu-frequency-cap-for-texture-aware-on-nano-and-orin-nano)
+* På Jetson-enheter med låg strömförbrukning (Nano, Orin Nano) tillämpar CLI:n en GPU-frekvensbegränsning när du begär Texture Aware — se [NVIDIA Jetson-guiden](../linux/nvidia-jetson-guide.md#gpu-frequency-cap-for-texture-aware-on-nano-and-orin-nano)
 
 ***
 
 ## Värmehantering (Jetson)
 
-Jetson-enheter har termiska begränsningar, särskilt vid installationer i slutna utrymmen eller i flygplan. Chloros
-övervakar Jetsons inbyggda temperatursensorer och skalar batchstorlekarna automatiskt:
+Jetson-enheter har termiska begränsningar, särskilt vid installationer i slutna utrymmen eller i flygplan. Chloros övervakar Jetsons inbyggda temperatursensorer och skalar batchstorlekarna automatiskt:
 
 | Temperatur | Reaktion |
 | --- | --- |
-| **&lt; 70 °C** | Normal drift – full hastighet |
+| **< 70 °C** | Normal drift – full hastighet |
 | **70 °C** (Varning) | Batchstorleken minskas gradvis (100 % → 50 % mellan 70 °C och 80 °C) |
 | **80 °C** (Kritiskt) | Aggressiv avreglering (50 % → 0 % mellan 80 °C och 90 °C) |
 | **90 °C** (Avstängning) | Stoppa GPU-bearbetningen helt |
@@ -182,11 +167,9 @@ På stationära system med tillräcklig kylning utlöses termisk strypning säll
 
 ## Hantering av minnesbelastning
 
-Chloros
-övervakar GPU-minnet kontinuerligt under bearbetningen och reagerar på tre nivåer.
+Chloros övervakar GPU-minnet kontinuerligt under bearbetningen och reagerar på tre nivåer.
 
-**Batchstorlek.** En batch börjar med 8 bilder gånger plattformsmultiplikatorn från tabellerna ovan. Chloros
-kontrollerar sedan ledigt VRAM, reserverar 20 % av det för PyTorchs egen overhead och antar ungefär 100 MB GPU-minne per 12 MP-bild — batchen är den som är minst av de två, antingen den minnesbaserade gränsen eller plattformsbasen. Den sjunker aldrig under 1.
+**Batchstorlek.** En batch börjar med 8 bilder gånger plattformsmultiplikatorn från tabellerna ovan. Chloros kontrollerar sedan ledigt VRAM, reserverar 20 % av det för PyTorchs egen overhead och antar ungefär 100 MB GPU-minne per 12 MP-bild — batchen är den som är minst av de två, antingen den minnesbaserade gränsen eller plattformsbasen. Den sjunker aldrig under 1.
 
 **Förebyggande minskning.**Vid**över 85 % VRAM-utnyttjande** minskas batchstorlekarna innan något går fel.**Begränsning av tilldelningen per tråd.** När den aktuella utnyttjandegraden stiger skalas varje tråds GPU-budget ned: ×0,75 vid över 80 % utnyttjande, ×0,5 vid över 90 %. Övervakningsintervallen är 70 % (konservativt), 85 % (normal driftsgräns) och 95 % (risk för OOM).**OOM-backoff och återställning.** Om en minnesbrist ändå inträffar:
 
@@ -194,8 +177,7 @@ kontrollerar sedan ledigt VRAM, reserverar 20 % av det för PyTorchs egen overhe
 * aktiva trådstilldelningar minskas till 70 % av sitt aktuella värde och tilldelningsmodulen övergår till sin konservativa strategi, för att sedan återgå till normal nivå efter en serie lyckade tilldelningar
 * vid kraftig belastning övergår pipelinen från `fused_gpu` till `tiled_gpu`, och till `cpu_fallback` som en sista utväg
 
-**Värd-RAM (Jetson).** Innan bearbetningen påbörjas uppskattar CLI
--verktyget värdminnets toppvärde utifrån antalet bilder och debayer-läget och varnar om RAM-minnet plus filbaserad swap sannolikt är otillräckligt, samtidigt som det visar de exakta kommandona för att lägga till swap — se [NVIDIA Jetson-guiden](../linux/nvidia-jetson-guide.md#swap-warning-and-recommendations).
+**Värd-RAM (Jetson).** Innan bearbetningen påbörjas uppskattar CLI-verktyget värdminnets toppvärde utifrån antalet bilder och debayer-läget och varnar om RAM-minnet plus filbaserad swap sannolikt är otillräckligt, samtidigt som det visar de exakta kommandona för att lägga till swap — se [NVIDIA Jetson-guiden](../linux/nvidia-jetson-guide.md#swap-warning-and-recommendations).
 
 ***
 
@@ -219,21 +201,17 @@ Kontroll 7 visar `CUDA: <bool>, Denoiser: <bool>` — båda måste vara sanna f�
 
 ### Backend-loggar
 
-Strategin och antalet arbetare väljs inuti backend vid starten av varje körning — det finns ingen CLI
--banner som visar dessa. När något beter sig oväntat (en GPU-väg som faller tillbaka, ett OOM, en brusreducerare som inte går att ladda) är det i backend-loggen för den sessionen som det syns:
+Strategin och antalet arbetare väljs inuti backend vid starten av varje körning — det finns ingen CLI-banner som visar dessa. När något beter sig oväntat (en GPU-väg som faller tillbaka, ett OOM, en brusreducerare som inte går att ladda) är det i backend-loggen för den sessionen som det syns:
 
 | Plattform | Loggplats |
 | --- | --- |
-| **Linux
-/Jetson** | `~/.cache/chloros/logs/backend_<YYYYMMDD_HHMMSS>.log` (en fil per start) |
-| **Linux
-, backend startad via CLI** | även `~/.chloros/backend.log` |
+| **Linux/Jetson** | `~/.cache/chloros/logs/backend_<YYYYMMDD_HHMMSS>.log` (en fil per start) |
+| **Linux, backend startad via CLI** | även `~/.chloros/backend.log` |
 | **Windows** | `%LOCALAPPDATA%\Chloros\logs\` |
 
 ### Förlopp i realtid
 
-Under en körning visar CLI
-:n realtidsförlopp per tråd (Detektering, Analys, Bearbetning, Export) som strömmas via Server-Sent Events — det praktiska sättet att avgöra om tråd 3 är flaskhalsen. Se [Bearbetningspipeline](processing-pipeline.md).
+Under en körning visar CLI:n realtidsförlopp per tråd (Detektering, Analys, Bearbetning, Export) som strömmas via Server-Sent Events — det praktiska sättet att avgöra om tråd 3 är flaskhalsen. Se [Bearbetningspipeline](processing-pipeline.md).
 
 ***
 
@@ -241,8 +219,6 @@ Under en körning visar CLI
 
 * [Bearbetningspipeline](processing-pipeline.md) — Förstå arkitekturen för den 4-trådiga pipelinen
 * [NVIDIA Jetson-guide](../linux/nvidia-jetson-guide.md) — Jetson-specifik driftsättning och optimering
-* [CLI
-: Kommandorad](../CLI.md) — Guiden för CLI
+* [CLI: Kommandorad](../CLI.md) — Guiden för CLI
 
-* [CLI
--referens](../reference/cli-reference.md) — Utförlig kommandolista för version 1.3.0
+* [CLI-referens](../reference/cli-reference.md) — Utförlig kommandolista för version 1.3.0

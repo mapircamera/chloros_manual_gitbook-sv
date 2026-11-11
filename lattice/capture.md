@@ -26,28 +26,10 @@ Tre lägesknappar högst upp i fönstret:
 | **Kontinuerlig**| Inspelningar i följd tills ett stoppvillkor uppfylls. | Avbryt vid**antal bilder** (standard 1) *eller* **bildtagningstid** (standard 10 s; enheter: sekunder / minuter / timmar / dagar). |
 | **Intervall**(timelapse) | Bildserier enligt en timer. |**Bilder per intervall**(standard 1) ·**Var**N enheter (standard 5 s) ·**I** N enheter (standard 1 m). |
 
-I läget Kontinuerligt eller Intervall förvandlas knappen Ta alla bilder till en **Stopp (N)**-knapp under körning, och räknar bilderna allteftersom de tas. En fullständig enhet avbryter körningen (se [Flödet för ”Capture All”](#the-capture-all-flow)).**Kontinuerligt läge på arrayer körs i backend (nytt i 1.3.0).** När alla kameror i listan tillhör en array (fristående kameror är dolda eller exkluderade) skickar kontinuerligt läge inte längre en begäran per inspelning: Chloros
-
--backend kör själva inspelningsslingan, skriver en synkroniserad grupp medan den väljer nästa, och knappen avläser antalet. Med fristående kameror i listan gör Chloros
-
-inspelningar pass för pass som tidigare.
+I läget Kontinuerligt eller Intervall förvandlas knappen Ta alla bilder till en **Stopp (N)**-knapp under körning, och räknar bilderna allteftersom de tas. En fullständig enhet avbryter körningen (se [Flödet för ”Capture All”](#the-capture-all-flow)).**Kontinuerligt läge på arrayer körs i backend (nytt i 1.3.0).** När alla kameror i listan tillhör en array (fristående kameror är dolda eller exkluderade) skickar kontinuerligt läge inte längre en begäran per inspelning: Chloros-backend kör själva inspelningsslingan, skriver en synkroniserad grupp medan den väljer nästa, och knappen avläser antalet. Med fristående kameror i listan gör Chloros inspelningar pass för pass som tidigare.
 
 {% hint style="warning" %}
-**Snabb inspelning på Windows
-
-: se till att Chloros
-
--backend hålls undantagen från Microsoft Defender.** Realtidsskanning av varje fil som en inspelning med hög hastighet skriver kostar cirka 30 % av inspelningshastigheten i MAPIR
-
-s tester (hundratals filer per sekund vid ett litet ROI). Windows
-
--installationsprogrammet erbjuder alternativet **”Uteslut Chloros
-
--backend från Microsoft Defender-skanning (mycket snabbare kamerafångst; rekommenderas)”**, som är markerat som standard, och tar bort undantaget vid avinstallation. Om du har avmarkerat det, kör installationsprogrammet igen med alternativet markerat, eller lägg till ett undantag för Defender-processen för `chloros-backend.exe` (i mappen `backend` i Chloros
-
--installationsmappen). När Defender använder en eller flera CPU-kärnor under en matris kontinuerlig inspelning noterar Chloros
-
--backend detta en gång i sin logg, med samma två åtgärder.
+**Snabb inspelning på Windows: se till att Chloros-backend hålls undantagen från Microsoft Defender.** Realtidsskanning av varje fil som en inspelning med hög hastighet skriver kostar cirka 30 % av inspelningshastigheten i MAPIRs tester (hundratals filer per sekund vid ett litet ROI). Windows-installationsprogrammet erbjuder alternativet **”Uteslut Chloros-backend från Microsoft Defender-skanning (mycket snabbare kamerafångst; rekommenderas)”**, som är markerat som standard, och tar bort undantaget vid avinstallation. Om du har avmarkerat det, kör installationsprogrammet igen med alternativet markerat, eller lägg till ett undantag för Defender-processen för `chloros-backend.exe` (i mappen `backend` i Chloros-installationsmappen). När Defender använder en eller flera CPU-kärnor under en matris kontinuerlig inspelning noterar Chloros-backend detta en gång i sin logg, med samma två åtgärder.
 {% endhint %}
 
 <!-- SCREENSHOT-NEEDED: the capture-mode area of Capture Settings with Interval selected — showing the "Captures / interval", "Every N (unit)" and "For N (unit)" rows with their defaults (1, 5 s, 1 m). -->
@@ -67,26 +49,16 @@ Hjälptexten i rutan sammanfattar det: välj vilka kameror och exporttyper som �
 
 Det finns sex exporttyper: **Raw, Debayered, Radiance, Reflectance, Preview, Index**. Endast de tillämpliga visas i varje kameras rad:
 
-| Exporttyp | Innehåll | RGB
-
-(FRGB) | Bayer-multispektral (FRGN/FOCN/FNGB) | Mono (M3M) |
+| Exporttyp | Innehåll | RGB (FRGB) | Bayer-multispektral (FRGN/FOCN/FNGB) | Mono (M3M) |
 | --- | --- | --- | --- | --- |
 | **Raw** | Bayer-mosaik (mono: det enda bandet) direkt från sensorn | ✓ | ✓ | ✓ |
-| **Debayered** | Linjär demosaik: kalibreringspaketets mörkförskjutning (DSNU) avlägsnas från rådata, därefter utförs en kantmedveten demosaik — ingen linearitetskorrigering, flat field eller unmix. Sparas som en 3-kanals RGB
-
--TIFF
-
--fil (mono: 1-kanals gråskala) | ✓ | ✓ | ✓ |
-| **Förhandsgranskning** | Fullständig visningskedja (vitbalans + gamma enligt kamerans profil, plus RGB
-
--kamerans inställning för höjdpunkter; multispektral: sträckning med falska färger) | ✓ | ✓ | ✓ |
+| **Debayered** | Linjär demosaik: kalibreringspaketets mörkförskjutning (DSNU) avlägsnas från rådata, därefter utförs en kantmedveten demosaik — ingen linearitetskorrigering, flat field eller unmix. Sparas som en 3-kanals RGB-TIFF-fil (mono: 1-kanals gråskala) | ✓ | ✓ | ✓ |
+| **Förhandsgranskning** | Fullständig visningskedja (vitbalans + gamma enligt kamerans profil, plus RGB-kamerans inställning för höjdpunkter; multispektral: sträckning med falska färger) | ✓ | ✓ | ✓ |
 | **Strålningsintensitet** | float32 W/m²/sr/nm via den fullständiga radiometriska kedjan | — (erbjuds inte) | ✓ | ✓ |
 | **Reflektans** | uint16 ρ (32768 = 1,0) | — (erbjuds inte) | ✓ — visas endast när kameran har en DAQ-ljussensor (egen eller ärvd från sin matris) | samma som multispektral |
 | **Index** | Vegetationsindex (LUT) -rendering | — | ✓ — kräver ett aktiverat, icke-tomt indexuttryck på kameran och erbjuds inte till medlemmar i kombinerade matriser (matrisen har ett gemensamt index) | — (ett index kräver ≥2 band; se [Monokameror och vegetationsindex](mono-indices.md)) |
 
-Strålning och reflektans erbjuds aldrig för RGB
-
--kameror — strålning per Bayer-pixel är inte meningsfull för en bredbandsfotometrisk sensor.
+Strålning och reflektans erbjuds aldrig för RGB-kameror — strålning per Bayer-pixel är inte meningsfull för en bredbandsfotometrisk sensor.
 
 ### Snabbaste inspelning
 
@@ -151,15 +123,11 @@ Inspelningarna sparas under det öppna projektet i mappen `<project>/captures/`.
 * **En avvikelse att känna till:** visningsnivån lagras i en mapp med namnet `preview/` medan filerna behåller `_display` i namnet — mapp och suffix skiljer sig åt endast för den nivån.
 * Okända nivåer placeras i en mapp med sitt eget namn; om en undermapp inte kan skapas skrivs filen till rotkatalogen för inspelningarna istället för att gå förlorad.
 * Inspelnings-TIFF-filer komprimeras som standard förlustfritt (DEFLATE) och innehåller alla metadata om kalibrering och bearbetning **inuti filens XMP** — bilderna är självbeskrivande och har inga sidfiler utöver filen `.daq` (och dess `.daq.cameras.json`).
-* **Klämmasker (nytt i 1.3.0).**Där den spektrala 3×3-separeringen var tvungen att klämma fast ett band till 0 på minst en pixel, får produkterna för strålningsintensitet, reflektans och index en mask per pixel, `clamp_masks/<product folder>/<product name>_clampmask.tif` (bit 0 = bandet i produktens R-kanal, bit 1 = G, bit 2 = B); produktens `Chloros:UnmixClampMask` XMP-tagg pekar på den. Maskerna finns**bredvid** produktmapparna, aldrig inuti någon, så en produktmapp som `reflectance/` kan överlämnas till fotogrammetriprogramvaran som den är. Chloros
-
-egen import hoppar över maskerna.
+* **Klämmasker (nytt i 1.3.0).**Där den spektrala 3×3-separeringen var tvungen att klämma fast ett band till 0 på minst en pixel, får produkterna för strålningsintensitet, reflektans och index en mask per pixel, `clamp_masks/<product folder>/<product name>_clampmask.tif` (bit 0 = bandet i produktens R-kanal, bit 1 = G, bit 2 = B); produktens `Chloros:UnmixClampMask` XMP-tagg pekar på den. Maskerna finns**bredvid** produktmapparna, aldrig inuti någon, så en produktmapp som `reflectance/` kan överlämnas till fotogrammetriprogramvaran som den är. Chloros egen import hoppar över maskerna.
 * **Orientering (1.3.0).** En fristående kameras Preview-, Radiance-, Reflectance- och Index-produkter roteras enligt inställningen för spegling/rotation; Raw- och Debayered-filerna förblir som sensorn läste in dem. Alla filer i arrayen förblir i sitt ursprungliga format. Varje fil lagrar inställningen i sin XMP, så vid ombearbetning tillämpas den på samma sätt.
 * **Vilken kamera en `.daq` tillhör (1.3.0).** En bilds `.daq` matchas, vid bearbetningstillfället, endast med bilder från de kameror som dess `.daq.cameras.json` namnger. En fristående kamera utan egen ljussensor lånar därför inte längre avläsningar från en annan kamera – koppla en sensor till den eller registrera en i fliken Ljussensorer. En ljussensorregistrering (och alla `.daq` utan den filen, inklusive äldre inspelningar) fungerar fortfarande för alla kameror.
 
-Detta är samma struktur som `chloros-cli lattice capture` / `array-capture` skriver till sin `-o`-katalog — dokumenterad i [CLI
-
--referens § Hur en inspelningsmapp ser ut](../reference/cli-reference.md#what-a-captures-folder-looks-like).
+Detta är samma struktur som `chloros-cli lattice capture` / `array-capture` skriver till sin `-o`-katalog — dokumenterad i [CLI-referens § Hur en inspelningsmapp ser ut](../reference/cli-reference.md#what-a-captures-folder-looks-like).
 
 <!-- SCREENSHOT-NEEDED: OS file explorer showing a real <project>/captures/ folder after a multi-level array capture — the raw/debayered/radiance/reflectance/preview subfolders, the daq/ and clamp_masks/ folders, and sync_<ts>_SN<serial>_<level>.tif filenames visible inside one subfolder. -->
 
@@ -179,11 +147,7 @@ chloros-cli process "C:/ChlorosProjects/MyField/captures"
 Att namnge en undermapp på en nivå direkt (t.ex. `…/captures/raw/`) fungerar också, men lämnar mappen `daq/` kvar – kopiera den vid sidan av när du-härleder en radiometrisk produkt från `raw/`, annars har tidsstämpeln inget att jämföra mot.
 
 {% hint style="warning" %}
-**Bearbetningen börjar alltid från `raw`.** Inom varje inspelning är den obearbetade bilden källan till bearbetningskedjan; `debayered`, `radiance`, `reflectance`, och `preview` förekommer som visningslägen men matas aldrig tillbaka genom pipelinen – att återbearbeta en härledd produkt skulle innebära att vignettering, färg och strålningsberäkningar som redan är inbakade i dess pixlar tillämpas på nytt, så Chloros
-
--algoritmen avstår hellre än att utföra dubbelbearbetning. Renderingarna `index/` och `composite/` bearbetas aldrig alls (de är utdata, inte inspelningar). En mapp med inspelningar som sparats **utan** råimport visas normalt, men `process` hoppar över den och meddelar detta; `--input-level {raw,debayered,processed}` är den avsiktliga nödutgången som tvingar fram en ingångspunkt. Se [CLI
-
--referensen](../reference/cli-reference.md#what-a-captures-folder-looks-like) för de exakta meddelandena om hopp.
+**Bearbetningen börjar alltid från `raw`.** Inom varje inspelning är den obearbetade bilden källan till bearbetningskedjan; `debayered`, `radiance`, `reflectance`, och `preview` förekommer som visningslägen men matas aldrig tillbaka genom pipelinen – att återbearbeta en härledd produkt skulle innebära att vignettering, färg och strålningsberäkningar som redan är inbakade i dess pixlar tillämpas på nytt, så Chloros-algoritmen avstår hellre än att utföra dubbelbearbetning. Renderingarna `index/` och `composite/` bearbetas aldrig alls (de är utdata, inte inspelningar). En mapp med inspelningar som sparats **utan** råimport visas normalt, men `process` hoppar över den och meddelar detta; `--input-level {raw,debayered,processed}` är den avsiktliga nödutgången som tvingar fram en ingångspunkt. Se [CLI-referensen](../reference/cli-reference.md#what-a-captures-folder-looks-like) för de exakta meddelandena om hopp.
 {% endhint %}
 
 Ytterligare två beteenden som är värda att känna till vid skriptning av ombearbetning:
@@ -197,9 +161,7 @@ Ytterligare två beteenden som är värda att känna till vid skriptning av ombe
 
 Allt på denna sida kan köras utan grafiskt gränssnitt. GUI-inspelningslägena motsvarar direkt `chloros-cli lattice array-capture`:
 
-| GUI | CLI
-
-|
+| GUI | CLI |
 | --- | --- |
 | Enstaka | `chloros-cli lattice array-capture` |
 | Kontinuerlig | `array-capture --continuous [--count N] [--duration S]` |
@@ -210,6 +172,4 @@ Allt på denna sida kan köras utan grafiskt gränssnitt. GUI-inspelningslägena
 | Spela in indexvideo | `chloros-cli lattice array-record` |
 | Spela in rå bildserie / Skapa video | `chloros-cli lattice array-burst` / `array-build-video` |
 
-Fullständiga flaggtabeller, alternativet för smart-AE-stabiliserad inspelning (`--smart`) och modellen för kontinuerlig hastighet finns i [CLI
-
--referens § Inspelningslägen, inspelningsenheter och offline-bearbetning](../reference/cli-reference.md#capture-modes-recorders--offline-reprocess).
+Fullständiga flaggtabeller, alternativet för smart-AE-stabiliserad inspelning (`--smart`) och modellen för kontinuerlig hastighet finns i [CLI-referens § Inspelningslägen, inspelningsenheter och offline-bearbetning](../reference/cli-reference.md#capture-modes-recorders--offline-reprocess).

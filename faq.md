@@ -27,15 +27,9 @@ Ja. Chloros 1.3.0 stöder LATTICE M3C- och M3M-kameramoduler från början till 
 
 <summary>Kan jag kalibrera mina bilder för reflektans utan ett kalibreringsmål?</summary>
 
-**Survey3
+**Survey3:** Nej. Utan en bild av kalibreringsmålet som tagits i samband med att bilderna utan målet togs kommer du inte att kunna koppla bildens pixelvärden till en känd reflektansprocent. Om du dessutom inte inkluderar loggen från en MAPIR-ljussensor kommer omgivningsljusets spektrum inte att mätas, och reflektansresultaten blir inte korrekta.
 
-:** Nej. Utan en bild av kalibreringsmålet som tagits i samband med att bilderna utan målet togs kommer du inte att kunna koppla bildens pixelvärden till en känd reflektansprocent. Om du dessutom inte inkluderar loggen från en MAPIR
-
--ljussensor kommer omgivningsljusets spektrum inte att mätas, och reflektansresultaten blir inte korrekta.
-
-**LATTICE:** Ja. Reflektansen kan relateras till den nedåtriktade irradians som mäts av en DAQ-ljussensor istället för en panel (ρ = π·L/E). När ett QA-godkänt mål *finns* i bildramen blir det som standard den absoluta referensen (`--reflectance-source auto`), såvida det inte godkänns med en flagga, då målet och DAQ-kedjorna konkurrerar om det uppmätta poängtalet. Ett undantag: ”F988-reflektansen kalibreras med hjälp av en reflektanspanel i scenen: bandet ligger utanför DAQ-ljussensorns kalibrerade område, så Chloros
-
-tillämpar din senaste panelavläsning och behåller den mellan panelavläsningarna.” Se [Kalibreringsmål](calibration-targets.md).
+**LATTICE:** Ja. Reflektansen kan relateras till den nedåtriktade irradians som mäts av en DAQ-ljussensor istället för en panel (ρ = π·L/E). När ett QA-godkänt mål *finns* i bildramen blir det som standard den absoluta referensen (`--reflectance-source auto`), såvida det inte godkänns med en flagga, då målet och DAQ-kedjorna konkurrerar om det uppmätta poängtalet. Ett undantag: ”F988-reflektansen kalibreras med hjälp av en reflektanspanel i scenen: bandet ligger utanför DAQ-ljussensorns kalibrerade område, så Chloros tillämpar din senaste panelavläsning och behåller den mellan panelavläsningarna.” Se [Kalibreringsmål](calibration-targets.md).
 
 </details>
 
@@ -43,9 +37,7 @@ tillämpar din senaste panelavläsning och behåller den mellan panelavläsninga
 
 <summary>Behöver jag en DAQ-ljussensor?</summary>
 
-Inte för strålning: LATTICE-strålningsdata exporteras från varje kameras fabriksradiometriska kalibrering och kräver varken en DAQ-sensor eller ett mål. För **reflektans**behöver du en referens för omgivningsljuset – antingen en DAQ-ljussensors nedåtriktade mätning eller ett kalibreringsmål i bildrutan. Med en DAQ-sensor kan du ta fram kalibrerad reflektans**utan att placera några paneler i scenen**. Inspelade `.daq`-filer matchas automatiskt med dina bilder utifrån tidsstämpeln. Se [Kalibreringsmål](calibration-targets.md) och [CLI
-
--referensen](reference/cli-reference.md).
+Inte för strålning: LATTICE-strålningsdata exporteras från varje kameras fabriksradiometriska kalibrering och kräver varken en DAQ-sensor eller ett mål. För **reflektans**behöver du en referens för omgivningsljuset – antingen en DAQ-ljussensors nedåtriktade mätning eller ett kalibreringsmål i bildrutan. Med en DAQ-sensor kan du ta fram kalibrerad reflektans**utan att placera några paneler i scenen**. Inspelade `.daq`-filer matchas automatiskt med dina bilder utifrån tidsstämpeln. Se [Kalibreringsmål](calibration-targets.md) och [CLI-referensen](reference/cli-reference.md).
 
 </details>
 
@@ -143,9 +135,7 @@ Om du i filbläddrarens tabell förväljer målbilderna i den högra kolumnen ko
 
 <summary>Om jag ska ladda upp mina bilder till <a href="https://www.mapir.camera/collections/software/products/mapir-cloud-subscription">MAPIR Cloud,</a> bör jag då bearbeta dem i Chloros innan uppladdningen?</summary>
 
-Om du planerar att ladda upp till vår onlinebehandlingsplattform [MAPIR
-
-Cloud](https://www.mapir.camera/collections/software/products/mapir-cloud-subscription) ska du inte redigera bilderna innan du laddar upp dem. Cloud utför samma bearbetning och mer därtill.
+Om du planerar att ladda upp till vår onlinebehandlingsplattform [MAPIR Cloud](https://www.mapir.camera/collections/software/products/mapir-cloud-subscription) ska du inte redigera bilderna innan du laddar upp dem. Cloud utför samma bearbetning och mer därtill.
 
 </details>
 
@@ -185,9 +175,7 @@ Ja! Chloros innehåller [Dynamic Compute Adaptation](processing-architecture/dyn
 
 <summary>Vad är bearbetningspipeline med 4 trådar?</summary>
 
-Chloros
-använder en 4-trådig pipelinerad arkitektur för Chloros
-+-användare: Tråd 1 (Detektering) laddar bilder och detekterar kalibreringsmål, Tråd 2 (Kalibrering) beräknar reflektanskalibrering, Tråd 3 (Bearbetning) utför GPU-accelererad debayering och indexberäkning, och Tråd 4 (Export) skriver utdatafiler. Flera bilder kan befinna sig i olika trådar samtidigt för maximal genomströmning. Se [Bearbetningspipeline](processing-architecture/processing-pipeline.md) för mer information.
+Chloros använder en 4-trådig pipelinerad arkitektur för Chloros+-användare: Tråd 1 (Detektering) laddar bilder och detekterar kalibreringsmål, Tråd 2 (Kalibrering) beräknar reflektanskalibrering, Tråd 3 (Bearbetning) utför GPU-accelererad debayering och indexberäkning, och Tråd 4 (Export) skriver utdatafiler. Flera bilder kan befinna sig i olika trådar samtidigt för maximal genomströmning. Se [Bearbetningspipeline](processing-architecture/processing-pipeline.md) för mer information.
 
 </details>
 

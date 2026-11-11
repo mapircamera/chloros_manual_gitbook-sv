@@ -1,12 +1,8 @@
 # Kamerainställningar
 
-Fliken **Kameror** är Chloros
+Fliken **Kameror** är Chloros live-kontrollpanel för LATTICE-kameror: ett huvudområde som visar varje ansluten kamera som en live-ruta, samt en sidofält som växlar mellan tre sidor – **kameralistan**, ett**inställningsfönster**(inställningar per kamera, för kameragrupper eller för inspelning – en i taget) samt**Index Calculator**. Denna sida beskriver alla reglage i kameralistan, inställningspanelen per kamera och inställningspanelen för kameragrupper. Inspelningslägen, val av exporttyp och flödet ”Capture All” finns på den tillhörande sidan [Inspelningsinställningar och lägen](capture.md).
 
-live-kontrollpanel för LATTICE-kameror: ett huvudområde som visar varje ansluten kamera som en live-ruta, samt en sidofält som växlar mellan tre sidor – **kameralistan**, ett**inställningsfönster**(inställningar per kamera, för kameragrupper eller för inspelning – en i taget) samt**Index Calculator**. Denna sida beskriver alla reglage i kameralistan, inställningspanelen per kamera och inställningspanelen för kameragrupper. Inspelningslägen, val av exporttyp och flödet ”Capture All” finns på den tillhörande sidan [Inspelningsinställningar och lägen](capture.md).
-
-Fliken ”Kameror” visas i sidofältet när Chloros
-
--backenden är klar. Alla kontroller nedan kommunicerar med den lokala backenden via `127.0.0.1:5000`; ändringar tillämpas omedelbart på livekameran om inte annat anges.
+Fliken ”Kameror” visas i sidofältet när Chloros-backenden är klar. Alla kontroller nedan kommunicerar med den lokala backenden via `127.0.0.1:5000`; ändringar tillämpas omedelbart på livekameran om inte annat anges.
 
 ## Kameratyper som används på denna sida
 
@@ -14,40 +10,12 @@ Kontrollerna visas eller döljs beroende på vilken typ av kamera som är vald. 
 
 | Term | Betydelse | Filterkanaler |
 | --- | --- | --- |
-| **RGB
-
--kamera** | LATTICE M3C med FRGB-filter (modellen innehåller `-FRGB`) | Red
-
-/ Green
-
-/ Blue
-
-|
-| **Bayer-multispektral** | LATTICE M3C med FRGN, FOCN eller FNGB | FRGN: Red
-
-t / Green
-
-t / NIR
-
-· FOCN: Orange
-
-t / Cyan
-
-t / NIR
-
-· FNGB: NIR
-
-/ Green
-
-t / Blue
-
-t |
+| **RGB-kamera** | LATTICE M3C med FRGB-filter (modellen innehåller `-FRGB`) | Red / Green / Blue |
+| **Bayer-multispektral** | LATTICE M3C med FRGN, FOCN eller FNGB | FRGN: Red / Green / NIR · FOCN: Orange / Cyan / NIR · FNGB: NIR / Green / Blue |
 | **Mono (M3M)** | LATTICE M3M — ett smalbandsfilter, ett kalibrerat band | Enstaka band |
 | **Arraymedlem** | En kamera ansluten som del av en synkroniserad array (kombinerad eller separat visning) | Enligt sitt filter |
 
- RGB
-
--kameror genomgår fotometrisk bearbetning (vitbalans, färgprofiler, gamma); multispektrala och monokameror genomgår den radiometriska kedjan och hoppar över de fotometriska inställningarna. Arraymedlemmar överför inställningar på strömnivå (pixelformat, upplösning, binning, utlösare, bildhastighet) till arrayen — dessa rader blir skrivskyddade i rutan per kamera och flyttas istället till rutan för arrayinställningar.
+ RGB-kameror genomgår fotometrisk bearbetning (vitbalans, färgprofiler, gamma); multispektrala och monokameror genomgår den radiometriska kedjan och hoppar över de fotometriska inställningarna. Arraymedlemmar överför inställningar på strömnivå (pixelformat, upplösning, binning, utlösare, bildhastighet) till arrayen — dessa rader blir skrivskyddade i rutan per kamera och flyttas istället till rutan för arrayinställningar.
 
 ## Huvudområdet för flödet
 
@@ -55,9 +23,7 @@ t |
 
 
 
-Om inga kameror är anslutna visar flödesområdet en startskärm med texten **”Anslut en kamera för att komma igång”**och två knappar:**Anslut kamera**(grön, öppnar anslutningsdialogrutan för en enskild kamera) och**Anslut array** (blå, öppnar anslutningsdialogrutan för en array). Själva anslutningsdialogrutorna beskrivs i [Ansluta kameror](connecting.md); begrepp relaterade till arrayer (synkronisering, nivåer, bandbredd) i [Kameragrupper med flera kameror](arrays.md). När du öppnar ett sparat projekt som innehåller kameror visas istället en laddningsindikator med texten ”Öppnar N sparade kameror på nytt…” medan Chloros
-
-återställer strömmarna från den senaste sessionen.
+Om inga kameror är anslutna visar flödesområdet en startskärm med texten **”Anslut en kamera för att komma igång”**och två knappar:**Anslut kamera**(grön, öppnar anslutningsdialogrutan för en enskild kamera) och**Anslut array** (blå, öppnar anslutningsdialogrutan för en array). Själva anslutningsdialogrutorna beskrivs i [Ansluta kameror](connecting.md); begrepp relaterade till arrayer (synkronisering, nivåer, bandbredd) i [Kameragrupper med flera kameror](arrays.md). När du öppnar ett sparat projekt som innehåller kameror visas istället en laddningsindikator med texten ”Öppnar N sparade kameror på nytt…” medan Chloros återställer strömmarna från den senaste sessionen.
 
 <!-- SCREENSHOT-NEEDED: Cameras tab empty state — the "Connect a camera to get started" splash with the green Connect Camera and blue Connect Array buttons. -->
 
@@ -122,21 +88,11 @@ Tills du ändrar ordningen visar listan först matriser, sedan fristående kamer
 
 ### Live-histogram
 
-Högst upp i fönstret finns ett live-luma-histogram som beräknas utifrån JPEG
+Högst upp i fönstret finns ett live-luma-histogram som beräknas utifrån JPEG-förhandsvisningen med en frekvens på cirka 8 Hz. Medelvärdet är Bayer-vägt — (R+2G+B)/4 — för att matcha kamerans egen AE-mätning.
 
--förhandsvisningen med en frekvens på cirka 8 Hz. Medelvärdet är Bayer-vägt — (R+2G+B)/4 — för att matcha kamerans egen AE-mätning.
-
-* **Den Orange
-
-a streckade linjen**= AE-målet.**Dra den horisontellt för att ändra målet** — ett kommando skickas när du släpper, och genom att dra växlar AE-målläget till Manuellt.
-* **Den Green
-
-a heldragna linjen** = det faktiska medelvärdet för luma (det som AE för närvarande levererar).
-* **RGB
-
--knapp** (uppe till höger): växlar mellan överlagrade bandvisa histogram färgade enligt kamerans filter (t.ex. på FRGN: grått NIR
-
-, grönt, rött). På monokameror (M3M) står det ”MONO” på knappen och den är inaktiverad — mono visar alltid det bandvisa luminanshistogrammet.
+* **Den Orange a streckade linjen**= AE-målet.**Dra den horisontellt för att ändra målet** — ett kommando skickas när du släpper, och genom att dra växlar AE-målläget till Manuellt.
+* **Den Green a heldragna linjen** = det faktiska medelvärdet för luma (det som AE för närvarande levererar).
+* **RGB-knapp** (uppe till höger): växlar mellan överlagrade bandvisa histogram färgade enligt kamerans filter (t.ex. på FRGN: grått NIR, grönt, rött). På monokameror (M3M) står det ”MONO” på knappen och den är inaktiverad — mono visar alltid det bandvisa luminanshistogrammet.
 * Etiketterna på X-axeln följer sensorns bitdjup för det aktuella pixelformatet: 0..255, 0..1023, 0..4095 eller 0..65535.
 
 ### Rader
@@ -148,89 +104,47 @@ med kamerainformation
 | Rad | Beteende |
 | --- | --- |
 | **Modell** | Skrivskyddad (t.ex. `LATT-M3C-L87-FRGN`). |
-| **Radiometrisk kalibrering** | Green**&quot;Aktiv&quot;**-märkning med en bildtext som visar kalibreringsnivå, hash, kalibreringsdatum och bandlista, hämtade från kamerans kalibreringspaket (se [Fabriksradiometrisk kalibrering](https://mapir.gitbook.io/lattice-camera/calibration/factory-radiometric-calibration)).**Dolt för RGB
-
--kameror** — de har en fotometrisk vitbalanskalibrering, inte strålningsintensitet per band. |
-| **Kalibreringsrapport**|**Hämta**-knapp — öppnar kamerans NIST-kalibreringscertifikat (per serienummer) som PDF i ditt operativsystems visningsprogram. Om certifikatet ännu inte finns i cachen visar Chloros
-
-istället ett tips. |
+| **Radiometrisk kalibrering** | Green**"Aktiv"**-märkning med en bildtext som visar kalibreringsnivå, hash, kalibreringsdatum och bandlista, hämtade från kamerans kalibreringspaket (se [Fabriksradiometrisk kalibrering](https://mapir.gitbook.io/lattice-camera/calibration/factory-radiometric-calibration)).**Dolt för RGB-kameror** — de har en fotometrisk vitbalanskalibrering, inte strålningsintensitet per band. |
+| **Kalibreringsrapport**|**Hämta**-knapp — öppnar kamerans NIST-kalibreringscertifikat (per serienummer) som PDF i ditt operativsystems visningsprogram. Om certifikatet ännu inte finns i cachen visar Chloros istället ett tips. |
 | **Serienummer** | Skrivskyddat. |
 | **Firmware**| Visar den aktuella versionen och hämtar sedan den tillgängliga versionen för denna modell (cachelagrad per modell — en grupp med N kameror kontrollerar servern en gång). Status: ”Kontrollerar…” →**”Uppdatera till X”**-knapp → ”Uppdaterar…” → ”Uppdaterad A → B” / ”Misslyckades: …” / ”Hoppades över: …” / grönt**”Uppdaterad”**. Verktygstips för uppdateringsknappen: ”Återställ till fabriksinställningar + uppdatering + omprogrammering av UserSet1. ~2–3 minuter; koppla inte bort.” |
 | **IP** | Skrivskyddad. |
 | **Temperatur** | Skrivskyddad, uppdateras var 3:e sekund. Blir orange vid ≥65 °C och röd med en ⚠ vid ≥75 °C. |
-| **Kalibreringsmål** kryssruta | Aktiverar ArUco-reflektansmåldetektering med en NDVI
-
--valideringstabell per panel under liveflödet (listvy) — se [Tabellen för kalibreringsmål](#the-calibration-target-table). Endast för sessionen — öppnas alltid avstängd. |
-| **Ljussensor** rullgardinsmeny | Kopplar en DAQ-ljussensor (DAQ-E/M/U, från listan på fliken Ljussensorer) till denna kamera för belysningskorrigering av nedåtriktat ljus (DLS) och prediktiv automatisk exponering. &quot;”Ingen” avmarkerar kopplingen. Om inga sensorer är anslutna visar rullgardinsmenyn ”(inga sensorer anslutna – öppna fliken DAQ)”. Kopplingen sparas med projektet. |
+| **Kalibreringsmål** kryssruta | Aktiverar ArUco-reflektansmåldetektering med en NDVI-valideringstabell per panel under liveflödet (listvy) — se [Tabellen för kalibreringsmål](#the-calibration-target-table). Endast för sessionen — öppnas alltid avstängd. |
+| **Ljussensor** rullgardinsmeny | Kopplar en DAQ-ljussensor (DAQ-E/M/U, från listan på fliken Ljussensorer) till denna kamera för belysningskorrigering av nedåtriktat ljus (DLS) och prediktiv automatisk exponering. "”Ingen” avmarkerar kopplingen. Om inga sensorer är anslutna visar rullgardinsmenyn ”(inga sensorer anslutna – öppna fliken DAQ)”. Kopplingen sparas med projektet. |
 
 #### Tabellen Kalibreringsmål
 
-Tabellen är endast avsedd för **validering** (&quot;endast validering — ändrar inte kalibreringen&quot;). Rubrikerna anger kamerans serienummer, filter, målnummer och markörstorlek i pixlar, och den har en rad per panel:
+Tabellen är endast avsedd för **validering** ("endast validering — ändrar inte kalibreringen"). Rubrikerna anger kamerans serienummer, filter, målnummer och markörstorlek i pixlar, och den har en rad per panel:
 
-* **Panel**, följt av en kolumn per band med panelens värde — en Bayer-kamera visar sina tre band med namn och våglängd (t.ex. FRGN: Red
-
-660 nm / Green
-
-550 nm / NIR
-
-850 nm); en **mono (M3M)-kamera visar sitt enda band** (t.ex. `F750`) och har inga NDVI
-
--kolumner.
+* **Panel**, följt av en kolumn per band med panelens värde — en Bayer-kamera visar sina tre band med namn och våglängd (t.ex. FRGN: Red 660 nm / Green 550 nm / NIR 850 nm); en **mono (M3M)-kamera visar sitt enda band** (t.ex. `F750`) och har inga NDVI-kolumner.
 * **Sat** — andelen av panelens pixlar som är mättade (gult från 1 %, rött från 5 %).
-* **NDVI
-
-Meas**,**NDVI
-
-Theo** (panelens referensreflektans-NDVI
-
-) och **Δ** — endast Bayer-multispektralkameror. En liten markering efter ”NDVI
-
-Meas” anger vad den uppmätta NDVI
-
-:n har beräknats utifrån: **ρ**(reflektans — ett ljussensorvärde finns tillgängligt),**L**(strålning — inget värde från ljussensorn) eller**DN**(råvärden från kameran). Endast ett**ρ**-NDVI
-
--värde är jämförbart med NDVI
-
-Theo: för L och DN är Δ-kolumnen gråmarkerad och en anteckning anger detta (”Inget värde från ljussensorn: NDVI
-
-är baserat på strålningsintensitet, så Δ är ingen kalibreringskontroll” / ”NDVI
-
-är baserat på råa kameravärden, så Δ är ingen kalibreringskontroll”). Med ρ är Δ grönt under 0,02, gult under 0,05 och rött i övriga fall.
+* **NDVI Meas**,**NDVI Theo** (panelens referensreflektans-NDVI) och **Δ** — endast Bayer-multispektralkameror. En liten markering efter ”NDVI Meas” anger vad den uppmätta NDVI:n har beräknats utifrån: **ρ**(reflektans — ett ljussensorvärde finns tillgängligt),**L**(strålning — inget värde från ljussensorn) eller**DN**(råvärden från kameran). Endast ett**ρ**-NDVI-värde är jämförbart med NDVI Theo: för L och DN är Δ-kolumnen gråmarkerad och en anteckning anger detta (”Inget värde från ljussensorn: NDVI är baserat på strålningsintensitet, så Δ är ingen kalibreringskontroll” / ”NDVI är baserat på råa kameravärden, så Δ är ingen kalibreringskontroll”). Med ρ är Δ grönt under 0,02, gult under 0,05 och rött i övriga fall.
 
 <!-- SCREENSHOT-NEEDED: a 1.3.0 Calibration Target table under a live feed in list view — a Bayer camera's table showing the band columns, Sat, and "NDVI Meas ρ" / NDVI Theo / Δ; ideally next to a mono camera's single-band table with no NDVI columns. -->
 
-### Exponering &amp; förstärkning
+### Exponering & förstärkning
 
 <!-- SCREENSHOT-NEEDED: per-camera Exposure & Gain section — Exposure (us) and Gain (dB) rows with Auto/Manual toggles, AE Target Brightness, AE Smoothing slider, AE Region of Interest row with the Aim button, and (on an array camera) AE Tune Speed and Highlight Protection rows. -->
 
-Alla numeriska inmatningar här använder spinnare som accelererar vid långt tryck: tryck = ±1, håll ned &gt;1,5 s = ±10, håll ned &gt;3 s = ±100. Värdet skickas till kameran när du släpper.
+Alla numeriska inmatningar här använder spinnare som accelererar vid långt tryck: tryck = ±1, håll ned >1,5 s = ±10, håll ned >3 s = ±100. Värdet skickas till kameran när du släpper.
 
 | Kontroll | Intervall / alternativ | Standard | Gäller för | Vad den gör |
 | --- | --- | --- | --- | --- |
 | **Exponering (us)**| Kamerans aktuella min/max | Auto | Alla | Exponeringstid i mikrosekunder, med en**Auto/Manuell**omkopplare. Auto = kontinuerlig automatisk exponering på kamerasidan. Om du ställer in manuell exponering förblir**Förstärkning** på Auto om den var det tidigare, vilket gör att du fritt kan använda kamerans hela förstärkningsområde tills du redigerar förstärkningen eller ställer in den på Manuell. |
 | **Förstärkning (dB)**| Kamerans aktuella min/max (t.ex. upp till 48 dB) | Manuell (av) | Alla | Analog/digital förstärkning med egen**Auto/Manuell**-omkopplare. |
 | **AE-målbelysning**| 0–255 | 80, läge**Auto**| Alla (redigerbar när AE eller automatisk förstärkning är på) | Den belysning som AE siktar på. I**Auto**(standard) väljer en histogrambaserad bakgrundskontroll själv målet och håller exponeringen på 60–75 % av sensorns maxvärde. Om du skriver in ett värde eller drar i histogrammets orange linje växlar det till**Manuell**. |
-| **AE-utjämning** | 0,5–40, steg 0,1 | 8,0 | Alla | AE-dämpning. Verktygstips: &quot;Lägre = AE reagerar snabbare (kan pulsera vid hög bildfrekvens). Högre = jämnare / långsammare.” Värden långt under standardvärdet kan få AE att pulsera och destabilisera strömningen vid höga bildfrekvenser; 8,0 är det stabila standardvärdet. |
+| **AE-utjämning** | 0,5–40, steg 0,1 | 8,0 | Alla | AE-dämpning. Verktygstips: "Lägre = AE reagerar snabbare (kan pulsera vid hög bildfrekvens). Högre = jämnare / långsammare.” Värden långt under standardvärdet kan få AE att pulsera och destabilisera strömningen vid höga bildfrekvenser; 8,0 är det stabila standardvärdet. |
 | **AE-område av intresse**| Kryssruta för aktivering +**Aim**-knapp | Av | Alla | När den är aktiverad mäter AE endast det gröna streckade området istället för hela bilden.**Sikta** aktiverar ”klicka för att placera” i liveflödet: ett klick centrerar ett område vid 30 % av bilden; klicka och dra för att rita en anpassad rektangel (minst 5 % × 5 %). *Aim* inaktiveras automatiskt efter en placering. Området mappas tillbaka till kamerans egna koordinater enligt den rotation/spegling du har ställt in och sparas med projektet. |
 | **AE-inställningshastighet** | 0,1–5, steg 0,1 | 1,0 | Endast för array-medlemmar | Hur snabbt det automatiska AE-målet spårar förändringar i scenens ljusstyrka; 1,0× kontrollerar på nytt var 2,5:e sekund. |
 | **Highlight Protection** | Strikt (1 %) / Normal (5 %) / Lätt (15 %) | Strikt | Kameror som exponerar inställningen | Hur stor del av bilden som får klippas till vitt innan AE mörkar ner bilden. |
 
 {% hint style="info" %}
-**Ljuskrav för multispektrala Bayer-kameror (RGN
-
-/ OCN
-
-/ NGB
-
-):** scenen måste ha tillräckligt med ljus i alla tre kanalerna, annars fungerar inte kalibreringen korrekt — en enda sensorexponering täcker alla tre spektrum. Använd en DAQ-ljussensor för att mäta ljuset, eller använd helt mono (M3M) så att varje band får sin egen exponering. Om en bildtagning bryter mot detta upptäcker Chloros
-
-det och varnar dig (meddelandet om avklämning vid avblandning). I realtid visar en kanaluppdelad ruta **”Banddata med låg tillförlitlighet · N %”** när unmix har klämt fast det bandet på 25 % eller mer av dess pixlar.
+**Ljuskrav för multispektrala Bayer-kameror (RGN / OCN / NGB):** scenen måste ha tillräckligt med ljus i alla tre kanalerna, annars fungerar inte kalibreringen korrekt — en enda sensorexponering täcker alla tre spektrum. Använd en DAQ-ljussensor för att mäta ljuset, eller använd helt mono (M3M) så att varje band får sin egen exponering. Om en bildtagning bryter mot detta upptäcker Chloros det och varnar dig (meddelandet om avklämning vid avblandning). I realtid visar en kanaluppdelad ruta **”Banddata med låg tillförlitlighet · N %”** när unmix har klämt fast det bandet på 25 % eller mer av dess pixlar.
 {% endhint %}
 
 {% hint style="info" %}
-**Hur automatisk exponering fördelar exponeringstid och förstärkning (1.3.0).** När förstärkningen är inställd på Auto håller Chloros
-
-förstärkningen på 0 dB tills exponeringen har nått det längsta tillåtna värdet (AE:s övre gräns, en matris utlösningsperiod eller DAQ:s exponeringsgräns); först då ökar förstärkningen. I en matris har utlösningsfrekvensen företräde: automatisk exponering fyller den period som frekvensen anger, och höjer sedan förstärkningen, så en mörknande scen sänker inte längre en automatisk utlösningsfrekvens (i 1.2.0 gjorde den det). En **manuell**exponering på en arraymedlem som är längre än utlösningsperioden saktar ner arrayens utlösning för att anpassa den; en automatisk frekvens återkommer så snart varje enhet som saktade ner den återgår till automatisk exponering. När både**Exponering**och**AE-målbelysning** är inställda på Auto och en DAQ-ljussensor ger ett mätvärde, hålls varje kameras exponering oförändrad så snart den automatiska exponeringen har stabiliserats, så länge det uppmätta ljuset ligger inom cirka ±25 %; en större, ihållande ljusförändring, en omstart av inställningarna (till exempel en ROI-ändring) eller din egen exponeringsändring aktiverar den på nytt.
+**Hur automatisk exponering fördelar exponeringstid och förstärkning (1.3.0).** När förstärkningen är inställd på Auto håller Chloros förstärkningen på 0 dB tills exponeringen har nått det längsta tillåtna värdet (AE:s övre gräns, en matris utlösningsperiod eller DAQ:s exponeringsgräns); först då ökar förstärkningen. I en matris har utlösningsfrekvensen företräde: automatisk exponering fyller den period som frekvensen anger, och höjer sedan förstärkningen, så en mörknande scen sänker inte längre en automatisk utlösningsfrekvens (i 1.2.0 gjorde den det). En **manuell**exponering på en arraymedlem som är längre än utlösningsperioden saktar ner arrayens utlösning för att anpassa den; en automatisk frekvens återkommer så snart varje enhet som saktade ner den återgår till automatisk exponering. När både**Exponering**och**AE-målbelysning** är inställda på Auto och en DAQ-ljussensor ger ett mätvärde, hålls varje kameras exponering oförändrad så snart den automatiska exponeringen har stabiliserats, så länge det uppmätta ljuset ligger inom cirka ±25 %; en större, ihållande ljusförändring, en omstart av inställningarna (till exempel en ROI-ändring) eller din egen exponeringsändring aktiverar den på nytt.
 {% endhint %}
 
 {% hint style="info" %}
@@ -271,34 +185,18 @@ Allt i detta avsnitt gäller **endast visningssidan**— det ändrar vad du ser 
 | --- | --- | --- | --- | --- |
 | **Renderingsupplösning** | 360p (snabbaste) / 480p / 720p / 1080p / Sensorens ursprungliga upplösning (långsammaste) | 720p | Alla | Den höjd vid vilken backend kör den radiometriska förhandsgranskningskedjan. Lägre värden ger högre bildfrekvens utan att synfältet ändras. |
 | **Index**| Kryssruta för aktivering + kugghjul | Av | Endast Bayer-multispektralt,**inte** kombinerade matriser | Förhandsgranskning av vegetationsindex i realtid. Kugghjulet öppnar den delade [Indexberäknaren](#index-calculator-pane) som är förladdad med kamerans filter-naturliga band (t.ex. `Red_660_RGN`, `Green_550_RGN`, `NIR_850_RGN`). Det anpassade uttrycket plus LUT (på/av, standardnivå 7-stop, standardmin 0,2, standardmax 1) beräknas för varje förhandsgranskningsbild. Medlemmar i den kombinerade matrisen döljer denna rad — matrisen har ett gemensamt index. |
-| **Vitbalans** | Av / En gång / Kontinuerligt + en knapp för ny mätning | Kontinuerligt | Endast RGB
-
-| Live-vitbalans. Uppdateringsknappen återinsamlar vitbalansen från det aktuella DLS-spektrumet (inaktiverad när läget är Av). |
-| **Gamma** | På / Av | På | Endast RGB
-
-| Visar gamma (γ = 2,2 LUT) i liveförhandsvisningen. Sparade bilder förblir linjära. |
+| **Vitbalans** | Av / En gång / Kontinuerligt + en knapp för ny mätning | Kontinuerligt | Endast RGB | Live-vitbalans. Uppdateringsknappen återinsamlar vitbalansen från det aktuella DLS-spektrumet (inaktiverad när läget är Av). |
+| **Gamma** | På / Av | På | Endast RGB | Visar gamma (γ = 2,2 LUT) i liveförhandsvisningen. Sparade bilder förblir linjära. |
 | **Brusreducering** | Kryssruta + styrka 0–100 | Av / 50 | Alla (per kamera, även inom matriser) | Bilateralt filter i liveförhandsvisningen. Högre värde = jämnare men mjukare detaljer. |
 | **Skärpa** | Kryssruta + styrka 0–100 | Av / 30 | Alla | Oskärpmask i liveförhandsvisningen, tillämpas sist. Kan förstärka brus. Endast i förhandsvisningen. |
 | **Vignett**| Kryssruta + styrka 0–100 | Av / 0 | Alla | Manuell korrigering av kvarvarande vignett (ljusar upp hörnen), läggs ovanpå bildseriens uppskattning av smart vignett.**Radiometrisk — påverkar både liveförhandsvisningen OCH exporten**, till skillnad från brusreducering/skärpa. |
-| **Färgprofil** | Raw / Linjär / Naturlig / Förbättrad / Anpassad temperatur | Naturlig | Endast RGB
-
-| Se nedan. |
-| **Färgtemperatur** | 2000–10000 K, steg 100 | 5500 K | Endast RGB
-
-, anpassad temperaturprofil | Låser vitbalansen till en fast korrelerad färgtemperatur (DLS-inmatning ignoreras). Det senast valda Kelvin-värdet sparas även vid profilbyten. |
-| **Högdagrar** | −100 till 0, steg 1 | 0 (av) | Endast RGB
-
-| Nytt i 1.3.0. Mörkar ner de ljusaste, vitaste områdena i bilden (0 = oförändrat, −100 = starkast). Gäller för liveförhandsvisningen **och för bilder tagna på skärmnivå (Förhandsvisning)**, som sparar inställningen (`Chloros:DisplayHighlights`); export av strålnings- och reflektansvärden påverkas aldrig. Det går inte att återställa sensordata som har klippts – sänk exponeringen för att undvika detta. Zebraöverlägget följer den mörkare bilden. Inaktiveras med Raw-färgprofilen (”Tillämpas inte med Raw-färgprofilen.”). |
-| **Mättnad** | 0–200 (100 = neutral) | 100 | Endast RGB
-
-| HSV-mättnad i liveförhandsvisningen. |
-| **Kontrast** | 0–200 (100 = neutral) | 100 | Endast RGB
-
-| Linjär kontrast runt mellangrått i liveförhandsvisningen. |
+| **Färgprofil** | Raw / Linjär / Naturlig / Förbättrad / Anpassad temperatur | Naturlig | Endast RGB | Se nedan. |
+| **Färgtemperatur** | 2000–10000 K, steg 100 | 5500 K | Endast RGB, anpassad temperaturprofil | Låser vitbalansen till en fast korrelerad färgtemperatur (DLS-inmatning ignoreras). Det senast valda Kelvin-värdet sparas även vid profilbyten. |
+| **Högdagrar** | −100 till 0, steg 1 | 0 (av) | Endast RGB | Nytt i 1.3.0. Mörkar ner de ljusaste, vitaste områdena i bilden (0 = oförändrat, −100 = starkast). Gäller för liveförhandsvisningen **och för bilder tagna på skärmnivå (Förhandsvisning)**, som sparar inställningen (`Chloros:DisplayHighlights`); export av strålnings- och reflektansvärden påverkas aldrig. Det går inte att återställa sensordata som har klippts – sänk exponeringen för att undvika detta. Zebraöverlägget följer den mörkare bilden. Inaktiveras med Raw-färgprofilen (”Tillämpas inte med Raw-färgprofilen.”). |
+| **Mättnad** | 0–200 (100 = neutral) | 100 | Endast RGB | HSV-mättnad i liveförhandsvisningen. |
+| **Kontrast** | 0–200 (100 = neutral) | 100 | Endast RGB | Linjär kontrast runt mellangrått i liveförhandsvisningen. |
 | **Spegla H / Spegla V** | Kryssrutor | Av | Alla | Spegla förhandsvisningen horisontellt/vertikalt. |
-| **Rotation**| 0° / 90° / 180° / 270° | 0° | Alla | Rotera förhandsvisningen. Orienteringen tillämpas i slutet av förhandsgranskningskedjan i backend.**Sparade bilder (1.3.0):**Förhandsgranskning, Radiance, Reflectance och Index-produkter från en fristående kamera vänds med Spegling/Rotation, medan**Raw och Debayered behåller kamerans ursprungliga orientering**; varje bildfil sparar inställningen i sin XMP, så att bearbetning av en raw-fil senare tillämpar den på samma sätt.**Filer i en array behåller sin ursprungliga orientering** (inställningen sparas, men tillämpas inte), och sammansatta vyer i en array ignorerar den. |**Semantik för färgprofiler** (RGB
-
--kameror):
+| **Rotation**| 0° / 90° / 180° / 270° | 0° | Alla | Rotera förhandsvisningen. Orienteringen tillämpas i slutet av förhandsgranskningskedjan i backend.**Sparade bilder (1.3.0):**Förhandsgranskning, Radiance, Reflectance och Index-produkter från en fristående kamera vänds med Spegling/Rotation, medan**Raw och Debayered behåller kamerans ursprungliga orientering**; varje bildfil sparar inställningen i sin XMP, så att bearbetning av en raw-fil senare tillämpar den på samma sätt.**Filer i en array behåller sin ursprungliga orientering** (inställningen sparas, men tillämpas inte), och sammansatta vyer i en array ignorerar den. |**Semantik för färgprofiler** (RGB-kameror):
 
 * **Raw** — kringgår bearbetningskedjan helt.
 * **Linjär** — mörksignal + flat-field + vitbalans; ingen färgmatris, ingen gamma.
@@ -323,20 +221,12 @@ Dessa finns endast i gränssnittet — de ritas över videon och påverkar aldri
 | **Rutnät** | Av / 3 × 3 / 9 × 9 | Av | Kompositionsrutnät. |
 | **Histogram** | Kryssruta + bredd 0,10–0,90 av bilden | Av / 0,25 | En histogramremsa i strömmen. |
 | **Fokuspeak** | Kryssruta + tröskelvärde 20–200 + färgprov | Av / 80 / `#ff5722` | Sobel-kantmarkering för fokusering. |
-| **Kanaluppdelningar** | &quot;Visa uppdelningar (Red
-
-/ Green
-
-/ NIR
-
-)&quot; / Knappen ”Dölj uppdelningar” | Dold | Lägger till tre oberoende gråskaliga rutor per kanal bredvid den sammansatta bilden (knapptexten följer kamerans filterkanaler). Varje uppdelad ruta kan dras och har samma kantfärg som kameran. Ej tillgängligt på monokameror. Sparas med projektet. |
+| **Kanaluppdelningar** | "Visa uppdelningar (Red / Green / NIR)" / Knappen ”Dölj uppdelningar” | Dold | Lägger till tre oberoende gråskaliga rutor per kanal bredvid den sammansatta bilden (knapptexten följer kamerans filterkanaler). Varje uppdelad ruta kan dras och har samma kantfärg som kameran. Ej tillgängligt på monokameror. Sparas med projektet. |
 
 ### Spotmätare
 
 * Kryssrutan **Klicka för att ta prov**: klicka på livebilden för att ta ett prov på en enskild pixel (ett hårkors markerar den), eller klicka och dra över ett område för att få ett pixelgenomsnitt.**Rensa**tar bort provet och hårkorset. Kan inte användas samtidigt med AE-ROI-läget**Sikta**.
-* **Välj**Visa**i rullgardinsmenyn:**Raw (bitdjup)**— ursprungliga digitala värden med sensorns bitdjup (t.ex. 12-bit → 0..4095) — eller**Display (8-bit)** (standard). När ett liveindex är aktivt visar Display istället det beräknade indexvärdet (t.ex. NDVI
-
-).
+* **Välj**Visa**i rullgardinsmenyn:**Raw (bitdjup)**— ursprungliga digitala värden med sensorns bitdjup (t.ex. 12-bit → 0..4095) — eller**Display (8-bit)** (standard). När ett liveindex är aktivt visar Display istället det beräknade indexvärdet (t.ex. NDVI).
 * Avläsningspanelen visar pixelkoordinater, bildstorlek, pixelformat, bitdjup och en kanaltabell (Chan / Värde / %) med bandbeteckningar och våglängder; Bayer-gröna par är medelvärdesberäknade; regionprover visar ”N px avg”.
 
 Spotmätarens status gäller endast för den aktuella sessionen.
@@ -358,18 +248,10 @@ Detta avsnitt visas endast när **minst en DAQ-ljussensor är ansluten** — lö
 | **Scenreflektans**|**Omkalibrera ρ**-knapp | — | Omberäknar den scenreflektansfaktor som lösaren använder. |
 
 {% hint style="info" %}
-**Array Connect stänger av den prediktiva AE som standard** — för arrayer hanteras exponeringen av Chloros
-
-smarta AE samt kamerans automatiska exponering (med mättnadskydd), och den prediktiva AE:s-reflektansuppskattning inte säker i blandade scener. Du kan återaktivera den per kamera här om du specifikt vill ha DLS-driven radiometrisk exponering.
+**Array Connect stänger av den prediktiva AE som standard** — för arrayer hanteras exponeringen av Chloros smarta AE samt kamerans automatiska exponering (med mättnadskydd), och den prediktiva AE:s-reflektansuppskattning inte säker i blandade scener. Du kan återaktivera den per kamera här om du specifikt vill ha DLS-driven radiometrisk exponering.
 {% endhint %}
 
-**DAQ-driven exponeringsgräns och incident-pinned AE.** Oavsett kryssrutan ovan, när en DAQ-ljussensor tilldelas en RGB
-
--kamera, beräknar Chloros
-
-— utifrån den uppmätta absoluta nedåtriktade irradians — den maximala exponeringen × förstärkningen vid vilken en yta med 100 % reflektans förblir under klippningsgränsen, och tillämpar den som ett **tak**för den automatiska exponeringen. Sedan version 1.3.0 gäller taket endast så länge ett kalibreringsmål befinner sig i kamerans synfält (synligt i bildrutan under de senaste 10 sekunderna); när inget mål syns används istället kamerans vanliga automatiska exponering, med sitt eget skydd mot överexponering, så att resten av scenen inte hålls mörkare än nödvändigt. Medan takvärdet är aktivt är kameran**fäst vid infallande ljus**: den körs i öppen slinga med den incidentmätna exponeringen och förstärkningen inställd på 0 dB — exponeringen följer det uppmätta ljuset, inte scenens innehåll. Eftersom takvärdet endast kan förkorta exponeringstiden kan det inte i sig orsaka klippning. Sedan version 1.3.0 beräknas takvärdet med kamerans egen exponeringskonstant från dess kalibreringspaket (ett flottgenomsnittsvärde endast när paketet inte innehåller något). Takvärdet kopplas ur automatiskt – och normal automatisk exponering återupptas – när inget kalibreringsmål syns, DAQ-avläsningen saknas, är föråldrad (&gt;30 s), mörk eller om ≥15 % av bilden klipps vid den fastställda exponeringen (vilket innebär att sensorn och kameran ser olika belysning). Det finns ingen GUI-knapp; detta är standardbeteende när en RGB
-
--kamera är kopplad till en DAQ.
+**DAQ-driven exponeringsgräns och incident-pinned AE.** Oavsett kryssrutan ovan, när en DAQ-ljussensor tilldelas en RGB-kamera, beräknar Chloros — utifrån den uppmätta absoluta nedåtriktade irradians — den maximala exponeringen × förstärkningen vid vilken en yta med 100 % reflektans förblir under klippningsgränsen, och tillämpar den som ett **tak**för den automatiska exponeringen. Sedan version 1.3.0 gäller taket endast så länge ett kalibreringsmål befinner sig i kamerans synfält (synligt i bildrutan under de senaste 10 sekunderna); när inget mål syns används istället kamerans vanliga automatiska exponering, med sitt eget skydd mot överexponering, så att resten av scenen inte hålls mörkare än nödvändigt. Medan takvärdet är aktivt är kameran**fäst vid infallande ljus**: den körs i öppen slinga med den incidentmätna exponeringen och förstärkningen inställd på 0 dB — exponeringen följer det uppmätta ljuset, inte scenens innehåll. Eftersom takvärdet endast kan förkorta exponeringstiden kan det inte i sig orsaka klippning. Sedan version 1.3.0 beräknas takvärdet med kamerans egen exponeringskonstant från dess kalibreringspaket (ett flottgenomsnittsvärde endast när paketet inte innehåller något). Takvärdet kopplas ur automatiskt – och normal automatisk exponering återupptas – när inget kalibreringsmål syns, DAQ-avläsningen saknas, är föråldrad (>30 s), mörk eller om ≥15 % av bilden klipps vid den fastställda exponeringen (vilket innebär att sensorn och kameran ser olika belysning). Det finns ingen GUI-knapp; detta är standardbeteende när en RGB-kamera är kopplad till en DAQ.
 
 ### Insamling och utlösning
 
@@ -419,11 +301,7 @@ Visas för både kombinerade och separata arrayer:
 
 En egen grupp direkt efter omgivningsljussensorn, för både kombinerade och separata matriser:
 
-* Kryssrutan **Aktivera** — ”Upptäck MAPIR
-
-ArUco-mål och validera NDVI
-
-mot panelens reflektans-LUT”; styr överlägg och valideringstabeller för det kombinerade rutnätets mål. På ett **separat** rutnät aktiverar den varje medlems egen [kalibreringsmåltabell](#the-calibration-target-table) (en per kamerarad i listvyn).
+* Kryssrutan **Aktivera** — ”Upptäck MAPIR ArUco-mål och validera NDVI mot panelens reflektans-LUT”; styr överlägg och valideringstabeller för det kombinerade rutnätets mål. På ett **separat** rutnät aktiverar den varje medlems egen [kalibreringsmåltabell](#the-calibration-target-table) (en per kamerarad i listvyn).
 
 ### Inspelning — enhetliga sensorinställningar
 
@@ -445,7 +323,7 @@ Observera i fönstret: ”Ändringar av format/upplösning startar om alla kamer
 
 Nytt i 1.3.0. Raden för ROI-beskärning och kartan under den fungerar tillsammans:
 
-* **ROI på / ROI av**— aktiverar eller inaktiverar sensorbeskärningen**omedelbart**(kamerorna startas om kortvarigt; matrisrutan visar ”Tillämpar inställningar…”).**Av**läser av hela sensorn och**kommer ihåg din beskärning**— fälten fortsätter att visa den;**På** tillämpar den igen. Om du aktiverar ROI utan att någon beskärning är inställd tillämpas en centrerad beskärning i halv storlek (&quot;Ingen beskärning var inställd, så en centrerad beskärning i halv storlek tillämpades. Justera den med fälten.&quot;).
+* **ROI på / ROI av**— aktiverar eller inaktiverar sensorbeskärningen**omedelbart**(kamerorna startas om kortvarigt; matrisrutan visar ”Tillämpar inställningar…”).**Av**läser av hela sensorn och**kommer ihåg din beskärning**— fälten fortsätter att visa den;**På** tillämpar den igen. Om du aktiverar ROI utan att någon beskärning är inställd tillämpas en centrerad beskärning i halv storlek ("Ingen beskärning var inställd, så en centrerad beskärning i halv storlek tillämpades. Justera den med fälten.").
 * **Välj**— ritar beskärningen på kartan: dra över den eller klicka på två motsatta hörn (Esc avbryter). Rektangeln placeras i fälten B/H/X/Y, justerad enligt stegen ovan; ingenting tillämpas förrän du trycker på**Apply**, så du kan finjustera den med fältpilarna först. En rektangel per tryck på Select.
 * **Kartan**visar beskärningen på hela sensorn, så du kan bredda ut den igen: ”Full sensor, live” medan kamerorna läser av hela sensorn, eller ”Fullbildsöversikt från {tid}. Kamerorna läser endast den beskärda delen.” medan de är beskärda. Om matrisen endast någonsin har strömmat beskuret visar kartan ”Ingen fullbildsvy ännu: denna matris har endast strömmat beskuret.” med en**Visa fullbild**-knapp, som stänger av ROI. Beskärningens etikett `W×H @ X,Y` placeras utanför rutan (ovanför den, eller under när rutan når upp till kanten), på kartan och på live-rutan.
 * **Apply**bekräftar inställningarna: en beskärning aktiverar ROI; helbilden (efter**Reset**) inaktiverar den med den tidigare beskärningen fortfarande lagrad; en ROI som är inaktiverad och vars fält fortfarande visar den lagrade beskärningen förblir inaktiverad när du tillämpar en annan ändring (format, binning, hastighet).
@@ -463,7 +341,7 @@ Visas för **både kombinerade och separata matriser** (1.2.0 visade det endast 
 
 * **Residual**-rutan: ”RMS x.xx px” — grönt under 1 px, gult under 3 px, rött i övriga fall eller om någon kamera misslyckades; ”ingen profil” före den första lösningen.
 * Sammanfattningsrad: ”✓ Alla kameror inriktade (N)” / ”⚠ p/N kameror inriktade —  <serial (filter)="">misslyckades” / ”Beskärning aktiv — Kalibrera om för att inrikta (använder hela sensorn)” / ”Väntar på att exponeringen ska stabiliseras…” / ”Tillämpar inställningar…” (kamerorna startas om) / ”Arrayen har slutat leverera bildrutor — anslut arrayen igen”.
-* Tabell per kamera: kamera (de fyra sista siffrorna i serienumret + filter), omprojiceringsfel i px med antal matchningar (&quot;ref&quot; för huvudkameran) och poängen för normaliserad korskorrelation av överlappningen mot gränsvärdet 0,35 för godkänd passning.
+* Tabell per kamera: kamera (de fyra sista siffrorna i serienumret + filter), omprojiceringsfel i px med antal matchningar ("ref" för huvudkameran) och poängen för normaliserad korskorrelation av överlappningen mot gränsvärdet 0,35 för godkänd passning.
 * **Omkalibrera justeringen** knapp (visar ”Kalibrera inriktning” före den första profilen) — kör om samregistreringen på nya bildrutor.
 * **Kryssrutan ”Auto-expose cameras for alignment”** (markerad som standard) — gör tillfälligt mörka eller platta kameror ljusare (först exponering, sedan förstärkning) så att de får textur att matcha, och återställer sedan AE.
 
@@ -479,7 +357,7 @@ Chloros justerar varje matris automatiskt efter anslutning, i båda visningsläg
 ### Liveförhandsgranskning
 
 * Kryssrutan **Histogram**+ breddslider (0,10–0,90 av bilden) — histogramremsan i liveflödet visas på varje medlems ruta samtidigt (inklusive rutor med delade kanaler), samt [Histogramöverlägg](#display-overlays-drawn-over-the-live-feed) som är inställt för hela matrisen. Det visas som aktiverat när alla medlemmar redan har det. På en**separat** matris är detta den enda raden i gruppen.
-* *Endast kombinerat:* **Index**: kryssruta för aktivering + kugghjul — öppnar den delade [Indexkalkylatorn](#index-calculator-pane) med band ritade från**alla** medlemskameror. En förhandsgranskningsrad för uttryck nedanför visar det aktuella uttrycket (&quot;Inget uttryck angivet — öppna kalkylatorn för att skapa ett&quot;), som uppdateras varje sekund.
+* *Endast kombinerat:* **Index**: kryssruta för aktivering + kugghjul — öppnar den delade [Indexkalkylatorn](#index-calculator-pane) med band ritade från**alla** medlemskameror. En förhandsgranskningsrad för uttryck nedanför visar det aktuella uttrycket ("Inget uttryck angivet — öppna kalkylatorn för att skapa ett"), som uppdateras varje sekund.
 * *Endast kombinerat:* Rullgardinsmenyn **Renderingsupplösning**(samma förinställningar som per kamera, standard 720p): höjden på live-view-strömmen**och** den sparade storleken på den sammansatta exporten. Observera i fönstret: ”Förhandsgranskning + storlek på den sparade sammansatta bilden. Bilder per kamera exporteras alltid i full upplösning.”
 
 ### Visningslager *(endast kombinerat)** Kryssrutan **Aktivera** (standardinställning avstängd — huvudkameran visas direkt; på = lagerkomposit).

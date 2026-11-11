@@ -26,18 +26,18 @@ Det finns två huvudsakliga sätt att lägga till bilder i ditt projekt:
 
 Använd det här alternativet för att importera enskilda bildfiler eller ett litet urval av filer.
 
-1. Klicka på knappen **&quot;Lägg till filer&quot;** <img src="../.gitbook/assets/image (3).png" alt="" data-size="line"> högst upp i filbläddraren
+1. Klicka på knappen **"Lägg till filer"** <img src="../.gitbook/assets/image (3).png" alt="" data-size="line"> högst upp i filbläddraren
 2. Navigera till mappen som innehåller dina bilder
 3. Välj en eller flera bildfiler (håll ned **Ctrl** för att välja flera filer)
-4. Klicka på **&quot;Öppna&quot;** för att importera de valda filerna
+4. Klicka på **"Öppna"** för att importera de valda filerna
 
 ### Metod 2: Lägg till mapp
 
 Använd det här alternativet för att importera alla bilder från en mapp på en gång. Du kan välja **flera mappar** i en och samma dialogruta.
 
-1. Klicka på knappen **&quot;Lägg till mapp&quot;** <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> högst upp i panelen Filbläddraren
+1. Klicka på knappen **"Lägg till mapp"** <img src="../.gitbook/assets/image (1) (1).png" alt="" data-size="line"> högst upp i panelen Filbläddraren
 2. Navigera till och välj den eller de mappar som innehåller bilderna från din inspelningssession
-3. Klicka på **&quot;Välj mapp&quot;** för att importera alla bilder som stöds
+3. Klicka på **"Välj mapp"** för att importera alla bilder som stöds
 
 {% hint style="info" %}
 **Filer som inte går att ladda rapporteras.** Om en mapp innehåller filer som Chloros känner igen men inte kan ladda, visas en varning – bilderna försvinner inte tyst från rutnätet.

@@ -16,49 +16,21 @@ När du är inloggad visas dina kontouppgifter:
 | Abonnemang | `plan_id` | Typ |
 | --- | --- | --- |
 | Iron | `0` | Gratis |
-| Copper | `1` | Betald (Chloros
-
-+) |
-| Bronze | `2` | Betald (Chloros
-
-+) |
-| Silver | `3` | Betald (Chloros
-
-+) |
-| Guld | `4` | Betald (Chloros
-
-+) |
+| Copper | `1` | Betald (Chloros+) |
+| Bronze | `2` | Betald (Chloros+) |
+| Silver | `3` | Betald (Chloros+) |
+| Guld | `4` | Betald (Chloros+) |
 
 Se [abonnemang och priser](https://cloud.mapir.camera/pricing) för information om vad varje betald nivå innehåller.
 
-### Åtkomst till CLI
+### Åtkomst till CLI/SDK kräver en betald nivå
 
-/SDK
+Åtkomst till CLI och Python SDK kräver **valfri betald Chloros+-nivå (Copper eller högre)**. Detta kontrolleras**på serversidan** — varje CLI/SDK-förfrågan måste innehålla både en aktiv session och ett betalt abonnemang:
 
-kräver en betald nivå
-
-Åtkomst till CLI
-
-och Python
-
-SDK
-
-kräver **valfri betald Chloros
-
-+-nivå (Copper eller högre)**. Detta kontrolleras**på serversidan** — varje CLI
-
-/SDK
-
--förfrågan måste innehålla både en aktiv session och ett betalt abonnemang:
-
-| HTTP
-
--status | `error_code` | Betydelse | Åtgärd |
+| HTTP-status | `error_code` | Betydelse | Åtgärd |
 | --- | --- | --- | --- |
 | `401` | `AUTH_REQUIRED` | Inte inloggad på den här datorn | `chloros-cli login <email> <password>` |
-| `403` | `PLAN_UPGRADE_REQUIRED` | Inloggad, men abonnemangsnivån är för låg (gratisnivån Iron) | Uppgradera till valfritt betalt Chloros
-
-+-abonnemang |
+| `403` | `PLAN_UPGRADE_REQUIRED` | Inloggad, men abonnemangsnivån är för låg (gratisnivån Iron) | Uppgradera till valfritt betalt Chloros+-abonnemang |
 
 `chloros-cli status` är fortfarande tillgängligt på gratisnivån, så du kan alltid se din aktuella plan och varför åtkomst nekas.
 
@@ -73,17 +45,9 @@ Varje plan har en övre gräns för hur många LATTICE-kameror och DAQ-ljussenso
 | Silver | 10 | 6 |
 | Gold | 20 | 12 |
 
-## CLI
+## CLI-inloggning
 
--inloggning
-
-Logga in med dina Chloros
-
-+-inloggningsuppgifter för att aktivera CLI
-
--bearbetning. På Linux
-
-(utan grafiskt gränssnitt) är detta det enda sättet att aktivera din licens.
+Logga in med dina Chloros+-inloggningsuppgifter för att aktivera CLI-bearbetning. På Linux (utan grafiskt gränssnitt) är detta det enda sättet att aktivera din licens.
 
 **Syntax:**
 
@@ -92,15 +56,7 @@ chloros-cli login <email> <password>
 ```
 
 {% hint style="info" %}
-**SDK
-
--användare**: Python
-
--SDK
-
-:et tillhandahåller även en programmeringsmetod för att rensa cachade inloggningsuppgifter. Se [SDK
-
--referensen](reference/sdk-reference.md) för mer information.
+**SDK-användare**: Python-SDK:et tillhandahåller även en programmeringsmetod för att rensa cachade inloggningsuppgifter. Se [SDK-referensen](reference/sdk-reference.md) för mer information.
 {% endhint %}
 
 **Exempel:**
@@ -127,23 +83,13 @@ Cachelagrade inloggningsuppgifter och konfiguration lagras i mappen `.chloros` i
 | **Windows** | `%USERPROFILE%\.chloros\` |
 | **Linux** | `~/.chloros/` |
 
-Om du installerar en nyare version över en befintlig behålls dina inloggningsuppgifter, både i Windows
-
-(installationsprogrammet) och i Linux
-
-(mappen `.deb`, inklusive `chloros-cli update`). Om du avinstallerar Chloros
-
-– eller tar bort Linux
-
--paketet – rensas den cachade inloggningen, så du måste logga in igen efter en ny installation.
+Om du installerar en nyare version över en befintlig behålls dina inloggningsuppgifter, både i Windows (installationsprogrammet) och i Linux (mappen `.deb`, inklusive `chloros-cli update`). Om du avinstallerar Chloros – eller tar bort Linux-paketet – rensas den cachade inloggningen, så du måste logga in igen efter en ny installation.
 
 ### Planens giltighetstid och offline-toleransperiod
 
 Planens giltighetstid i GUI visar när din licens upphör att gälla. För återkommande månadsabonnemang sker utgången i slutet av månaden; för årsabonnemang sker den ett år efter att du startade abonnemanget.
 
-Chloros
-
-validerar din licens online, men det går att arbeta offline under en övergångsperiod:
+Chloros validerar din licens online, men det går att arbeta offline under en övergångsperiod:
 
 * Lyckade servervalideringar cachelagras i **5 minuter**, så vid normal användning görs väldigt få licensförfrågningar.
 * En signerad, maskinbunden licenscache täcker längre perioder utan internetanslutning: **30 dagar för månadsabonnemang**och**fram till abonnemangets utgångsdatum (högst 365 dagar) för årsabonnemang**.
@@ -151,13 +97,7 @@ validerar din licens online, men det går att arbeta offline under en övergång
 
 ### Enhetsbegränsning
 
-Varje Chloros
-
-+-abonnemang erbjuder ett olika antal registrerade enheter. Varje enhet som du loggar in på med ett Chloros
-
-+-konto räknas in i antalet registrerade enheter. Du kan byta namn på och ta bort en enhet på din MAPIR
-
-Cloud-kontosida.
+Varje Chloros+-abonnemang erbjuder ett olika antal registrerade enheter. Varje enhet som du loggar in på med ett Chloros+-konto räknas in i antalet registrerade enheter. Du kan byta namn på och ta bort en enhet på din MAPIR Cloud-kontosida.
 
 <table><thead><tr><th width="168.5999755859375" align="right">Chloros-abonnemang</th><th align="center">COPPER</th><th align="center">BRONZE</th><th align="center">SILVER</th><th align="center">GOLD</th></tr></thead><tbody><tr><td align="right">Enheter som stöds</td><td align="center">2</td><td align="center">2</td><td align="center">5</td><td align="center">10</td></tr></tbody></table>
 

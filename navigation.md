@@ -22,19 +22,7 @@ Från vänster till höger innehåller den övre rubriken:
 * **Anslut till ljussensor** — gå till [fliken Ljussensorer](daq/) för att ansluta en DAQ-ljussensor. Fungerar även utan att ett projekt är öppet.
 
 {% hint style="info" %}
-**Endast Windows**: Chloros
-
-Desktop GUI är tillgängligt på Windows
-
-. Linux
-
--användare bör se dokumentationen för [CLI
-
-](CLI.md) och [Python
-
-SDK
-
-](api-python-sdk.md) för bearbetning utan grafiskt gränssnitt.
+**Endast Windows**: Chloros Desktop GUI är tillgängligt på Windows. Linux-användare bör se dokumentationen för [CLI](CLI.md) och [Python SDK](api-python-sdk.md) för bearbetning utan grafiskt gränssnitt.
 {% endhint %}
 
 ### <img src=".gitbook/assets/image (2) (1) (1).png" alt="" data-size="line">
@@ -49,15 +37,9 @@ Förloppsindikator <img src=".gitbook/assets/image (5).png" alt="" data-size="li
 
 
 
-I det kostnadsfria Chloros
+I det kostnadsfria Chloros-läget, där alla filer bearbetas sekventiellt, visar förloppsindikatorn två steg: Måldetektering och Bearbetning.
 
--läget, där alla filer bearbetas sekventiellt, visar förloppsindikatorn två steg: Måldetektering och Bearbetning.
-
-I det licensierade Chloros
-
-+-läget, där alla filer bearbetas samtidigt, visar förloppsindikatorn fyra steg: Detektering, Analys, Kalibrering, Export. Om du håller muspekaren över Chloros
-
-+-förloppsindikatorn öppnas en utökad panel med fyra förloppsindikatorer så att du kan följa processen. Om du klickar på den översta förloppsindikatorn fryses rullgardinsmenyn, och om du klickar igen frigörs den.
+I det licensierade Chloros+-läget, där alla filer bearbetas samtidigt, visar förloppsindikatorn fyra steg: Detektering, Analys, Kalibrering, Export. Om du håller muspekaren över Chloros+-förloppsindikatorn öppnas en utökad panel med fyra förloppsindikatorer så att du kan följa processen. Om du klickar på den översta förloppsindikatorn fryses rullgardinsmenyn, och om du klickar igen frigörs den.
 
 <figure><img src=".gitbook/assets/plus_prog.JPG" alt=""><figcaption></figcaption></figure>
 
