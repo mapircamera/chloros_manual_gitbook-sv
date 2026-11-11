@@ -1,6 +1,6 @@
 # Starta bearbetningen
 
-När du har importerat dina bilder, markerat dina kalibreringsmål och konfigurerat dina projektinställningar är du redo att påbörja bearbetningen. Denna sida guidar dig genom hur du startar bearbetningsflödet Chloros.
+När du har importerat dina bilder, markerat dina kalibreringsmål och konfigurerat dina projektinställningar är du redo att påbörja bearbetningen. Denna sida guidar dig genom hur du startar Chloros-bearbetningsflödet.
 
 ## Checklista inför bearbetningen
 
@@ -8,13 +8,13 @@ Innan du klickar på Start-knappen ska du kontrollera att allt är klart:
 
 * [ ] **Filer importerade** – Alla bilder visas i filbläddraren
 * [ ] **Målbilder markerade** – Kolumnen ”Mål” har kontrollerats för kalibreringsbilder (eller en `.daq`-inspelning har importerats för LATTICE)
-* [ ] **Kameramodeller identifierade** – Kolumnen ”Kameramodell” visar rätt kameror
+* [ ] **Kameramodeller identifierade** – Kolumnen Kameramodell visar rätt kameror
 * [ ] **Inställningar konfigurerade** – Projektinställningarna har granskats och justerats
 * [ ] **Index valda** – Önskade multispektrala index har lagts till (vid behov)
 * [ ] **Exportformat valt** – Utdataformat som passar ditt arbetsflöde
 
 {% hint style="info" %}
-**Tips**: Klicka dig igenom några bilder i filbläddraren för att kontrollera att de har laddats korrekt innan bearbetning.
+**Tips**: Klicka igenom några bilder i filbläddraren för att kontrollera att de har laddats korrekt innan bearbetningen påbörjas.
 {% endhint %}
 
 ***
@@ -27,17 +27,17 @@ Start-/uppspelningsknappen finns i den övre rubrikraden i Chloros:
 
 * Plats: Överst i mitten av fönstret
 * Ikon: **Uppspelnings-/startknapp** <img src="../.gitbook/assets/image (2) (1) (1).png" alt="" data-size="line">
-* Status: Knappen är aktiverad (lysande) när den är redo för bearbetning
+* Status: Knappen är aktiverad (ljus) när den är redo för bearbetning
 
 ### Klicka för att starta
 
-1. Klicka på **uppspelnings-/startknappen** i den övre rubrikraden
+1. Klicka på **Spela upp/Start-knappen** i den övre rubrikraden
 2. Bearbetningen påbörjas omedelbart
-3. Knappen förvandlas till en **stoppknapp** under bearbetningen
+3. Knappen förvandlas till en **Stopp**-knapp under bearbetningen
 4. Förloppsindikatorn uppdateras och visar bearbetningsstatus
 
 {% hint style="success" %}
-**Bearbetning påbörjad**: När du klickar på knappen sköter Chloros automatiskt alla bearbetningssteg – måldetektering, debayering, kalibrering, indexberäkning och export. Programmet känner automatiskt av om ditt projekt är Survey3, LATTICE eller en blandning, och tillämpar rätt bearbetningsflöde för varje kamera.
+**Bearbetning påbörjad**: När du klickar hanterar Chloros automatiskt alla bearbetningssteg – måldetektering, debayering, kalibrering, indexberäkning och export. Programmet känner automatiskt av om ditt projekt är Survey3, LATTICE eller en blandning, och tillämpar rätt bearbetningsflöde för varje kamera.
 {% endhint %}
 
 ***
@@ -64,7 +64,7 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 * Mycket långsammare än Chloros+ parallellt läge
 * Lämpligt för små till medelstora datamängder (&lt; 200 bilder)
 
-### Chloros+-läge (Parallell bearbetning)
+### Chloros+-läge (parallell bearbetning)
 
 **Kräver Chloros+-licens**
 
@@ -72,35 +72,35 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 * Bearbetar flera bilder samtidigt med hjälp av en [bearbetningspipeline med 4 trådar](../processing-architecture/processing-pipeline.md)
 * [Dynamisk beräkningsanpassning](../processing-architecture/dynamic-compute-adaptation.md) väljer automatiskt den optimala strategin för din hårdvara vid start
-* GPU-acceleration (CUDA) med NVIDIA-grafikkort (stationära datorer och Jetson)
-* **Antalet arbetare anpassas efter hårdvaran**: GPU-strategier kör**1–4 samtidiga arbetare** (skalade efter VRAM – en Jetson med lite minne kör 1, en stationär GPU med 12 GB eller mer kör upp till 4); system med enbart CPU kör en arbetare per fysisk kärna, minus en**Förloppsindikatorn visar 4 steg** (motsvarande de 4 trådarna i pipelinen):
+* GPU-acceleration (CUDA) med NVIDIA-grafikkort
+* **Antalet arbetare anpassas efter hårdvaran**: GPU-strategier kör**2–4 samtidiga arbetare** (skalade efter VRAM — 3 på en GPU med 2–12 GB, 2 till 4 på en GPU med 12 GB eller mer); System med enbart CPU kör en arbetsprocess per fysisk kärna, minus en**Förloppsindikatorn visar 4 steg** (motsvarande de 4 pipeline-trådarna):
 
-1. **Detektering** (tråd 1) – Hittar kalibreringsmål
-2. **Analys** (tråd 2) – Granskar bildens metadata och beräknar kalibrering
-3. **Kalibrering** (tråd 3) – Debayering, vignettkorrigering, kalibrering, indexberäkning
-4. **Export** (tråd 4) – Spara bearbetade bilder och index**Interaktion med förloppsindikatorn:*** **Håll muspekaren** över stapeln för att se en detaljerad rullgardinsmeny med fyra steg
-* **Klicka** på förloppsindikatorn för att frysa rullgardinsmenyn på plats
+1. **Detektering** (Tråd 1) – Söker efter kalibreringsmål
+2. **Analys** (tråd 2) – Granskning av bildmetadata och beräkning av kalibrering
+3. **Kalibrering** (tråd 3) – Debayering, vignetteringskorrigering, kalibrering, indexberäkning
+4. **Export** (tråd 4) – Spara bearbetade bilder och index**Interaktion med förloppsindikatorn:*** **Håll muspekaren** över indikatorn för att se en detaljerad rullgardinsmeny med de fyra stegen
+* **Klicka** på förloppsindikatorn för att låsa rullgardinsmenyn på plats
 * **Klicka igen** för att låsa upp och dölja menyn**Bearbetningstid:**
 
-* Betydligt snabbare än i gratisläget
+* Betydligt snabbare än gratisläget
 * GPU-acceleration förbättrar hastigheten ytterligare
 
 {% hint style="info" %}
-**Chloros+ Hastighet**: Parallellbearbetning kan vara 5–10 gånger snabbare än sekventiellt läge för stora datamängder. Ett projekt med 500 bilder som tar 2 timmar i gratisläget kan slutföras på 15–20 minuter med Chloros+.
+**Chloros+ hastighet**: Parallellbearbetning kan vara 5–10 gånger snabbare än sekventiellt läge för stora datamängder. Ett projekt med 500 bilder som tar 2 timmar i gratisläget kan slutföras på 15–20 minuter med Chloros+.
 {% endhint %}
 
 ***
 
 ## Vad händer under bearbetningen
 
-### Steg 1: Målidentifiering
+### Steg 1: Måldetektering
 
 **Vad Chloros gör:**
 
-* Skannar de bilder du markerat i kolumnen ”Mål” (alla bilder om inga är markerade)
+* Skannar de bilder du har markerat i kolumnen ”Mål” (alla bilder om ingen är markerad)
 * Identifierar kalibreringspanelerna i varje mål
 * Extraherar reflektansvärden från målpanelerna
-* Registrerar målets tidsstämplar för kalibreringsschemaläggning
+* Registrerar tidsstämplar för målen för kalibreringsplanering
 
 **Varaktighet:** 1–30 sekunder (med markerade mål), 5–30+ minuter (omarkerade)
 
@@ -108,7 +108,7 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 **Vad Chloros gör:**
 
-* Konverterar RAW-data med Bayer-mönster till fullständiga 3-kanalsbilder (LATTICE-monomoduler förblir enkelbandsbilder — debayering hoppas över för dem med en anteckning i loggen)
+* Konverterar RAW-data i Bayer-mönster till fullständiga 3-kanalsbilder (LATTICE-monomoduler förblir enkelbandsbilder – debayering hoppas över för dem med en anteckning i loggen)
 * Tillämpar den valda demosaicing-algoritmen
 * Bevarar maximal bildkvalitet och detaljrikedom
 
@@ -116,9 +116,9 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 ### Steg 3: Kalibrering
 
-**Vad Chloros gör:*** **Vignettkorrigering**: Tar bort mörkningen vid bildkanterna
+**Vad Chloros gör:*** **Vignettkorrigering**: Tar bort mörkningen vid kanterna
 * **Reflektanskalibrering**: Normaliserar med hjälp av målreflektansvärden och/eller DAQ-data för nedåtriktad strålning
-* Tillämpar korrigeringar på alla band/kanaler
+* Tillämpar korrigeringar över alla band/kanaler
 * Använder lämplig kalibreringsreferens för varje bild baserat på tidsstämpel
 
 **Varaktighet:** Största delen av bearbetningstiden
@@ -138,20 +138,20 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 **Vad Chloros gör:**
 
 * Sparar bearbetade bilder i det valda formatet
-* **LATTICE fan-out**: varje rå LATTICE-bildruta exporteras som alla aktiverade produkter i ett steg — debayered, förhandsgranskning, radiance (alltid float32), reflektans
+* **LATTICE fan-out**: varje rå LATTICE-ram exporteras som alla aktiverade produkter i ett steg — debayered, förhandsgranskning, radiance (alltid float32), reflektans
 * Skriver filer till projektets utdatastruktur: `<project>/<camera>/<format>/<Product>_Images/`
-* **Behåller källfilnamnet** – mappen identifierar produkten, inget suffix läggs till**Varaktighet:** Varierar beroende på exportformat och filstorlek***
+* **Behåller källfilnamnet** — mappen identifierar produkten, inget suffix läggs till**Tid:** Varierar beroende på exportformat och filstorlek***
 
 ## Bearbetningsbeteende
 
 ### Automatisk bearbetningspipeline
 
-När den har startats körs hela pipelinen automatiskt:
+När den väl har startats körs hela pipelinen automatiskt:
 
 * Ingen användarinteraktion krävs
 * Alla konfigurerade steg utförs i tur och ordning
-* Förloppsuppdateringar visas i realtid
-* Exporterade filer skrivs till disken allteftersom de blir färdiga — du kan öppna färdiga utdata medan körningen fortsätter
+* Uppdateringar om förloppet visas i realtid
+* Exporterade filer skrivs till disken allteftersom de blir färdiga — du kan öppna färdiga resultat medan körningen fortsätter
 
 ### Datoranvändning under bearbetningen
 
@@ -161,7 +161,7 @@ När den har startats körs hela pipelinen automatiskt:
 * Datorn förblir responsiv för andra uppgifter
 * Det är säkert att minimera Chloros och arbeta i andra program
 
-**Chloros+ Parallellt läge:**
+**Chloros+ parallellt läge:**
 
 * Hög CPU-användning i strategins arbetsgrupp
 * Med GPU-acceleration: Hög GPU-användning
@@ -169,20 +169,20 @@ När den har startats körs hela pipelinen automatiskt:
 * Undvik att starta andra CPU-krävande uppgifter
 
 {% hint style="warning" %}
-**Prestandatips**: För bästa Chloros+-prestanda, stäng andra program och låt Chloros använda alla systemresurser.
+**Prestandatips**: För bästa prestanda med Chloros+ bör du stänga andra program och låta Chloros använda systemets resurser fullt ut.
 {% endhint %}
 
-### Bearbetningen kan inte pausas (men det går att avsluta den på ett korrekt sätt)
+### Bearbetningen kan inte pausas (men avbrytningen sker smidigt)
 
-* När bearbetningen har startat kan den inte pausas och återupptas senare
-* Om du klickar på **Stopp** avslutas körningen korrekt redan vid det första klicket
-* Produkter som redan har exporterats innan stoppet finns kvar på disken
+* När bearbetningen väl har startats kan den inte pausas och återupptas senare
+* Om du klickar på **Stopp** avslutas körningen helt vid första klicket
+* Produkter som redan har exporterats före stoppet finns kvar på disken
 * En avbruten körning rapporterar korrekt vad som har slutförts (se raderna `[RUN-SUMMARY]` i loggen)
 * En ny körning startar pipelinen från början
 
 **Planeringstips:** För mycket stora projekt bör du överväga att bearbeta i omgångar eller använda CLI för bättre kontroll.***
 
-## Övervaka bearbetningen
+## Övervaka din bearbetning
 
 Medan bearbetningen pågår kan du:
 
@@ -202,8 +202,8 @@ Om du behöver avbryta bearbetningen:
 ### Så här avbryter du
 
 1. Leta reda på **Stopp-knappen** (ersätter Start-knappen under bearbetningen)
-2. Klicka på den en gång – stapeln visar **”Avbryter...”** medan den pågående bilden slutförs
-3. Körningen avslutas i ett definitivt stoppat tillstånd och loggen visar en detaljerad rapport (`[RUN-SUMMARY]`) över vad som har slutförts
+2. Klicka på den en gång – fältet visar **”Stoppar...”** medan den pågående bilden slutförs
+3. Körningen avslutas i ett definitivt stoppat tillstånd och loggen visar en detaljerad `[RUN-SUMMARY]` över vad som har slutförts
 
 ### När ska man avbryta
 
@@ -211,27 +211,27 @@ Om du behöver avbryta bearbetningen:
 
 * Man har insett att felaktiga inställningar har använts
 * Man har glömt att markera målbilder
-* Felaktiga bilder har importerats
+* Fel bilder har importerats
 * Systemet går för långsamt eller svarar inte
 
-**Efter avbrytning:**
+**Efter avbrytandet:**
 
-* Produkter som exporterades före avbrytningen finns kvar på disken
+* Produkter som exporterats före avbrytandet finns kvar på disken
 * Granska och åtgärda eventuella problem, justera inställningarna efter behov
-* Starta om bearbetningen – körningen börjar från början
+* Starta om bearbetningen — körningen börjar från början
 
 ***
 
-## Uppskattad bearbetningstid
+## Uppskattningar av bearbetningstid
 
 Den faktiska bearbetningstiden varierar kraftigt beroende på:
 
-* Antal bilder
-* Bildupplösning
-* Inmatningsformat (RAW eller JPG)
-* Bearbetningsläge (Free eller Chloros+)
+* Antalet bilder
+* Bildupplösningen
+* Inmatningsformatet (RAW eller JPG)
+* Bearbetningsläge (Free vs Chloros+)
 * CPU-hastighet och antal kärnor
-* Tillgänglighet av GPU (endast Chloros+)
+* Tillgång till GPU (endast Chloros+)
 * Antal index att beräkna
 * Antal aktiverade exportprodukter (LATTICE)
 
@@ -241,7 +241,7 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 | ----------- | --------- | -------------- | -------------- |
 | 50 bilder   | 15–20 min | 5–8 min        | 3–5 min        |
 | 100 bilder  | 30–40 min | 10–15 min      | 5–8 min        |
-| 200 bilder  | 1–1,5 tim | 20–30 min      | 10–15 min      |
+| 200 bilder  | 1–1,5 timmar | 20–30 min      | 10–15 min      |
 | 500 bilder  | 2–3 timmar   | 45–60 min      | 20–30 min      |
 | 1 000 bilder | 4–6 timmar   | 1,5–2 timmar      | 40–60 min      |
 
@@ -269,7 +269,7 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 3. Starta om Chloros om knappen fortfarande är inaktiverad
 4. Kontrollera felsökningsloggen för felmeddelanden
 
-### Bearbetningen startar men avbryts omedelbart
+### Bearbetningen startar men misslyckas omedelbart
 
 **Möjliga orsaker:**
 
@@ -289,23 +289,35 @@ Den faktiska bearbetningstiden varierar kraftigt beroende på:
 
 En körning som begärde bildprodukter men inte skrev ut några behandlas som ett **misslyckande, inte en framgång** — Chloros rapporterar detta tydligt:
 
-* GUI-loggen visar `[RUN-SUMMARY]`-meddelanden som anger den troliga orsaken — inga bilder importerade, inget mål detekterat, eller att alla begärda produkter hoppats över som icke tillämpliga (t.ex. begäran om radians/reflektans från kameror som endast stöder RGB)
-* Motsvarigheten till CLI (`chloros-cli process`) skriver ut `Processing finished but wrote no image products.` och **avslutas med ett värde som inte är noll**, så att skript kan upptäcka det
-* En avsiktlig körning med endast metadata (alla exportprodukter inaktiverade, inga index) räknas fortfarande som lyckad
+* GUI-loggen visar `[RUN-SUMMARY]`-meddelanden som anger den troliga orsaken — inga bilder importerade, inget mål detekterat, eller att alla begärda produkter hoppats över som icke tillämpliga (t.ex. begäran om strålningsintensitet/reflektans från kameror som endast har RGB)
+* Motsvarigheten i CLI (`chloros-cli process`) visar `Processing finished but wrote no image products.` och **avslutas med ett värde som inte är noll**, så att skript kan upptäcka det
+* En avsiktlig körning med endast metadata (alla exportprodukter inaktiverade, inga index) räknas fortfarande som en framgång
 
-Se [referensen för CLI](../reference/cli-reference.md#a-run-that-writes-no-images-fails) för fullständig beskrivning.
+Se [CLI-referensen](../reference/cli-reference.md#a-run-that-writes-no-images-fails) för fullständig beskrivning.
+
+### Projektmappen ligger för djupt i katalogstrukturen för den här datorn
+
+**Endast Windows, nytt i 1.3.0.** Windows levereras med långa sökvägar inaktiverade, vilket innebär att ingen filväg får vara längre än 260 tecken. Chloros-produkterna ligger upp till cirka 130 tecken under projektmappen, så en projektmapp som ligger djupare än så kan inte ta emot sina produkter. Istället för att köras utan att skriva ut något kontrollerar Chloros nu innan bearbetningen startar:
+
+* Att klicka på Start startar inte en körning: förloppsindikatorn visar orsaken, och felsökningsloggen visar `[PROCESS] refused: The project folder is too deep for this computer…`. Meddelandet anger projektmappens längd och den längsta projektmapp som ryms.
+* Att skapa eller öppna ett projekt i en mapp som är för djup även för projektets egna filer nekas också. En meddelanderuta förklarar varför, med den längsta projektmappen som ryms och hur man aktiverar långa sökvägar, och ingenting skapas eller öppnas; felsökningsloggen registrerar detta som `[PROJECT] refused: …`. Att duplicera ett projekt under ett längre namn kan också överskrida gränsen: kopian skapas men öppnas inte, och samma meddelande anger orsaken.
+
+**Lösningar:**
+
+1. Förvara projekten i en kortare mapp – ändra**Arbetsmappen** i [Projektinställningar](../project-settings/project-settings.md) och skapa projektet på nytt, eller
+2. Aktivera långa sökvägar i Windows och starta om Chloros: kör Chloros-installationsprogrammet igen med **Aktivera långa sökvägar i Windows** markerat (det är markerat som standard), eller använd grupprincip: *Datorkonfiguration &gt; Administrativa mallar &gt; System &gt; Filsystem &gt; Aktivera långa Win32-sökvägar*.
 
 ### Varningen ”Inga mål upptäckta”
 
 **Möjliga orsaker:**
 
-* Glömde att markera målbilder
+* Du har glömt att markera målbilder
 * Målbilderna innehåller inga synliga mål
 * Inställningarna för måldetektering är för strikta
 
 **Lösningar:**
 
-1. Läs igenom [Att välja målbilder](choosing-target-images.md)
+1. Läs igenom [Välja målbilder](choosing-target-images.md)
 2. Markera lämpliga bilder i kolumnen ”Mål”
 3. Kontrollera att målen är synliga i de markerade bilderna
 4. Justera inställningarna för måldetektering vid behov
@@ -326,15 +338,15 @@ Se [referensen för CLI](../reference/cli-reference.md#a-run-that-writes-no-imag
 
 1. **Undvik att systemet går i viloläge** – Inaktivera energisparlägen
 2. **Håll Chloros i förgrunden** – Eller åtminstone synligt i aktivitetsfältet
-3. **Övervaka framstegen då och då** – Kontrollera om det finns varningar eller fel
-4. **Starta inte andra resurskrävande program** – Särskilt inte när Chloros+ körs i parallellt läge
+3. **Övervaka förloppet då och då** – Kontrollera om det finns varningar eller fel
+4. **Starta inte andra resurskrävande program** – Särskilt inte i Chloros+ parallellläge
 
 ### Chloros+ GPU-acceleration
 
 Om du använder NVIDIA GPU-acceleration:
 
 1. Uppdatera NVIDIA-drivrutinerna till den senaste versionen
-2. Se till att GPU:n har minst 4 GB VRAM (minst 7 GB för samtidig texturmedveten debayering)
+2. Se till att GPU:n har minst 4 GB VRAM (minst 7 GB för samtidig Texture Aware-debayering)
 3. Stäng GPU-krävande program (spel, videoredigering)
 4. Övervaka GPU-temperaturen (se till att kylningen är tillräcklig)
 
@@ -345,7 +357,7 @@ Om du använder NVIDIA GPU-acceleration:
 När bearbetningen har startat:
 
 1. **Övervaka förloppet** – Se [Övervaka bearbetningen](monitoring-the-processing.md)
-2. **Vänta tills bearbetningen är klar** – Bearbetningen sker automatiskt
+2. **Vänta tills bearbetningen är klar** – Bearbetningen körs automatiskt
 3. **Granska resultaten** – Se [Avsluta bearbetningen](finishing-the-processing.md)
 
 För information om vad du ska göra under bearbetningen, se [Övervaka bearbetningen](monitoring-the-processing.md).

@@ -2,78 +2,124 @@
 
 ## En kamera = ett band
 
-En **M3M**-kamera är den monokroma motsvarigheten till Bayer**M3C**: en monokrom IMX265-sensor bakom ett enda smalbandigt interferensfilter. Modellsträngen anger bandet – `M3M-<lens>-F<wavelength>`, t.ex. `M3M-L87-F685` (visas i Chloros som `LATT-M3M-L87-F685`). Sensorn levererar ett**enda gråskaleband** utan Bayer-mosaik: det finns inget att demosaikera, ingen kanalöverskridande överhörning att separera och ingen vitbalans att ställa in.
+En **M3M**-kamera är den monokroma motsvarigheten till Bayer**M3C**: en monokrom IMX265-sensor bakom ett enda smalbandigt interferensfilter. Modellsträngen anger bandet – `M3M-<lens>-F<wavelength>`, t.ex. `M3M-L87-F685` (visas i Chloros
+
+som `LATT-M3M-L87-F685`). Sensorn levererar ett **enda gråskaleband** utan Bayer-mosaik: det finns inget att demosaikera, ingen kanalöverskridande överhörning att separera och ingen vitbalans att ställa in.
 
 Konsekvenser som är värda att känna till innan du planerar ett monosystem:
 
-* **Strålning och reflektans är fullständigt definierade per band.**Det är radiometriska kartor per band, så en M3M-kamera producerar kalibrerad radianse i float32 (W/m²/sr/nm) och reflektans i uint16 (`32768` = ρ 1,0) precis som ett M3C-band gör. Monobilder har en**identitets**sensorresponsmatris – ingen 3×3-separering behövs eller tillämpas.
-* **En enskild monokamera kan inte generera ett vegetationsindex.** NDVI, NDRE och liknande behöver minst två band. För att beräkna index från monohårdvara kombinerar man flera M3M-kameror – se nedan.
-* M3M-kameror strömmar **Mono12** (12-bitars, 2 byte/pixel över kabeln), vilket är viktigt för [budgetering av arraybandbredd](arrays.md#bandwidth-the-rules-of-thumb).
+* **Strålning och reflektans är fullständigt definierade per band.**Det är radiometriska kartor per band, så en M3M-kamera producerar kalibrerad radians i float32 (W/m²/sr/nm) och reflektans i uint16 (`32768` = ρ 1,0) precis som ett M3C-band gör. Mono-bilder har en**identitets**-matris för sensorns respons – ingen 3×3-avblandning behövs eller tillämpas.
+* **En enskild monokamera kan inte generera ett vegetationsindex.** NDVI
 
-## Vad Chloros hoppar över för mono – och hur det meddelar dig
+, NDRE
 
-Stegen i färgpipeline gäller helt enkelt inte för en sensor med ett enda band. Chloros **hoppar över dem med ett enradigt meddelande** istället för att rapportera ett fel, och kör dem fortfarande normalt för alla M3C-kameror (Bayer) i samma session:
+och liknande index kräver minst två band. För att beräkna index från monohårdvara kombinerar man flera M3M-kameror – se nedan.
+* M3M-kameror strömmar **Mono12** (12-bitars: 2 byte/pixel över nätverket, eller 1,5 byte/pixel när en matris använder [packad 12-bitars överföring](arrays.md#packed-12-bit-transport)), vilket är viktigt för [bandbreddsplanering för matriser](arrays.md#bandwidth-how-many-cameras-fit).
 
-| Steg | Beteende för mono (M3M) | Beteende för M3C |
+## Vad Chloros
+
+hoppar över för mono – och hur det meddelar dig
+
+Stegen i färgpipeline gäller helt enkelt inte för en enkelbandssensor. Chloros
+
+**hoppar över dem med ett meddelande på en rad** istället för att rapportera ett fel, och kör dem fortfarande normalt för alla M3C-kameror (Bayer) i samma session:
+
+| Steg | Beteende vid monokrom (M3M) | Beteende vid M3C |
 | --- | --- | --- |
-| Demosaic / debayer | Hoppas över — exportnivån för `debayered` är en 1-kanals gråskalebild. | 3-kanals demosaic. |
-| Vitbalans (`lattice white-balance`) | Hoppas över med ett enradigt meddelande. | Körs normalt. |
-| Färgprofil (`lattice color-profile`) | Hoppas över med ett enradigt meddelande. | Körs normalt. |
+| Demosaic / debayer | Hoppas över — exportnivån `debayered` är en 1-kanals gråskalebild. | 3-kanals demosaic. |
+| Vitbalans (`lattice white-balance`) | Hoppas över med ett meddelande på en rad. | Körs normalt. |
+| Färgprofil (`lattice color-profile`) | Hoppas över med ett meddelande på en rad. | Körs normalt. |
 | Mättnad/kontrast (`lattice color`) | Hoppas över med ett meddelande på en rad. | Körs normalt. |
 | Spektral crosstalk-avskiljning | Identitet (ingen 3×3-matris). | 3×3-matris tillämpad per kamera. |
-| Strålningsintensitet/reflektans | **Körs** — per band, fullt kalibrerad. | Körs per band. |
+| Radiance/reflektans | **Körs** — per band, fullt kalibrerad. | Körs per band. |
 
-GUI:n tillämpar samma gating: för en monokamera döljer inställningspanelen per kamera de rader som endast gäller RGB (vitbalans, gamma, färgprofil, mättnad, kontrast, kanaluppdelning), och livehistogrammet är låst till en enda **MONO**-kurva. Diskriminatorn i hela stacken är `M3M`-tokenet i modellsträngen, som visas i GUI/SDK som `is_mono`.
+GUI:n tillämpar samma gating: för en monokamera döljer inställningspanelen per kamera de rader som endast gäller RGB
+
+(vitbalans, gamma, färgprofil, mättnad, kontrast, kanaluppdelningar), och livehistogrammet är låst till en enda **MONO**-kurva. Diskriminatorn genom hela stapeln är token `M3M` i modellsträngen, som visas i GUI/SDK
+
+som `is_mono`.
 
 ## Index kräver ≥ 2 band: justera → stapla → indexera
 
-Arbetsflödet för monoindexering består alltid av samma tre steg:
+Arbetsflödet för monoindex består alltid av samma tre steg:
 
-1. **Justera** — rikta flera M3M-kameror mot olika våglängder (t.ex. en F650 ”Red” och en F850 &quot;NIR&quot;), koppla ihop dem som en [multikamera-array](arrays.md) och låt Chloros beräkna korrigeringsförskjutningen mellan kamerorna.
-2. **Stack** — de inriktade bildrutorna blir en multibandsbild (varje kamera bidrar med ett namngivet band).
-3. **Index** — utvärdera en indexformel över stackens band och rendera den valfritt genom en LUT.
+1. **Justera** — rikta flera M3M-kameror mot olika våglängder (t.ex. en F650 ”Red
 
-I GUI:n utgör hela denna kedja visningsläget **Combined Cameras**: den sammansatta livebilden är redan justerad, och arrayens Index Calculator (nedan) definierar den formel som den renderar. Inspelade exporter kan justeras till samma inriktning med inspelningsalternativet**Aligned**.
+” och en F850 ”NIR
+
+”), koppla ihop dem som en [multikamera-array](arrays.md) och låt Chloros
+
+beräkna ko-registreringsförskjutningen mellan kamerorna.
+2. **Stapla** — de justerade bildrutorna blir en multibandsbild (varje kamera bidrar med ett namngivet band).
+3. **Index** — utvärdera en indexformel över stapelns band, eventuellt genom att rendera den via en LUT.
+
+I GUI:n utgör hela denna kedja visningsläget **Combined Cameras**: den sammansatta livebilden är redan justerad, och arrayens Index Calculator (nedan) definierar den formel som den renderar. Inspelade exportfiler kan förvrängas till samma justering med inspelningsalternativet**Aligned**.
 
 ## Indexkalkylatorn
 
-Indexkalkylatorn skapar det indexuttryck som används av livevisningen och indexexporterna per kamera. Det är en gemensam yta som öppnas från två ställen i sidofältet på fliken **Kameror**:
+Indexkalkylatorn skapar det indexuttryck som används av livevyn och indexexporten per kamera. Det är en gemensam yta som öppnas från två ställen i sidofältet på fliken Kameror:
 
-* **Per kamera**— Liveförhandsgranskning →**Index**-kugghjulet (endast RGN/OCN/NGB Bayer-kameror; en enskild monokamera har ingen indexkontroll eftersom ett band inte kan bilda ett index).
-* **Per array**— arrayinställningar → Liveförhandsvisning →**Index**-kugghjulet. Detta är monovägen: bandlistan omfattar**alla kameror i gruppen**, så ett monopar bidrar med sina två band här.
+* **Per kamera**— Liveförhandsgranskning →**Index**-kugghjulet (endast RGN
+
+-/OCN
+
+-/NGB
+
+-Bayer-kameror; en ensam monokamera har ingen indexkontroll eftersom ett band inte kan bilda ett index).
+* **Per array**— arrayinställningar → Liveförhandsvisning →**Index**-kugghjulet. Detta är vägen för monokameror: bandlistan omfattar**alla ingående kameror**, så ett monopar bidrar med sina två band här.
 
 <!-- SCREENSHOT-NEEDED: Index Calculator pane opened for a combined array of two mono cameras (e.g. F650 + F850): band chips row showing the two bands with wavelength labels, the operator buttons, the expression textarea containing "(NIR - Red) / (NIR + Red)", the green "Valid expression" banner, the LUT controls (Apply LUT checked, Level 7-stop, Min 0.2 / Max 1), and the live histogram with p2/p98 percentile lines. -->
 
 Kontrollerna, uppifrån och ner:
 
-* **Bandchips** (”Bands — klicka för att lägga till i uttrycket”) — en knapp per tillgängligt band, märkt med färgnamn + våglängd i nm (duplicerade färgnamn skiljs åt, t.ex. ”Color 850”). Genom att klicka infogas bandtoken vid markören. Band från kameror som inte kan producera strålning per band (RGB/FRGB) filtreras bort.
+* **Bandchips** (&quot;Band — klicka för att lägga till i uttrycket&quot;) — en knapp per tillgängligt band, märkt med färgnamn + våglängd i nm (dubbla färgnamn skiljs åt, t.ex. &quot;Färg 850&quot;). Ett klick infogar bandtoken vid markören. Band från kameror som inte kan producera strålning per band (RGB
+
+/FRGB) filtreras bort.
 * **Operator- och funktionsknappar** — `+ - * / ( ) ^ ,` samt `abs() sqrt() log() log10() exp() min() max() pow()`.
-* **Textfält för uttryck** — fritt inmatad formel; platshållaren visar den klassiska NDVI-formen `(NIR - Red) / (NIR + Red)`. En skrivskyddad, tokeniserad förhandsgranskning ovanför visar bandchips, siffror och flaggor som okända token.
-* **Giltighetsbanner**— grått ”Tomt — inget index kommer att tillämpas”; grönt ”Giltigt uttryck”; rött med det specifika tolkningsfelet (okänt band, tvetydigt band som exponeras av flera kameror, saknad parentes, …); eller gult när uttrycket är giltigt men**konstant** (t.ex. `X/X`, eller en NDVI-nämnare som skrivits med `−` istället för `+`) — en konstant mappar hela bilden till en enda färg.
+* **Textfält för uttryck** — fritt inmatad formel; platshållaren visar den klassiska NDVI
+
+-formen `(NIR - Red) / (NIR + Red)`. En skrivskyddad, tokeniserad förhandsgranskning ovanför visar bandchips, siffror och flaggor som okända token.
+* **Giltighetsbanner**— grått ”Tomt — inget index kommer att tillämpas”; grönt ”Giltigt uttryck”; rött med det specifika tolkningsfelet (okänt band, tvetydigt band som exponeras av flera kameror, saknad parentes, …); eller gult när uttrycket är giltigt men**konstant** (t.ex. `X/X`, eller en NDVI
+
+-nämnare som skrivits in som `−` istället för `+`) — en konstant mappar hela bilden till en enda färg.
 * En separat gul varning visas om det tillämpade uttrycket är korrekt men **live-bilden är enhetlig** (platt eller mättad scen) — histogramkollapsen upptäcks automatiskt.
-* **Apply LUT**(standard: på; av = gråskalesträckning),**Level**2/3/5/7-stop (standard 7-stop) och**Min / Max**-inmatningar på båda sidor om gradientfältet. Min är som standard inställt på**0,2**— det zoomar in färgskalan till det vegetationsrelevanta området medan värden under detta passerar som gråskala; ställ in Min på −1 för hela indexområdet (knappen**Återställ** återställer −1…+1). Max är som standard inställt på 1.
+* **Apply LUT**(standard: på; av = gråskalesträckning),**Level**2/3/5/7-stop (standard 7-stop) och**Min / Max**-inmatningar på båda sidor om gradientfältet. Min är som standard inställt på**0,2**— det zoomar in färgrampen till det vegetationsrelevanta intervallet medan värden under detta passerar som gråskala; ställ in Min på −1 för hela indexintervallet (knappen**Återställ** återställer −1…+1). Max är som standard inställt på 1.
 * **Live-histogram** över indexfördelningen — kvadratrotskalade staplar, gulbruna p2/p98-percentillinjer, en vit medianlinje och avläsningar för värden utanför intervallet (&quot;◀ N% &lt; lo&quot; / &quot;hi &lt; N% ▶&quot;) som blir bärnstensfärgade över 1 % som en signal om att bredda Min/Max-fönstret.
-* **Apply**tillämpar uttrycket på liveströmmen; LUT-justeringar tillämpas direkt utan att man behöver trycka på Apply. Uttryck är avsiktligt**endast giltiga för den aktuella sessionen** — de sparas inte mellan sessioner.
+* **Apply** tillämpar uttrycket på liveströmmen; LUT-justeringar tillämpas direkt utan att du behöver trycka på Apply. Om ett projekt är öppet sparas uttrycket och LUT-inställningarna med projektet och återställs när du öppnar det igen; utan projekt gäller de endast under den aktuella sessionen.
 
 <!-- SCREENSHOT-NEEDED: Combined-array live tile rendering NDVI from a mono pair through the default 7-stop LUT, with the array name pill and fps readout visible — the result of applying the expression from the previous screenshot. -->
 
-## CLI-kedjan
 
-Samma kedja av justering → stapel → index, skriptbar från början till slut:
+
+## CLI
+
+-vägen
+
+Samma kedja av align → stack → index, skriptbar från början till slut:
 
 ```bash
-chloros-cli lattice array-connect --serials SN_RED,SN_NIR
+chloros-cli lattice align-calibrate --serials SN_RED,SN_NIR --save align.json
 chloros-cli lattice index --live --profile align.json \
   --preset NDVI --channel red=Red_660 --channel nir=NIR_850 \
   --save-multiband -o output/
 ```
 
-`--channel` mappar en förinställnings symboler till stapelns bandnamn. Två regler hjälper dig att undvika misslyckade körningar:
+`align-calibrate` använder en ansluten array som innehåller dess kameror, eller öppnar dem själv för den aktuella körningen. `index --live` öppnar alltid kamerorna själv (en [tillfällig array](../reference/cli-reference.md#multi-camera-transient-sessions)) och har ingen `--serials`: den öppnar varje kamera i nätverket. Släpp därför alla kameror som Chloros
 
-* **Symboler är skiftlägeskänsliga** och måste stämma exakt med förinställningens kanalnamn — förinställningarna använder gemener (NDVI:s är `red`,`nir`; kontrollera `--list-presets`). `--channel red=Red_660` fungerar; `--channel RED=660` misslyckas med ett `channel_map missing entries`-fel.
-* Bandsidan måste ange ett band i den justerade stapeln (`lattice align-info --profile align.json` listar dem). Offline-läget accepterar även 0-baserade bandindex, t.ex. `--channel red=0 --channel nir=1`.
+håller innan det — GUI:t, `cam-connect`, `array-connect` (`chloros-cli lattice array-disconnect --all`): att öppna en upptagen kamera en andra gång kan stoppa dess innehavares ström eller krascha backend-systemet. En kamera som inte levererar någon bildruta gör att körningen misslyckas, och ingen stack eller index skrivs.
 
-`lattice index` körs också helt offline mot en sparad, justerad multibands-TIFF:
+`--channel` mappar en förinställnings symboler till stackens bandnamn. Två regler hjälper dig att undvika ett misslyckat körningsförsök:
+
+* **Symboler är skiftlägeskänsliga** och måste stämma exakt med förinställningens kanalnamn — förinställningar använder gemener (för NDVI
+
+gäller `red`,`nir`; se `--list-presets`). `--channel red=Red_660` fungerar; `--channel RED=660` misslyckas med ett `channel_map missing entries`-fel.
+* Bandsidan måste ange ett band i den justerade stapeln (`lattice align-info --profile align.json` listar dem). Offline-läget accepterar även bandindex med 0 som startpunkt, t.ex. `--channel red=0 --channel nir=1`.
+
+`lattice index` körs även offline mot en sparad, justerad flerbands-TIFF
+
+-fil. Varje formulär körs på backend, så den måste vara igång och inloggad på en betald Chloros
+
++-nivå; ett relativt `--input` eller `--output` hänvisar till den mapp du kör kommandot från:
 
 ```bash
 chloros-cli lattice index --input aligned.tif --preset NDVI \
@@ -86,10 +132,18 @@ chloros-cli lattice index --input aligned.tif --preset NDVI \
 
 `NDVI, GNDVI, BNDVI, NDRE, ENDVI, SAVI, OSAVI, MSAVI, EVI, EVI2, CVI, MSR, TDVI, LAI, GLI, NGRDI, VARI, TGI, EXG, CIRE, CIGREEN, NDWI`
 
-Kör `chloros-cli lattice index --list-presets` för varje förinställnings formel och kanalsymboler, och `--list-gradients` för de tillgängliga färggradienterna. Anpassade formler använder `--formula EXPR` med samma syntax som Index Calculator. Observera att denna lista med förinställningar är specifik för LATTICE-indexmotorn – rullgardinsmenyn för bearbetning i projektinställningarna för importerade bilder innehåller en annan lista (se [Multispektrala indexformler](../project-settings/multispectral-index-formulas.md)).
+Kör `chloros-cli lattice index --list-presets` för varje förinställnings formel och kanalsymboler, och `--list-gradients` för de tillgängliga färggradienterna. Anpassade formler använder `--formula EXPR` med samma syntax som Index Calculator. Observera att denna lista med förinställningar är specifik för LATTICE-indexmotorn – rullgardinsmenyn för bearbetning under Projektinställningar för importerade bilder innehåller en annan lista (se [Multispektrala indexformler](../project-settings/multispectral-index-formulas.md)).
 
-Den fullständiga uppsättningen flaggor (`--output-format`, `--vmin/--vmax/--percentile`, `--bg-mode`, justeringsreglagen för `--live`, och mer) dokumenteras i [CLI-referensen § Index / Vegetationsmatematik](../reference/cli-reference.md#index--vegetation-maths); motsvarigheter till SDK finns i [SDK-referensen](../reference/sdk-reference.md).
+Den fullständiga uppsättningen flaggor (`--output-format`, `--vmin/--vmax/--percentile`, `--bg-mode`, justeringsreglagen för `--live` och mer) finns dokumenterad i [CLI
+
+-referensen § Index / Vegetationsmatematik](../reference/cli-reference.md#index--vegetation-maths); Motsvarande SDK
+
+-funktioner finns i [SDK
+
+-referensen](../reference/sdk-reference.md).
 
 ## Hämta indexprodukter från en mono-array
 
-När en array är ansluten och ett indexuttryck tillämpas sparar `array-capture` (eller GUI-funktionen **Capture All**) exportnivåerna per kamera *och* indexrenderingen — `--index`/`--no-index` växlar mellan detta på CLI, och standardinställningen för insamlingen är att inkludera alla tillämpliga nivåer. En monokameras bidrag till varje inspelningsgrupp är dess enda band på rå-/debayered- (gråskala-)/radiance-/reflektansnivåer, plus den delade sammansatta indexkompositionen när matrisen körs i kombinerat läge. Se [Flerkameramatriser § Insamling](arrays.md#capturing-monitoring-vs-analysis).
+När en array är ansluten och ett indexuttryck har tillämpats sparar `array-capture` (eller GUI-funktionen **Capture All**) sparar exportnivåerna per kamera *och* indexrenderingen — `--index`/`--no-index` växlar mellan detta i CLI
+
+och standardinställningen är att inkludera alla tillämpliga nivåer. En monokameras bidrag till varje inspelningsgrupp är dess enda band på rå-/debayered- (gråskala)-/radian- och reflektansnivåer, plus den delade sammansatta indexkompositionen när matrisen körs i kombinerat läge. Se [Multikamera-arrayer § Inspelning](arrays.md#capturing-monitoring-vs-analysis).
