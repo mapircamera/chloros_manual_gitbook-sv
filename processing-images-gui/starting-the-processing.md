@@ -180,7 +180,9 @@ När den väl har startats körs hela pipelinen automatiskt:
 * En avbruten körning rapporterar korrekt vad som har slutförts (se raderna `[RUN-SUMMARY]` i loggen)
 * En ny körning startar pipelinen från början
 
-**Planeringstips:** För mycket stora projekt bör du överväga att bearbeta i omgångar eller använda CLI för bättre kontroll.***
+**Planeringstips:** För mycket stora projekt bör du överväga att bearbeta i omgångar eller använda CLI för bättre kontroll.
+
+***
 
 ## Övervaka din bearbetning
 

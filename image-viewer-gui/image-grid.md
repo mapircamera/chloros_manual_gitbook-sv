@@ -10,7 +10,9 @@ Använd zoomreglaget uppe till höger för att justera storleken på bildminiaty
 * **Ctrl + `+`**/**Ctrl + `=`**och**Ctrl + `−`** ändrar storleken med 4 px per tryckning. Tangentbordsinställningarna slutar vid 64 px i den lägre änden och, i den högre änden, vid den storlek som rymmer exakt två miniatyrbilder per rad i det aktuella fönstret.
 * Den storlek du väljer sparas med projektet (`UI → Grid thumbnail size` i `project.json`, standard `160`), så när du öppnar projektet igen återställs den.
 
-<figure><img src="../.gitbook/assets/chloros_grid_zoom.gif" alt=""><figcaption></figcaption></figure>Miniatyrbildens *upplösning* är en separat inställning från miniatyrbildens *storlek*: se **Visning → Upplösning för miniatyrbilder** i [Projektinställningar](../project-settings/project-settings.md) (standard 512 px på den långa sidan). Storleken avgör hur stor rutan ritas; upplösningen avgör hur mycket detalj som hämtas för att fylla den.***
+<figure><img src="../.gitbook/assets/chloros_grid_zoom.gif" alt=""><figcaption></figcaption></figure>Miniatyrbildens *upplösning* är en separat inställning från miniatyrbildens *storlek*: se **Visning → Upplösning för miniatyrbilder** i [Projektinställningar](../project-settings/project-settings.md) (standard 512 px på den långa sidan). Storleken avgör hur stor rutan ritas; upplösningen avgör hur mycket detalj som hämtas för att fylla den.
+
+***
 
 ## Verktygsfältet för rutnätet
 

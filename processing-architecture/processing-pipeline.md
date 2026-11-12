@@ -15,7 +15,9 @@ Images In → [Thread 1: Detection] → [Thread 2: Calibration] → [Thread 3: P
 
 Varje bild passerar genom alla fyra trådarna i tur och ordning. Med Chloros+ multitrådsbearbetning upptar flera bilder olika trådar samtidigt – medan tråd 3 bearbetar en bild kan tråd 1 detektera nästa, tråd 2 kalibrera en annan och tråd 4 skriva en färdig bild till disken.
 
-Framsteg rapporteras per tråd och strömmas via Server-Sent Events (backend publicerar dem på `/api/events`). I CLI:s realtidsvisning av framsteg är de fyra stegen märkta **Detektering, Analys, Bearbetning, Export**.***
+Framsteg rapporteras per tråd och strömmas via Server-Sent Events (backend publicerar dem på `/api/events`). I CLI:s realtidsvisning av framsteg är de fyra stegen märkta **Detektering, Analys, Bearbetning, Export**.
+
+***
 
 ## Trådinformation
 

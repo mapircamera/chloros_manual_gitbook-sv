@@ -34,7 +34,9 @@ i vänster sidopanel
 * **Alternativ**: `Default (512 px)`, `1024 px`, `2048 px`, `Full resolution`
 * **Standard**: Standard (512 px)
 * **Beskrivning**: Upplösning (längsta sidan, i pixlar) vid vilken miniatyrerna i bildrutnätet renderas. Högre värden ser skarpare ut när man zoomar in, men laddas långsammare och använder mer minne. Full upplösning motsvarar den ursprungliga bildstorleken.
-* **Obs**: Endast för visning — detta påverkar aldrig bearbetningen eller exporterade filer.***
+* **Obs**: Endast för visning — detta påverkar aldrig bearbetningen eller exporterade filer.
+
+***
 
 ## Måldetektering
 
@@ -184,7 +186,9 @@ Det lagrade värdet matchas utan hänsyn till versaler och gemener, och några s
   * En kamera + en stift: Stift 2 ställs automatiskt in på ”Använd inte”
   * En kamera + två stift: Stift 2 ställs automatiskt in på ”Använd inte”
   * Flera kameror: Manuellt val krävs
-* **Obs**: Samma kamera kan inte tilldelas både stift 1 och stift 2 samtidigt.***
+* **Obs**: Samma kamera kan inte tilldelas både stift 1 och stift 2 samtidigt.
+
+***
 
 ## DAQ-ljussensor
 
@@ -205,7 +209,9 @@ Varje rad visar filen, sensormodellen och den diffusorkåpskorrigering som fakti
 * **Beskrivning**: `Auto` använder den registrerade kåpan för varje fil (Sunshine-kåpan antas om inget har registrerats, men DAQ-U, DAQ-M och DAQ-E levereras utan kåpa och Chloros kan inte se vilken som är monterad, därför varnar bearbetningen för ett antaget lock: välj det lock som var monterat). Att välja ett specifikt lock åsidosätter **alla** nedåtriktade filer i projektet utom en DAQ-E-S:s, vars diffusor ingår i dess kalibrering; ett projekt som endast består av DAQ-E-S visar ingen rullgardinsmeny: råa inspelningar korrigeras med den, och inspelningar som redan har ett lock omrefereras (den inspelade korrigeringen ångras och den valda tillämpas).
 * **Viktigt**: Det valda locket måste stämma överens med det lock som fysiskt var monterat under inspelningen. Varken sensorn eller programvaran kan upptäcka det fysiska locket – ett felaktigt lock-ID korrigerar spektren felaktigt.
 
-Det finns avsiktligt **en** projektomfattande inställning istället för rullgardinsmenyer per fil: inställningen gäller för alla nedåtriktade källor i projektet.***
+Det finns avsiktligt **en** projektomfattande inställning istället för rullgardinsmenyer per fil: inställningen gäller för alla nedåtriktade källor i projektet.
+
+***
 
 ## Arrayjustering
 

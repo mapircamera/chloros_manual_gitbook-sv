@@ -136,7 +136,9 @@ Två regler styr siffrorna:
 * En tråd som är den **enda** aktiva tilldelas sin profils maximala tilldelning.
 * När mer än en *tung* GPU-uppgift är aktiv delas varje tung uppgifts bastilldelning mellan dem (aldrig under det konfigurerade minimumet).
 
-Det värde som faktiskt används vid körning är det **lägsta** av plattformsprofilens tilldelning och den aktuella rekommendationen från GPU-minnesmonitorn, så ett upptaget kort har alltid företräde framför en optimistisk profil.***
+Det värde som faktiskt används vid körning är det **lägsta** av plattformsprofilens tilldelning och den aktuella rekommendationen från GPU-minnesmonitorn, så ett upptaget kort har alltid företräde framför en optimistisk profil.
+
+***
 
 ## Texturmedveten bearbetning
 

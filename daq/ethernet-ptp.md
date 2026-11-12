@@ -102,4 +102,4 @@ Detaljer för användare som kräver strikt synkronisering:
 | Sändningsdomän | Värd och sensor befinner sig i samma L2-segment; mDNS dirigeras inte |
 | Brandvägg | Windows: installationsprogrammets regel **Chloros Backend (UDP-In)** släpper in DAQ-E-strömmen (UDP 5002), mDNS (5353) och PTP (319/320); en brandvägg från tredje part måste ha samma inställningar. Linux: `.deb` öppnar dessa portar i `ufw` / `firewalld` endast om brandväggen var aktiv vid installationstillfället — tillåt dem själv i en brandvägg som aktiveras senare |
 | Värd med flera nätverkskort | Upptäckten söker igenom mDNS med ARP som reserv; `--eth-host <ip-or-hostname>` hoppar över upptäckten och ansluter direkt |
-| Omsökning via GUI | Upptäckten körs endast medan anslutningsdialogrutan är öppen; använd Uppdatera |</version>
+| Omsökning via GUI | Upptäckten körs endast medan anslutningsdialogrutan är öppen; använd Uppdatera |

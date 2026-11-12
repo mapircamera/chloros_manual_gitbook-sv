@@ -155,7 +155,9 @@ Detta avsnitt visas **endast** när minst en bild i projektet innehåller den mo
 
 * **Tillämpa arrayjustering** (standard: på): förvränger varje bearbetad produkt (debayered / förhandsgranskning / strålningsintensitet / reflektans / index) till arrayens gemensamma referensgeometri. Av = exporterar i sensorns ursprungliga geometri.
 * **Beskär till gemensam överlappning** (standard: på): beskär justerade exporter till det område som alla moduler delar, så att varje band har samma täckningsområde. Av behåller hela sensorns yta (svart fyllning utanför källan).
-* **Omprovtagning**:**Bilineär (jämn, standard)**,**Närmaste (bevarar exakta värden)**— ingen blandning mellan pixlar, för strikt radiometrisk analys — eller**Kubisk (skarpast)**.***
+* **Omprovtagning**:**Bilineär (jämn, standard)**,**Närmaste (bevarar exakta värden)**— ingen blandning mellan pixlar, för strikt radiometrisk analys — eller**Kubisk (skarpast)**.
+
+***
 
 ## Spara och ladda inställningar
 

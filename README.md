@@ -64,7 +64,9 @@ Fullständig guide: [Använda Chloros med AI-assistenter](ai-assistants.md).
 * **Tydlig felhantering.** En `chloros-cli process`-körning som begärde produkter men inte skrev ut några misslyckas nu tydligt och avslutas med ett värde större än noll; lyckade körningar rapporterar hur många bildprodukter de skrev ut.
 * **Ny utdatastruktur.** Produkterna placeras i `<project>/<camera>/<format>/<Product>_Images/`-mappar och behåller källfilnamnet — det är mappen, inte ett filnamnstillägg, som identifierar produkten. Se [Utdataformat för bilder](output-image-formats.md).
 * **Fler ingångar, planer och språk.** Stöd för `.dng`-ingångar; alla 38 gränssnittsspråk är fullständigt implementerade; hårdvarubegränsningar per plan med gratis (utan inloggning) användning av upp till 4 kameror och 2 ljussensorer.
-* **Tillförlitlighet.** ”Stop Processing” avslutas korrekt med en tydlig sammanfattning av körningen, projekt med flera kameror exporterar data från varje kamera och installationsprogrammet loggar inte längre ut dig vid uppgraderingar.***
+* **Tillförlitlighet.** ”Stop Processing” avslutas korrekt med en tydlig sammanfattning av körningen, projekt med flera kameror exporterar data från varje kamera och installationsprogrammet loggar inte längre ut dig vid uppgraderingar.
+
+***
 
 Chloros finns tillgängligt i tre användargränssnitt:
 

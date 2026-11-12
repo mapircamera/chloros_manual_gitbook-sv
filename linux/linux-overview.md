@@ -10,7 +10,8 @@ Chloros 1.3.0 erbjuder inbyggt stöd för Linux för **CLI**och**Python SDK** �
 
 ## Plattformsstödmatris
 
-| Funktion | Windows (GUI) | Windows (CLI/SDK) | Linux amd64 (CLI/ --- | --- | --- | --- |
+| Funktion | Windows (GUI) | Windows (CLI/SDK) | Linux amd64 (CLI/SDK) | Linux arm64 / Jetson (CLI/SDK) |
+| --- | --- | --- | --- | --- |
 | **GUI för skrivbordet** | Ja | Ej tillämpligt | Nej | Nej |
 | **CLI** (`chloros-cli`) | Ja | Ja | Ja | Ja |
 | **Python-SDK** (`chloros-sdk`) | Ja | Ja | Ja | Ja |
@@ -22,7 +23,9 @@ Chloros 1.3.0 erbjuder inbyggt stöd för Linux för **CLI**och**Python SDK** �
 | **Texturmedveten debayer** (kräver en CUDA-GPU) | Ja (Chloros+) | Ja (Chloros+) | Ja (Chloros+) | Ja (Chloros+) |
 | **Dynamisk beräkningsanpassning** | Ja | Ja | Ja | Ja |
 | **Backend som systemtjänst** (`chloros-backend@<user>.service`) | Nej | Nej | Ja (opt-in) | Ja (opt-in) |
-| **Uppdatering på plats** (`chloros-cli update`) | Nej (kör installationsprogrammet) | Nej (kör installationsprogrammet) | Ja | Ja |***
+| **Uppdatering på plats** (`chloros-cli update`) | Nej (kör installationsprogrammet) | Nej (kör installationsprogrammet) | Ja | Ja |
+
+***
 
 ## Arkitekturer som stöds
 
@@ -35,7 +38,9 @@ Chloros 1.3.0 erbjuder inbyggt stöd för Linux för **CLI**och**Python SDK** �
 
 * **Ubuntu 22.04 LTS eller nyare** (amd64)
 * **Debian 12 eller nyare** (amd64)
-* **NVIDIA JetPack 6** (arm64 — Jetson Orin-plattformar)***
+* **NVIDIA JetPack 6** (arm64 — Jetson Orin-plattformar)
+
+***
 
 ## Vad Linux-användare får
 
@@ -54,7 +59,9 @@ Chloros 1.3.0 erbjuder inbyggt stöd för Linux för **CLI**och**Python SDK** �
 
 * **GUI för skrivbordet** — inget grafiskt gränssnitt; all interaktion sker via CLI eller Python-SDK
 * **Bildvisare** — ingen interaktiv bildvisare, rutnätsvy eller kartmarkörer
-* **Visuell projektledning** — projekt skapas och drivs via CLI-kommandon och SDK-anrop (själva hårdvaran — kameror, sensorer, bildinsamling — förblir fullt styrbar från terminalen)***
+* **Visuell projektledning** — projekt skapas och drivs via CLI-kommandon och SDK-anrop (själva hårdvaran — kameror, sensorer, bildinsamling — förblir fullt styrbar från terminalen)
+
+***
 
 ## Licenskrav
 

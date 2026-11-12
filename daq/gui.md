@@ -192,7 +192,9 @@ För kvantitativa strålningsvärden ska du beräkna medelvärdet av minst 15 se
 
 * Kombinera flera sensorer i ett diagram (delade axlar), behåll separata diagram (automatisk rutnätslayout), flytta sensorer mellan diagram, dra och ordna om rader/rutor och dölj enskilda sensorer med ögonikonen.
 * Chloros sparar följande per projekt: enhetsnamn, diagramfärger, diagramstorlek, visningsläge och varje sensors inställningar (integreringstid, bildmedelvärde, AE-status, val av kåpa).
-* **När ett projekt öppnas på nytt ansluts sensorerna automatiskt** via adress – COM-port för DAQ-U, BLE-enhet för DAQ-M, mDNS-värdnamn för DAQ-E (upplöses även om enhetens IP-adress har ändrats) – och tillämpar återigen varje sensors sparade kapselprofil, bildrutsmedelvärde, AE-status och manuell integrationstid.***
+* **När ett projekt öppnas på nytt ansluts sensorerna automatiskt** via adress – COM-port för DAQ-U, BLE-enhet för DAQ-M, mDNS-värdnamn för DAQ-E (upplöses även om enhetens IP-adress har ändrats) – och tillämpar återigen varje sensors sparade kapselprofil, bildrutsmedelvärde, AE-status och manuell integrationstid.
+
+***
 
 ## Kameraparning (DLS)
 

@@ -78,7 +78,9 @@ Varje bild med GPS-data får en markör vid sina koordinater.
 | Leverantör        | Anmärkningar                                                                                                                                                             |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Google Maps** | Brett globalt täckningsområde; stöder alla fyra karttyper                                                                                                            |
-| **Esri ArcGIS**| Ofta flygbilder med högre upplösning i vissa regioner. Karttypen**Terrain** erbjuds inte för Esri och dess knapp är inaktiverad när Esri är valt |***
+| **Esri ArcGIS**| Ofta flygbilder med högre upplösning i vissa regioner. Karttypen**Terrain** erbjuds inte för Esri och dess knapp är inaktiverad när Esri är valt |
+
+***
 
 ## Kartrutor
 
@@ -93,7 +95,9 @@ Välj kartlagerstyp med knapparna (från vänster till höger):
 | **Satellit**        | Detaljerade satellitbilder, inga etiketter — alternativet med högst bandbredd |
 | **Hybrid** (standard) | Satellitbilder med vägar och etiketter överlagrade                |
 
-Fliken ”Karta” öppnas i läget **Hybrid**. Ditt val överförs till leverantörsväxlingen där leverantören stöder detta.***
+Fliken ”Karta” öppnas i läget **Hybrid**. Ditt val överförs till leverantörsväxlingen där leverantören stöder detta.
+
+***
 
 ## Kartnavigering
 
@@ -141,7 +145,9 @@ Fliken ”Karta” öppnas i läget **Hybrid**. Ditt val överförs till leveran
 
 ### Kartan är tom eller kartrutorna slutar laddas
 
-Kartruteleverantörerna är onlinetjänster. Om kartrutorna slutar komma in, kontrollera maskinens nätverksanslutning och försök sedan byta leverantör. Om du hade zoomat in extremt mycket, tryck på återställningsknappen **×** för att återgå till en normal zoomnivå och låt kartan begära in kartrutorna på nytt.***
+Kartruteleverantörerna är onlinetjänster. Om kartrutorna slutar komma in, kontrollera maskinens nätverksanslutning och försök sedan byta leverantör. Om du hade zoomat in extremt mycket, tryck på återställningsknappen **×** för att återgå till en normal zoomnivå och låt kartan begära in kartrutorna på nytt.
+
+***
 
 ## Relaterade sidor
 

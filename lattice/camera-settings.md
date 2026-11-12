@@ -196,7 +196,9 @@ Allt i detta avsnitt gäller **endast visningssidan**— det ändrar vad du ser 
 | **Mättnad** | 0–200 (100 = neutral) | 100 | Endast RGB | HSV-mättnad i liveförhandsvisningen. |
 | **Kontrast** | 0–200 (100 = neutral) | 100 | Endast RGB | Linjär kontrast runt mellangrått i liveförhandsvisningen. |
 | **Spegla H / Spegla V** | Kryssrutor | Av | Alla | Spegla förhandsvisningen horisontellt/vertikalt. |
-| **Rotation**| 0° / 90° / 180° / 270° | 0° | Alla | Rotera förhandsvisningen. Orienteringen tillämpas i slutet av förhandsgranskningskedjan i backend.**Sparade bilder (1.3.0):**Förhandsgranskning, Radiance, Reflectance och Index-produkter från en fristående kamera vänds med Spegling/Rotation, medan**Raw och Debayered behåller kamerans ursprungliga orientering**; varje bildfil sparar inställningen i sin XMP, så att bearbetning av en raw-fil senare tillämpar den på samma sätt.**Filer i en array behåller sin ursprungliga orientering** (inställningen sparas, men tillämpas inte), och sammansatta vyer i en array ignorerar den. |**Semantik för färgprofiler** (RGB-kameror):
+| **Rotation**| 0° / 90° / 180° / 270° | 0° | Alla | Rotera förhandsvisningen. Orienteringen tillämpas i slutet av förhandsgranskningskedjan i backend.**Sparade bilder (1.3.0):**Förhandsgranskning, Radiance, Reflectance och Index-produkter från en fristående kamera vänds med Spegling/Rotation, medan**Raw och Debayered behåller kamerans ursprungliga orientering**; varje bildfil sparar inställningen i sin XMP, så att bearbetning av en raw-fil senare tillämpar den på samma sätt.**Filer i en array behåller sin ursprungliga orientering** (inställningen sparas, men tillämpas inte), och sammansatta vyer i en array ignorerar den. |
+
+**Semantik för färgprofiler** (RGB-kameror):
 
 * **Raw** — kringgår bearbetningskedjan helt.
 * **Linjär** — mörksignal + flat-field + vitbalans; ingen färgmatris, ingen gamma.

@@ -191,7 +191,9 @@ Få tillgång till avancerade funktioner med ett Chloros+-abonnemang:
 * **🐻 Avancerad texturmedveten debayer-metod** – en högkvalitativ kantmedveten debayer kombinerad med en AI/ML-brusreduceringsmodell som tar bort nästan allt debayeringsbrus.
 * 🧮 **Anpassade formler** – Skapa anpassade multispektrala index
 
-<p align="center"><a href="https://cloud.mapir.camera/pricing" class="button primary">Se Chloros+ abonnemang och priser</a></p>***
+<p align="center"><a href="https://cloud.mapir.camera/pricing" class="button primary">Se Chloros+ abonnemang och priser</a></p>
+
+***
 
 ## Hjälp med installation
 
@@ -232,7 +234,9 @@ Behöver du hjälp med installation eller konfiguration?
 * 📧 **E-post**: info@mapir.camera
 * 🌐 **Webbplats**: [https://www.mapir.camera/community/contact](https://www.mapir.camera/community/contact)
 * 📚 **Dokumentation**: [Kom igång](./)
-* ❓ **Vanliga frågor**: [Vanliga frågor](faq.md)***
+* ❓ **Vanliga frågor**: [Vanliga frågor](faq.md)
+
+***
 
 ## Programuppdateringar
 

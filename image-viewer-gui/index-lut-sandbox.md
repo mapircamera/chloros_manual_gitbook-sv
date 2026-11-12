@@ -71,7 +71,9 @@ För den fullständiga formelreferensen – alla tre förinställningslistorna o
 
 ### Med ”Index” markerat men utan LUT
 
-Bilden ritas i **gråskala**, utsträckt mellan de två tröskelvärdena. Detta är avsiktligt: indexbilden består av skalära data, och gråskala är den mest korrekta återgivningen av den. Lägg till en LUT när du vill ha färg.***
+Bilden ritas i **gråskala**, utsträckt mellan de två tröskelvärdena. Detta är avsiktligt: indexbilden består av skalära data, och gråskala är den mest korrekta återgivningen av den. Lägg till en LUT när du vill ha färg.
+
+***
 
 ## Arbeta med LUT:er (uppslagstabeller)
 
@@ -135,7 +137,9 @@ Exempel på NDVI-fönster:
 | Endast frisk vegetation                 | 0,5  | 0,9 |
 | Betona stress                        | 0,2  | 0,5 |
 
-Genom att begränsa fönstret ökar kontrasten inom ditt intresseområde och allt annat hamnar utanför intervallet — där **klippningsläget** avgör vad som händer med det.***
+Genom att begränsa fönstret ökar kontrasten inom ditt intresseområde och allt annat hamnar utanför intervallet — där **klippningsläget** avgör vad som händer med det.
+
+***
 
 ## Klippningslägen
 

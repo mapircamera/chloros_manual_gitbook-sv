@@ -57,7 +57,9 @@ När den effektiva förstoringen överstiger **60×** ritar Chloros en markering
 | **←**                           | Helskärm | Föregående bild                      |
 | **Ctrl + R**                    | Helskärm | Återställ index/LUT-sandlådan         |
 | **Ctrl + `+`**/**Ctrl + `=`** | Rutnät        | Större miniatyrbilder (4 px per tryck)  |
-| **Ctrl + `−`**                  | Rutnät        | Mindre miniatyrbilder (4 px per tryck) |***
+| **Ctrl + `−`**                  | Rutnät        | Mindre miniatyrbilder (4 px per tryck) |
+
+***
 
 ## Markörvärden
 
@@ -100,7 +102,9 @@ Visningsprogrammet, index-/LUT-sandlådan och indexexporten beräknar alla skala
 Två konsekvenser som är värda att känna till:
 
 * En **32-bitars procent**TIFF lagrar DN/65535 som ett flyttal, och en**8-bitars** PNG/JPG-export lagrar DN × 255/65535 — visningsprogrammet konverterar båda tillbaka innan procentvärdet visas.
-* Ett fall går inte att återställa: en **8-bitars TIFF-export av en 8-bitars källbild** beskärs till 0–255 istället för att skalas om, och har avsiktligt ingen skalningsetikett. För dessa filer visar panelen endast DN, utan procentkolumn. Detta är det ärliga svaret, inte ett fel.***
+* Ett fall går inte att återställa: en **8-bitars TIFF-export av en 8-bitars källbild** beskärs till 0–255 istället för att skalas om, och har avsiktligt ingen skalningsetikett. För dessa filer visar panelen endast DN, utan procentkolumn. Detta är det ärliga svaret, inte ett fel.
+
+***
 
 ## Lagrets histogram
 
@@ -126,7 +130,9 @@ Tre knappar finns ovanför histogrammet:
 | **INDEX**| På      | Visas endast när ett index är aktivt. Växlar histogrammet från källbanden till**indexvärdesfördelningen**, där de två klipptrösklarna ritas som orange streckade linjer och markörens indexvärde som en vit linje                                                          |
 | **RGB**| Av     | Växlar från den kombinerade kurvan till kurvor per kanal. På en monosensor visar denna knapp**MONO** och är inaktiverad — det finns bara en kanal att visa                                                                                                                                  |
 
-Histogrammet beräknas utifrån de **block du kan se**, inte utifrån källpixlarna bakom dem: ändra GSD-blockstorleken så beräknas fördelningen om, så att histogrammet, markören och den visade bilden alltid stämmer överens.***
+Histogrammet beräknas utifrån de **block du kan se**, inte utifrån källpixlarna bakom dem: ändra GSD-blockstorleken så beräknas fördelningen om, så att histogrammet, markören och den visade bilden alltid stämmer överens.
+
+***
 
 ## GSD-blockstorlek
 
@@ -185,7 +191,9 @@ Tillämpa multispektrala index och färg-LUT:er från sidofältet:
 
 3. Välj kamerans filter och en indexformel, och dra sedan kanalcirklarna till formelns fält
 4. Lägg till en LUT och välj en gradient, tröskelvärden och ett klippningsläge
-5. Läs av värdena vid markören och spara resultatet med **Export/Save Image(s)**Se [Index/LUT Sandbox](index-lut-sandbox.md) för en fullständig genomgång.***
+5. Läs av värdena vid markören och spara resultatet med **Export/Save Image(s)**Se [Index/LUT Sandbox](index-lut-sandbox.md) för en fullständig genomgång.
+
+***
 
 ## Felsökning
 

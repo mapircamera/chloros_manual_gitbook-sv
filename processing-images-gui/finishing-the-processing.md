@@ -110,7 +110,9 @@ Reflektansen lagras som ett heltal (DN), och **det DN-värde som motsvarar ρ = 
 | LATTICE (M3C/M3M) | **32768** (utrymme upp till ρ 2,0) | XMP-taggen `Chloros:PixelScale=32768` är inlagd i filen |
 | Survey3          | **65535** (avskuren vid ρ 1,0)     | Ingen `Chloros:PixelScale`-tagg – den avsaknaden är tecknet (Survey3-produkter har andra `Chloros:*`-bearbetningstaggar) |
 
-**Läs av `Chloros:PixelScale`-taggen och dividera med den** istället för att utgå från ett generellt värde på 65535 — att dividera LATTICE-reflektansen med 65535 halverar tyst varje värde. En reflektansfil från före version 1.3.0 som är skriven som 8-bitars klipptes av, inte omskalades, och saknar skalatagg: exportera om den i 16-bitars eller 32-bitars format istället för att dela den. Se [Utgångsbildformat](../output-image-formats.md) för hela historien.***
+**Läs av `Chloros:PixelScale`-taggen och dividera med den** istället för att utgå från ett generellt värde på 65535 — att dividera LATTICE-reflektansen med 65535 halverar tyst varje värde. En reflektansfil från före version 1.3.0 som är skriven som 8-bitars klipptes av, inte omskalades, och saknar skalatagg: exportera om den i 16-bitars eller 32-bitars format istället för att dela den. Se [Utgångsbildformat](../output-image-formats.md) för hela historien.
+
+***
 
 ## Metadata som överförs till exportfilerna
 
@@ -165,7 +167,9 @@ För att spara en logg över bearbetningen eller skicka den till MAPIR-supporten
 3. Bifoga den med projektdokumentationen
 4. Skicka till MAPIR-supporten om problem uppstår
 
-För att skicka ett problem direkt till MAPIR, använd buggikonen (**Rapportera en bugg**) högst upp på fliken Debug Log — se [Rapportera en bugg från fliken Log](monitoring-the-processing.md#reporting-a-bug-from-the-log-tab).***
+För att skicka ett problem direkt till MAPIR, använd buggikonen (**Rapportera en bugg**) högst upp på fliken Debug Log — se [Rapportera en bugg från fliken Log](monitoring-the-processing.md#reporting-a-bug-from-the-log-tab).
+
+***
 
 ## Vanliga utdataproblem och lösningar
 
