@@ -28,7 +28,11 @@ För användare med Chloros+-licens:
 1.**Detektering** – Söker efter kalibreringsmål
 2. **Analys** – Granskar bilder och förbereder bearbetningskedjan
 3. **Kalibrering** – Tillämpa korrigeringar för vinjettering och reflektans
-4. **Export** – Spara bearbetade filer**Interaktiva funktioner:*** **Håll muspekaren över** förloppsindikatorn för att se den utökade panelen med fyra steg
+4. **Export** – Spara bearbetade filer
+
+**Interaktiva funktioner:**
+
+* **Håll muspekaren över** förloppsindikatorn för att se den utökade panelen med fyra steg
 * **Klicka på** förloppsindikatorn för att frysa/fästa den utökade panelen
 * **Klicka igen** för att låsa upp och dölja automatiskt när muspekaren flyttas bort
 * Varje steg visar individuell framstegsgrad (0–100 %)
@@ -92,7 +96,9 @@ För användare med Chloros+-licens:
 
 ### Steg 3: Kalibrering
 
-**Vad som händer:*** **Debayering**: Konvertering av RAW-Bayer-mönster till 3 kanaler (hoppas över för LATTICE-monomoduler, med en anmärkning)
+**Vad som händer:**
+
+* **Debayering**: Konvertering av RAW-Bayer-mönster till 3 kanaler (hoppas över för LATTICE-monomoduler, med en anmärkning)
 * **Vignettkorrigering**: Avlägsnar mörkningen vid objektivets kanter
 * **Reflektanskalibrering**: Normalisering med målvärden och/eller DAQ-nedviktning
 * **Indexberäkning**: Beräkning av multispektrala index
@@ -104,7 +110,9 @@ För användare med Chloros+-licens:
 * Bild som bearbetas just nu
 * Bearbetade bilder / Totalt antal bilder
 
-**Bearbetningsbeteende:*** **Fritt läge**: Bearbetar en bild i taget sekventiellt
+**Bearbetningsbeteende:**
+
+* **Fritt läge**: Bearbetar en bild i taget sekventiellt
 * **Läge ”Chloros+”**: Kör en hårdvaruanpassad arbetspool — 1–4 samtidiga arbetsprocesser på GPU-system (beroende på VRAM), en arbetsprocess per fysisk kärna (minus en) på system med enbart CPU. Se [Dynamisk beräkningsanpassning](../processing-architecture/dynamic-compute-adaptation.md)
 * **GPU-acceleration**: Påskyndar detta steg avsevärt**Vad du bör hålla koll på:**
 

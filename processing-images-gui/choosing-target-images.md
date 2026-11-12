@@ -32,7 +32,9 @@ Om **inga** bilder är markerade går Chloros tillbaka till att skanna varje bil
 
 Bläddra igenom dina importerade bilder i filbläddraren och identifiera vilka bilder som innehåller kalibreringsmål.
 
-**Vanliga scenarier:*** **Mål före bildtagning**: Taget innan sessionen påbörjas
+**Vanliga scenarier:**
+
+* **Mål före bildtagning**: Taget innan sessionen påbörjas
 * **Mål efter bildtagning**: Tagna efter att sessionen avslutats
 * **Mål i fält**: Mål placerade inom bildtagningsområdet
 * **Flera mål**: 2–3 målbilder per session (rekommenderas)
@@ -140,9 +142,17 @@ Använd denna kolumn för att kontrollera att du har markerat mål för varje ka
 
 ### Justera detekteringskänsligheten
 
-Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Projektinställningar](adjusting-project-settings.md):**Minsta kalibreringsprovområde (px):*** **Standard**: 25 pixlar
+Om Chloros inte detekterar dina mål korrekt, justera dessa inställningar i [Projektinställningar](adjusting-project-settings.md):
+
+**Minsta kalibreringsprovområde (px):**
+
+* **Standard**: 25 pixlar
 * **Öka** om du får falska detekteringar på små artefakter
-* **Minska** om målen inte detekteras**Minsta målkluster (0–100):*** **Standard**: 60
+* **Minska** om målen inte detekteras
+
+**Minsta målkluster (0–100):**
+
+* **Standard**: 60
 * **Öka** om målen delas upp i flera detekteringar
 * **Minska** om mål med färgvariationer inte detekteras fullständigt
 

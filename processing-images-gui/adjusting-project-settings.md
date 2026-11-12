@@ -44,7 +44,9 @@ Panelen Projektinställningar är indelad i avsnitten nedan. Två ytterligare av
 
 Styr hur Chloros identifierar kalibreringsmål i dina bilder.
 
-**Viktiga inställningar:*** **Minsta kalibreringsprovområde (px)**: Storlekströskel för måldetektering (standard:**25**, intervall 0–10000)
+**Viktiga inställningar:**
+
+* **Minsta kalibreringsprovområde (px)**: Storlekströskel för måldetektering (standard:**25**, intervall 0–10000)
 * **Minsta målkluster (0–100)**: Tröskelvärde för likhet vid gruppering av målregioner (standard:**60**)**När ska du justera:**
 
 * Öka provområdet om du får felaktiga detekteringar
@@ -59,19 +61,26 @@ Dessa inställningar är gråmarkerade när **reflektanskalibrering/vitbalans** 
 
 Huvudsakliga alternativ för bildbearbetning och kalibrering.
 
-**Viktiga inställningar:*** **Vignettkorrigering**: Kompenserar för mörkare kanter på bilden ✅ Rekommenderas
+**Viktiga inställningar:**
+
+* **Vignettkorrigering**: Kompenserar för mörkare kanter på bilden ✅ Rekommenderas
 * **Reflektanskalibrering / vitbalans**: Kalibrerar bilder med hjälp av detekterade mål (Survey3) och/eller data från DAQ:s ljussensor (LATTICE) ✅ Rekommenderas
 * **Debayer-metod**: Algoritm för att konvertera RAW till 3-kanals multispektral
 * **Minsta omkalibreringsintervall**: Minsta tid i sekunder mellan användning av kalibreringsmål (standard:**0** = använd alla, intervall 0–3600)**Okalibrerade reservprodukter:**När en bildruta inte kan reflektanskalibreras (inget mål tillgängligt eller kalibrering inaktiverad) exporteras den som en av två reservprodukter —**exakt en av de två finns per körning**, vald av omkopplaren för Vignette-korrigering:
 
-* **Exportera sensorns respons**: skriver `Sensor_Response_Images` — används när vignettkorrigering är**av*** **Exportera vignettkorrigerad**: skriver `Vignette_Corrected_Images` — används när vignettkorrigering är**på**Den kryssruta som inte är aktiv är gråmarkerad. Om du avmarkerar den aktiva rutan stoppas skrivningen av den filen helt.**LATTICE-exportprodukter** (visas för varje projekt; de gäller för LATTICE-bildtagningar):
+* **Exportera sensorns respons**: skriver `Sensor_Response_Images` — används när vignettkorrigering är**av**
+* **Exportera vignettkorrigerad**: skriver `Vignette_Corrected_Images` — används när vignettkorrigering är**på**Den kryssruta som inte är aktiv är gråmarkerad. Om du avmarkerar den aktiva rutan stoppas skrivningen av den filen helt.**LATTICE-exportprodukter** (visas för varje projekt; de gäller för LATTICE-bildtagningar):
 
 * **Exportera debayered**: den linjära debayered-bilden (`Debayered_Images`): kalibreringspaketets mörka offset avlägsnas, därefter demosaicerad, utan flat field eller unmix — samma fil som en bildspara sparar på sin debayered-nivå — i sensorns ursprungliga orientering. Gäller för RGB- och multispektrala moduler.
 * **Exportera förhandsgranskning**: förhandsgranskningen på skärmen (`Preview_Images`). RGB = vitbalans (DAQ-ljuskälla om tillgänglig, annars gråskala) + gamma; multispektral = falskfärgssträckning.
 * **Exportera strålningsintensitet**: spektral strålningsintensitet av typen float32 (`Radiance_Images`, W/m²/sr/nm). Endast multispektrala moduler – gäller inte för RGB-masterfiler.
 * **Exportera reflektans**: uint16-reflektans (`Reflectance_Calibrated_Images`, DN 32768 = ρ 1,0) när en `.daq`-avläsning av nedåtriktad strålning eller ett mål inom bildrutan täcker bildrutan. Endast multispektrala moduler.
 
-Alla fyra är **aktiverade som standard**— en importerad LATTICE-råbild fördelas till alla aktiverade och tillämpliga produkter i ett enda bearbetningssteg. Kryssrutan**Exportera reflektans** är gråmarkerad när reflektanskalibrering är avstängd. Inställningar som inte kan användas på grund av en överordnad inställning är alltid gråmarkerade med ett verktygstips som anger vilken inställning som måste ändras.**Avancerade inställningar:*** **Tidszonsförskjutning för ljussensor**: Timmar från UTC för tidsanpassning av ljussensorn (standard: 0, intervall −12 till +12)
+Alla fyra är **aktiverade som standard**— en importerad LATTICE-råbild fördelas till alla aktiverade och tillämpliga produkter i ett enda bearbetningssteg. Kryssrutan**Exportera reflektans** är gråmarkerad när reflektanskalibrering är avstängd. Inställningar som inte kan användas på grund av en överordnad inställning är alltid gråmarkerade med ett verktygstips som anger vilken inställning som måste ändras.
+
+**Avancerade inställningar:**
+
+* **Tidszonsförskjutning för ljussensor**: Timmar från UTC för tidsanpassning av ljussensorn (standard: 0, intervall −12 till +12)
 * **Tillämpa PPK-korrigeringar**: Använder GPS-/exponeringsstiftdata från `.daq`-filer (standard: av)
 * **Exponeringsstift 1/2**: Tilldelar kameror till exponeringsstift för konfigurationer med två kameror
 
@@ -105,7 +114,9 @@ Konfigurera vilka vegetationsindex som ska beräknas och exporteras. I rullgardi
 3. Konfigurera visualiseringsinställningarna (LUT-färger, värdeintervall)
 4. Lägg till flera index efter behov
 
-**Populära index:*** **NDVI**: Allmän vegetationshälsa (vanligast)
+**Populära index:**
+
+* **NDVI**: Allmän vegetationshälsa (vanligast)
 * **NDRE**: Tidig stressdetektering med RedEdge
 * **GNDVI**: Känslig för klorofyllkoncentration
 * **OSAVI**: Fungerar bra med synlig mark
@@ -217,7 +228,11 @@ Om du använder MAPIR-DAQ-inspelare med GPS för exakt geolokalisering:
 3. Ställ in**”Tidszonsförskjutning för ljussensor”** vid behov (standard: 0 för UTC)
 4. Tilldela kameror till exponeringsstift:
    * **En kamera**: Tilldelas automatiskt till stift 1
-   * **Två kameror**: Tilldela varje kamera manuellt till rätt stift**Tilldelning av exponeringsstift:*** **Exponeringsstift 1**: Välj kameramodell från rullgardinsmenyn
+   * **Två kameror**: Tilldela varje kamera manuellt till rätt stift
+
+**Tilldelning av exponeringsstift:**
+
+* **Exponeringsstift 1**: Välj kameramodell från rullgardinsmenyn
 * **Exponeringsstift 2**: Välj den andra kameran eller ”Använd inte”
 * Samma kamera kan inte tilldelas båda stiften
 

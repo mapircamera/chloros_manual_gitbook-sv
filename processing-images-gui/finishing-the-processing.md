@@ -81,7 +81,9 @@ Räkna inte enligt någon formel — antalet utdata beror på vilka produkter so
 
 ### Förhandsgranskning i externa bildvisare
 
-**Rekommenderade bildvisare:*** **QGIS** – Gratis GIS-programvara (bäst för georefererad multispektral analys)
+**Rekommenderade bildvisare:**
+
+* **QGIS** – Gratis GIS-programvara (bäst för georefererad multispektral analys)
 * **IrfanView** – Snabb, lättviktig bildvisare (stöder TIFF)
 * **Adobe Photoshop** – Professionell redigering (stöder TIFF)
 * **GIMP** – Gratis alternativ till Photoshop
@@ -221,7 +223,9 @@ För att skicka ett problem direkt till MAPIR, använd buggikonen (**Rapportera 
 
 ### Problem: NDVI-värdena verkar felaktiga
 
-**Förväntade NDVI-intervall:*** **Vatten, stenar, jord**: -0,1 till 0,2
+**Förväntade NDVI-intervall:**
+
+* **Vatten, stenar, jord**: -0,1 till 0,2
 * **Gles/ohälsosam vegetation**: 0,2 till 0,4
 * **Måttlig vegetation**: 0,4 till 0,6
 * **Frisk, tät vegetation**: 0,6 till 0,9**Om värdena ligger utanför dessa intervall:**
@@ -275,12 +279,18 @@ För att skicka ett problem direkt till MAPIR, använd buggikonen (**Rapportera 
 
 ### Rekommenderad strategi för säkerhetskopiering
 
-**Vad som ska sparas:*** ✅ **Originalbilder i RAW/JPG eller LATTICE-råbilder** – Arkivera på separat enhet/i molnet; råbilderna är källan till bearbetningsflödet och allt annat kan återskapas utifrån dem
+**Vad som ska sparas:**
+
+* ✅ **Originalbilder i RAW/JPG eller LATTICE-råbilder** – Arkivera på separat enhet/i molnet; råbilderna är källan till bearbetningsflödet och allt annat kan återskapas utifrån dem
 * ✅ **`.daq` / `.csv`-filer från ljussensorn** – Behövs för att senare återberäkna reflektansen
 * ✅ **Bearbetade resultat** – Spara kalibrerade bilder och index
 * ✅ **Projektmapp** (`project.json` och tillhörande filer) – Innehåller alla inställningar för ombearbetning vid behov
 * ✅ **Felsökningslogg** – Dokumenterar detaljer om bearbetningen
-* ✅ **Kalibreringsmålbilder** – För verifiering och ombearbetning**Rekommendationer för lagring:*** **Omedelbar säkerhetskopiering**: Extern hårddisk
+* ✅ **Kalibreringsmålbilder** – För verifiering och ombearbetning
+
+**Rekommendationer för lagring:**
+
+* **Omedelbar säkerhetskopiering**: Extern hårddisk
 * **Långsiktigt arkiv**: Molnlagring (Google Drive, Dropbox m.fl.)
 * **Kritiska data**: Spara 2–3 kopior på olika platser***
 

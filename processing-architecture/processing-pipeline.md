@@ -45,7 +45,11 @@ En CPU-bunden beräkningstråd. Vid en Survey3-körning eller en blandad körnin
 
 ### Tråd 3: Bearbetning (GPU)
 
-**Syfte**: Tillämpa korrigeringar och beräkna vegetationsindex.**Detta är den mest beräkningsintensiva tråden.*** **Debayering**: konverterar RAW-Bayer-data till flerkanaliga bilder
+**Syfte**: Tillämpa korrigeringar och beräkna vegetationsindex.
+
+**Detta är den mest beräkningsintensiva tråden.**
+
+* **Debayering**: konverterar RAW-Bayer-data till flerkanaliga bilder
   * Standard (snabb, medelhög kvalitet) — standardinställning, `--debayer standard`
   * Texture Aware (långsam, högsta kvalitet) — endast Chloros+, `--debayer texture-aware`, använder en AI/ML-modell för brusreducering
   * LATTICE mono (M3M)-bildtagningar är enkelbandsbilder: demosaik- och vitbalansstegen hoppas över för dessa (med ett loggmeddelande på en rad), medan eventuella M3C/Bayer-bilder i samma körning fortfarande genomgår dessa steg

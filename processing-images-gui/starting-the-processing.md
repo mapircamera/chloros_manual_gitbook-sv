@@ -78,7 +78,11 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 1. **Detektering** (Tråd 1) – Söker efter kalibreringsmål
 2. **Analys** (tråd 2) – Granskning av bildmetadata och beräkning av kalibrering
 3. **Kalibrering** (tråd 3) – Debayering, vignetteringskorrigering, kalibrering, indexberäkning
-4. **Export** (tråd 4) – Spara bearbetade bilder och index**Interaktion med förloppsindikatorn:*** **Håll muspekaren** över indikatorn för att se en detaljerad rullgardinsmeny med de fyra stegen
+4. **Export** (tråd 4) – Spara bearbetade bilder och index
+
+**Interaktion med förloppsindikatorn:**
+
+* **Håll muspekaren** över indikatorn för att se en detaljerad rullgardinsmeny med de fyra stegen
 * **Klicka** på förloppsindikatorn för att låsa rullgardinsmenyn på plats
 * **Klicka igen** för att låsa upp och dölja menyn**Bearbetningstid:**
 
@@ -116,7 +120,9 @@ Chloros fungerar i två olika bearbetningslägen beroende på din licens:
 
 ### Steg 3: Kalibrering
 
-**Vad Chloros gör:*** **Vignettkorrigering**: Tar bort mörkningen vid kanterna
+**Vad Chloros gör:**
+
+* **Vignettkorrigering**: Tar bort mörkningen vid kanterna
 * **Reflektanskalibrering**: Normaliserar med hjälp av målreflektansvärden och/eller DAQ-data för nedåtriktad strålning
 * Tillämpar korrigeringar över alla band/kanaler
 * Använder lämplig kalibreringsreferens för varje bild baserat på tidsstämpel

@@ -401,7 +401,7 @@ Snabböversikt över vad som finns var när en kamera ingår i en array:
 Övriga övergripande funktioner:
 
 * **Kombinerad vs separat visning** väljs vid anslutning till matrisen: kombinerad = en justerad sammansatt ruta (medlemmarna sänder endast via delad vy); separat = varje medlem renderar sin egen synkroniserade ruta. En kamera visar aldrig både en fristående sändning och en matrisruta.
-* ****Automatisk återanslutning**: när ett sparat projekt öppnas återställs dess kameror och matriser och alla sparade inställningar tillämpas på nytt på backend innan strömmarna återupptas.
+* **Automatisk återanslutning**: när ett sparat projekt öppnas återställs dess kameror och matriser och alla sparade inställningar tillämpas på nytt på backend innan strömmarna återupptas.
 * **Capture-gating**: dolda eller pausade kameror exkluderas från Capture All; en matris blockeras helt endast när ALLA medlemmar är dolda/pausade. Se [Inspelningsinställningar och lägen](capture.md).
 
 ## Hur inställningarna sparas
